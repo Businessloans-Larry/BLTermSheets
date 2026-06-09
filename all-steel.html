@@ -128,19 +128,6 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,A
 .borrower-bar{padding:10px 18px;margin-bottom:10px;}.cover-notes{margin-bottom:12px;gap:8px;}.cover-note{padding:8px 12px;}
 .offers-grid{margin-bottom:18px;}.offer-card-body{padding:7px 12px 9px;}.kv-row{padding:2px 0;}.card-tag{margin-top:6px;}}
 </style>
-
-<style>
-.rev-edit{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
-.rev-edit .fld{flex:1;min-width:70px;}
-.rev-edit .lbl{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.85);margin-bottom:3px;display:block;}
-.rev-edit .box{display:flex;align-items:center;background:white;border-radius:6px;border:2px solid #00CD67;padding:2px 8px;}
-.rev-edit .box:focus-within{border-color:#FFC858;}
-.rev-edit .pfx{font-family:'Georgia',serif;font-size:14px;color:#00A352;}
-.rev-edit input{font-family:'Georgia',serif;font-size:14px;color:#00A352;border:none;outline:none;width:100%;background:transparent;}
-.rev-edit input::-webkit-outer-spin-button,.rev-edit input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-@media print{.rev-edit .box{border-color:transparent;padding-left:0;}.rev-edit input{pointer-events:none;}}
-</style>
-
 </head><body>
 
 <div class="container">
@@ -148,9 +135,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,A
     <div class="cover-header-meta"><div><strong>Term Sheet</strong></div><div id="prepared-date"></div><div>Lender: Revenued</div></div></div>
   <div class="cover-title-block"><div class="cover-eyebrow">Funding Offers Comparison</div>
     <h1 class="cover-title">Funding Offers for All Steel</h1>
-    <p class="cover-subtitle">Two Revenued Flex Line options. Each works like a revolving line of credit with no fees. Adjust the line amount, factor, or weeks on either option to recalculate its weekly payment, full early payoff schedule, and the payoff comparison.</p></div>
+    <p class="cover-subtitle">Two Revenued Flex Line options, each a revolving line of credit with no fees. Adjust the funding amount below to recalculate every offer and early payoff schedule.</p></div>
   <div class="borrower-bar"><div><div class="borrower-bar-label">Borrower</div><div class="borrower-bar-name">All Steel</div></div>
-    <div class="borrower-bar-funding"><div class="borrower-bar-label">Lender</div><div class="borrower-bar-name">Revenued Flex Line</div></div></div>
+    <div class="borrower-bar-funding"><div class="borrower-bar-label">Funding Amount (Editable)</div><div class="amount-input-wrap"><span class="amount-prefix">$</span><input type="text" id="loan-amount" class="amount-input" value="300,000" inputmode="numeric"/></div><div class="amount-help" id="amount-help">Range $10,100 to $320,000. Option A caps at $300,000; Option B at $320,000.</div></div></div>
   <div class="cover-notes">
     <div class="cover-note cover-note-flex"><div class="cover-note-badge">Flex Line</div><div class="cover-note-text">Both options work like a line of credit. Draw and pay down as needed, with no origination, draw, or maintenance fees.</div></div>
     <div class="cover-note cover-note-docs"><div class="cover-note-badge">Documents Needed</div><div class="cover-note-text">Final confirmation requires a driver's license, voided check, A/R and A/P, 2026 P&amp;L and balance sheet, a Plaid bank connection, and a signed contract.</div></div>
@@ -160,128 +147,70 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,A
     <a class="quick-jump-link" href="#offer-R1">Option A &middot; 52 wk</a>
     <a class="quick-jump-link" href="#offer-R2">Option B &middot; 60 wk</a></div>
   <div class="offers-grid" id="offers-grid"></div>
-  <div id="comparison-wrap"></div>
   <div id="detail-sections"></div>
   <div class="footer">
-    <p><strong>About these offers.</strong> Each Revenued Flex Line is a revolving line of credit with no fees. The weekly payment equals the line amount multiplied by the factor, divided by the number of weeks. The Early Payoff Schedule shows the balance to settle the line in full at each weekly point, the cumulative amount paid, the total cost of credit, the effective factor to three decimals, and the savings versus carrying the line to full term. The first four weeks reflect a reduced early payoff window; after that the effective factor steps up and declines to the full factor at term. All amounts recalculate with the inputs on each card.</p>
+    <p><strong>About these offers.</strong> Each Revenued Flex Line is a revolving line of credit with no fees. The weekly payment equals the line amount multiplied by the factor, divided by the number of weeks. The Early Payoff Schedule shows the balance to settle the line in full at each weekly point, the cumulative amount paid, the total cost of credit, the effective factor to three decimals, and the savings versus carrying the line to full term. The first four weeks reflect a reduced early payoff window; after that the effective factor steps up and declines to the full factor at term. All amounts recalculate with the funding amount above.</p>
     <p><strong>Disclosure.</strong> This term sheet is for illustration purposes only. The weekly early payoff factors between the first and final weeks are modeled and may differ from Revenued's final prepayment terms. Actual figures may differ due to underwriting, the funding date, bank holidays, and other factors. Final terms are subject to underwriting approval, receipt of required documentation, and execution of definitive funding documents.</p>
   </div>
 </div>
 
 <script>
-const OFFERS = [{"id": "R1", "lender": "Revenued", "brand": "revenued", "tag": "Option A", "amount": 300000, "factor": 1.29, "weeks": 52}, {"id": "R2", "lender": "Revenued", "brand": "revenued", "tag": "Option B", "amount": 320000, "factor": 1.41, "weeks": 60}];
-const REQS = ["Driver's license", "Voided check", "Accounts receivable and accounts payable (A/R and A/P) reports", "2026 profit and loss statement", "2026 balance sheet", "Plaid bank connection", "Signed contract"];
-const START = new Date(2026,5,9);            // projected origination 6/9/2026
-const WINDOW = 4;                            // first-month reduced payoff window
-const COMP_MONTHS = [1,3,6,9,12];
-const COMP_WEEKS = [4,13,26,39,52];
-
+const OFFERS=[{"id": "R1", "lender": "Revenued", "brand": "revenued", "tag": "Option A", "cap": 300000, "rtr_per_dollar": 1.29, "payment_per_dollar": 0.02480769230769231, "n": 52, "schedule_per_dollar": [[1, "6/9/26", 0.0248076923, 0.9807692308, 0.0055769231, "1.006", 0.2844230769], [2, "6/16/26", 0.0496153846, 0.9615384615, 0.0111538462, "1.011", 0.2788461538], [3, "6/23/26", 0.0744230769, 0.9423076923, 0.0167307692, "1.017", 0.2732692308], [4, "6/30/26", 0.0992307692, 0.9230769231, 0.0223076923, "1.022", 0.2676923077], [5, "7/7/26", 0.1240384615, 0.9675027473, 0.0915412088, "1.092", 0.1984587912], [6, "7/14/26", 0.1488461538, 0.9469175824, 0.0957637363, "1.096", 0.1942362637], [7, "7/21/26", 0.1736538462, 0.9263324176, 0.0999862637, "1.100", 0.1900137363], [8, "7/28/26", 0.1984615385, 0.9057472527, 0.1042087912, "1.104", 0.1857912088], [9, "8/4/26", 0.2232692308, 0.8851620879, 0.1084313187, "1.108", 0.1815686813], [10, "8/11/26", 0.2480769231, 0.8645769231, 0.1126538462, "1.113", 0.1773461538], [11, "8/18/26", 0.2728846154, 0.8439917582, 0.1168763736, "1.117", 0.1731236264], [12, "8/25/26", 0.2976923077, 0.8234065934, 0.1210989011, "1.121", 0.1689010989], [13, "9/1/26", 0.3225, 0.8028214286, 0.1253214286, "1.125", 0.1646785714], [14, "9/8/26", 0.3473076923, 0.7822362637, 0.129543956, "1.130", 0.160456044], [15, "9/15/26", 0.3721153846, 0.7616510989, 0.1337664835, "1.134", 0.1562335165], [16, "9/22/26", 0.3969230769, 0.7410659341, 0.137989011, "1.138", 0.152010989], [17, "9/29/26", 0.4217307692, 0.7204807692, 0.1422115385, "1.142", 0.1477884615], [18, "10/6/26", 0.4465384615, 0.6998956044, 0.1464340659, "1.146", 0.1435659341], [19, "10/13/26", 0.4713461538, 0.6793104396, 0.1506565934, "1.151", 0.1393434066], [20, "10/20/26", 0.4961538462, 0.6587252747, 0.1548791209, "1.155", 0.1351208791], [21, "10/27/26", 0.5209615385, 0.6381401099, 0.1591016484, "1.159", 0.1308983516], [22, "11/3/26", 0.5457692308, 0.6175549451, 0.1633241758, "1.163", 0.1266758242], [23, "11/10/26", 0.5705769231, 0.5969697802, 0.1675467033, "1.168", 0.1224532967], [24, "11/17/26", 0.5953846154, 0.5763846154, 0.1717692308, "1.172", 0.1182307692], [25, "11/24/26", 0.6201923077, 0.5557994505, 0.1759917582, "1.176", 0.1140082418], [26, "12/1/26", 0.645, 0.5352142857, 0.1802142857, "1.180", 0.1097857143], [27, "12/8/26", 0.6698076923, 0.5146291209, 0.1844368132, "1.184", 0.1055631868], [28, "12/15/26", 0.6946153846, 0.494043956, 0.1886593407, "1.189", 0.1013406593], [29, "12/22/26", 0.7194230769, 0.4734587912, 0.1928818681, "1.193", 0.0971181319], [30, "12/29/26", 0.7442307692, 0.4528736264, 0.1971043956, "1.197", 0.0928956044], [31, "1/5/27", 0.7690384615, 0.4322884615, 0.2013269231, "1.201", 0.0886730769], [32, "1/12/27", 0.7938461538, 0.4117032967, 0.2055494505, "1.206", 0.0844505495], [33, "1/19/27", 0.8186538462, 0.3911181319, 0.209771978, "1.210", 0.080228022], [34, "1/26/27", 0.8434615385, 0.370532967, 0.2139945055, "1.214", 0.0760054945], [35, "2/2/27", 0.8682692308, 0.3499478022, 0.218217033, "1.218", 0.071782967], [36, "2/9/27", 0.8930769231, 0.3293626374, 0.2224395604, "1.222", 0.0675604396], [37, "2/16/27", 0.9178846154, 0.3087774725, 0.2266620879, "1.227", 0.0633379121], [38, "2/23/27", 0.9426923077, 0.2881923077, 0.2308846154, "1.231", 0.0591153846], [39, "3/2/27", 0.9675, 0.2676071429, 0.2351071429, "1.235", 0.0548928571], [40, "3/9/27", 0.9923076923, 0.247021978, 0.2393296703, "1.239", 0.0506703297], [41, "3/16/27", 1.0171153846, 0.2264368132, 0.2435521978, "1.244", 0.0464478022], [42, "3/23/27", 1.0419230769, 0.2058516484, 0.2477747253, "1.248", 0.0422252747], [43, "3/30/27", 1.0667307692, 0.1852664835, 0.2519972527, "1.252", 0.0380027473], [44, "4/6/27", 1.0915384615, 0.1646813187, 0.2562197802, "1.256", 0.0337802198], [45, "4/13/27", 1.1163461538, 0.1440961538, 0.2604423077, "1.260", 0.0295576923], [46, "4/20/27", 1.1411538462, 0.123510989, 0.2646648352, "1.265", 0.0253351648], [47, "4/27/27", 1.1659615385, 0.1029258242, 0.2688873626, "1.269", 0.0211126374], [48, "5/4/27", 1.1907692308, 0.0823406593, 0.2731098901, "1.273", 0.0168901099], [49, "5/11/27", 1.2155769231, 0.0617554945, 0.2773324176, "1.277", 0.0126675824], [50, "5/18/27", 1.2403846154, 0.0411703297, 0.2815549451, "1.282", 0.0084450549], [51, "5/25/27", 1.2651923077, 0.0205851648, 0.2857774725, "1.286", 0.0042225275], [52, "6/1/27", 1.29, 0.0, 0.29, "1.290", 0.0]]}, {"id": "R2", "lender": "Revenued", "brand": "revenued", "tag": "Option B", "cap": 320000, "rtr_per_dollar": 1.41, "payment_per_dollar": 0.0235, "n": 60, "schedule_per_dollar": [[1, "6/9/26", 0.0235, 0.9833333333, 0.0068333333, "1.007", 0.4031666667], [2, "6/16/26", 0.047, 0.9666666667, 0.0136666667, "1.014", 0.3963333333], [3, "6/23/26", 0.0705, 0.95, 0.0205, "1.020", 0.3895], [4, "6/30/26", 0.094, 0.9333333333, 0.0273333333, "1.027", 0.3826666667], [5, "7/7/26", 0.1175, 1.0079404762, 0.1254404762, "1.125", 0.2845595238], [6, "7/14/26", 0.141, 0.9896142857, 0.1306142857, "1.131", 0.2793857143], [7, "7/21/26", 0.1645, 0.9712880952, 0.1357880952, "1.136", 0.2742119048], [8, "7/28/26", 0.188, 0.9529619048, 0.1409619048, "1.141", 0.2690380952], [9, "8/4/26", 0.2115, 0.9346357143, 0.1461357143, "1.146", 0.2638642857], [10, "8/11/26", 0.235, 0.9163095238, 0.1513095238, "1.151", 0.2586904762], [11, "8/18/26", 0.2585, 0.8979833333, 0.1564833333, "1.156", 0.2535166667], [12, "8/25/26", 0.282, 0.8796571429, 0.1616571429, "1.162", 0.2483428571], [13, "9/1/26", 0.3055, 0.8613309524, 0.1668309524, "1.167", 0.2431690476], [14, "9/8/26", 0.329, 0.8430047619, 0.1720047619, "1.172", 0.2379952381], [15, "9/15/26", 0.3525, 0.8246785714, 0.1771785714, "1.177", 0.2328214286], [16, "9/22/26", 0.376, 0.806352381, 0.182352381, "1.182", 0.227647619], [17, "9/29/26", 0.3995, 0.7880261905, 0.1875261905, "1.188", 0.2224738095], [18, "10/6/26", 0.423, 0.7697, 0.1927, "1.193", 0.2173], [19, "10/13/26", 0.4465, 0.7513738095, 0.1978738095, "1.198", 0.2121261905], [20, "10/20/26", 0.47, 0.733047619, 0.203047619, "1.203", 0.206952381], [21, "10/27/26", 0.4935, 0.7147214286, 0.2082214286, "1.208", 0.2017785714], [22, "11/3/26", 0.517, 0.6963952381, 0.2133952381, "1.213", 0.1966047619], [23, "11/10/26", 0.5405, 0.6780690476, 0.2185690476, "1.219", 0.1914309524], [24, "11/17/26", 0.564, 0.6597428571, 0.2237428571, "1.224", 0.1862571429], [25, "11/24/26", 0.5875, 0.6414166667, 0.2289166667, "1.229", 0.1810833333], [26, "12/1/26", 0.611, 0.6230904762, 0.2340904762, "1.234", 0.1759095238], [27, "12/8/26", 0.6345, 0.6047642857, 0.2392642857, "1.239", 0.1707357143], [28, "12/15/26", 0.658, 0.5864380952, 0.2444380952, "1.244", 0.1655619048], [29, "12/22/26", 0.6815, 0.5681119048, 0.2496119048, "1.250", 0.1603880952], [30, "12/29/26", 0.705, 0.5497857143, 0.2547857143, "1.255", 0.1552142857], [31, "1/5/27", 0.7285, 0.5314595238, 0.2599595238, "1.260", 0.1500404762], [32, "1/12/27", 0.752, 0.5131333333, 0.2651333333, "1.265", 0.1448666667], [33, "1/19/27", 0.7755, 0.4948071429, 0.2703071429, "1.270", 0.1396928571], [34, "1/26/27", 0.799, 0.4764809524, 0.2754809524, "1.275", 0.1345190476], [35, "2/2/27", 0.8225, 0.4581547619, 0.2806547619, "1.281", 0.1293452381], [36, "2/9/27", 0.846, 0.4398285714, 0.2858285714, "1.286", 0.1241714286], [37, "2/16/27", 0.8695, 0.421502381, 0.291002381, "1.291", 0.118997619], [38, "2/23/27", 0.893, 0.4031761905, 0.2961761905, "1.296", 0.1138238095], [39, "3/2/27", 0.9165, 0.38485, 0.30135, "1.301", 0.10865], [40, "3/9/27", 0.94, 0.3665238095, 0.3065238095, "1.307", 0.1034761905], [41, "3/16/27", 0.9635, 0.348197619, 0.311697619, "1.312", 0.098302381], [42, "3/23/27", 0.987, 0.3298714286, 0.3168714286, "1.317", 0.0931285714], [43, "3/30/27", 1.0105, 0.3115452381, 0.3220452381, "1.322", 0.0879547619], [44, "4/6/27", 1.034, 0.2932190476, 0.3272190476, "1.327", 0.0827809524], [45, "4/13/27", 1.0575, 0.2748928571, 0.3323928571, "1.332", 0.0776071429], [46, "4/20/27", 1.081, 0.2565666667, 0.3375666667, "1.338", 0.0724333333], [47, "4/27/27", 1.1045, 0.2382404762, 0.3427404762, "1.343", 0.0672595238], [48, "5/4/27", 1.128, 0.2199142857, 0.3479142857, "1.348", 0.0620857143], [49, "5/11/27", 1.1515, 0.2015880952, 0.3530880952, "1.353", 0.0569119048], [50, "5/18/27", 1.175, 0.1832619048, 0.3582619048, "1.358", 0.0517380952], [51, "5/25/27", 1.1985, 0.1649357143, 0.3634357143, "1.363", 0.0465642857], [52, "6/1/27", 1.222, 0.1466095238, 0.3686095238, "1.369", 0.0413904762], [53, "6/8/27", 1.2455, 0.1282833333, 0.3737833333, "1.374", 0.0362166667], [54, "6/15/27", 1.269, 0.1099571429, 0.3789571429, "1.379", 0.0310428571], [55, "6/22/27", 1.2925, 0.0916309524, 0.3841309524, "1.384", 0.0258690476], [56, "6/29/27", 1.316, 0.0733047619, 0.3893047619, "1.389", 0.0206952381], [57, "7/6/27", 1.3395, 0.0549785714, 0.3944785714, "1.394", 0.0155214286], [58, "7/13/27", 1.363, 0.036652381, 0.399652381, "1.400", 0.010347619], [59, "7/20/27", 1.3865, 0.0183261905, 0.4048261905, "1.405", 0.0051738095], [60, "7/27/27", 1.41, 0.0, 0.41, "1.410", 0.0]]}];
+const REQS=["Driver's license", "Voided check", "Accounts receivable and accounts payable (A/R and A/P) reports", "2026 profit and loss statement", "2026 balance sheet", "Plaid bank connection", "Signed contract"];
+const MIN_LOAN=10100, MAX_LOAN=320000, DEFAULT_LOAN=300000;
 function money(v,dec){dec=(dec===undefined)?2:dec;if(dec===0)return '$'+Math.round(v).toLocaleString('en-US');return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function parseNum(s){const n=parseFloat(String(s).replace(/[^0-9.]/g,''));return isNaN(n)?0:n;}
-function dateStr(w){const d=new Date(START);d.setDate(d.getDate()+7*(w-1));return (d.getMonth()+1)+'/'+d.getDate()+'/'+String(d.getFullYear()).slice(2);}
-
-// House Revenued early-payoff model (reproduces the Absolute EMC schedule exactly).
-function genSchedule(factor,weeks){
-  const pay=factor/weeks;
-  const R0=1+(0.085/0.35)*(factor-1);
-  const rows=[];
-  for(let w=1;w<=weeks;w++){
-    const cum=pay*w;
-    let payoff,cost;
-    if(w<=WINDOW){ payoff=1-w/weeks; cost=w*(factor-1)/weeks; }
-    else { payoff=R0*(weeks-w)/weeks; cost=cum+payoff-1; }
-    if(payoff<0)payoff=0;
-    let savings=factor-cum-payoff; if(savings<0)savings=0;
-    rows.push([w,dateStr(w),cum,payoff,cost,(1+cost).toFixed(3),savings]);
-  }
-  return rows;
-}
-function flexRows(o){const L=o.amount,rows=genSchedule(o.factor,o.weeks);let s='';
-  for(const r of rows){s+=`<tr><td class="num">${r[0]}</td><td class="money">${r[1]}</td><td class="money">${money(r[2]*L)}</td><td class="money payoff">${money(r[3]*L)}</td><td class="money">${money(r[4]*L)}</td><td class="factor">${r[5]}</td><td class="money discount">${money(r[6]*L)}</td></tr>`;}
-  return s;}
+function parseAmt(s){const n=parseFloat(String(s).replace(/[^0-9.]/g,''));return isNaN(n)?0:n;}
 function reqsBlock(){return `<div class="reqs"><div class="reqs-title">Closing Requirements</div><ul class="reqs-list">${REQS.map(r=>`<li>${r}</li>`).join('')}</ul></div>`;}
-
-function buildCard(o){
-  const rtr=o.amount*o.factor, pay=rtr/o.weeks;
+function flexRows(o,loan){let s='';for(const r of o.schedule_per_dollar){
+  s+=`<tr><td class="num">${r[0]}</td><td class="money">${r[1]}</td><td class="money">${money(r[2]*loan)}</td><td class="money payoff">${money(r[3]*loan)}</td><td class="money">${money(r[4]*loan)}</td><td class="factor">${r[5]}</td><td class="money discount">${money(r[6]*loan)}</td></tr>`;}return s;}
+function buildCard(o,loan){
+  const L=Math.min(loan,o.cap),pay=L*o.payment_per_dollar,rtr=L*o.rtr_per_dollar;
   return `<div class="offer-card brand-${o.brand}" id="card-${o.id}">
-    <div class="offer-card-header"><div class="offer-lender">${o.lender}</div><div class="offer-term">${o.tag} &middot; ${o.weeks} weeks</div></div>
+    <div class="offer-card-header"><div class="offer-lender">${o.lender}</div><div class="offer-term">${o.tag} &middot; ${o.n} weeks</div></div>
     <div class="offer-card-body">
-      <div class="rev-edit">
-        <div class="fld"><span class="lbl">Line Amount</span><div class="box"><span class="pfx">$</span><input data-id="${o.id}" data-f="amount" value="${o.amount.toLocaleString('en-US')}" inputmode="numeric"/></div></div>
-        <div class="fld"><span class="lbl">Factor</span><div class="box"><input data-id="${o.id}" data-f="factor" value="${o.factor.toFixed(3)}" inputmode="decimal"/></div></div>
-        <div class="fld"><span class="lbl">Weeks</span><div class="box"><input data-id="${o.id}" data-f="weeks" value="${o.weeks}" inputmode="numeric"/></div></div>
-      </div>
+      <div class="kv-row"><span class="kv-label">Line Amount</span><span class="kv-val">${money(L,0)}</span></div>
       <div class="kv-row kv-nofee"><span class="kv-label">Fees</span><span class="kv-val">None</span></div>
-      <div class="kv-row kv-net"><span class="kv-label">Funds Available</span><span class="kv-val" id="fa-${o.id}">${money(o.amount,0)}</span></div>
-      <div class="kv-row"><span class="kv-label">Weekly Payment</span><span class="kv-val" id="wp-${o.id}">${money(pay)}</span></div>
-      <div class="kv-row"><span class="kv-label"># of Payments</span><span class="kv-val" id="np-${o.id}">Up to ${o.weeks} (weekly)</span></div>
-      <div class="kv-row"><span class="kv-label">Full-Term Payback</span><span class="kv-val" id="ft-${o.id}">${money(rtr,0)}</span></div>
+      <div class="kv-row kv-net"><span class="kv-label">Funds Available</span><span class="kv-val">${money(L,0)}</span></div>
+      <div class="kv-row"><span class="kv-label">Weekly Payment</span><span class="kv-val">${money(pay)}</span></div>
+      <div class="kv-row"><span class="kv-label"># of Payments</span><span class="kv-val">Up to ${o.n} (weekly)</span></div>
+      <div class="kv-row"><span class="kv-label">Full-Term Payback</span><span class="kv-val">${money(rtr,0)}</span></div>
       <div class="card-tag">Functions as a line of credit. Draw and pay down as needed, and pay down early to lower your effective cost.</div>
     </div></div>`;
 }
-function buildDetail(o,idx){
-  const rtr=o.amount*o.factor, pay=rtr/o.weeks;
+function buildDetail(o,loan,idx){
+  const L=Math.min(loan,o.cap),pay=L*o.payment_per_dollar,rtr=L*o.rtr_per_dollar;
   return `<section class="detail-section brand-${o.brand}" id="offer-${o.id}">
     <div class="detail-section-header"><h2 class="detail-section-title">${o.lender} Flex Line</h2><div class="detail-section-sub">Offer ${idx} &middot; ${o.tag} &middot; Revolving line of credit</div></div>
     <div class="detail-note"><strong>How this works.</strong> The Revenued Flex Line functions as a line of credit: funds can be drawn and paid down as needed. There are no origination, draw, or maintenance fees. The schedule below shows the early payoff balance at each weekly point, and paying the line down sooner reduces your effective cost (factor).</div>
     <div class="detail-grid">
-      <div class="detail-stat"><div class="stat-label">Line Amount</div><div class="stat-val">${money(o.amount,0)}</div></div>
+      <div class="detail-stat"><div class="stat-label">Line Amount</div><div class="stat-val">${money(L,0)}</div></div>
       <div class="detail-stat detail-stat-accent"><div class="stat-label">Fees</div><div class="stat-val">None</div></div>
       <div class="detail-stat"><div class="stat-label">Weekly Payment</div><div class="stat-val">${money(pay)}</div></div>
-      <div class="detail-stat"><div class="stat-label">Payments</div><div class="stat-val">Up to ${o.weeks} / weekly</div></div>
+      <div class="detail-stat"><div class="stat-label">Payments</div><div class="stat-val">Up to ${o.n} / weekly</div></div>
       <div class="detail-stat"><div class="stat-label">Full-Term Payback</div><div class="stat-val">${money(rtr,0)}</div></div>
-      <div class="detail-stat detail-stat-gold"><div class="stat-label">Full-Term Factor</div><div class="stat-val">${o.factor.toFixed(3)}</div></div>
+      <div class="detail-stat detail-stat-gold"><div class="stat-label">Full-Term Factor</div><div class="stat-val">${o.rtr_per_dollar.toFixed(3)}</div></div>
     </div>
     ${reqsBlock()}
     <h3 class="schedule-title">Early Payoff Schedule (Weekly)</h3>
-    <p class="schedule-note">Each row shows the cumulative amount paid, the balance to settle the line in full, the total cost of credit, the effective factor, and the savings versus carrying the line to full term, at that weekly point. Factor is shown to three decimals. Amounts recalculate with the inputs above. Dates are illustrative and based on the projected origination date.</p>
+    <p class="schedule-note">Each row shows the cumulative amount paid, the balance to settle the line in full, the total cost of credit, the effective factor, and the savings versus carrying the line to full term, at that weekly point. Factor is shown to three decimals. Amounts recalculate with the funding amount above. Dates are illustrative and based on the projected origination date.</p>
     <div class="amort-table-wrap"><table class="amort-table"><thead><tr>
       <th>Week #</th><th>Payment Date</th><th>Cumulative Paid</th><th>Early Payoff Balance</th><th>Total Cost of Credit</th><th>Effective Factor</th><th>Savings if Paid Off</th>
-    </tr></thead><tbody>${flexRows(o)}</tbody></table></div>
+    </tr></thead><tbody>${flexRows(o,loan)}</tbody></table></div>
   </section>`;
 }
-function buildComparison(){
-  const head='<th>Pay off at</th>'+OFFERS.map(o=>`<th>${o.lender} ${o.tag}<span class="cmp-th-sub">${money(o.amount,0)} &middot; ${o.weeks} wk</span></th>`).join('');
-  const sched=OFFERS.map(o=>genSchedule(o.factor,o.weeks));
-  let bodyR='';
-  for(let i=0;i<COMP_WEEKS.length;i++){
-    const wk=COMP_WEEKS[i];
-    let row=`<td>${COMP_MONTHS[i]} month${COMP_MONTHS[i]>1?'s':''}</td>`;
-    const costs=OFFERS.map((o,j)=>{const idx=Math.min(wk,o.weeks)-1;return sched[j][idx][4]*o.amount;});
-    const mn=Math.min(...costs);
-    for(let j=0;j<OFFERS.length;j++){
-      const best=(costs[j]===mn)?'cmp-best':'';
-      row+=`<td class="${best}"><div class="cmp-cost">${money(costs[j],0)}</div></td>`;
-    }
-    bodyR+=`<tr>${row}</tr>`;
-  }
-  return `<div class="cmp-section"><h3 class="cmp-title">Payoff Cost Comparison</h3>`
-    +`<p class="cmp-sub">Total cost of credit to settle each line in full at the points below. Updates with the inputs on each card. The two options are different line sizes, so this is a cost reference, not a like-for-like comparison.</p>`
-    +`<table class="cmp-table"><thead><tr>${head}</tr></thead><tbody>${bodyR}</tbody></table>`
-    +`<p class="cmp-note">Cost is the cumulative cost of credit at each weekly milestone. Both options carry no fees. The first four weeks reflect a reduced early payoff window. Lowest cost in each row is highlighted. Figures are illustrative.</p></div>`;
+function renderAll(loan){
+  document.getElementById('offers-grid').innerHTML=OFFERS.map(o=>buildCard(o,loan)).join('');
+  document.getElementById('detail-sections').innerHTML=OFFERS.map((o,i)=>buildDetail(o,loan,i+1)).join('');
 }
-function updateCardVals(o){
-  const rtr=o.amount*o.factor, pay=o.weeks>0?rtr/o.weeks:0;
-  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  set('fa-'+o.id,money(o.amount,0)); set('wp-'+o.id,money(pay));
-  set('np-'+o.id,'Up to '+o.weeks+' (weekly)'); set('ft-'+o.id,money(rtr,0));
-}
-function renderDynamic(){
-  document.getElementById('comparison-wrap').innerHTML=buildComparison();
-  document.getElementById('detail-sections').innerHTML=OFFERS.map((o,i)=>buildDetail(o,i+1)).join('');
-}
-function onEdit(e){
-  const o=OFFERS.find(x=>x.id===e.target.dataset.id);
-  o[e.target.dataset.f]=parseNum(e.target.value);
-  updateCardVals(o); renderDynamic();
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  const t=new Date();
-  document.getElementById('prepared-date').textContent='Prepared '+t.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  document.getElementById('offers-grid').innerHTML=OFFERS.map(buildCard).join('');
-  document.querySelectorAll('.rev-edit input').forEach(inp=>inp.addEventListener('input',onEdit));
-  renderDynamic();
-});
+function fmtInput(n){return Math.round(n).toLocaleString('en-US');}
+function helpDefault(){return 'Range $10,100 to $320,000. Option A caps at $300,000; Option B at $320,000.';}
+function onInput(){const inp=document.getElementById('loan-amount'),help=document.getElementById('amount-help');let v=parseAmt(inp.value);
+  if(v<MIN_LOAN){help.textContent=`Below minimum. Minimum is $${MIN_LOAN.toLocaleString('en-US')}.`;help.classList.add('warning');}
+  else if(v>MAX_LOAN){help.textContent=`Capped at $${MAX_LOAN.toLocaleString('en-US')} (Option B maximum).`;help.classList.add('warning');v=MAX_LOAN;}
+  else{help.textContent=helpDefault();help.classList.remove('warning');}
+  if(v>0)renderAll(v);}
+function onBlur(){const inp=document.getElementById('loan-amount');let v=parseAmt(inp.value);if(v<MIN_LOAN)v=MIN_LOAN;if(v>MAX_LOAN)v=MAX_LOAN;inp.value=fmtInput(v);document.getElementById('amount-help').textContent=helpDefault();document.getElementById('amount-help').classList.remove('warning');renderAll(v);}
+document.addEventListener('DOMContentLoaded',()=>{const t=new Date();document.getElementById('prepared-date').textContent='Prepared '+t.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});const inp=document.getElementById('loan-amount');inp.addEventListener('input',onInput);inp.addEventListener('blur',onBlur);inp.addEventListener('focus',()=>inp.select());renderAll(DEFAULT_LOAN);});
 </script>
 
 </body></html>
