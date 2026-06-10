@@ -333,4 +333,15 @@ document.getElementById("amount").addEventListener("blur", function(){
 document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
 recompute();
 </script>
+<script>
+/* term-sheet open tracker beacon */
+(function(){try{
+  if(sessionStorage.getItem('bl_open_pinged'))return;
+  sessionStorage.setItem('bl_open_pinged','1');
+  var deal="1791 OLG";
+  setTimeout(function(){
+    new Image().src="https://script.google.com/macros/s/AKfycbxwmFx3rP5afIjYUeKNyXTLH-PpW41I0j4DEjQfMQ3u_he5Fun5W6Phnp_3URdkKEFd/exec?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&r="+(new Date().getTime());
+  },2500);
+}catch(e){}})();
+</script>
 </body></html>
