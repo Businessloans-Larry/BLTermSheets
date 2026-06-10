@@ -242,9 +242,9 @@ var PERIODS = 52;
 var MAX_AMOUNT = 500000;
 var MIN_AMOUNT = 10000;
 var OPTIONS = [
-  { id:"A", tag:"Option A", name:"100% Interest Forgiveness", factor:1.12,  forgiveness:1.0, feePct:0.04,
+  { id:"A", tag:"Option A", name:"100% Interest Forgiveness", factor:1.12,  forgiveness:1.0, feePct:0.04, apr:31.13,
     payoffNote:"Pay off early and <b>100% of the remaining interest is forgiven</b> — you owe only the remaining principal." },
-  { id:"B", tag:"Option B", name:"50% Interest Forgiveness", factor:1.145, forgiveness:0.5, feePct:0.0,
+  { id:"B", tag:"Option B", name:"50% Interest Forgiveness", factor:1.145, forgiveness:0.5, feePct:0.0, apr:27.24,
     payoffNote:"Pay off early and <b>50% of the remaining interest is forgiven</b> — you owe remaining principal plus half the remaining interest." }
 ];
 
@@ -341,6 +341,7 @@ function renderOffers(){
         + kv("Origination fee" + (m.feePct ? " ("+(m.feePct*100)+"%)" : ""), m.feePct ? money(m.fee) : "None")
         + kv("Net funded (deposited)", money(m.net))
         + kv("Total repayment", money(m.total))
+        + kv("APR", opt.apr.toFixed(2) + "%")
         + kv("Number of payments", m.n + " weekly")
         + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.payment)+'</span></div>'
         + '<div class="kv-payoff">'+opt.payoffNote+'</div>'
@@ -438,6 +439,7 @@ function downloadPDF(){
       ["Origination fee", m.fee > 0 ? money(m.fee) + " (" + (m.feePct*100) + "%)" : "None"],
       ["Net funded (deposited)", money(m.net)],
       ["Total repayment", money(m.total)],
+      ["APR", opt.apr.toFixed(2) + "%"],
       ["Cost of capital", money(m.interestTotal)],
       ["Payments", m.n + " weekly (12-month term)"],
       ["Weekly payment", money(m.payment)],
