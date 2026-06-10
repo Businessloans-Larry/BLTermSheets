@@ -203,7 +203,6 @@ function renderOffers(){
         + kv("Origination fee (3%)", money(m.fee), "kv-fee")
         + kv("Net advance (deposited)", money(m.net), "kv-net")
         + kv("Total payback", money(m.payback))
-        + kv("Factor rate", o.factor.toFixed(2))
         + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.payment)+'</span></div>'
         + kv("Number of payments", o.nPay)
         + kv("Position", o.position)
@@ -233,7 +232,6 @@ function downloadPDF(){
       ["Origination fee (3%)", money(m.fee)],
       ["Net advance (deposited)", money(m.net)],
       ["Total payback", money(m.payback)],
-      ["Factor rate", o.factor.toFixed(2)],
       ["Weekly payment", money(m.payment)],
       ["Number of payments", o.nPay + " (" + o.term + "-month term)"],
       ["Position", o.position]

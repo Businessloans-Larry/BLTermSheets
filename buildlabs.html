@@ -311,7 +311,6 @@ function renderOffers(){
         + kv("Funding amount", money0(m.amount))
         + kv("Origination fee" + (m.feePct ? " ("+(m.feePct*100)+"%)" : ""), m.feePct ? money(m.fee) : "None")
         + kv("Net funded (deposited)", money(m.net))
-        + kv("Factor rate", opt.factor.toFixed(3))
         + kv("Total repayment", money(m.total))
         + kv("Number of payments", m.n + " weekly")
         + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.payment)+'</span></div>'
@@ -320,28 +319,6 @@ function renderOffers(){
   }).join("");
 }
 function kv(label,val){ return '<div class="kv-row"><span class="kv-label">'+label+'</span><span class="kv-val">'+val+'</span></div>'; }
-
-function renderCompare(){
-  document.getElementById("cmpHeadA").innerHTML = "Option A<br><span style='font-weight:400;font-size:11px;opacity:.85'>100% forgiveness</span>";
-  document.getElementById("cmpHeadB").innerHTML = "Option B<br><span style='font-weight:400;font-size:11px;opacity:.85'>50% forgiveness</span>";
-  var a = MODELS.A, b = MODELS.B;
-  var feeLbl = function(m){ return m.fee > 0 ? money(m.fee) + " (" + (m.feePct*100) + "%)" : "None"; };
-  var rows = [
-    ["Funding amount", money0(a.amount), money0(b.amount)],
-    ["Origination fee", feeLbl(a), feeLbl(b)],
-    ["Net amount funded", money(a.net), money(b.net)],
-    ["Factor rate", a.factor.toFixed(3), b.factor.toFixed(3)],
-    ["Total repayment", money(a.total), money(b.total)],
-    ["Cost of capital", money(a.interestTotal), money(b.interestTotal)],
-    ["Term", "12 months", "12 months"],
-    ["Payments", a.n+" weekly", b.n+" weekly"],
-    ["Weekly payment", "<b>"+money(a.payment)+"</b>", "<b>"+money(b.payment)+"</b>"],
-    ["Interest forgiven if paid in full", "100%", "50%"]
-  ];
-  document.getElementById("compareBody").innerHTML = rows.map(function(r){
-    return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td></tr>";
-  }).join("");
-}
 
 function renderSchedules(){
   var html = "";
@@ -431,7 +408,6 @@ function downloadPDF(){
     var rows = [
       ["Origination fee", m.fee > 0 ? money(m.fee) + " (" + (m.feePct*100) + "%)" : "None"],
       ["Net funded (deposited)", money(m.net)],
-      ["Factor rate", opt.factor.toFixed(3)],
       ["Total repayment", money(m.total)],
       ["Cost of capital", money(m.interestTotal)],
       ["Payments", m.n + " weekly (12-month term)"],
