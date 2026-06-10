@@ -184,7 +184,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <div class="offers-grid" id="offersGrid"></div>
 
   <h2 class="section-title">Payoff Cost Comparison</h2>
-  <p class="chart-note">Total cost to pay each option in full at the points below — everything you pay to settle, minus the amount funded, including the origination fee. The struck-through figure is the full-term cost; bold is your cost if you pay in full at that point. Updates with the funding amount above.</p>
+  <p class="chart-note">Total cost — including the origination fee — to pay each option in full at the points below. Updates with the funding amount above.</p>
   <div id="payoffWrap"></div>
 
   <h2 class="section-title">Amortization Schedule</h2>
@@ -351,12 +351,14 @@ function renderSchedules(){
     html += '<h3 class="sched-title">'+opt.tag+' — '+opt.name+'</h3>';
     html += '<div class="sched-meta">'+m.n+' weekly payments of '+money(m.payment)
       + '. The <b>Payoff if Paid in Full</b> column already applies the '+fg+' interest forgiveness.</div>';
+    var cum = 0;
     var rowsHtml = m.rows.map(function(row){
-      return "<tr><td>"+row.k+"</td><td>"+money(row.pay)+"</td><td>"+money(row.H)+"</td><td>"+money(row.I)
-        + "</td><td>"+money(row.balance)+"</td><td class='payoff-col'>"+money(row.payoff)+"</td></tr>";
+      cum = round2(cum + row.H);
+      return "<tr><td>"+row.k+"</td><td>"+money(row.pay)+"</td><td>"+money(row.H)+"</td><td>"+money(cum)
+        + "</td><td>"+money(row.I)+"</td><td>"+money(row.balance)+"</td><td class='payoff-col'>"+money(row.payoff)+"</td></tr>";
     }).join("");
     html += '<table class="amort amort-full"><thead><tr>'
-      + '<th>#</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Remaining Balance</th><th>Payoff if Paid in Full</th>'
+      + '<th>#</th><th>Payment</th><th>Interest</th><th>Cumulative Interest</th><th>Principal</th><th>Remaining Balance</th><th>Payoff if Paid in Full</th>'
       + '</tr></thead><tbody>'+rowsHtml+'</tbody></table>';
   });
   document.getElementById("schedWrap").innerHTML = html;
@@ -390,10 +392,8 @@ function renderPayoff(){
     html += '<tr><td class="po-rowhead">'+mo+(mo===1?' month':' months')+'</td>';
     cols.forEach(function(c, ci){
       var d = disc[ci];
-      var u = settleCost(c.m, mo, false);
-      var strike = (u > d + 1) ? '<span class="po-strike">'+money0(u)+'</span> ' : '';
       var best = (Math.abs(d-minV) < 0.5) ? ' class="po-best"' : '';
-      html += '<td'+best+'>'+strike+'<b>'+money0(d)+'</b></td>';
+      html += '<td'+best+'><b>'+money0(d)+'</b></td>';
     });
     html += '</tr>';
   });
@@ -459,24 +459,28 @@ function downloadPDF(){
     doc.text(opt.tag + " — Amortization Schedule (" + (opt.forgiveness*100) + "% interest forgiveness)", L, yy); yy += 16;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
     doc.text(m.n + " weekly payments of " + money(m.payment) + ". The Payoff column already applies the " + (opt.forgiveness*100) + "% forgiveness.", L, yy); yy += 18;
-    var cols = [
-      {h:"#",         x:L,   a:"left",  g:function(r){return String(r.k);}},
-      {h:"Payment",   x:200, a:"right", g:function(r){return money(r.pay);}},
-      {h:"Interest",  x:290, a:"right", g:function(r){return money(r.H);}},
-      {h:"Principal", x:386, a:"right", g:function(r){return money(r.I);}},
-      {h:"Remaining", x:474, a:"right", g:function(r){return money(r.balance);}},
-      {h:"Payoff",    x:R,   a:"right", g:function(r){return money(r.payoff);}}
+    var heads = [
+      {h:"#",         x:L,   a:"left"},
+      {h:"Payment",   x:150, a:"right"},
+      {h:"Interest",  x:230, a:"right"},
+      {h:"Cum. Int.", x:318, a:"right"},
+      {h:"Principal", x:400, a:"right"},
+      {h:"Remaining", x:484, a:"right"},
+      {h:"Payoff",    x:R,   a:"right"}
     ];
     function header(){
       doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20);
-      cols.forEach(function(c){ doc.text(c.h, c.x, yy, {align:c.a}); });
+      heads.forEach(function(c){ doc.text(c.h, c.x, yy, {align:c.a}); });
       yy += 4; doc.setDrawColor(150); doc.line(L, yy, R, yy); yy += 11;
       doc.setFont("helvetica","normal"); doc.setTextColor(45);
     }
     doc.setFontSize(8); header();
+    var cum = 0;
     m.rows.forEach(function(r){
       if(yy > bottom){ doc.addPage(); yy = top; doc.setFontSize(8); header(); }
-      cols.forEach(function(c){ doc.text(c.g(r), c.x, yy, {align:c.a}); });
+      cum = round2(cum + r.H);
+      var vals = [String(r.k), money(r.pay), money(r.H), money(cum), money(r.I), money(r.balance), money(r.payoff)];
+      heads.forEach(function(c, j){ doc.text(vals[j], c.x, yy, {align:c.a}); });
       yy += 12;
     });
   }
