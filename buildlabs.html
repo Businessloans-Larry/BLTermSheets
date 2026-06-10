@@ -151,7 +151,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     </div>
     <div class="cover-note cover-note-info">
       <div class="cover-note-badge">Two Options</div>
-      <div class="cover-note-text">Options differ by factor rate and the interest forgiven if paid off early. Compare side-by-side below.</div>
+      <div class="cover-note-text">Option A: 1.12 factor, 100% early-payoff forgiveness, 4% origination fee. Option B: 1.145 factor, 50% forgiveness, no fee.</div>
     </div>
   </div>
 
@@ -191,9 +191,9 @@ var PERIODS = 52;
 var MAX_AMOUNT = 500000;
 var MIN_AMOUNT = 10000;
 var OPTIONS = [
-  { id:"A", tag:"Option A", name:"100% Interest Forgiveness", factor:1.12,  forgiveness:1.0,
+  { id:"A", tag:"Option A", name:"100% Interest Forgiveness", factor:1.12,  forgiveness:1.0, feePct:0.04,
     payoffNote:"Pay off early and <b>100% of the remaining interest is forgiven</b> — you owe only the remaining principal." },
-  { id:"B", tag:"Option B", name:"50% Interest Forgiveness", factor:1.145, forgiveness:0.5,
+  { id:"B", tag:"Option B", name:"50% Interest Forgiveness", factor:1.145, forgiveness:0.5, feePct:0.0,
     payoffNote:"Pay off early and <b>50% of the remaining interest is forgiven</b> — you owe remaining principal plus half the remaining interest." }
 ];
 
@@ -216,6 +216,9 @@ function rate(nper, pmt, pv){
 
 function buildModel(opt, amount){
   var factor = opt.factor;
+  var feePct = opt.feePct || 0;
+  var fee = round2(amount * feePct);          // origination fee, deducted from disbursement
+  var net = round2(amount - fee);             // net amount deposited
   var total = round2(amount * factor);
   var payment = Math.ceil((total / PERIODS) * 100) / 100;   // ROUNDUP to cent
   var n = Math.round(total / payment);                       // ~52
@@ -249,7 +252,7 @@ function buildModel(opt, amount){
     M = C; E = J;
     if(begRTR <= 0) break;
   }
-  return { factor:factor, total:total, payment:payment, n:n, interestTotal:interestTotal, forgiveness:opt.forgiveness, rows:rows };
+  return { amount:amount, factor:factor, feePct:feePct, fee:fee, net:net, total:total, payment:payment, n:n, interestTotal:interestTotal, forgiveness:opt.forgiveness, rows:rows };
 }
 
 var MODELS = {};
@@ -283,7 +286,9 @@ function renderOffers(){
         + '<div class="offer-sub">12-month term &middot; weekly payments</div>'
       + '</div>'
       + '<div class="offer-card-body">'
-        + kv("Funding amount", money0(m.total/opt.factor))
+        + kv("Funding amount", money0(m.amount))
+        + kv("Origination fee" + (m.feePct ? " ("+(m.feePct*100)+"%)" : ""), m.feePct ? money(m.fee) : "None")
+        + kv("Net funded (deposited)", money(m.net))
         + kv("Factor rate", opt.factor.toFixed(3))
         + kv("Total repayment", money(m.total))
         + kv("Cost of capital", money(m.interestTotal))
@@ -299,8 +304,11 @@ function renderCompare(){
   document.getElementById("cmpHeadA").innerHTML = "Option A<br><span style='font-weight:400;font-size:11px;opacity:.85'>100% forgiveness</span>";
   document.getElementById("cmpHeadB").innerHTML = "Option B<br><span style='font-weight:400;font-size:11px;opacity:.85'>50% forgiveness</span>";
   var a = MODELS.A, b = MODELS.B;
+  var feeLbl = function(m){ return m.fee > 0 ? money(m.fee) + " (" + (m.feePct*100) + "%)" : "None"; };
   var rows = [
-    ["Funding amount", money0(a.total/a.factor), money0(b.total/b.factor)],
+    ["Funding amount", money0(a.amount), money0(b.amount)],
+    ["Origination fee", feeLbl(a), feeLbl(b)],
+    ["Net amount funded", money(a.net), money(b.net)],
     ["Factor rate", a.factor.toFixed(3), b.factor.toFixed(3)],
     ["Total repayment", money(a.total), money(b.total)],
     ["Cost of capital", money(a.interestTotal), money(b.interestTotal)],
