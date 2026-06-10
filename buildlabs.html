@@ -38,12 +38,20 @@ h1,h2,h3,.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .amount-help.warning{color:var(--gold);font-weight:600;}
 
 /* cover notes */
-.cover-notes{display:grid;grid-template-columns:1fr 1.6fr;gap:12px;margin-bottom:24px;}
+.cover-notes{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px;}
 @media(max-width:820px){.cover-notes{grid-template-columns:1fr;}}
 .cover-note{display:flex;flex-direction:column;gap:5px;padding:13px 16px;border-radius:9px;border:1.5px solid;}
 .cover-note-green{border-color:var(--green);background:rgba(0,205,103,.07);}
 .cover-note-docs{border-color:var(--gold);background:rgba(255,200,88,.10);}
 .cover-note-info{border-color:var(--cyan);background:rgba(0,205,239,.07);}
+.closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:16px 18px;margin-bottom:22px;}
+.closing h3{color:var(--navy);font-size:16px;margin:0 0 10px 0;}
+.closing-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:680px){.closing-cols{grid-template-columns:1fr;}}
+.closing-sub{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--green-d);font-weight:700;margin-bottom:6px;}
+.closing ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--navy2);}
+.closing li{margin-bottom:5px;}
+@media print{.closing{page-break-inside:avoid;}}
 .cover-note-badge{font-family:'DM Serif Display',Georgia,serif;font-size:14px;color:var(--navy);}
 .cover-note-text{font-size:12px;color:var(--navy2);}
 .actions{margin:-4px 0 24px;display:flex;gap:10px;align-items:center;}
@@ -170,9 +178,30 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
       <div class="cover-note-badge">⚡ 24-Hour Funding</div>
       <div class="cover-note-text">Funds disbursed within 24 hours of signed contract and cleared documents.</div>
     </div>
-    <div class="cover-note cover-note-docs">
-      <div class="cover-note-badge">Documents Needed</div>
-      <div class="cover-note-text">Application (from Riju Gupta) &middot; 2&times; Driver's License &middot; Voided Business Check &middot; Signed Contract</div>
+  </div>
+
+  <div class="closing">
+    <h3>Closing Requirements</h3>
+    <div class="closing-cols">
+      <div>
+        <div class="closing-sub">To send docs</div>
+        <ul>
+          <li>Add Buildlabs LLC to the loan</li>
+          <li>2023 business tax return</li>
+          <li>Release of outstanding UCC by Corporation Service Company filed on 11.25.2025</li>
+          <li>December&ndash;May business bank statements for National Financial Services LLC</li>
+          <li>Application &amp; driver's license from Riju Gupta</li>
+          <li>Call in with an underwriter</li>
+        </ul>
+      </div>
+      <div>
+        <div class="closing-sub">To fund</div>
+        <ul>
+          <li>Signed Mulligan Loan Agreement</li>
+          <li>Valid, US government-issued photo ID</li>
+          <li>Voided check for the account ending in 2752</li>
+        </ul>
+      </div>
     </div>
   </div>
 
