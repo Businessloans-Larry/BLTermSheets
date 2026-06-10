@@ -420,52 +420,40 @@ document.getElementById("amount").addEventListener("blur", function(){
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
-  var L = 54, R = 558, y = 72;
-  var amt = MODELS.A.amount;
+  var L = 54, R = 558, y = 70;
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
-  doc.text("Funding Offer Summary — Buildlabs", L, y); y += 20;
+  doc.text("Funding Offers — Buildlabs", L, y); y += 20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared June 9, 2026 at 9:33 PM EDT", L, y); y += 22;
+  doc.text("BusinessLoans.com     Prepared June 9, 2026 at 9:33 PM EDT     Funding amount " + money0(MODELS.A.amount), L, y); y += 22;
   doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-  doc.text("Funding amount: " + money0(amt), L, y); y += 8;
-  doc.setDrawColor(170); doc.line(L, y, R, y); y += 22;
-
+  doc.text("Offer Summary", L, y); y += 14;
+  var cols=[{h:"Offer",x:L,a:"left"},{h:"Advance",x:230,a:"right"},{h:"Payback",x:340,a:"right"},{h:"Weekly",x:440,a:"right"},{h:"Net Adv.",x:R,a:"right"}];
+  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20);
+  cols.forEach(function(c){ doc.text(c.h,c.x,y,{align:c.a}); });
+  y += 4; doc.setDrawColor(150); doc.line(L,y,R,y); y += 11;
+  doc.setFont("helvetica","normal"); doc.setTextColor(45);
   OPTIONS.forEach(function(opt){
     var m = MODELS[opt.id];
-    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text(opt.tag + " — " + opt.name, L, y); y += 17;
-    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-    var rows = [
-      ["Origination fee", m.fee > 0 ? money(m.fee) + " (" + (m.feePct*100) + "%)" : "None"],
-      ["Net funded (deposited)", money(m.net)],
-      ["Total repayment", money(m.total)],
-      ["APR", opt.apr.toFixed(2) + "%"],
-      ["Cost of capital", money(m.interestTotal)],
-      ["Payments", m.n + " weekly (12-month term)"],
-      ["Weekly payment", money(m.payment)],
-      ["Interest forgiven if paid in full", (opt.forgiveness*100) + "%"]
-    ];
-    rows.forEach(function(r){
-      doc.text(r[0] + ":", L + 8, y);
-      doc.text(String(r[1]), R, y, {align:"right"});
-      y += 15;
-    });
+    var v=[opt.tag+" ("+(opt.forgiveness*100)+"% forg.)", money0(m.amount), money0(m.total), money(m.payment), money0(m.net)];
+    cols.forEach(function(c,j){ doc.text(String(v[j]),c.x,y,{align:c.a}); });
     y += 14;
   });
+  y += 10; doc.setDrawColor(205); doc.line(L,y,R,y); y += 14;
+  doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Closing requirements:", L, y); y += 13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  var reqs=["To send docs:","  - Add Buildlabs LLC to the loan","  - 2023 business tax return","  - Release of outstanding UCC by Corporation Service Company filed on 11.25.2025","  - December-May business bank statements for National Financial Services LLC","  - Application & driver's license from Riju Gupta","  - Call in with an underwriter","To fund:","  - Signed Mulligan Loan Agreement","  - Valid, US government-issued photo ID","  - Voided check for the account ending in 2752"];
+  reqs.forEach(function(r){ doc.text(r, L, y); y += 12; });
+  y += 4; doc.setFontSize(7); doc.setTextColor(120);
+  doc.text(doc.splitTextToSize("Illustration only and not a commitment to lend; subject to underwriting and final contract. Total funding amount may not equal the amount deposited. Actual amortization may differ due to origination date, bank holidays, missed or early payments, and other factors.", R - L), L, y);
 
-  doc.setDrawColor(205); doc.line(L, y, R, y); y += 13;
-  doc.setFontSize(7.5); doc.setTextColor(120);
-  var disc = "Illustration only and not a commitment to lend; subject to underwriting and final contract. Total funding amount may not equal the amount deposited to your business checking account. Actual amortization may differ due to origination date, bank holidays, missed or early payments, prior outstanding loans, and other factors.";
-  doc.text(doc.splitTextToSize(disc, R - L), L, y);
-
-  // amortization schedule — one (paginated) section per option
   function schedTable(opt, m){
     var top = 60, bottom = 772, yy = top;
     doc.addPage();
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
     doc.text(opt.tag + " — Amortization Schedule (" + (opt.forgiveness*100) + "% interest forgiveness)", L, yy); yy += 16;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
-    doc.text(m.n + " weekly payments of " + money(m.payment) + ". The Payoff column already applies the " + (opt.forgiveness*100) + "% forgiveness.", L, yy); yy += 18;
+    doc.text(m.n + " weekly payments of " + money(m.payment) + ".  APR " + opt.apr.toFixed(2) + "%.  Payoff applies the " + (opt.forgiveness*100) + "% forgiveness.", L, yy); yy += 18;
     var heads = [
       {h:"#",         x:L,   a:"left"},
       {h:"Payment",   x:150, a:"right"},
@@ -493,7 +481,7 @@ function downloadPDF(){
   }
   OPTIONS.forEach(function(opt){ schedTable(opt, MODELS[opt.id]); });
 
-  doc.save("buildlabs-funding-summary.pdf");
+  doc.save("buildlabs-offers.pdf");
 }
 document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
 

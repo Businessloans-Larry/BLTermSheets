@@ -213,43 +213,33 @@ function renderOffers(){
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
-  var L = 54, R = 558, y = 72;
-  doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
-  doc.text("Funding Offer Summary — Entertainment Technology Consultants, LLC", L, y, {maxWidth:R-L}); y += 30;
+  var L = 54, R = 558, y = 70;
+  doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.setTextColor(20);
+  doc.text("Funding Offers — Entertainment Technology Consultants, LLC", L, y, {maxWidth:R-L}); y += 28;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared June 10, 2026 at 10:55 AM EDT", L, y); y += 22;
+  doc.text("BusinessLoans.com     Prepared June 10, 2026 at 10:55 AM EDT     Requested " + money0(MODELS.byz.advance), L, y); y += 22;
   doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-  doc.text("Requested amount: " + money0(MODELS.byz.advance), L, y); y += 8;
-  doc.setDrawColor(170); doc.line(L, y, R, y); y += 22;
-
+  doc.text("Offer Summary", L, y); y += 14;
+  var cols=[{h:"Offer",x:L,a:"left"},{h:"Advance",x:230,a:"right"},{h:"Payback",x:340,a:"right"},{h:"Weekly",x:440,a:"right"},{h:"Net Adv.",x:R,a:"right"}];
+  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20);
+  cols.forEach(function(c){ doc.text(c.h,c.x,y,{align:c.a}); });
+  y += 4; doc.setDrawColor(150); doc.line(L,y,R,y); y += 11;
+  doc.setFont("helvetica","normal"); doc.setTextColor(45);
   OFFERS.forEach(function(o){
     var m = MODELS[o.id];
-    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text(o.name + (m.capped ? "  (at offer max)" : ""), L, y); y += 17;
-    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-    var rows = [
-      ["Advance amount", money0(m.advance)],
-      ["Origination fee (3%)", money(m.fee)],
-      ["Net advance (deposited)", money(m.net)],
-      ["Total payback", money(m.payback)],
-      ["Weekly payment", money(m.payment)],
-      ["Number of payments", o.nPay + " (" + o.term + "-month term)"],
-      ["Position", o.position]
-    ];
-    rows.forEach(function(r){
-      doc.text(r[0] + ":", L + 8, y);
-      doc.text(String(r[1]), R, y, {align:"right"});
-      y += 15;
-    });
+    var v=[o.name + (m.capped?" (max)":""), money0(m.advance), money0(m.payback), money(m.payment), money0(m.net)];
+    cols.forEach(function(c,j){ doc.text(String(v[j]),c.x,y,{align:c.a}); });
     y += 14;
   });
-
-  doc.setDrawColor(205); doc.line(L, y, R, y); y += 13;
-  doc.setFontSize(7.5); doc.setTextColor(120);
-  var disc = "Illustration only and not a commitment to lend; subject to underwriting and final contract. The total funding amount may not equal the amount deposited to your business checking account. Each offer is limited to its stated maximum advance.";
-  doc.text(doc.splitTextToSize(disc, R - L), L, y);
-
-  doc.save("entertainment-tech-summary.pdf");
+  y += 10; doc.setDrawColor(205); doc.line(L,y,R,y); y += 14;
+  doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Closing requirements:", L, y); y += 13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  var reqs=["Driver's License","Voided Business Check"];
+  reqs.forEach(function(r){ doc.text("- "+r, L, y); y += 12; });
+  y += 4; doc.setFontSize(7); doc.setTextColor(120);
+  doc.text(doc.splitTextToSize("Illustration only and not a commitment to lend; subject to underwriting and final contract. The total funding amount may not equal the amount deposited. Each offer is limited to its stated maximum advance.", R - L), L, y);
+  doc.save("entertainment-tech-offers.pdf");
 }
 
 document.getElementById("amount").addEventListener("input", recompute);
