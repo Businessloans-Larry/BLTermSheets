@@ -55,6 +55,18 @@ h1,h2,h3,.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .chart-legend{display:flex;gap:18px;margin-bottom:6px;font-size:12px;color:var(--navy2);}
 .chart-legend .leg{display:inline-flex;align-items:center;gap:6px;}
 .chart-legend .swatch{width:12px;height:12px;border-radius:3px;display:inline-block;}
+.payoff{width:100%;font-size:13px;border:1px solid var(--line);border-radius:10px;border-collapse:separate;border-spacing:0;overflow:hidden;}
+.payoff thead th{background:var(--navy);color:#fff;padding:12px 16px;text-align:right;vertical-align:bottom;font-weight:700;}
+.payoff thead th.po-rowhead{text-align:left;}
+.payoff .po-opt{font-size:13px;}
+.payoff .po-sub{font-size:11px;font-weight:400;opacity:.82;margin-top:3px;}
+.payoff td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);color:var(--navy);font-variant-numeric:tabular-nums;}
+.payoff tbody tr:last-child td{border-bottom:none;}
+.payoff td.po-rowhead{text-align:left;font-weight:700;}
+.payoff tbody tr:nth-child(even){background:#fbfbfd;}
+.payoff .po-strike{color:#9aa3bf;text-decoration:line-through;font-size:12px;margin-right:5px;}
+.payoff td.po-best{background:rgba(0,205,103,.12);}
+.payoff td.po-best b{color:var(--green-d);}
 @media print{.actions{display:none;}}
 
 /* offers */
@@ -171,9 +183,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="offers-grid" id="offersGrid"></div>
 
-  <h2 class="section-title">Total Cost of Capital Over Time</h2>
-  <p class="chart-note">Cumulative cost of capital — interest paid plus the origination fee — if held through each milestone. Updates with the funding amount above.</p>
-  <div id="chartWrap" class="chart-wrap"></div>
+  <h2 class="section-title">Payoff Cost Comparison</h2>
+  <p class="chart-note">Total cost to pay each option in full at the points below — everything you pay to settle, minus the amount funded, including the origination fee. The struck-through figure is the full-term cost; bold is your cost if you pay in full at that point. Updates with the funding amount above.</p>
+  <div id="payoffWrap"></div>
 
   <h2 class="section-title">Amortization Schedule</h2>
   <p class="chart-note">Full payment-by-payment schedule for each option. The Payoff column already applies that option's interest forgiveness.</p>
@@ -282,7 +294,7 @@ function recompute(){
   OPTIONS.forEach(function(opt){ MODELS[opt.id] = buildModel(opt, amount); });
   renderOffers();
   renderSchedules();
-  renderChart();
+  renderPayoff();
 }
 
 function renderOffers(){
@@ -350,55 +362,43 @@ function renderSchedules(){
   document.getElementById("schedWrap").innerHTML = html;
 }
 
-function renderChart(){
-  var months = [3,6,9,12];
-  function costAt(m, monthNo){
-    var k = Math.round(monthNo/12 * m.n);
-    var ci = 0;
-    for(var i=0;i<k && i<m.rows.length;i++){ ci += m.rows[i].H; }
-    return round2(ci + m.fee);   // cumulative interest + origination fee
+function renderPayoff(){
+  var months = [1,3,6,9,12];
+  function settleCost(m, monthNo, discounted){
+    var k = Math.max(1, Math.round(monthNo/12 * m.n));
+    if(k > m.rows.length) k = m.rows.length;
+    var payments = 0;
+    for(var i=0;i<k;i++){ payments += m.rows[i].pay; }
+    var row = m.rows[k-1];
+    var payoff = discounted ? row.payoff : row.balance;
+    return round2(payments + payoff - m.amount + m.fee);
   }
-  var colors = {A:"#002F68", B:"#0E97A8"};
-  var series = OPTIONS.map(function(opt){
+  var cols = OPTIONS.map(function(opt){
     var m = MODELS[opt.id];
-    return { name:opt.tag + " (" + (opt.forgiveness*100) + "%)", color:colors[opt.id],
-             vals: months.map(function(mo){ return costAt(m, mo); }) };
+    var feeTxt = opt.feePct ? (opt.feePct*100) + "% fee" : "no fee";
+    return { opt:opt, m:m, sub:(opt.forgiveness*100) + "% forgiveness \u00B7 " + feeTxt };
   });
-  var maxV = 1;
-  series.forEach(function(s){ s.vals.forEach(function(v){ if(v>maxV) maxV=v; }); });
-  var stepGuess = Math.pow(10, Math.floor(Math.log10(maxV)));
-  var niceMax = Math.ceil(maxV / (stepGuess/2)) * (stepGuess/2);
-  if(!isFinite(niceMax) || niceMax<=0) niceMax = maxV;
-  var W=720, H=300, mL=66, mR=18, mT=22, mB=46;
-  var pw=W-mL-mR, ph=H-mT-mB;
-  var gw = pw/months.length;
-  var nB = series.length, barW = Math.min(46, gw*0.26), gap = gw*0.06;
-  var groupW = nB*barW + (nB-1)*gap;
-  var svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Total cost of capital by month">';
-  for(var t=0;t<=4;t++){
-    var val = niceMax*t/4;
-    var yy = mT+ph - (val/niceMax)*ph;
-    svg += '<line x1="'+mL+'" y1="'+yy+'" x2="'+(W-mR)+'" y2="'+yy+'" stroke="#E8E9EF"/>';
-    svg += '<text x="'+(mL-8)+'" y="'+(yy+3)+'" text-anchor="end" font-size="10" fill="#485282">'+money0(val)+'</text>';
-  }
-  months.forEach(function(mo, gi){
-    var gx = mL + gi*gw + (gw-groupW)/2;
-    series.forEach(function(s, si){
-      var v = s.vals[gi];
-      var bh = (v/niceMax)*ph;
-      var bx = gx + si*(barW+gap);
-      var by = mT+ph - bh;
-      svg += '<rect x="'+bx+'" y="'+by+'" width="'+barW+'" height="'+bh+'" rx="3" fill="'+s.color+'"/>';
-      svg += '<text x="'+(bx+barW/2)+'" y="'+(by-5)+'" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1A2763">'+money0(v)+'</text>';
+  var html = '<table class="payoff"><thead><tr><th class="po-rowhead">Pay off at</th>';
+  cols.forEach(function(c){
+    html += '<th><div class="po-opt">'+c.opt.name+'</div><div class="po-sub">'+c.sub+'</div></th>';
+  });
+  html += '</tr></thead><tbody>';
+  months.forEach(function(mo){
+    var disc = cols.map(function(c){ return settleCost(c.m, mo, true); });
+    var minV = disc[0];
+    disc.forEach(function(v){ if(v<minV) minV=v; });
+    html += '<tr><td class="po-rowhead">'+mo+(mo===1?' month':' months')+'</td>';
+    cols.forEach(function(c, ci){
+      var d = disc[ci];
+      var u = settleCost(c.m, mo, false);
+      var strike = (u > d + 1) ? '<span class="po-strike">'+money0(u)+'</span> ' : '';
+      var best = (Math.abs(d-minV) < 0.5) ? ' class="po-best"' : '';
+      html += '<td'+best+'>'+strike+'<b>'+money0(d)+'</b></td>';
     });
-    svg += '<text x="'+(mL+gi*gw+gw/2)+'" y="'+(mT+ph+18)+'" text-anchor="middle" font-size="11" fill="#485282">Month '+mo+'</text>';
+    html += '</tr>';
   });
-  svg += '<line x1="'+mL+'" y1="'+(mT+ph)+'" x2="'+(W-mR)+'" y2="'+(mT+ph)+'" stroke="#9aa3bf"/>';
-  svg += '</svg>';
-  var legend = '<div class="chart-legend">' + series.map(function(s){
-    return '<span class="leg"><span class="swatch" style="background:'+s.color+'"></span>'+s.name+'</span>';
-  }).join('') + '</div>';
-  document.getElementById("chartWrap").innerHTML = legend + svg;
+  html += '</tbody></table>';
+  document.getElementById("payoffWrap").innerHTML = html;
 }
 
 // events
