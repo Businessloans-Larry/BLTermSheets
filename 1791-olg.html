@@ -24,6 +24,14 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .borrower-bar-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;line-height:1.15;}
 .borrower-bar-funding{text-align:right;}
 .borrower-bar-amt{font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#fff;}
+.amount-input-wrap{display:inline-flex;align-items:center;background:#fff;border-radius:9px;padding:5px 16px;border:2px solid var(--green);transition:border-color .15s,box-shadow .15s;}
+.amount-input-wrap:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,88,.25);}
+.amount-prefix{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--green-d);margin-right:1px;}
+.amount-input{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--green-d);background:transparent;border:none;outline:none;width:160px;text-align:left;}
+.amount-help{font-size:10.5px;color:rgba(255,255,255,.65);margin-top:6px;}
+.amount-help.warning{color:var(--gold);font-weight:600;}
+.cap-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green-d);background:rgba(0,205,103,.12);border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:middle;}
+@media print{.amount-input-wrap{border:none !important;box-shadow:none !important;padding:0;}}
 
 .closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:14px 18px;margin-bottom:22px;}
 .closing h3{color:var(--navy);font-size:16px;margin:0 0 8px 0;}
@@ -108,7 +116,8 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Requested Amount</div>
-      <div class="borrower-bar-amt">$400,000</div>
+      <div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="400,000" aria-label="Requested amount"/></div>
+      <div id="amountHelp" class="amount-help">Adjustable — each offer caps at its own maximum</div>
     </div>
   </div>
 
@@ -146,10 +155,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
 <script>
 "use strict";
-var ORIG_PCT = 0.025;
-var BASE = 400000; // prepay tables are quoted per $400,000 funded; scale to each advance
+var ORIG_PCT = 0.025, BASE = 400000, MASTER_MAX = 400000;
+var STATE = { requested: 400000 };
 
-// per-$400K prepay tables (payoff = Discounted Receipts Purchased; saved = Prepay Discount)
 var PP = {
  ret6:{dates:["7/10/26","8/9/26","9/8/26","10/8/26","11/7/26"],
    payoff:[470112.86,471882.37,473332.81,474447.64,475209.47],
@@ -192,17 +200,28 @@ function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
 function money(x){ return "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); }
 
+// each offer's quoted figures are at its own max advance; scale linearly to the requested amount,
+// capped at the offer's max. prepay tables are per $400,000 funded -> scale by advance/400000.
+function modelOf(o){
+  var maxAdv = o.advance;
+  var adv = Math.min(STATE.requested, maxAdv); if(adv < 0) adv = 0;
+  var sCard = maxAdv ? adv/maxAdv : 0;
+  return { advance:adv, capped:STATE.requested > maxAdv,
+    payback:round2(o.payback*sCard), weekly:round2(o.weekly*sCard),
+    fee:round2(adv*ORIG_PCT), net:round2(adv*(1-ORIG_PCT)), sPP:adv/BASE };
+}
+
 function offerCard(o, cls, label){
-  var fee = round2(o.advance*ORIG_PCT);
-  var net = round2(o.advance - fee);
+  var m = modelOf(o);
+  var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
   return '<div class="offer-card '+cls+'">'
     + '<div class="offer-card-header"><div class="offer-term">'+o.term+'-Month</div><div class="offer-sub">'+label+' &middot; weekly</div></div>'
     + '<div class="offer-card-body">'
-      + '<div class="kv-row"><span class="kv-label">Advance</span><span class="kv-val">'+money0(o.advance)+'</span></div>'
-      + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee (2.5%)</span><span class="kv-val">'+money(fee)+'</span></div>'
-      + '<div class="kv-row kv-net"><span class="kv-label">Net advance</span><span class="kv-val">'+money(net)+'</span></div>'
-      + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(o.payback)+'</span></div>'
-      + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money0(o.weekly)+'</span></div>'
+      + '<div class="kv-row"><span class="kv-label">Advance</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
+      + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee (2.5%)</span><span class="kv-val">'+money(m.fee)+'</span></div>'
+      + '<div class="kv-row kv-net"><span class="kv-label">Net advance</span><span class="kv-val">'+money(m.net)+'</span></div>'
+      + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
+      + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money0(m.weekly)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
       + '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">1st</span></div>'
     + '</div></div>';
@@ -221,13 +240,11 @@ function renderPrepay(){
   var html = "";
   GROUPS.forEach(function(g){
     g.offers.forEach(function(o){
-      var t = PP[o.pp];
-      var scale = o.advance / BASE;
-      var scaled = o.advance !== BASE;
+      var t = PP[o.pp]; var m = modelOf(o); var scale = m.sPP;
       html += '<div class="prepay-section">'
-        + '<div class="prepay-head"><h2 class="prepay-title">'+g.label+' — '+o.term+'-Month — '+money0(o.advance)+'</h2></div>'
-        + '<div class="prepay-recap">Total payback <b>'+money0(o.payback)+'</b> &middot; <b>'+money0(o.weekly)+'</b>/week &times; '+o.nPay+' &middot; '+o.term+'-month term &middot; '+g.note+'</div>';
-      if(scaled) html += '<div class="scale-note">Figures scaled to this offer\'s '+money0(o.advance)+' advance (prepay tool quotes per $400,000 funded).</div>';
+        + '<div class="prepay-head"><h2 class="prepay-title">'+g.label+' — '+o.term+'-Month — '+money0(m.advance)+'</h2></div>'
+        + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money0(m.weekly)+'</b>/week &times; '+o.nPay+' &middot; '+o.term+'-month term &middot; '+g.note+'</div>';
+      if(m.advance !== BASE) html += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m.advance)+') — the prepay tool quotes per $400,000 funded.</div>';
       html += '<table class="prepay"><thead><tr><th>Month</th><th>Pay off by</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
       for(var i=0;i<t.payoff.length;i++){
         html += '<tr><td>'+(i+1)+'</td><td>'+t.dates[i]+'</td>'
@@ -247,9 +264,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers — 1791 OLG", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared June 10, 2026 at 12:48 PM EDT     Requested $400,000", L, y); y+=22;
-
-  // summary table of all offers
+  doc.text("BusinessLoans.com     Prepared June 10, 2026 at 12:48 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
   doc.text("Offer Summary", L, y); y+=14;
   var cols=[{h:"Pricing",x:L,a:"left"},{h:"Term",x:210,a:"left"},{h:"Advance",x:300,a:"right"},{h:"Payback",x:390,a:"right"},{h:"Weekly",x:470,a:"right"},{h:"Net Adv.",x:R,a:"right"}];
@@ -259,8 +274,8 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setTextColor(45);
   GROUPS.forEach(function(g){
     g.offers.forEach(function(o){
-      var net=round2(o.advance*(1-ORIG_PCT));
-      var v=[g.label, o.term+"-mo", money0(o.advance), money0(o.payback), money0(o.weekly), money0(net)];
+      var m=modelOf(o);
+      var v=[g.label, o.term+"-mo", money0(m.advance), money0(m.payback), money0(m.weekly), money0(m.net)];
       cols.forEach(function(c,j){ doc.text(v[j],c.x,y,{align:c.a}); });
       y+=14;
     });
@@ -271,16 +286,14 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   var reqs=["Bank Statements - March & April, account ending #9019","Home Address - Ramiro Romani","DecisionLogic","Email Address - Ramiro Romani","Voided Check - #6463 & #9019","Driver's License / Photo ID"];
   reqs.forEach(function(r){ doc.text("- "+r, L, y); y+=12; });
-
-  // one page per offer's prepay schedule
   GROUPS.forEach(function(g){
     g.offers.forEach(function(o){
-      var t=PP[o.pp], scale=o.advance/BASE;
+      var t=PP[o.pp], m=modelOf(o), scale=m.sPP;
       doc.addPage(); var yy=60;
       doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-      doc.text(g.label+" — "+o.term+"-Month — "+money0(o.advance), L, yy); yy+=15;
+      doc.text(g.label+" — "+o.term+"-Month — "+money0(m.advance), L, yy); yy+=15;
       doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
-      doc.text("Total payback "+money0(o.payback)+"   "+money0(o.weekly)+"/week x "+o.nPay+"   early payoff = "+g.label, L, yy); yy+=20;
+      doc.text("Total payback "+money0(m.payback)+"   "+money0(m.weekly)+"/week x "+o.nPay+"   early payoff = "+g.label, L, yy); yy+=20;
       var ch=[{h:"Month",x:L,a:"left"},{h:"Pay off by",x:150,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
       doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
       ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
@@ -296,12 +309,28 @@ function downloadPDF(){
       }
     });
   });
-
   doc.save("1791-olg-offers.pdf");
 }
 
+function recompute(){
+  var raw = document.getElementById("amount").value.replace(/[^0-9.]/g,"");
+  var r = parseFloat(raw) || 0; var capped = false;
+  if(r > MASTER_MAX){ r = MASTER_MAX; capped = true; }
+  if(r < 0) r = 0;
+  STATE.requested = r;
+  var help = document.getElementById("amountHelp");
+  help.className = "amount-help" + (capped ? " warning" : "");
+  help.textContent = capped ? "Capped at the $400,000 maximum" : "Adjustable — each offer caps at its own maximum";
+  renderOffers(); renderPrepay();
+}
+document.getElementById("amount").addEventListener("input", recompute);
+document.getElementById("amount").addEventListener("blur", function(){
+  var raw = this.value.replace(/[^0-9.]/g,""); var v = parseFloat(raw) || 0;
+  if(v > MASTER_MAX) v = MASTER_MAX;
+  this.value = v ? Math.round(v).toLocaleString("en-US") : "";
+  recompute();
+});
 document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
-renderOffers();
-renderPrepay();
+recompute();
 </script>
 </body></html>
