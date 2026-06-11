@@ -65,6 +65,19 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   .amount-input{width:auto;}
   .offer-card{page-break-inside:avoid;}
 }
+.prepay-section{margin-top:30px;page-break-before:always;}
+.prepay-head{border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:6px;}
+.prepay-title{color:var(--navy);font-size:21px;margin:0;}
+.prepay-recap{font-size:12.5px;color:var(--slate);margin:6px 0 14px;}
+.prepay-recap b{color:var(--navy);}
+table.prepay{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+table.prepay th,table.prepay td{padding:11px 16px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;}
+table.prepay th:first-child,table.prepay td:first-child{text-align:left;}
+table.prepay thead th{background:var(--navy);color:#fff;font-weight:600;font-size:12.5px;}
+table.prepay tbody tr:nth-child(even){background:var(--bg);}
+table.prepay tbody tr:last-child td{border-bottom:none;}
+.po-payoff{color:var(--navy);font-weight:600;}
+.po-saved{color:var(--green-d);font-weight:600;}
 </style>
 </head>
 <body>
@@ -81,7 +94,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offer</div>
   <h1 class="cover-title">Dallas Underground</h1>
-  <p class="cover-subtitle">1st-position weekly funding offer below. Adjust the requested amount and every figure updates live.</p>
+  <p class="cover-subtitle">1st-position weekly funding offer below, with an early-payoff schedule. Adjust the requested amount and every figure updates live.</p>
 
   <div class="borrower-bar">
     <div>
@@ -111,6 +124,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   </div>
 
   <div id="offersWrap"></div>
+  <div id="prepayWrap"></div>
 
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. The offer is subject to underwriting approval and final contract. The total funding amount may not equal the amount deposited to your business checking account. Final terms may differ due to origination date, bank holidays, missed or early payments, and other factors.
@@ -158,6 +172,22 @@ function renderOffers(){
     + '</div></div></div>';
 }
 
+var PREPAY = [{m:1,f:1.23},{m:2,f:1.25},{m:3,f:1.27},{m:4,f:1.29}];
+function renderPrepay(){
+  var mm = model();
+  var rows = PREPAY.map(function(p){
+    var payoff = round2(mm.advance * p.f);
+    var saved = round2(mm.advance * (FACTOR - p.f));
+    return '<tr><td>Within month '+p.m+'</td><td class="po-payoff">'+money(payoff)+'</td><td class="po-saved">'+money(saved)+'</td></tr>';
+  }).join("");
+  document.getElementById("prepayWrap").innerHTML =
+    '<div class="prepay-section">'
+    + '<div class="prepay-head"><h2 class="prepay-title">Early Payoff Schedule</h2></div>'
+    + '<div class="prepay-recap">Pay the balance in full within a window below to settle at a reduced total. Total repayment at full term: <b>'+money(mm.repayment)+'</b>.</div>'
+    + '<table class="prepay"><thead><tr><th>Pay off</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>'+rows+'</tbody></table>'
+    + '</div>';
+}
+
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
@@ -183,6 +213,23 @@ function downloadPDF(){
   ["Driver's license","Voided business check","Electronic bank verification","Proof of default satisfaction"].forEach(function(r){ doc.text("- "+r, L, y); y+=12; });
   y+=4; doc.setFontSize(7); doc.setTextColor(120);
   doc.text(doc.splitTextToSize("Illustration only and not a commitment to lend; subject to underwriting and final contract. The total funding amount may not equal the amount deposited to your business checking account.", R-L), L, y);
+  doc.addPage(); var yy=60;
+  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+  doc.text("Early Payoff Schedule — "+money0(m.advance), L, yy); yy+=15;
+  doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
+  doc.text("Total repayment at full term "+money0(m.repayment)+". Pay in full within a window below to settle at a reduced total.", L, yy); yy+=20;
+  var ch=[{h:"Pay off",x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
+  doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
+  yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=12;
+  doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
+  PREPAY.forEach(function(p){
+    var po=round2(m.advance*p.f), sv=round2(m.advance*(FACTOR-p.f));
+    doc.text("Within month "+p.m, L, yy);
+    doc.text(money(po), 360, yy, {align:"right"});
+    doc.text(money(sv), R, yy, {align:"right"});
+    yy+=14;
+  });
   doc.save("dallas-underground-offers.pdf");
 }
 
@@ -196,6 +243,7 @@ function recompute(){
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $600,000 maximum" : "Adjustable up to $600,000";
   renderOffers();
+  renderPrepay();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
