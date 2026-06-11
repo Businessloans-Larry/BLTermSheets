@@ -257,13 +257,14 @@ recompute();
 <script>
 /* term-sheet open tracker beacon */
 (function(){try{
-  if(sessionStorage.getItem('bl_open_pinged'))return;
-  sessionStorage.setItem('bl_open_pinged','1');
   var deal="Entertainment Technology Consultants";
+  var bk="bl_open_pinged_"+deal;
+  if(sessionStorage.getItem(bk))return;
+  sessionStorage.setItem(bk,"1");
   setTimeout(function(){
     var base="https://script.google.com/macros/s/AKfycbxwmFx3rP5afIjYUeKNyXTLH-PpW41I0j4DEjQfMQ3u_he5Fun5W6Phnp_3URdkKEFd/exec?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&ua="+encodeURIComponent(navigator.userAgent);
     function ping(loc){ new Image().src=base+(loc?"&loc="+encodeURIComponent(loc):"")+"&r="+(new Date().getTime()); }
-    fetch("https://ipwho.is/").then(function(r){return r.json();}).then(function(d){ ping([d.city,d.region,d.country].filter(Boolean).join(", ")); }).catch(function(){ ping(""); });
+    fetch("https://ipinfo.io/json").then(function(r){return r.json();}).then(function(d){ ping([d.city,d.region,d.country].filter(Boolean).join(", ")); }).catch(function(){ ping(""); });
   },2500);
 }catch(e){}})();
 </script>
