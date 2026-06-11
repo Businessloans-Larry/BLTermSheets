@@ -51,6 +51,8 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .cap-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green-d);background:rgba(0,205,103,.12);border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:middle;}
 .badge-disc{font-size:9px;font-weight:700;background:var(--green);color:#fff;border-radius:4px;padding:1px 6px;letter-spacing:.04em;}
 .badge-warn{font-size:9px;font-weight:700;background:var(--gold);color:#5a4300;border-radius:4px;padding:1px 6px;letter-spacing:.04em;}
+.badge-rec{font-size:9px;font-weight:700;background:var(--green-d);color:#fff;border-radius:4px;padding:1px 6px;letter-spacing:.04em;}
+.offer-card.is-rec{border-color:var(--green);box-shadow:0 0 0 2px rgba(0,205,103,.18);}
 .kv-fee .kv-val{color:#B8860B;}
 .kv-net{background:rgba(0,205,103,.08);margin:4px -8px;padding:6px 8px;border-radius:5px;}
 .kv-net .kv-val{color:var(--green-d);}
@@ -149,7 +151,7 @@ var OFFERS = [
     prepay:[{m:1,fOld:1.23,f:1.21},{m:2,fOld:1.25,f:1.23},{m:3,fOld:1.27,f:1.25},{m:4,fOld:1.29,f:1.27}],
     closing:["Driver's license","Voided business check","Electronic bank verification","Proof of default satisfaction"] },
   { id:2, tag:"Offer 2", termLabel:"52-Week Term", max:500000, weeks:52, term:"52 weekly (13 months)",
-    feePct:0.025, feeLabel:"Upfront fee (2.5%)", factorOld:null, factor:1.34, discounted:false,
+    feePct:0.025, feeLabel:"Upfront fee (2.5%)", factorOld:null, factor:1.34, discounted:false, recommended:true, showFactor:true,
     note:null,
     prepay:[{m:1,f:1.12},{m:2,f:1.14},{m:3,f:1.17},{m:4,f:1.20},{m:5,f:1.26},{m:6,f:1.29}],
     closing:["Driver's license","Voided business check","Electronic bank verification","Aging A/R","2025 tax extension","Recent invoices"] }
@@ -175,8 +177,8 @@ function renderOffers(){
   document.getElementById("offersWrap").innerHTML = '<div class="offers-grid">' + OFFERS.map(function(o){
     var m = model(o);
     var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
-    var badge = o.discounted ? '<span class="badge-disc">2% DISCOUNT</span>' : (o.note ? '<span class="badge-warn">CONTINGENT</span>' : '');
-    return '<div class="offer-card">'
+    var badge = o.discounted ? '<span class="badge-disc">2% DISCOUNT</span>' : (o.recommended ? '<span class="badge-rec">★ RECOMMENDED</span>' : (o.note ? '<span class="badge-warn">CONTINGENT</span>' : ''));
+    return '<div class="offer-card'+(o.recommended?' is-rec':'')+'">'
       + '<div class="offer-card-header"><div class="offer-tag">'+o.tag+' '+badge+'</div><div class="offer-term">'+o.termLabel+'</div><div class="offer-sub">1st Position &middot; weekly</div></div>'
       + '<div class="offer-card-body">'
         + kv("Advance", money0(m.adv)+capTag)
@@ -198,14 +200,14 @@ function renderDetails(){
       var payoff = round2(m.adv*p.f);
       var saved = round2(m.repay - payoff);
       var payoffCell = (o.discounted && p.fOld) ? '<span class="was">'+money0(round2(m.adv*p.fOld))+'</span>'+money0(payoff) : money0(payoff);
-      return '<tr><td>Within month '+p.m+'</td><td class="po-payoff">'+payoffCell+'</td><td class="po-saved">'+money0(saved)+'</td></tr>';
+      return '<tr><td>Within month '+p.m+'</td>'+(o.showFactor?'<td>'+p.f.toFixed(2)+'</td>':'')+'<td class="po-payoff">'+payoffCell+'</td><td class="po-saved">'+money0(saved)+'</td></tr>';
     }).join("");
     return '<div class="detail-section">'
       + '<div class="detail-head"><h2 class="detail-title">'+o.tag+' — '+o.termLabel+' — '+money0(m.adv)+'</h2></div>'
       + (o.note ? '<div class="'+o.note.cls+'"><strong>'+o.note.title+'.</strong> '+o.note.text+'</div>' : '')
       + '<h3 class="sub-title">Early Payoff Schedule</h3>'
       + '<div class="prepay-recap">Total repayment at full term: <b>'+money0(m.repay)+'</b>. Pay in full within a window below to settle at a reduced total.</div>'
-      + '<table class="prepay"><thead><tr><th>Pay off</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      + '<table class="prepay"><thead><tr><th>Pay off</th>'+(o.showFactor?'<th>Factor</th>':'')+'<th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>'+rows+'</tbody></table>'
       + '<h3 class="sub-title">Closing Requirements</h3>'
       + '<ul class="closing-list">'+o.closing.map(function(c){return '<li>'+c+'</li>';}).join("")+'</ul>'
       + '</div>';
@@ -247,7 +249,9 @@ function downloadPDF(){
     if(o.note){ doc.text(o.note.title + ": " + o.note.text, L, yy, {maxWidth:R-L}); yy+=24; }
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
     doc.text("Total repayment at full term "+money0(m.repay)+". Early payoff windows below.", L, yy); yy+=18;
-    var ch=[{h:"Pay off",x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
+    var ch = o.showFactor
+      ? [{h:"Pay off",x:L,a:"left"},{h:"Factor",x:210,a:"right"},{h:"Total Payoff",x:380,a:"right"},{h:"Interest Saved",x:R,a:"right"}]
+      : [{h:"Pay off",x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
     doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
     ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
     yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=12;
@@ -255,7 +259,8 @@ function downloadPDF(){
     o.prepay.forEach(function(p){
       var payoff=round2(m.adv*p.f), saved=round2(m.repay-payoff);
       doc.text("Within month "+p.m, L, yy);
-      doc.text(money0(payoff), 360, yy, {align:"right"});
+      if(o.showFactor) doc.text(p.f.toFixed(2), 210, yy, {align:"right"});
+      doc.text(money0(payoff), o.showFactor?380:360, yy, {align:"right"});
       doc.text(money0(saved), R, yy, {align:"right"});
       yy+=14;
     });
