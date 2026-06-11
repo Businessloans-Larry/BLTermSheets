@@ -247,6 +247,7 @@ body {
   .amount-input-wrap { border-color: transparent; box-shadow: none; }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -309,6 +310,11 @@ body {
     </ul>
   </div>
 
+  <div class="pdf-actions" style="margin:4px 0 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+    <button id="pdfBtn" style="font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:13px;background:#00CD67;color:#fff;border:none;border-radius:8px;padding:11px 20px;cursor:pointer;">&#11015; Download PDF</button>
+    <span style="font-size:11.5px;color:#485282;">Plain PDF — offer summary, requirements, and every amortization schedule.</span>
+  </div>
+  <style>@media print{.pdf-actions{display:none}}</style>
   <div class="offers-grid" id="offers-grid"></div>
 
   <div class="footer">
@@ -523,6 +529,63 @@ if (document.readyState !== 'loading') {
 }
 </script>
 
+<script>
+/* standard Download-PDF button (matches the other BL term sheets) */
+function downloadPDF(){
+  if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
+  var requested = parseAmount(document.getElementById('loan-amount').value);
+  if(!requested || isNaN(requested)) requested = DEFAULT_LOAN;
+  var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
+  var L=54, R=558, y=70;
+  function m0(n){ return "$"+Math.round(n).toLocaleString("en-US"); }
+  function m2(n){ return "$"+Number(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.setTextColor(20);
+  doc.text("Funding Offers — Petrocare Marine Consultants, Inc.", L, y, {maxWidth:R-L}); y+=26;
+  doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
+  doc.text("BusinessLoans.com     Prepared June 11, 2026 at 9:32 AM EDT     Requested "+m0(requested), L, y); y+=22;
+  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+  doc.text("Offer Summary", L, y); y+=14;
+  var cols=[{h:"Offer",x:L,a:"left"},{h:"Advance",x:230,a:"right"},{h:"Payback",x:340,a:"right"},{h:"Weekly",x:440,a:"right"},{h:"Net Adv.",x:R,a:"right"}];
+  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20);
+  cols.forEach(function(c){ doc.text(c.h,c.x,y,{align:c.a}); });
+  y+=4; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
+  doc.setFont("helvetica","normal"); doc.setTextColor(45);
+  OFFERS.forEach(function(o){
+    var loan=effectiveLoan(o,requested), rtr=loan*o.factor, net=loan-loan*o.fee_pct, wk=rtr/o.weeks;
+    var label="Offer "+o.id+" - "+o.term_months+"mo ("+o.if_tier+"% forg.)"+(requested>o.max_loan?" (max)":"");
+    var v=[label, m0(loan), m0(rtr), m2(wk), m0(net)];
+    cols.forEach(function(c,j){ doc.text(String(v[j]),c.x,y,{align:c.a}); });
+    y+=14;
+  });
+  y+=10; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
+  doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  var reqs=["Signed Mulligan Loan Agreement","Valid, US government-issued photo ID","Voided check for the funding account","Most recent business bank statements","Current AR and AP aging reports","2026 YTD profit & loss statement and balance sheet","Call with an underwriter"];
+  reqs.forEach(function(r){ doc.text("- "+r, L, y); y+=12; });
+  y+=4; doc.setFontSize(7); doc.setTextColor(120);
+  doc.text(doc.splitTextToSize("Illustration only and not a commitment to lend; subject to underwriting and execution of definitive loan documents. Actual amortization may differ. Each offer reflects its individual maximum funding amount; offers above their caps are shown at the maximum.", R-L), L, y);
+  OFFERS.forEach(function(o){
+    var loan=effectiveLoan(o,requested), rtr=loan*o.factor, wk=rtr/o.weeks;
+    doc.addPage(); var yy=58;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text("Offer "+o.id+" - "+o.term_months+"-Month - "+m0(loan)+(requested>o.max_loan?" (offer max)":""), L, yy); yy+=15;
+    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
+    doc.text("Total repayment "+m0(rtr)+"   "+m2(wk)+"/week x "+o.weeks+"   "+o.if_tier+"% interest forgiveness on early payoff", L, yy); yy+=18;
+    var heads=[{h:"#",x:L,a:"left"},{h:"Outstanding",x:150,a:"right"},{h:"Interest",x:235,a:"right"},{h:"Principal",x:315,a:"right"},{h:"Cost",x:400,a:"right"},{h:"Disc.",x:478,a:"right"},{h:"Payoff",x:R,a:"right"}];
+    function hdr(){ doc.setFont("helvetica","bold"); doc.setFontSize(7.5); doc.setTextColor(20); heads.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); }); yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=10; doc.setFont("helvetica","normal"); doc.setTextColor(45); }
+    doc.setFontSize(7.5); hdr();
+    o.schedule.forEach(function(r){
+      if(yy>770){ doc.addPage(); yy=58; doc.setFontSize(7.5); hdr(); }
+      var vals=[String(r[0]), m0(r[1]*loan), m0(r[2]*loan), m0(r[3]*loan), m0(r[4]*loan), m0(r[5]*loan), m0(r[6]*loan)];
+      heads.forEach(function(c,j){ doc.text(vals[j],c.x,yy,{align:c.a}); });
+      yy+=11;
+    });
+  });
+  doc.save("petrocare-marine-offers.pdf");
+}
+document.getElementById('pdfBtn').addEventListener('click', downloadPDF);
+</script>
 <script>
 /* term-sheet open tracker beacon */
 (function(){try{
