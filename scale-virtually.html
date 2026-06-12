@@ -138,14 +138,14 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 "use strict";
 var ORIG_PCT = 0.025, MASTER_MAX = 329000;
 var STATE = { requested: 329000 };
-var CLOSING = ["Driver's License","Valid Phone Number","Signed Contracts","Use of Funds","Bank Verification","12-Month Bank Verification — account ending in 1686","Tax Return"];
+var CLOSING = ["Mobile phone number","Email address","Recent bank statements for associated accounts (1230)","Voided check (#1686 & #2215)","DecisionLogic","Driver's License / Photo ID","Home address"];
 
 var GROUPS = [
  { name:"10% Discount Pricing", cls:"g-ten", note:"Lower-cost pricing. Pay off early and a 10% discount applies to the remaining balance.", offers:[
-   { termLabel:"12-Month", max:252000, factor:1.218, weekly:5908.00, payoff:[259994.97,267432.10,274293.69,280561.48,286216.64,291239.72,295610.67,299308.81,302312.79,304600.58,306149.46] },
-   { termLabel:"15-Month", max:273000, factor:1.277, weekly:5368.00, payoff:[281803.18,290140.79,297997.80,305358.73,312207.58,318527.83,324302.44,329513.82,334143.79,338173.62,341583.96,344354.82,346465.58,347894.97] },
-   { termLabel:"18-Month", max:315000, factor:1.327, weekly:5364.00, payoff:[324967.44,334515.46,343630.79,352299.72,360508.14,368241.47,375484.69,382222.28,388438.24,394116.06,399238.73,403788.67,407747.76,411097.31,413818.02,415890.00,417292.72] },
-   { termLabel:"19-Month", max:328000, factor:1.347, weekly:5371.00, payoff:[338411.29,348414.95,357998.04,367147.21,375848.68,384088.24,391851.24,399122.54,405886.54,412127.14,417827.72,422971.13,427539.70,431515.19,434878.75,437610.97,439691.82,441100.60] }
+   { termLabel:"12-Month", max:252000, factor:1.228, weekly:5908.00, payoff:[304544.65,305321.15,306037.98,306693.18,307284.69,307810.41,308268.16,308655.70,308970.69,309210.74,309373.36] },
+   { termLabel:"15-Month", max:273000, factor:1.267, weekly:5368.00, payoff:[339452.37,340257.51,341015.89,341726.05,342386.51,342995.70,343552.03,344053.86,344499.49,344887.16,345215.07,345481.36,345684.11,345821.33] },
+   { termLabel:"18-Month", max:315000, factor:1.317, weekly:5364.00, payoff:[405837.93,406765.27,407650.27,408491.62,409287.98,410037.97,410740.15,411393.07,411995.21,412544.99,413040.83,413481.05,413863.95,414187.77,414450.68,414650.82,414786.26] },
+   { termLabel:"19-Month", max:328000, factor:1.337, weekly:5371.00, payoff:[428495.77,429469.14,430401.27,431290.89,432136.69,432937.31,433691.35,434397.38,435053.92,435659.43,436212.34,436711.03,437153.81,437538.96,437864.70,438129.20,438330.56,438466.83] }
  ]},
  { name:"100% Discount Pricing", cls:"g-hundred", note:"Higher-cost pricing with 100% early-payoff forgiveness — pay off early and the remaining interest is fully forgiven.", offers:[
    { termLabel:"12-Month", max:243000, factor:1.278, weekly:5977.00, payoff:[252699.49,261753.15,270135.19,277818.81,284776.13,290978.16,296394.76,300994.56,304744.97,307612.09,309560.65] },
