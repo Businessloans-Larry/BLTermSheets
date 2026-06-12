@@ -155,6 +155,7 @@ var GROUPS = [
  ]}
 ];
 
+(function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;});});})();
 function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
 function money(x){ return "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); }
@@ -174,7 +175,7 @@ function offerCard(o, g){
   var m = model(o);
   var cap = m.capped ? '<span class="cap-badge">offer max</span>' : '';
   return '<div class="offer-card '+g.cls+'">'
-    + '<div class="offer-card-header"><div class="offer-term">'+o.termLabel+'</div><div class="offer-sub">'+g.name.replace(" Pricing","")+' &middot; weekly</div></div>'
+    + '<div class="offer-card-header"><div class="offer-sub" style="opacity:.72">Offer '+o.num+'</div><div class="offer-term">'+o.termLabel+'</div><div class="offer-sub">'+g.name.replace(" Pricing","")+' &middot; weekly</div></div>'
     + '<div class="offer-card-body">'
       + kv("Advance", money0(m.adv)+cap)
       + kv("Origination fee (2.5%)", money0(m.fee), "kv-fee")
@@ -206,7 +207,7 @@ function renderDetails(){
         rows += '<tr><td>Within month '+(i+1)+'</td><td class="po-payoff">'+money0(po)+'</td><td class="po-saved">'+money0(saved)+'</td></tr>';
       }
       out += '<div class="detail-section">'
-        + '<div class="detail-head"><h2 class="detail-title">'+g.name.replace(" Pricing","")+' — '+o.termLabel+' — '+money0(m.adv)+'</h2></div>'
+        + '<div class="detail-head"><h2 class="detail-title">Offer '+o.num+' — '+g.name.replace(" Pricing","")+' — '+o.termLabel+' — '+money0(m.adv)+'</h2></div>'
         + '<div class="sched-recap">Total repayment at full term: <b>'+money0(m.payback)+'</b> · <b>'+money(m.weekly)+'</b>/week × '+m.nPay+'. The <b>Total Payoff</b> already applies the '+(g.cls==="g-hundred"?"100%":"10%")+' early-payoff discount.</div>'
         + '<table class="sched"><thead><tr><th>Pay off</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>'+rows+'</tbody></table>'
         + '</div>';
@@ -233,7 +234,7 @@ function downloadPDF(){
   GROUPS.forEach(function(g){
     g.offers.forEach(function(o){
       var m=model(o);
-      var lbl=(g.cls==="g-hundred"?"100%":"10%")+" "+o.termLabel.replace("-Month","mo");
+      var lbl="Offer "+o.num+": "+(g.cls==="g-hundred"?"100%":"10%")+" "+o.termLabel.replace("-Month","mo");
       var v=[lbl, money0(m.adv)+(m.capped?" (max)":""), money0(m.payback), money(m.weekly), money0(m.net)];
       cols.forEach(function(c,j){ doc.text(String(v[j]),c.x,y,{align:c.a}); });
       y+=14;
@@ -250,7 +251,7 @@ function downloadPDF(){
       var m=model(o);
       doc.addPage(); var yy=58;
       doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-      doc.text((g.cls==="g-hundred"?"100% Discount":"10% Discount")+" — "+o.termLabel+" — "+money0(m.adv), L, yy); yy+=16;
+      doc.text("Offer "+o.num+" — "+(g.cls==="g-hundred"?"100% Discount":"10% Discount")+" — "+o.termLabel+" — "+money0(m.adv), L, yy); yy+=16;
       doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
       doc.text("Total repayment "+money0(m.payback)+" · "+money(m.weekly)+"/week × "+m.nPay+". Total Payoff applies the "+(g.cls==="g-hundred"?"100%":"10%")+" early-payoff discount.", L, yy, {maxWidth:R-L}); yy+=20;
       var hh=[{h:"Pay off",x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
