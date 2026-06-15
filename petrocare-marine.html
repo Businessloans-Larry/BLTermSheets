@@ -246,6 +246,13 @@ body {
   .container { max-width: 100%; padding: 0; }
   .amount-input-wrap { border-color: transparent; box-shadow: none; }
 }
+
+.edit-row{display:flex;align-items:center;justify-content:flex-end;gap:14px;}
+.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:23px;color:#FFC858;white-space:nowrap;display:inline-flex;align-items:center;text-shadow:0 1px 3px rgba(0,0,0,.35);animation:editpulse 1.2s ease-in-out infinite;}
+.edit-arrow{font-size:34px;margin-left:8px;line-height:1;animation:editnudge .9s ease-in-out infinite;}
+@keyframes editnudge{0%,100%{transform:translateX(0);}50%{transform:translateX(12px);}}
+@keyframes editpulse{0%,100%{opacity:.68;}50%{opacity:1;}}
+@media print{.edit-hint{display:none;}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
@@ -274,10 +281,10 @@ body {
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Funding Amount (Editable)</div>
-      <div class="amount-input-wrap">
+      <div class="edit-row"><span class="edit-hint">Edit amount here<span class="edit-arrow">&#10142;</span></span><div class="amount-input-wrap">
         <span class="amount-prefix">$</span>
         <input type="text" id="loan-amount" class="amount-input" value="1,000,000" inputmode="numeric" />
-      </div>
+      </div></div>
       <div class="amount-help" id="amount-help">Range: $100,000 to $1,000,000 · per-offer caps apply</div>
     </div>
   </div>
