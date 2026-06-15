@@ -35,12 +35,14 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(8px);}}
 @media print{.edit-hint{display:none;}}
 .group-note{font-size:12px;color:var(--slate);margin:0 0 14px 0;}
-.offers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:8px;}
-@media(max-width:760px){.offers-grid{grid-template-columns:1fr;}}
+.offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px;}
+@media(max-width:900px){.offers-grid{grid-template-columns:1fr;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card-header{color:#fff;padding:14px 18px;}
 .brand-a .offer-card-header{background:linear-gradient(135deg,#002F68 0%,#1A2763 100%);}
 .brand-b .offer-card-header{background:linear-gradient(135deg,#0B7C8A 0%,#0E97A8 100%);}
+.brand-c .offer-card-header{background:linear-gradient(135deg,#00A352 0%,#00CD67 100%);}
+.position-note{border-left:4px solid var(--gold);background:rgba(255,200,88,.12);border-radius:6px;padding:11px 16px;margin:0 0 18px;font-size:13px;color:var(--navy2);}
 .offer-name{font-family:'DM Serif Display',Georgia,serif;font-size:20px;line-height:1.1;}
 .offer-sub{font-size:10.5px;opacity:.9;margin-top:2px;text-transform:uppercase;letter-spacing:.08em;}
 .offer-card-body{padding:14px 18px 16px;flex:1;}
@@ -105,7 +107,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">Aarcon Enterprises, Inc.</h1>
-  <p class="cover-subtitle">Two offers below. Adjust the requested amount and every figure updates live — each offer caps at its own maximum. Each offer's early-payoff schedule and stipulations are on its own page.</p>
+  <p class="cover-subtitle">Three offers below. Adjust the requested amount and every figure updates live — each offer caps at its own maximum. Each offer's early-payoff schedule (and stipulations, where provided) are on its own page.</p>
+
+  <div class="position-note"><b>All offers are 2nd position behind OnDeck.</b> No lender was able to approve a 1st-position offer due to the low revenue in February.</div>
 
   <div class="borrower-bar">
     <div>
@@ -147,7 +151,7 @@ var MASTER_MAX = 250000;
 var STATE = { requested: 250000 };
 
 var OFFERS = [
-  { id:"specialty", name:"Specialty Capital", cls:"brand-a", max:250000, factor:1.43, payback0:357500, weekly0:7150, nPay:50, term:"13 months", position:"1st", origPct:0.03, processing:849,
+  { id:"specialty", name:"Specialty Capital", cls:"brand-a", max:250000, factor:1.43, payback0:357500, weekly0:7150, nPay:50, term:"13 months", position:"2nd", origPct:0.03, processing:849,
     ppType:"days",
     pp:{ days:["0–30","31–60","61–90","91–120","121–150","151–180","181–210","211–240","241–270","271–300","301–330"],
       payoff:[270000,277500,285000,302500,310000,315000,327500,332500,340000,345000,347500],
@@ -156,7 +160,13 @@ var OFFERS = [
   { id:"newco", name:"NewCo Capital", cls:"brand-b", max:200000, factor:1.38, payback0:276000, weekly0:6900, nPay:40, term:"40 weekly payments", position:"2nd", origPct:0.03, processing:0,
     ppType:"factor",
     ppFactors:[1.20,1.23,1.27,1.30,1.33],
-    stips:["Accounts Receivable","Tax Return","Driver's License","Voided Check","12 Months Bank Statements","Bank Account Verification"] }
+    stips:["Accounts Receivable","Tax Return","Driver's License","Voided Check","12 Months Bank Statements","Bank Account Verification"] },
+  { id:"kalamata", name:"Kalamata Capital", cls:"brand-c", max:200000, factor:1.34, payback0:268000, weekly0:5134.10, nPay:"52 + 1", term:"12 months", position:"2nd", origPct:0, processing:0,
+    ppType:"days",
+    pp:{ days:["30","60","90","120","150","180"],
+      payoff:[224000,228000,232000,236000,241000,245000],
+      saved:[44000,40000,36000,32000,27000,23000] },
+    stips:[] }
 ];
 
 function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
@@ -181,7 +191,7 @@ function offerCard(o){
     + '<div class="offer-card-header"><div class="offer-name">'+o.name+'</div><div class="offer-sub">'+o.position+' Position &middot; '+o.term+' &middot; weekly</div></div>'
     + '<div class="offer-card-body">'
       + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
-      + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee (3%)</span><span class="kv-val">'+money(m.fee)+'</span></div>'
+      + (o.origPct ? '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+(o.origPct*100)+'%)</span><span class="kv-val">'+money(m.fee)+'</span></div>' : '')
       + procRow
       + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
@@ -196,6 +206,7 @@ function renderOffers(){
 }
 
 function stipsBlock(o){
+  if(!o.stips || !o.stips.length) return '';
   return '<div class="stips"><h4>'+o.name+' — Stipulations</h4><ul>' + o.stips.map(function(x){return '<li>'+x+'</li>';}).join("") + '</ul></div>';
 }
 
@@ -276,10 +287,12 @@ function downloadPDF(){
         yy+=14;
       });
     }
-    yy+=12; doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-    doc.text(o.name+" stipulations:", L, yy); yy+=13;
-    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-    o.stips.forEach(function(r){ doc.text("- "+r, L, yy); yy+=12; });
+    if(o.stips && o.stips.length){
+      yy+=12; doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+      doc.text(o.name+" stipulations:", L, yy); yy+=13;
+      doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+      o.stips.forEach(function(r){ doc.text("- "+r, L, yy); yy+=12; });
+    }
   });
   doc.save("aarcon-enterprises-offers.pdf");
 }
