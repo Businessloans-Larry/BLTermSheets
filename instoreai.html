@@ -29,6 +29,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .amount-input{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--green-d);background:transparent;border:none;outline:none;width:170px;text-align:left;}
 .amount-help{font-size:10.5px;color:rgba(255,255,255,.65);margin-top:6px;}
 .amount-help.warning{color:var(--gold);font-weight:600;}
+.edit-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;}
+.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:15px;color:var(--gold);white-space:nowrap;display:inline-flex;align-items:center;}
+.edit-arrow{font-size:20px;margin-left:5px;animation:nudge 1.1s ease-in-out infinite;}
+@keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
+@media print{.edit-hint{display:none;}}
 .flexbox{border:1.5px solid var(--green);background:rgba(0,205,103,.07);border-radius:10px;padding:14px 18px;margin-bottom:22px;}
 .flexbox h3{color:var(--navy);font-size:16px;margin:0 0 8px 0;}
 .flexbox ul{margin:0;padding-left:18px;columns:2;column-gap:28px;font-size:12.5px;color:var(--navy2);}
@@ -107,7 +112,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Draw Amount</div>
-      <div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="500,000" aria-label="Draw amount"/></div>
+      <div class="edit-row"><span class="edit-hint">Edit amount here<span class="edit-arrow">&#10142;</span></span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="500,000" aria-label="Draw amount"/></div></div>
       <div id="amountHelp" class="amount-help">Line up to $500,000 · 10% ($50,000) minimum first draw</div>
     </div>
   </div>
