@@ -108,7 +108,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Draw Amount</div>
       <div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="500,000" aria-label="Draw amount"/></div>
-      <div id="amountHelp" class="amount-help">Line up to $500,000 · 10% ($50,000) minimum draw</div>
+      <div id="amountHelp" class="amount-help">Line up to $500,000 · 10% ($50,000) minimum first draw</div>
     </div>
   </div>
 
@@ -118,7 +118,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
       <li>Line up to <b>$500,000</b> — draw what you need, when you need it</li>
       <li><b>No closing costs</b> and no closing fee</li>
       <li>Pay off <b>any time without penalty</b> — earlier payoff, lower factor</li>
-      <li><b>10% ($50,000) minimum</b> draw required to open the line</li>
+      <li><b>10% ($50,000) minimum</b> first draw to open the line</li>
       <li>Weekly payments over up to 52 weeks</li>
       <li>Your effective factor scales with how long you hold (see schedule)</li>
     </ul>
@@ -178,8 +178,7 @@ function renderOffer(){
       + '<div class="kv-row"><span class="kv-label">Full-term payback (52 wks)</span><span class="kv-val">'+money0(m.fullPayback)+'</span></div>'
       + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">up to '+N_PAY+' weekly</span></div>'
-      + '<div class="kv-row"><span class="kv-label">Factor by payoff week</span><span class="kv-val">'+PREPAY[0].f.toFixed(3)+'–'+PREPAY[PREPAY.length-1].f.toFixed(3)+'</span></div>'
-      + '<div class="kv-row"><span class="kv-label">Minimum draw (10%)</span><span class="kv-val">'+money0(MIN_DRAW)+'</span></div>'
+      + '<div class="kv-row"><span class="kv-label">Minimum first draw (10%)</span><span class="kv-val">'+money0(MIN_DRAW)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Prepayment penalty</span><span class="kv-val">None</span></div>'
     + '</div></div>';
 }
@@ -221,8 +220,7 @@ function downloadPDF(){
     ["Full-term payback (52 wks)", money0(m.fullPayback)],
     ["Weekly payment", money(m.weekly)],
     ["Number of payments", "up to "+N_PAY+" weekly"],
-    ["Factor by payoff week", PREPAY[0].f.toFixed(3)+"-"+PREPAY[PREPAY.length-1].f.toFixed(3)],
-    ["Minimum draw (10%)", money0(MIN_DRAW)],
+    ["Minimum first draw (10%)", money0(MIN_DRAW)],
     ["Prepayment penalty", "None"]
   ];
   rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
@@ -259,8 +257,8 @@ function recompute(){
   STATE.draw = d;
   var help = document.getElementById("amountHelp");
   if(capped){ help.className="amount-help warning"; help.textContent="Capped at the $500,000 line maximum"; }
-  else if(d>0 && d<MIN_DRAW){ help.className="amount-help warning"; help.textContent="Below the 10% ($50,000) minimum draw"; }
-  else { help.className="amount-help"; help.textContent="Line up to $500,000 · 10% ($50,000) minimum draw"; }
+  else if(d>0 && d<MIN_DRAW){ help.className="amount-help warning"; help.textContent="Below the 10% ($50,000) minimum first draw"; }
+  else { help.className="amount-help"; help.textContent="Line up to $500,000 · 10% ($50,000) minimum first draw"; }
   renderOffer(); renderPrepay();
 }
 document.getElementById("amount").addEventListener("input", recompute);
