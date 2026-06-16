@@ -125,9 +125,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   </div>
 
   <div class="closing">
-    <h3>Closing Requirements <span class="oc">Online Checkout: Ready</span></h3>
+    <h3>Closing Requirements</h3>
     <ul>
-      <li>Signed Application (and a signed app from a second owner)</li>
+      <li><b>Signed Application</b> — need signers totaling <b>50%+ ownership</b> on the application willing to sign the contract, <b>or</b> a board resolution giving Marc sole authority to sign.</li>
       <li>Driver's License <em>(not required with Online Checkout)</em></li>
       <li>Voided Check <em>(not required with Online Checkout)</em></li>
     </ul>
@@ -261,7 +261,7 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Closing requirements:", L, y); y+=12;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Signed Application (and a signed app from a second owner)","Driver's License (not required with Online Checkout)","Voided Check (not required with Online Checkout)"].forEach(function(r){ doc.text("- "+r, L, y); y+=12; });
+  ["Signed Application - need 50%+ ownership on the application willing to sign the contract, OR a board resolution giving Marc sole signing authority","Driver's License (not required with Online Checkout)","Voided Check (not required with Online Checkout)"].forEach(function(r){ doc.text("- "+r, L, y); y+=12; });
   y+=8; doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Cashflow trends:", L, y); y+=12;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
