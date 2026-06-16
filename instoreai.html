@@ -177,8 +177,8 @@ var OFFERS = [
     ppRates:[1.17,1.17,1.17,1.17,1.17,1.18,1.20,1.21,1.23] },
   { id:"t18b", cls:"alt", term:"18-Month", sub:"Lower early-payoff cost", max:250000, factor:1.38, payback0:345000, weekly0:4662.16, nPay:74, origPct:0.02,
     ppRates:[1.12,1.12,1.13,1.15,1.17,1.19,1.21,1.24,1.26] },
-  { id:"t12", cls:"", term:"12-Month", sub:"", max:250000, factor:1.26, payback0:315000, weekly0:6300.00, nPay:50, origPct:0.02, ppRates:null },
-  { id:"t9", cls:"", term:"9-Month", sub:"", max:250000, factor:1.21, payback0:302500, weekly0:8175.68, nPay:37, origPct:0.02, ppRates:null }
+  { id:"t12", cls:"", term:"12-Month", sub:"", max:250000, factor:1.26, payback0:315000, weekly0:6300.00, nPay:50, origPct:0.02, ppRates:[1.17,1.17,1.17,1.17,1.18,1.20] },
+  { id:"t9", cls:"", term:"9-Month", sub:"", max:250000, factor:1.21, payback0:302500, weekly0:8175.68, nPay:37, origPct:0.02, ppRates:[1.17,1.17,1.17,1.17] }
 ];
 
 function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
@@ -221,7 +221,7 @@ function renderPrepay(){
     var m = modelOf(o);
     html += '<div class="prepay-section">'
       + '<div class="prepay-head"><h2 class="prepay-title">'+o.term+' ('+o.sub+') — '+money0(m.advance)+' — Early Payoff</h2></div>'
-      + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments. Total payoff and interest saved if paid in full by the month shown (through Month 9).</div>';
+      + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments. Total payoff and interest saved if paid in full by the month shown (through Month '+o.ppRates.length+').</div>';
     if(m.advance !== o.max) html += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m.advance)+').</div>';
     html += '<table class="data"><thead><tr><th>Pay off by</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
     o.ppRates.forEach(function(rate, i){
