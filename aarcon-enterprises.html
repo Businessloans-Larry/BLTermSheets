@@ -228,17 +228,17 @@ function renderPrepay(){
       + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments &middot; '+o.position+' position. Total payoff and interest saved if paid in full early.</div>';
     if(m.advance !== o.max) html += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m.advance)+').</div>';
     if(o.ppType === "days"){
-      html += '<table class="prepay"><thead><tr><th>Pay off within (days)</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
+      html += '<table class="prepay"><thead><tr><th>Pay off by</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
       for(var i=0;i<o.pp.days.length;i++){
-        html += '<tr><td>'+o.pp.days[i]+' days</td><td class="po-payoff">'+money(round2(o.pp.payoff[i]*s))+'</td><td class="po-saved">'+money(round2(o.pp.saved[i]*s))+'</td></tr>';
+        html += '<tr><td>Month '+(i+1)+'</td><td class="po-payoff">'+money(round2(o.pp.payoff[i]*s))+'</td><td class="po-saved">'+money(round2(o.pp.saved[i]*s))+'</td></tr>';
       }
       html += '</tbody></table>';
     } else {
-      html += '<table class="prepay"><thead><tr><th>Early-payoff tier</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
+      html += '<table class="prepay"><thead><tr><th>Pay off by</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
       o.ppFactors.forEach(function(f, i){
         var payoff = round2(m.advance*f);
         var saved = round2(m.advance*(o.factor - f));
-        html += '<tr><td>Tier '+(i+1)+'</td><td class="po-payoff">'+money(payoff)+'</td><td class="po-saved">'+money(saved)+'</td></tr>';
+        html += '<tr><td>Month '+(i+1)+'</td><td class="po-payoff">'+money(payoff)+'</td><td class="po-saved">'+money(saved)+'</td></tr>';
       });
       html += '</tbody></table>';
     }
@@ -275,7 +275,7 @@ function downloadPDF(){
     doc.text(o.name+" — "+money0(m.advance)+" — Early Payoff", L, yy); yy+=15;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
     doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly   "+o.position+" position", L, yy); yy+=20;
-    var head = (o.ppType==="days") ? "Pay off within (days)" : "Early-payoff tier";
+    var head = "Pay off by";
     var ch=[{h:head,x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
     doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
     ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
@@ -283,14 +283,14 @@ function downloadPDF(){
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
     if(o.ppType==="days"){
       for(var i=0;i<o.pp.days.length;i++){
-        doc.text(o.pp.days[i]+" days", L, yy);
+        doc.text("Month "+(i+1), L, yy);
         doc.text(money(round2(o.pp.payoff[i]*s)), 360, yy, {align:"right"});
         doc.text(money(round2(o.pp.saved[i]*s)), R, yy, {align:"right"});
         yy+=14;
       }
     } else {
       o.ppFactors.forEach(function(f,i){
-        doc.text("Tier "+(i+1), L, yy);
+        doc.text("Month "+(i+1), L, yy);
         doc.text(money(round2(m.advance*f)), 360, yy, {align:"right"});
         doc.text(money(round2(m.advance*(o.factor-f))), R, yy, {align:"right"});
         yy+=14;
