@@ -310,4 +310,20 @@ document.getElementById("amount").addEventListener("blur", function(){
 document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
 recompute();
 </script>
+<script>
+/* term-sheet open tracker beacon (v3: per-deal dedup, guaranteed single ping, best-effort geo) */
+(function(){try{
+  var deal="InStoreAI Inc";
+  var bk="bl_open_pinged_"+deal;
+  if(sessionStorage.getItem(bk))return;
+  sessionStorage.setItem(bk,"1");
+  setTimeout(function(){
+    var base="https://script.google.com/macros/s/AKfycbxwmFx3rP5afIjYUeKNyXTLH-PpW41I0j4DEjQfMQ3u_he5Fun5W6Phnp_3URdkKEFd/exec?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&ua="+encodeURIComponent(navigator.userAgent);
+    var done=false;
+    function ping(loc){ if(done)return; done=true; new Image().src=base+(loc?"&loc="+encodeURIComponent(loc):"")+"&r="+(new Date().getTime()); }
+    setTimeout(function(){ ping(""); },2000);
+    fetch("https://ipinfo.io/json").then(function(r){return r.json();}).then(function(d){ ping([d.city,d.region,d.country].filter(Boolean).join(", ")); }).catch(function(){ ping(""); });
+  },2500);
+}catch(e){}})();
+</script>
 </body></html>
