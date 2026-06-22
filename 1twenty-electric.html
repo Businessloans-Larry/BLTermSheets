@@ -96,11 +96,11 @@ table.cmp tbody tr:last-child td{border-bottom:none;}
 .cmp-paid{color:#b6bcc8;}
 .cmp-foot{font-size:11.5px;color:var(--slate);margin:12px 0 0;max-width:940px;line-height:1.5;}
 .cmp-key{color:var(--green-d);font-weight:700;}
-table.cmp.cmp-simple{min-width:0;max-width:760px;}
-table.cmp.cmp-simple th:nth-child(2),table.cmp.cmp-simple td:nth-child(2){text-align:left;}
+table.cmp.cmp-simple{min-width:0;max-width:860px;}
 .cmp-opt{color:var(--navy);font-weight:600;}
 .cmp-sub2{display:block;font-size:10.5px;font-weight:400;color:var(--slate);margin-top:2px;}
 .cmp-cost{color:var(--green-d);font-weight:700;font-size:14.5px;}
+.cmp-pay{color:var(--navy);font-weight:700;font-variant-numeric:tabular-nums;}
 /* schedules */
 .detail-h{color:var(--navy);font-size:22px;margin:34px 0 4px 0;}
 .detail-note{font-size:12.5px;color:var(--slate);margin:0 0 14px;max-width:920px;}
@@ -153,7 +153,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">1Twenty Electric LLC</h1>
   <div class="topnote">
-    <b>Note on funding amount.</b> We can fund <b>$400,000&ndash;$500,000</b> without business tax returns &mdash; we were advised the company&rsquo;s have not been filed since 2021. Above that, the additional documents listed below are required, and <b>Lender A can fund up to $1,000,000</b> (Lender B caps at $500,000). The amount defaults to $500,000; adjust it and every figure &mdash; including which closing docs apply &mdash; updates instantly.
+    <b>Note on funding amount.</b> Funding <b>without business tax returns is limited to $400,000 (Lender A) / $500,000 (Lender B)</b> &mdash; we were advised the company&rsquo;s returns have not been filed since 2021. Larger advances, up to <b>$1,000,000</b>, require the additional documents listed below. Lender B&rsquo;s rates differ at $500,000 &amp; under vs over $500,000. The amount defaults to $500,000; adjust it and every figure &mdash; including which closing docs apply &mdash; updates instantly.
   </div>
 
   <div class="borrower-bar">
@@ -177,13 +177,13 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div id="offersWrap"></div>
 
-  <h2 class="cmp-title">Cheapest Option by Payoff Timeframe</h2>
-  <p class="cmp-note">For each payoff timeframe, the single cheapest option and its <b>total cost of capital</b> (origination fee + interest) if you settle the balance in full at that point. Updates with the funding amount above.</p>
+  <h2 class="cmp-title">Payoff at 3 &amp; 6 Months &mdash; Every Approval</h2>
+  <p class="cmp-note">For every offer, the <b>total amount you&rsquo;d have paid</b> (weekly payments to date + remaining payoff balance + any origination fee) to settle the balance in full at month 3 or month 6. Updates with the funding amount above.</p>
   <div id="comparisonWrap"></div>
-  <p class="cmp-foot">Lowest total cost of capital at each payoff point, compared at the current funding amount. Above $500,000 only Lender A scales up (Lender B caps at $500,000). Full per-offer figures are in the schedules below.</p>
+  <p class="cmp-foot">All-in totals at the funding amount shown. A dash (&mdash;) means early-payoff figures were not provided for that offer.</p>
 
   <h2 class="detail-h">Payoff &amp; Amortization Schedules</h2>
-  <p class="detail-note"><b>Lender A:</b> total payback if you settle in full by the end of each month (flat weekly payments in between). <b>Lender B:</b> full week-by-week amortization, with the total interest you&rsquo;d have paid if you settle that week under 50% vs 100% forgiveness. All figures scale with the funding amount.</p>
+  <p class="detail-note"><b>Lender A:</b> total payback if you settle in full by the end of each month (flat weekly payments in between). <b>Lender B (over $500K):</b> full week-by-week amortization, with the total interest you&rsquo;d have paid if you settle that week under 50% vs 100% forgiveness. (The $500K-&amp;-under 12/15/18-month schedules are available on request.) All figures scale with the funding amount.</p>
   <div id="schedulesWrap"></div>
 
   <div class="disclosure">
@@ -230,26 +230,44 @@ var GROUPS = [
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413791.45,426635.59,438499.76,449350.17,459151.88,467868.71,475463.27,481896.86,487129.46,491119.65,493824.60,495200] }
  ]},
- { name:"Lender B", note:"Two terms &mdash; 12-month (52 weekly payments, $650,000 payback) and 14-month (60 weekly payments, $675,000 payback). Each term comes two ways: a no-fee Standard option (50% interest discount on early payoff) and an Accelerated option (4% fee, 100% discount).",
+ { name:"Lender B &middot; $500,000 &amp; under", note:"Best rates for advances of $500,000 or less &mdash; 12-, 15-, and 18-month terms, each with 100% of remaining interest forgiven on early payoff and no origination fee.",
+   offers:[
+   { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-acc",
+     subText:"100% interest forgiven on early payoff", optShort:"100% (no fee)",
+     max:500000, weekly:11730.77, rtr:610000, periods:52, nPay:"52 weekly", feePct:0, forgive:1,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
+     ms:[ {mo:3,k:12,po:401832.88},{mo:6,k:24,po:294086.16} ] },
+   { kind:"forgive", term:"15-Month", termMonths:15, opt:"", cls:"opt-acc",
+     subText:"100% interest forgiven on early payoff", optShort:"100% (no fee)",
+     max:500000, weekly:9921.88, rtr:635000, periods:65, nPay:"65 weekly", feePct:0, forgive:1,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
+     ms:[ {mo:3,k:12,po:423920.84},{mo:6,k:24,po:340515.02} ] },
+   { kind:"forgive", term:"18-Month", termMonths:18, opt:"", cls:"opt-acc",
+     subText:"100% interest forgiven on early payoff", optShort:"100% (no fee)",
+     max:500000, weekly:8461.54, rtr:660000, periods:78, nPay:"78 weekly", feePct:0, forgive:1,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
+     ms:[ {mo:3,k:12,po:440502.29},{mo:6,k:24,po:375497.53} ] }
+ ]},
+ { name:"Lender B &middot; over $500,000", note:"Rates for advances over $500,000 &mdash; 12- and 14-month programs, each available with 50% (no fee) or 100% (4% fee) early-payoff interest forgiveness.",
    offers:[
    { kind:"forgive", term:"12-Month", termMonths:12, opt:"Standard Payoff", cls:"opt-std",
      subText:"50% interest forgiven on early payoff", optShort:"Std (0% fee)",
-     max:500000, weekly:12500, rtr:650000, periods:52, nPay:"52 weekly", feePct:0, forgive:0.5,
+     max:1000000, weekly:12500, rtr:650000, periods:52, nPay:"52 weekly", feePct:0, forgive:0.5,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
      ms:[ {mo:3,k:12,po:453631.90},{mo:6,k:24,po:326128.72},{mo:9,k:36,po:191678.72} ] },
    { kind:"forgive", term:"12-Month", termMonths:12, opt:"Accelerated Payoff", cls:"opt-acc",
      subText:"100% interest forgiven on early payoff", optShort:"Acc (4% fee)",
-     max:500000, weekly:12500, rtr:650000, periods:52, nPay:"52 weekly", feePct:0.04, forgive:1,
+     max:1000000, weekly:12500, rtr:650000, periods:52, nPay:"52 weekly", feePct:0.04, forgive:1,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:12,po:407263.80},{mo:6,k:24,po:302257.45},{mo:9,k:36,po:183357.44} ] },
    { kind:"forgive", term:"14-Month", termMonths:14, opt:"Standard Payoff", cls:"opt-std",
      subText:"50% interest forgiven on early payoff", optShort:"Std (0% fee)",
-     max:500000, weekly:11250, rtr:675000, periods:60, nPay:"60 weekly", feePct:0, forgive:0.5,
+     max:1000000, weekly:11250, rtr:675000, periods:60, nPay:"60 weekly", feePct:0, forgive:0.5,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
      ms:[ {mo:3,k:12,po:481609.37},{mo:6,k:24,po:370633.45},{mo:9,k:36,po:253898.65} ] },
    { kind:"forgive", term:"14-Month", termMonths:14, opt:"Accelerated Payoff", cls:"opt-acc",
      subText:"100% interest forgiven on early payoff", optShort:"Acc (4% fee)",
-     max:500000, weekly:11250, rtr:675000, periods:60, nPay:"60 weekly", feePct:0.04, forgive:1,
+     max:1000000, weekly:11250, rtr:675000, periods:60, nPay:"60 weekly", feePct:0.04, forgive:1,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:12,po:423218.73},{mo:6,k:24,po:336266.90},{mo:9,k:36,po:237797.29} ] }
  ]}
@@ -321,7 +339,7 @@ function offerCard(o){
      : kv("Origination fee", "None"+'<span class="tag-nofee">No fee</span>', "kv-nofee");
   var bodyCls = o.featured ? "offer-card-body grid2" : "offer-card-body";
   return '<div class="offer-card '+o.cls+(o.featured?' is-featured':'')+'">'
-    + '<div class="offer-card-header"><div class="offer-term">'+o.term+' &middot; '+o.opt+'</div>'
+    + '<div class="offer-card-header"><div class="offer-term">'+o.term+(o.opt?' &middot; '+o.opt:'')+'</div>'
       + '<div class="offer-sub">Offer '+o.num+' &middot; '+o.subText+'</div></div>'
     + '<div class="'+bodyCls+'">'
       + kv("Advance", money0(m.adv)+cap)
@@ -347,18 +365,25 @@ function offerFeeNote(o){
   if(o.kind==="monthly") return "2.5% fee, 100% discount";
   return o.feePct>0 ? "4% fee, 100% discount" : "no fee, 50% discount";
 }
+function allInAt(o,mo){
+  var m=model(o);
+  if(o.kind==="monthly"){
+    if(!o.payoffArr || mo>o.payoffArr.length) return null;
+    return round2(o.payoffArr[mo-1]*m.s + m.fee);
+  }
+  var ms=findMs(o,mo); if(!ms) return null;
+  return round2(o.weekly*m.s*ms.k + ms.po*m.s + m.fee);
+}
 function renderComparison(){
-  var months=[3,6,9];
-  var rows=months.map(function(mo){
-    var best=null;
-    ALL.forEach(function(o){ var c=costAtMonth(o,mo); if(c===null)return; if(!best||c<best.c) best={o:o,c:c}; });
-    return '<tr><td class="cmp-month">'+mo+' months</td>'
-      + '<td class="cmp-opt">Offer '+best.o.num+' &middot; '+offerLabel(best.o)
-        + '<span class="cmp-sub2">'+offerFeeNote(best.o)+'</span></td>'
-      + '<td class="cmp-cost">'+money0(best.c)+'</td></tr>';
+  var rows=ALL.map(function(o){
+    var c3=allInAt(o,3), c6=allInAt(o,6);
+    return '<tr><td class="cmp-opt">Offer '+o.num+' &middot; '+offerLabel(o)
+      + '<span class="cmp-sub2">'+o.gname+'</span></td>'
+      + '<td class="cmp-pay">'+(c3===null?'&mdash;':money0(c3))+'</td>'
+      + '<td class="cmp-pay">'+(c6===null?'&mdash;':money0(c6))+'</td></tr>';
   }).join("");
   document.getElementById("comparisonWrap").innerHTML =
-    '<table class="cmp cmp-simple"><thead><tr><th>Pay off at</th><th>Cheapest option</th><th>Total cost of capital</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    '<table class="cmp cmp-simple"><thead><tr><th>Approval</th><th>Payoff at 3 months</th><th>Payoff at 6 months</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }
 
 function weeklyTable(rows, pmt, s, oStd, oAcc){
@@ -401,13 +426,13 @@ function renderSchedules(){
     + '<p class="sched-sub">Total payback if you settle in full by the end of each month (scales with the funding amount, up to $1,000,000). You save the difference between this and the offer&rsquo;s full-term payback; the last figure in each column (highlighted) is the full-term total. The 22-month option&rsquo;s early-payoff schedule was not provided.</p>'
     + '<div class="sched-scroll"><table class="sched"><thead>'+laHead+'</thead><tbody>'+laBody+'</tbody></table></div></div>';
 
-  var tbl12='<div class="sched-block"><h3>Lender B &middot; 12-Month &mdash; Weekly Schedule</h3>'
-    + '<p class="sched-sub">Weekly payment '+money(round2(PMT12*s))+', 52 payments. The two <b>Total interest paid</b> columns show the total interest you&rsquo;ll have paid if you settle the balance in full that week &mdash; under 50% forgiveness (Offer 6) or 100% (Offer 7). Interest only; the Accelerated 4% origination fee is shown on the offer card.</p>'
-    + weeklyTable(SCHED12, PMT12, s, 6, 7) + '</div>';
+  var tbl12='<div class="sched-block"><h3>Lender B (over $500K) &middot; 12-Month &mdash; Weekly Schedule</h3>'
+    + '<p class="sched-sub">Weekly payment '+money(round2(PMT12*s))+', 52 payments. The two <b>Total interest paid</b> columns show the total interest you&rsquo;ll have paid if you settle the balance in full that week &mdash; under 50% forgiveness (Offer 9) or 100% (Offer 10). Interest only; the Accelerated 4% origination fee is shown on the offer card.</p>'
+    + weeklyTable(SCHED12, PMT12, s, 9, 10) + '</div>';
 
-  var tbl14='<div class="sched-block"><h3>Lender B &middot; 14-Month &mdash; Weekly Schedule</h3>'
-    + '<p class="sched-sub">Weekly payment '+money(round2(PMT14*s))+', 60 payments. The two <b>Total interest paid</b> columns show the total interest you&rsquo;ll have paid if you settle the balance in full that week &mdash; under 50% forgiveness (Offer 8) or 100% (Offer 9). Interest only; the Accelerated 4% origination fee is shown on the offer card.</p>'
-    + weeklyTable(SCHED14, PMT14, s, 8, 9) + '</div>';
+  var tbl14='<div class="sched-block"><h3>Lender B (over $500K) &middot; 14-Month &mdash; Weekly Schedule</h3>'
+    + '<p class="sched-sub">Weekly payment '+money(round2(PMT14*s))+', 60 payments. The two <b>Total interest paid</b> columns show the total interest you&rsquo;ll have paid if you settle the balance in full that week &mdash; under 50% forgiveness (Offer 11) or 100% (Offer 12). Interest only; the Accelerated 4% origination fee is shown on the offer card.</p>'
+    + weeklyTable(SCHED14, PMT14, s, 11, 12) + '</div>';
 
   document.getElementById("schedulesWrap").innerHTML = laTbl + tbl12 + tbl14;
 }
@@ -452,17 +477,18 @@ function downloadPDF(){
     var v=["#"+o.num+" "+o.term+" "+o.opt.replace(" Payoff",""), o.feePct>0?money0(m.fee):"None", money0(m.adv)+(m.capped?"*":""), money0(m.net), money0(m.payback), money(m.weekly)];
     sc.forEach(function(c,j){doc.text(String(v[j]),c.x,y,{align:c.a});}); y+=13; });
 
-  y+=16; need(90); doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Cheapest Option by Payoff Timeframe (total cost of capital, incl. fees)", L, y); y+=12;
-  var cc=[{h:"Pay off at",x:L,a:"left"},{h:"Cheapest option",x:150,a:"left"},{h:"Total cost of capital",x:R,a:"right"}];
-  doc.setFontSize(8.5); doc.setFont("helvetica","bold"); doc.setTextColor(20); cc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=13;
-  [3,6,9].forEach(function(mo){
-    var best=null; ALL.forEach(function(o){ var c=costAtMonth(o,mo); if(c===null)return; if(!best||c<best.c) best={o:o,c:c}; });
-    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
-    doc.text(mo+" months", L, y);
-    doc.text("Offer "+best.o.num+" — "+offerLabel(best.o)+" ("+offerFeeNote(best.o)+")", 150, y);
-    doc.setFont("helvetica","bold"); doc.setTextColor(0,140,80); doc.text(money0(best.c), R, y, {align:"right"});
-    y+=15;
+  y+=16; need(120); doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
+  doc.text("Payoff at 3 & 6 Months — Every Approval (all-in total paid, incl. fees)", L, y); y+=12;
+  var cc=[{h:"Approval",x:L,a:"left"},{h:"Payoff at 3 months",x:430,a:"right"},{h:"Payoff at 6 months",x:R,a:"right"}];
+  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20); cc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=12;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(45);
+  ALL.forEach(function(o){
+    if(y>760){ newpage(); doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(45); }
+    var c3=allInAt(o,3), c6=allInAt(o,6);
+    doc.text("#"+o.num+" "+offerLabel(o)+" ("+o.gname.replace(/&middot;/g,"·").replace(/&amp;/g,"&")+")", L, y);
+    doc.text(c3===null?"—":money0(c3), 430, y, {align:"right"});
+    doc.text(c6===null?"—":money0(c6), R, y, {align:"right"});
+    y+=13;
   });
 
   y+=20; need(180);
@@ -498,8 +524,8 @@ function downloadPDF(){
       cols.forEach(function(c,j){ doc.text(v[j], c.x, y, {align:c.a}); }); y+=10.5;
     });
   }
-  schedPage("Lender B — 12-Month Weekly Schedule", "Tot int = total interest paid if settled that week: 50% = Offer 6, 100% = Offer 7. Interest only; origination fee separate.", SCHED12, PMT12);
-  schedPage("Lender B — 14-Month Weekly Schedule", "Tot int = total interest paid if settled that week: 50% = Offer 8, 100% = Offer 9. Interest only; origination fee separate.", SCHED14, PMT14);
+  schedPage("Lender B (over $500K) — 12-Month Weekly Schedule", "Tot int = total interest paid if settled that week: 50% = Offer 9, 100% = Offer 10. Interest only; origination fee separate.", SCHED12, PMT12);
+  schedPage("Lender B (over $500K) — 14-Month Weekly Schedule", "Tot int = total interest paid if settled that week: 50% = Offer 11, 100% = Offer 12. Interest only; origination fee separate.", SCHED14, PMT14);
 
   newpage();
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
