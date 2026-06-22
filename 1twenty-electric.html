@@ -37,16 +37,21 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .btn-hint{font-size:11.5px;color:var(--slate);}
 @media print{.actions{display:none;}}
 .group-title{color:var(--navy);font-size:22px;margin:28px 0 4px 0;}
-.group-note{font-size:12px;color:var(--slate);margin:0 0 14px 0;max-width:880px;}
+.group-note{font-size:12px;color:var(--slate);margin:0 0 14px 0;max-width:900px;}
 .offers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:10px;}
+.offers-grid.one{grid-template-columns:1fr;}
 @media(max-width:680px){.offers-grid{grid-template-columns:1fr;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
+.offer-card.is-featured{border-color:var(--green);box-shadow:0 0 0 1px var(--green);}
 .offer-card-header{color:#fff;padding:12px 16px;}
+.opt-buy .offer-card-header{background:linear-gradient(135deg,#00A352 0%,#00CD67 100%);}
 .opt-std .offer-card-header{background:linear-gradient(135deg,#0B7C8A 0%,#0E97A8 100%);}
 .opt-acc .offer-card-header{background:linear-gradient(135deg,#002F68 0%,#1A2763 100%);}
 .offer-term{font-family:'DM Serif Display',Georgia,serif;font-size:19px;line-height:1.1;}
 .offer-sub{font-size:10.5px;opacity:.92;margin-top:3px;letter-spacing:.02em;}
 .offer-card-body{padding:12px 16px 14px;flex:1;}
+.offer-card-body.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;}
+@media(max-width:560px){.offer-card-body.grid2{grid-template-columns:1fr;}}
 .kv-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;font-size:12.5px;border-bottom:1px dotted var(--line);gap:8px;}
 .kv-row:last-child{border-bottom:none;}
 .kv-label{color:var(--slate);}
@@ -61,45 +66,41 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .kv-pay .kv-val{color:var(--navy);font-size:15px;}
 .kv-forgive .kv-val{color:var(--navy);}
 .tag-nofee{display:inline-block;background:var(--green);color:#fff;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle;}
-.closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:14px 18px;margin:22px 0 8px;}
+.closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:14px 18px;margin:24px 0 8px;}
 .closing h3{color:var(--navy);font-size:16px;margin:0 0 8px 0;}
 .closing ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--navy2);}
 .closing li{margin-bottom:5px;}
 .closing .req-foot{font-size:11.5px;color:var(--slate);margin:9px 0 0;font-style:italic;}
-/* chart */
-.chart-area{display:flex;gap:30px;justify-content:space-around;padding:26px 6px 0;border-bottom:2px solid var(--line);}
-.ccluster{display:flex;flex-direction:column;align-items:center;flex:1;}
-.cplot{display:flex;align-items:flex-end;justify-content:center;gap:9px;height:268px;width:100%;}
-.cbar{position:relative;width:52px;border-radius:6px 6px 0 0;min-height:2px;}
-@media(max-width:560px){.cbar{width:30px;} .chart-area{gap:10px;} .cplot{gap:5px;}}
-.cbar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--navy);white-space:nowrap;font-variant-numeric:tabular-nums;}
-.cxlabel{margin-top:10px;font-size:12.5px;font-weight:600;color:var(--navy);text-align:center;line-height:1.25;}
-.clegend{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin:16px 0 2px;font-size:11.5px;color:var(--slate);}
-.clegend-item{display:inline-flex;align-items:center;gap:6px;}
-.cswatch{width:13px;height:13px;border-radius:3px;display:inline-block;flex:none;}
-.opt-12std{background:#5BC0CE;} .opt-12acc{background:#0E7C8A;}
-.opt-14std{background:#7BD8A8;} .opt-14acc{background:#00A352;}
-.cmp-title{color:var(--navy);font-size:22px;margin:32px 0 4px 0;}
-.cmp-note{font-size:12.5px;color:var(--slate);margin:0 0 12px;max-width:900px;}
-.cmp-foot{font-size:11.5px;color:var(--slate);margin:14px 0 0;max-width:920px;line-height:1.5;}
+/* comparison table */
+.cmp-title{color:var(--navy);font-size:22px;margin:34px 0 4px 0;}
+.cmp-note{font-size:12.5px;color:var(--slate);margin:0 0 12px;max-width:920px;}
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table.cmp{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:680px;}
+table.cmp th,table.cmp td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line);border-left:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;}
+table.cmp th:first-child,table.cmp td:first-child{text-align:left;border-left:none;}
+table.cmp thead th{background:var(--navy);color:#fff;font-weight:600;font-size:12px;vertical-align:bottom;}
+.cmp-sub{display:block;font-size:9.5px;font-weight:400;opacity:.85;margin-top:2px;text-transform:none;letter-spacing:0;}
+table.cmp tbody tr:nth-child(even){background:var(--bg);}
+table.cmp tbody tr:last-child td{border-bottom:none;}
+.cmp-month{font-weight:600;color:var(--navy);}
+.cmp-best{background:rgba(0,205,103,.20);color:var(--green-d);font-weight:700;}
+.cmp-paid{color:#b6bcc8;}
+.cmp-foot{font-size:11.5px;color:var(--slate);margin:12px 0 0;max-width:940px;line-height:1.5;}
 .cmp-key{color:var(--green-d);font-weight:700;}
-/* early-payoff detail */
-.detail-h{color:var(--navy);font-size:22px;margin:32px 0 4px 0;}
-.detail-note{font-size:12.5px;color:var(--slate);margin:0 0 14px;max-width:900px;}
-.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;align-items:start;}
-.detail-card{border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;break-inside:avoid;}
-.detail-card-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px;margin-bottom:3px;}
-.detail-onum{font-family:'DM Serif Display',Georgia,serif;font-size:17px;color:var(--navy);line-height:1.1;}
-.detail-tag{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);}
-.detail-mini{font-size:11px;color:var(--slate);margin-bottom:7px;}
-.detail-mini b{color:var(--navy);}
-table.sched{border-collapse:separate;border-spacing:0;width:100%;font-size:11.5px;border:1px solid var(--line);border-radius:9px;overflow:hidden;}
-table.sched th,table.sched td{padding:5px 9px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;}
+/* schedules */
+.detail-h{color:var(--navy);font-size:22px;margin:34px 0 4px 0;}
+.detail-note{font-size:12.5px;color:var(--slate);margin:0 0 14px;max-width:920px;}
+.sched-block{margin-bottom:24px;}
+.sched-block h3{color:var(--navy);font-size:17px;margin:18px 0 3px;}
+.sched-block .sched-sub{font-size:11.5px;color:var(--slate);margin:0 0 9px;}
+.sched-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table.sched{border-collapse:separate;border-spacing:0;width:100%;font-size:11px;border:1px solid var(--line);border-radius:9px;overflow:hidden;min-width:560px;}
+table.sched th,table.sched td{padding:4px 8px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;}
 table.sched th:first-child,table.sched td:first-child{text-align:left;}
-table.sched thead th{background:var(--navy);color:#fff;font-weight:600;font-size:10.5px;}
+table.sched thead th{background:var(--navy);color:#fff;font-weight:600;font-size:10px;}
 table.sched tbody tr:nth-child(even){background:var(--bg);}
 table.sched tbody tr:last-child td{border-bottom:none;}
-table.sched tbody tr.full-row{background:rgba(0,205,103,.10);}
+table.sched tbody tr.full-row{background:rgba(0,205,103,.12);font-weight:600;}
 .po-payoff{color:var(--navy);font-weight:600;}
 .po-cost{color:var(--green-d);font-weight:600;}
 .disclosure{margin-top:28px;padding:16px 18px;background:var(--bg);border-radius:10px;border:1px solid var(--line);font-size:11px;color:var(--slate);line-height:1.5;}
@@ -116,7 +117,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   .amount-input-wrap{border:none !important;box-shadow:none !important;padding:0;}
   .amount-input{width:auto;}
   .edit-hint{display:none;}
-  .offer-card,.detail-card,.ccluster{page-break-inside:avoid;}
+  .cmp-scroll,.sched-scroll{overflow:visible;}
+  table.cmp,table.sched{min-width:0;}
+  .offer-card,.sched-block,table.sched tr{page-break-inside:avoid;}
 }
 </style>
 </head>
@@ -134,7 +137,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">1Twenty Electric LLC</h1>
-  <p class="cover-subtitle">Four approved options across two terms. Each term comes two ways: a <b>no-fee Standard</b> option (50% of remaining interest forgiven on early payoff) and an <b>Accelerated</b> option (4% fee, 100% of remaining interest forgiven). Adjust the funding amount and every figure updates live. The chart below shows your total cost if you pay the balance off at 3, 6, or 9 months.</p>
+  <p class="cover-subtitle">Five approved options. The lead offer carries the lowest weekly payment with early-payoff discounts built in. The two programs below each come two ways: a <b>no-fee Standard</b> option (50% of remaining interest forgiven on early payoff) and an <b>Accelerated</b> option (4% fee, 100% forgiven). Adjust the funding amount and everything updates live. The comparison table shows the cheapest option at each payoff point; full weekly schedules follow.</p>
 
   <div class="topnote">
     <b>Note on funding amount.</b> These offers are sized at <b>$500,000</b> &mdash; the maximum we can fund without business tax returns. We were advised the company&rsquo;s tax returns have not been filed since 2021; once they&rsquo;re filed, a larger advance may be available. You can model a smaller amount below and every figure updates instantly.
@@ -154,19 +157,19 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
-    <span class="btn-hint">Plain PDF &mdash; all offers, early-payoff costs, and closing requirements.</span>
+    <span class="btn-hint">Plain PDF &mdash; all offers, comparison, full schedules, and closing requirements.</span>
   </div>
 
   <div id="offersWrap"></div>
 
-  <h2 class="cmp-title">Total Cost If You Pay Off Early</h2>
-  <p class="cmp-note">Each bar is your <b>total cost of capital</b> (origination fee + interest) if you settle the balance in full at that point. Lower is better. Updates with the funding amount above.</p>
-  <div id="chartWrap"></div>
-  <p class="cmp-foot">Notice the trade-off: the <span class="cmp-key">Accelerated</span> options (100% interest forgiveness) cost the least if you pay off within the first few months &mdash; even with the 4% fee &mdash; while the no-fee <b>Standard</b> options (50% forgiveness) come out ahead if you carry the balance toward 9 months or to full term. Pick based on how soon you expect to pay it off.</p>
+  <h2 class="cmp-title">Cheapest Option by Payoff Timeframe</h2>
+  <p class="cmp-note">If you settle the balance in full at a given point, this is your <b>total cost of capital</b> (origination fee + interest) for each offer. The lowest cost on each row is highlighted in <span class="cmp-key">green</span>. Updates with the funding amount above.</p>
+  <div id="comparisonWrap"></div>
+  <p class="cmp-foot">Each cell is the all-in cost if you pay the balance off in full by that month. <span class="cmp-key">Green</span> = cheapest at that point. A dash (&mdash;) means that offer is already fully repaid by then. Early-payoff wins flip over time: the Accelerated (100%-forgiveness) options are cheapest in the first months even with the 4% fee, the no-fee Standard options take over by ~9 months, and Offer&nbsp;1 carries the lowest weekly payment throughout.</p>
 
-  <h2 class="detail-h">Early-Payoff Detail</h2>
-  <p class="detail-note">Exact figures behind the chart. For each option: the discounted payoff balance and the all-in cost of capital if you settle at that month. The highlighted row is payoff at full term.</p>
-  <div id="detailWrap"></div>
+  <h2 class="detail-h">Full Amortization Schedules</h2>
+  <p class="detail-note">Week-by-week for each program. <b>Remaining payback</b> is what&rsquo;s left if you keep paying on schedule; the <b>payoff</b> columns are what it takes to settle in full that week (the early-payoff discount already applied). All figures scale with the funding amount.</p>
+  <div id="schedulesWrap"></div>
 
   <div class="closing">
     <h3>Required Closing Documents for Funding</h3>
@@ -178,7 +181,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   </div>
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Offers are subject to underwriting approval and final contract. The total funding amount may not equal the amount deposited to your business checking account. Each offer is limited to the stated maximum advance. Early-payoff figures apply the stated interest-forgiveness discount for that option; the origination fee, where applicable, is included in the total cost of capital. Actual amortization may differ due to origination date, bank holidays, missed or early payments, the existence of a prior outstanding balance, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Offers are subject to underwriting approval and final contract. The total funding amount may not equal the amount deposited to your business checking account. Each offer is limited to the stated maximum advance. Early-payoff figures apply the stated discount for that option; the origination fee, where applicable, is included in the total cost of capital. Actual amortization may differ due to origination date, bank holidays, missed or early payments, the existence of a prior outstanding balance, and other factors.
   </div>
 
   <footer>
@@ -192,37 +195,55 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 "use strict";
 var BASE = 500000, MASTER_MAX = 500000;
 var STATE = { requested: 500000 };
+var PMT12 = 12500, PMT14 = 11250;
+var SCHED12 = [[5204.48,7295.52,637500,565102.24,492704.48],[5128.54,7371.46,625000,555166.51,485333.02],[5051.82,7448.18,612500,545192.42,477884.84],[4974.29,7525.71,600000,535179.56,470359.13],[4895.95,7604.05,587500,525127.54,462755.08],[4816.8,7683.2,575000,515035.94,455071.88],[4736.83,7763.17,562500,504904.35,447308.71],[4656.02,7843.98,550000,494732.36,439464.73],[4574.37,7925.63,537500,484519.55,431539.1],[4491.88,8008.12,525000,474265.49,423530.98],[4408.52,8091.48,512500,463969.75,415439.5],[4324.3,8175.7,500000,453631.9,407263.8],[4239.2,8260.8,487500,443251.5,399003],[4153.21,8346.79,475000,432828.1,390656.21],[4066.33,8433.67,462500,422361.27,382222.54],[3978.54,8521.46,450000,411850.54,373701.08],[3889.84,8610.16,437500,401295.46,365090.92],[3800.22,8699.78,425000,390695.57,356391.14],[3709.66,8790.34,412500,380050.4,347600.8],[3618.17,8881.83,400000,369359.48,338718.97],[3525.71,8974.29,387500,358622.34,329744.68],[3432.3,9067.7,375000,347838.49,320676.98],[3337.92,9162.08,362500,337007.45,311514.9],[3242.55,9257.45,350000,326128.72,302257.45],[3146.19,9353.81,337500,315201.82,292903.64],[3048.82,9451.18,325000,304226.23,283452.46],[2950.45,9549.55,312500,293201.45,273902.91],[2851.05,9648.95,300000,282126.98,264253.96],[2750.61,9749.39,287500,271002.28,254504.57],[2649.13,9850.87,275000,259826.85,244653.7],[2546.59,9953.41,262500,248600.14,234700.29],[2442.99,10057.01,250000,237321.64,224643.28],[2338.3,10161.7,237500,225990.79,214481.58],[2232.53,10267.47,225000,214607.05,204214.11],[2125.66,10374.34,212500,203169.88,193839.77],[2017.67,10482.33,200000,191678.72,183357.44],[1908.56,10591.44,187500,180133.0,172766.0],[1798.32,10701.68,175000,168532.16,162064.32],[1686.92,10813.08,162500,156875.62,151251.24],[1574.37,10925.63,150000,145162.8,140325.61],[1460.64,11039.36,137500,133393.12,129286.25],[1345.74,11154.26,125000,121565.99,118131.99],[1229.63,11270.37,112500,109680.81,106861.62],[1112.32,11387.68,100000,97736.97,95473.94],[993.79,11506.21,87500,85733.86,83967.73],[874.02,11625.98,75000,73670.88,72341.75],[753,11747,62500,61547.37,60594.75],[630.73,11869.27,50000,49362.74,48725.48],[507.18,11992.82,37500,37116.33,36732.66],[382.35,12117.65,25000,24807.5,24615.01],[256.22,12243.78,12500,12435.61,12371.23],[128.77,12371.23,0,0,0]];
+var SCHED14 = [[5210.02,6039.98,663750,578855.01,493960.02],[5147.09,6102.91,652500,570178.56,487857.11],[5083.49,6166.51,641250,561470.3,481690.6],[5019.24,6230.76,630000,552729.92,475459.84],[4954.31,6295.69,618750,543957.07,469164.15],[4888.71,6361.29,607500,535151.43,462802.86],[4822.43,6427.57,596250,526312.65,456375.29],[4755.45,6494.55,585000,517440.37,449880.74],[4687.78,6562.22,573750,508534.26,443318.52],[4619.4,6630.6,562500,499593.96,436687.92],[4550.31,6699.69,551250,490619.12,429988.23],[4480.5,6769.5,540000,481609.37,423218.73],[4409.96,6840.04,528750,472564.35,416378.69],[4338.68,6911.32,517500,463483.69,409467.37],[4266.67,6983.33,506250,454367.02,402484.04],[4193.9,7056.1,495000,445213.97,395427.94],[4120.38,7129.62,483750,436024.16,388298.32],[4046.09,7203.91,472500,426797.21,381094.41],[3971.02,7278.98,461250,417532.72,373815.43],[3895.17,7354.83,450000,408230.3,366460.6],[3818.54,7431.46,438750,398889.57,359029.14],[3741.1,7508.9,427500,389510.12,351520.24],[3662.86,7587.14,416250,380091.55,343933.1],[3583.8,7666.2,405000,370633.45,336266.9],[3503.92,7746.08,393750,361135.41,328520.82],[3423.2,7826.8,382500,351597.01,320694.02],[3341.65,7908.35,371250,342017.84,312785.67],[3259.24,7990.76,360000,332397.46,304794.91],[3175.98,8074.02,348750,322735.45,296720.89],[3091.84,8158.16,337500,313031.37,288562.73],[3006.84,8243.16,326250,303284.79,280319.57],[2920.94,8329.06,315000,293495.26,271990.51],[2834.15,8415.85,303750,283662.33,263574.66],[2746.46,8503.54,292500,273785.56,255071.12],[2657.85,8592.15,281250,263864.49,246478.97],[2568.32,8681.68,270000,253898.65,237797.29],[2477.86,8772.14,258750,243887.58,229025.15],[2386.45,8863.55,247500,233830.8,220161.6],[2294.09,8955.91,236250,223727.85,211205.69],[2200.77,9049.23,225000,213578.23,202156.46],[2106.48,9143.52,213750,203381.47,193012.94],[2011.2,9238.8,202500,193137.07,183774.14],[1914.93,9335.07,191250,182844.54,174439.07],[1817.66,9432.34,180000,172503.37,165006.73],[1719.38,9530.62,168750,162113.06,155476.11],[1620.07,9629.93,157500,151673.09,145846.18],[1519.72,9730.28,146250,141182.95,136115.9],[1418.33,9831.67,135000,130642.12,126284.23],[1315.89,9934.11,123750,120050.06,116350.12],[1212.37,10037.63,112500,109406.25,106312.49],[1107.78,10142.22,101250,98710.14,96170.27],[1002.1,10247.9,90000,87961.19,85922.37],[895.31,10354.69,78750,77158.84,75567.68],[787.42,10462.58,67500,66302.55,65105.1],[678.4,10571.6,56250,55391.75,54533.5],[568.24,10681.76,45000,44425.87,43851.74],[456.94,10793.06,33750,33404.34,33058.68],[344.47,10905.53,22500,22326.58,22153.15],[230.84,11019.16,11250,11192.0,11133.99],[116.01,11133.99,0,0.0,0.0]];
 
 var GROUPS = [
- { name:"12-Month Program", cls:"g12",
-   note:"12-month term, 52 weekly payments. Total payback $650,000 at full term. Choose the no-fee Standard option, or the Accelerated option that forgives 100% of remaining interest if you pay off early.",
+ { name:"Standard Offer", featured:true,
+   note:"Lowest weekly payment of the five &mdash; built for cash flow. 14-month term with early-payoff discounts built in: settle within the first six months and your total payback steps down (see schedule).",
    offers:[
-   { term:"12-Month", opt:"Standard Payoff", cls:"opt-std", barcls:"opt-12std", optShort:"Standard (0% fee)",
+   { kind:"buydown", term:"14-Month", termMonths:14, opt:"Standard", cls:"opt-buy", featured:true,
+     subText:"early-payoff discounts built in", optShort:"(2% fee)",
+     max:500000, weekly:11054.43, rtr:650000, feePct:0.02, nPay:"≈59 weekly",
+     earlyLabel:"Early payoff", earlyVal:"Discounts built in (see schedule)",
+     fullFactor:1.30, buyMonths:[1,2,3,4,5,6] }
+ ]},
+ { name:"12-Month Program", note:"12-month term, 52 weekly payments. Total payback $650,000 at full term. No-fee Standard option, or an Accelerated option that forgives 100% of remaining interest on early payoff.",
+   offers:[
+   { kind:"forgive", term:"12-Month", termMonths:12, opt:"Standard Payoff", cls:"opt-std",
+     subText:"50% interest forgiven on early payoff", optShort:"Std (0% fee)",
      max:500000, weekly:12500, rtr:650000, periods:52, nPay:"52 weekly", feePct:0, forgive:0.5,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
      ms:[ {mo:3,k:13,po:443251.50},{mo:6,k:26,po:304226.23},{mo:9,k:39,po:156875.62},{mo:12,k:52,po:0} ] },
-   { term:"12-Month", opt:"Accelerated Payoff", cls:"opt-acc", barcls:"opt-12acc", optShort:"Accelerated (4% fee)",
+   { kind:"forgive", term:"12-Month", termMonths:12, opt:"Accelerated Payoff", cls:"opt-acc",
+     subText:"100% interest forgiven on early payoff", optShort:"Acc (4% fee)",
      max:500000, weekly:12500, rtr:650000, periods:52, nPay:"52 weekly", feePct:0.04, forgive:1,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:13,po:399003.00},{mo:6,k:26,po:283452.46},{mo:9,k:39,po:151251.24},{mo:12,k:52,po:0} ] }
  ]},
- { name:"14-Month Program", cls:"g14",
-   note:"14-month term, 60 weekly payments. Total payback $675,000 at full term. Choose the no-fee Standard option, or the Accelerated option that forgives 100% of remaining interest if you pay off early.",
+ { name:"14-Month Program", note:"14-month term, 60 weekly payments. Total payback $675,000 at full term. No-fee Standard option, or an Accelerated option that forgives 100% of remaining interest on early payoff.",
    offers:[
-   { term:"14-Month", opt:"Standard Payoff", cls:"opt-std", barcls:"opt-14std", optShort:"Standard (0% fee)",
+   { kind:"forgive", term:"14-Month", termMonths:14, opt:"Standard Payoff", cls:"opt-std",
+     subText:"50% interest forgiven on early payoff", optShort:"Std (0% fee)",
      max:500000, weekly:11250, rtr:675000, periods:60, nPay:"60 weekly", feePct:0, forgive:0.5,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
      ms:[ {mo:3,k:13,po:472564.35},{mo:6,k:26,po:351597.01},{mo:9,k:39,po:223727.85},{mo:12,k:52,po:87961.19},{mo:14,k:60,po:0} ] },
-   { term:"14-Month", opt:"Accelerated Payoff", cls:"opt-acc", barcls:"opt-14acc", optShort:"Accelerated (4% fee)",
+   { kind:"forgive", term:"14-Month", termMonths:14, opt:"Accelerated Payoff", cls:"opt-acc",
+     subText:"100% interest forgiven on early payoff", optShort:"Acc (4% fee)",
      max:500000, weekly:11250, rtr:675000, periods:60, nPay:"60 weekly", feePct:0.04, forgive:1,
+     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:13,po:416378.69},{mo:6,k:26,po:320694.02},{mo:9,k:39,po:211205.69},{mo:12,k:52,po:85922.37},{mo:14,k:60,po:0} ] }
  ]}
 ];
 (function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;o.gname=g.name;});});})();
 var ALL=[]; GROUPS.forEach(function(g){g.offers.forEach(function(o){ALL.push(o);});});
-var CHART_MONTHS=[3,6,9];
 
 function round2(x){ return Math.round((x+Number.EPSILON)*100)/100; }
 function money(x){ return "$"+Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$"+Math.round(Number(x)).toLocaleString("en-US"); }
 function kv(label,val,cls){ return '<div class="kv-row'+(cls?' '+cls:'')+'"><span class="kv-label">'+label+'</span><span class="kv-val">'+val+'</span></div>'; }
+function scale(){ var adv=Math.min(STATE.requested,MASTER_MAX); if(adv<0)adv=0; return adv/BASE; }
 
 function model(o){
   var adv=Math.min(STATE.requested,o.max); if(adv<0)adv=0;
@@ -230,136 +251,185 @@ function model(o){
   var fee=round2(adv*o.feePct), net=round2(adv-fee);
   return { adv:adv, s:s, capped:STATE.requested>o.max, payback:round2(o.rtr*s), weekly:round2(o.weekly*s), fee:fee, net:net };
 }
-// cost of capital if settled in full after payment #k (milestone ms)
+function findMs(o,mo){ for(var i=0;i<(o.ms||[]).length;i++){ if(o.ms[i].mo===mo) return o.ms[i]; } return null; }
 function payoffAt(o,ms){
   var m=model(o);
-  var payoff=round2(ms.po*m.s);
-  var paid=round2(o.weekly*m.s*ms.k);
+  var payoff=round2(ms.po*m.s), paid=round2(o.weekly*m.s*ms.k);
   return { payoff:payoff, paid:paid, fee:m.fee, cost:round2(paid+payoff-m.adv+m.fee) };
 }
-function findMs(o,mo){ for(var i=0;i<o.ms.length;i++){ if(o.ms[i].mo===mo) return o.ms[i]; } return null; }
+function buyFactor(o,mo){ return mo<=6 ? round2(1.16+0.02*mo) : o.fullFactor; }
+function costAtMonth(o,mo){
+  var m=model(o);
+  if(o.kind==="buydown"){ return round2(m.adv*(buyFactor(o,mo)-1)+m.fee); }
+  var ms=findMs(o,mo); if(!ms) return null;
+  return payoffAt(o,ms).cost;
+}
 
-function offerCard(o,g){
+function offerCard(o){
   var m=model(o);
   var cap=m.capped?'<span class="cap-badge">offer max</span>':'';
   var feeRow = o.feePct>0
-    ? kv("Origination fee ("+(o.feePct*100)+"%)", money0(m.fee), "kv-fee")
-    : kv("Origination fee", "None"+'<span class="tag-nofee">No fee</span>', "kv-nofee");
-  return '<div class="offer-card '+o.cls+'">'
+     ? kv("Origination fee ("+round2(o.feePct*100)+"%)", money0(m.fee), "kv-fee")
+     : kv("Origination fee", "None"+'<span class="tag-nofee">No fee</span>', "kv-nofee");
+  var bodyCls = o.featured ? "offer-card-body grid2" : "offer-card-body";
+  return '<div class="offer-card '+o.cls+(o.featured?' is-featured':'')+'">'
     + '<div class="offer-card-header"><div class="offer-term">'+o.term+' &middot; '+o.opt+'</div>'
-      + '<div class="offer-sub">Offer '+o.num+' &middot; '+(o.forgive*100)+'% interest forgiven on early payoff</div></div>'
-    + '<div class="offer-card-body">'
+      + '<div class="offer-sub">Offer '+o.num+' &middot; '+o.subText+'</div></div>'
+    + '<div class="'+bodyCls+'">'
       + kv("Advance", money0(m.adv)+cap)
       + feeRow
       + kv("Net advance", money0(m.net), "kv-net")
       + kv("Total payback (full term)", money0(m.payback))
       + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
       + kv("Number of payments", o.nPay)
-      + kv("Term", o.term.replace("-Month"," months"))
-      + kv("Early-payoff forgiveness", (o.forgive*100)+'% of remaining interest', "kv-forgive")
+      + kv("Term", o.termMonths+" months")
+      + kv(o.earlyLabel, o.earlyVal, "kv-forgive")
     + '</div></div>';
 }
 
 function renderOffers(){
   document.getElementById("offersWrap").innerHTML = GROUPS.map(function(g){
     return '<h2 class="group-title">'+g.name+'</h2><p class="group-note">'+g.note+'</p>'
-      + '<div class="offers-grid">'+g.offers.map(function(o){return offerCard(o,g);}).join("")+'</div>';
+      + '<div class="offers-grid'+(g.featured?' one':'')+'">'+g.offers.map(function(o){return offerCard(o);}).join("")+'</div>';
   }).join("");
 }
 
-function renderChart(){
-  var maxv=0;
-  var data=ALL.map(function(o){
-    return CHART_MONTHS.map(function(mo){
-       var c=payoffAt(o,findMs(o,mo)).cost; if(c>maxv)maxv=c; return c;
-    });
-  });
-  var MAXH=240;
-  var clusters=CHART_MONTHS.map(function(mo,pi){
-     var bars=ALL.map(function(o,oi){
-        var c=data[oi][pi];
-        var h=maxv>0?Math.max(2,Math.round(c/maxv*MAXH)):2;
-        return '<div class="cbar '+o.barcls+'" style="height:'+h+'px"><span class="cbar-val">'+money0(c)+'</span></div>';
+function renderComparison(){
+  var months=[3,6,9,12,14];
+  var head='<tr><th>Pay off at</th>'+ALL.map(function(o){
+     return '<th>Offer '+o.num+'<span class="cmp-sub">'+o.term.replace("-Month","-mo")+' '+o.optShort+'</span></th>';
+  }).join("")+'</tr>';
+  var body=months.map(function(mo){
+     var vals=ALL.map(function(o){ return costAtMonth(o,mo); });
+     var present=vals.filter(function(v){return v!==null;});
+     var min=present.length?Math.min.apply(null,present):null;
+     var cells=vals.map(function(v){
+        if(v===null) return '<td class="cmp-paid">&mdash;</td>';
+        return '<td'+((v===min)?' class="cmp-best"':'')+'>'+money0(v)+'</td>';
      }).join("");
-     return '<div class="ccluster"><div class="cplot">'+bars+'</div><div class="cxlabel">Paid off at<br>'+mo+' months</div></div>';
+     return '<tr><td class="cmp-month">'+mo+' months</td>'+cells+'</tr>';
   }).join("");
-  var legend=ALL.map(function(o){
-     return '<span class="clegend-item"><span class="cswatch '+o.barcls+'"></span>'+o.term.replace("-Month","-mo")+' &middot; '+o.optShort+'</span>';
-  }).join("");
-  document.getElementById("chartWrap").innerHTML =
-     '<div class="chart-area">'+clusters+'</div><div class="clegend">'+legend+'</div>';
+  document.getElementById("comparisonWrap").innerHTML =
+     '<div class="cmp-scroll"><table class="cmp"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
 }
 
-function renderDetail(){
-  document.getElementById("detailWrap").innerHTML = '<div class="detail-grid">'+ALL.map(function(o){
-    var m=model(o);
-    var feeTxt = o.feePct>0 ? money0(m.fee)+" fee" : "no fee";
-    var rows=o.ms.map(function(ms){
-      var p=payoffAt(o,ms);
-      var full=(ms.po===0);
-      var lbl = full ? "Full term ("+ms.mo+" mo)" : "Month "+ms.mo;
-      return '<tr'+(full?' class="full-row"':'')+'><td>'+lbl+'</td>'
-        + '<td class="po-payoff">'+money0(p.payoff)+'</td>'
-        + '<td class="po-cost">'+money0(p.cost)+'</td></tr>';
-    }).join("");
-    return '<div class="detail-card">'
-      + '<div class="detail-card-head"><span class="detail-onum">Offer '+o.num+'</span>'
-        + '<span class="detail-tag">'+o.term+' &middot; '+o.opt+'</span></div>'
-      + '<div class="detail-mini">Advance <b>'+money0(m.adv)+'</b> &middot; Payback <b>'+money0(m.payback)+'</b> &middot; '+feeTxt+'</div>'
-      + '<table class="sched"><thead><tr><th>Pay off at</th><th>Payoff balance</th><th>Total cost*</th></tr></thead>'
-      + '<tbody>'+rows+'</tbody></table></div>';
-  }).join("")+'</div>'
-  + '<p class="cmp-foot">* <b>Total cost of capital</b> = weekly payments made + discounted payoff balance + origination fee &minus; advance. It is what the money costs you all-in if you settle at that month.</p>';
+function weeklyTable(rows, pmt, s, oStd, oAcc){
+  var head='<tr><th>#</th><th>Weekly</th><th>Interest</th><th>Principal</th><th>Remaining payback</th>'
+    +'<th>Payoff &mdash; Std (Offer '+oStd+')</th><th>Payoff &mdash; Acc (Offer '+oAcc+')</th></tr>';
+  var body=rows.map(function(r,i){
+    var full=(r[2]<=0.005);
+    return '<tr'+(full?' class="full-row"':'')+'><td>'+(i+1)+'</td>'
+      + '<td>'+money(pmt*s)+'</td>'
+      + '<td>'+money(r[0]*s)+'</td>'
+      + '<td>'+money(r[1]*s)+'</td>'
+      + '<td>'+money0(r[2]*s)+'</td>'
+      + '<td class="po-payoff">'+money0(r[3]*s)+'</td>'
+      + '<td class="po-payoff">'+money0(r[4]*s)+'</td></tr>';
+  }).join("");
+  return '<div class="sched-scroll"><table class="sched"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
+}
+
+function renderSchedules(){
+  var s=scale();
+  var o1=ALL[0], adv=round2(o1.max*s), rtr=round2(o1.rtr*s), fee=round2(o1.max*s*o1.feePct);
+  // Offer 1 buydown early-payoff schedule (by month held)
+  var brows=o1.buyMonths.map(function(mo){
+    var f=buyFactor(o1,mo), payoff=round2(adv*f), saved=round2(rtr-payoff);
+    return '<tr><td>Month '+mo+'</td><td class="po-payoff">'+money0(payoff)+'</td><td class="po-cost">'+money0(saved)+'</td></tr>';
+  }).join("")
+    + '<tr class="full-row"><td>Month 7 to full term</td><td class="po-payoff">'+money0(rtr)+'</td><td class="po-cost">'+money0(0)+'</td></tr>';
+  var buyTbl='<div class="sched-block"><h3>Offer 1 &middot; 14-Month Standard &mdash; Early-Payoff Schedule</h3>'
+    + '<p class="sched-sub">Weekly payment '+money(round2(o1.weekly*s))+' over a 14-month term (&approx;59 payments). Settle in full within the first six months and the total payback steps down as shown; from month 7 it is the full '+money0(rtr)+'.</p>'
+    + '<div class="sched-scroll"><table class="sched"><thead><tr><th>Pay off in</th><th>Total settlement payoff</th><th>You save vs full payback</th></tr></thead><tbody>'
+    + brows + '</tbody></table></div></div>';
+
+  var tbl12='<div class="sched-block"><h3>12-Month Program &mdash; Weekly Schedule</h3>'
+    + '<p class="sched-sub">Weekly payment '+money(round2(PMT12*s))+', 52 payments, '+money0(round2(650000*s))+' total payback. Payoff &mdash; Std applies 50% interest forgiveness (Offer 2); Payoff &mdash; Acc applies 100% (Offer 3).</p>'
+    + weeklyTable(SCHED12, PMT12, s, 2, 3) + '</div>';
+
+  var tbl14='<div class="sched-block"><h3>14-Month Program &mdash; Weekly Schedule</h3>'
+    + '<p class="sched-sub">Weekly payment '+money(round2(PMT14*s))+', 60 payments, '+money0(round2(675000*s))+' total payback. Payoff &mdash; Std applies 50% interest forgiveness (Offer 4); Payoff &mdash; Acc applies 100% (Offer 5).</p>'
+    + weeklyTable(SCHED14, PMT14, s, 4, 5) + '</div>';
+
+  document.getElementById("schedulesWrap").innerHTML = buyTbl + tbl12 + tbl14;
 }
 
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc=new window.jspdf.jsPDF({unit:"pt",format:"letter"});
-  var L=40,R=572,y=64;
+  var L=36,R=576,y=58, s=scale();
+  function newpage(){ doc.addPage(); y=54; }
+  function need(h){ if(y+h>752) newpage(); }
   doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.setTextColor(20);
   doc.text("Funding Offers — 1Twenty Electric LLC", L, y); y+=18;
   doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared June 22, 2026 at 9:50 AM EDT     Funding "+money0(STATE.requested), L, y); y+=18;
+  doc.text("BusinessLoans.com     Prepared June 22, 2026 at 9:50 AM EDT     Funding "+money0(STATE.requested), L, y); y+=16;
   doc.setFontSize(8.5); doc.setTextColor(110);
-  doc.text("~$500,000 is the max without business tax returns (not filed since 2021). 50% options have no fee; 100% options carry a 4% fee.", L, y); y+=18;
+  doc.text("~$500,000 is the max without business tax returns (not filed since 2021). 12/14-mo: Standard = no fee/50% forgiveness, Accelerated = 4% fee/100%.", L, y); y+=18;
+
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
   doc.text("Offer Summary", L, y); y+=12;
-  var sc=[{h:"Offer",x:L,a:"left"},{h:"Fee",x:250,a:"right"},{h:"Advance",x:330,a:"right"},{h:"Net",x:410,a:"right"},{h:"Payback",x:485,a:"right"},{h:"Weekly",x:R,a:"right"}];
+  var sc=[{h:"Offer",x:L,a:"left"},{h:"Fee",x:250,a:"right"},{h:"Advance",x:330,a:"right"},{h:"Net",x:408,a:"right"},{h:"Payback",x:490,a:"right"},{h:"Weekly",x:R,a:"right"}];
   doc.setFontSize(8); doc.setFont("helvetica","bold"); sc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
   doc.setFont("helvetica","normal"); doc.setTextColor(45);
   ALL.forEach(function(o){ var m=model(o);
     var v=["#"+o.num+" "+o.term+" "+o.opt.replace(" Payoff",""), o.feePct>0?money0(m.fee):"None", money0(m.adv)+(m.capped?"*":""), money0(m.net), money0(m.payback), money(m.weekly)];
     sc.forEach(function(c,j){doc.text(String(v[j]),c.x,y,{align:c.a});}); y+=13; });
-  y+=14; doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Total Cost of Capital If Paid Off Early (incl. fees) — lowest each row in bold", L, y); y+=12;
-  var nx=ALL.length, x0=L+92, step=(R-x0)/(nx-1);
+
+  y+=16; need(120); doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
+  doc.text("Total Cost of Capital by Payoff Timeframe (incl. fees) — cheapest each row in bold", L, y); y+=12;
+  var nx=ALL.length, x0=L+88, step=(R-x0)/(nx-1);
   doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Pay off at", L, y);
-  ALL.forEach(function(o,i){ doc.text("#"+o.num+" "+o.term.replace("-Month","mo")+(o.feePct>0?" 4%":" 0%"), x0+i*step, y, {align:"right"}); });
-  y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
-  doc.setFontSize(8);
+  ALL.forEach(function(o,i){ doc.text("Offer "+o.num, x0+i*step, y, {align:"right"}); });
+  y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11; doc.setFontSize(8);
   [3,6,9,12,14].forEach(function(mo){
-    var entries=ALL.map(function(o){ var ms=findMs(o,mo); return ms?payoffAt(o,ms).cost:null; });
-    var present=entries.filter(function(c){return c!==null;});
-    if(!present.length) return;
-    var min=Math.min.apply(null,present);
-    doc.setFont("helvetica","normal"); doc.setTextColor(45);
-    var anyFull=ALL.some(function(o){var ms=findMs(o,mo);return ms&&ms.po===0;});
-    doc.text((anyFull?"Mo "+mo+" (full)":"Mo "+mo), L, y);
-    ALL.forEach(function(o,i){ var c=entries[i];
-      if(c===null){ doc.setFont("helvetica","normal"); doc.setTextColor(160); doc.text("—", x0+i*step, y, {align:"right"}); return; }
+    var vals=ALL.map(function(o){ return costAtMonth(o,mo); });
+    var present=vals.filter(function(v){return v!==null;}); var min=Math.min.apply(null,present);
+    doc.setFont("helvetica","normal"); doc.setTextColor(45); doc.text(mo+" mo", L, y);
+    ALL.forEach(function(o,i){ var c=vals[i];
+      if(c===null){ doc.setFont("helvetica","normal"); doc.setTextColor(165); doc.text("—", x0+i*step, y, {align:"right"}); return; }
       if(c===min){ doc.setFont("helvetica","bold"); doc.setTextColor(0,140,80); } else { doc.setFont("helvetica","normal"); doc.setTextColor(60); }
       doc.text(money0(c), x0+i*step, y, {align:"right"});
     });
     y+=12;
   });
-  y+=16; if(y>720){doc.addPage();y=58;}
+
+  function schedPage(title, sub, rows, pmt, hasInt){
+    newpage();
+    doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20); doc.text(title, L, y); y+=13;
+    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(95); doc.text(sub, L, y); y+=14;
+    var cols=[{h:"#",x:L,a:"left"},{h:"Weekly",x:118,a:"right"},{h:"Interest",x:198,a:"right"},{h:"Principal",x:285,a:"right"},{h:"Remaining",x:380,a:"right"},{h:"Payoff Std",x:478,a:"right"},{h:"Payoff Acc",x:R,a:"right"}];
+    doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20); cols.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=10;
+    doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50);
+    rows.forEach(function(r,i){
+      if(y>760){ newpage(); doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50); }
+      var v=[String(i+1), money(pmt*s), money(r[0]*s), money(r[1]*s), money0(r[2]*s), money0(r[3]*s), money0(r[4]*s)];
+      cols.forEach(function(c,j){ doc.text(v[j], c.x, y, {align:c.a}); }); y+=10.5;
+    });
+  }
+  schedPage("12-Month Program — Weekly Schedule", "52 payments. Payoff Std = Offer 2 (50% forgiveness); Payoff Acc = Offer 3 (100%).", SCHED12, PMT12);
+  schedPage("14-Month Program — Weekly Schedule", "60 payments. Payoff Std = Offer 4 (50% forgiveness); Payoff Acc = Offer 5 (100%).", SCHED14, PMT14);
+
+  newpage();
+  doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
+  doc.text("Offer 1 — 14-Month Standard, Early-Payoff Schedule", L, y); y+=14;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(95);
+  doc.text("Weekly "+money(round2(ALL[0].weekly*s))+" over 14 months. Settle early and total payback steps down.", L, y); y+=14;
+  var bc=[{h:"Pay off in",x:L,a:"left"},{h:"Total settlement payoff",x:300,a:"right"},{h:"You save",x:R,a:"right"}];
+  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20); bc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.line(L,y,R,y); y+=11;
+  doc.setFont("helvetica","normal"); doc.setTextColor(50);
+  var o1=ALL[0], adv=round2(o1.max*s), rtr=round2(o1.rtr*s);
+  o1.buyMonths.forEach(function(mo){ var f=buyFactor(o1,mo), po=round2(adv*f);
+    [["Month "+mo,L,"left"],[money0(po),300,"right"],[money0(round2(rtr-po)),R,"right"]].forEach(function(c){doc.text(String(c[0]),c[1],y,{align:c[2]});}); y+=12; });
+  [["Month 7 to full term",L,"left"],[money0(rtr),300,"right"],[money0(0),R,"right"]].forEach(function(c){doc.text(String(c[0]),c[1],y,{align:c[2]});}); y+=18;
+
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
   doc.text("Required Closing Documents for Funding", L, y); y+=14;
   doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(50);
   ["Bank Verification","Proof of Ownership"].forEach(function(t){ doc.text("• "+t, L+6, y); y+=13; });
   doc.setFontSize(8.5); doc.setTextColor(110);
-  doc.text("* Please provide a voided check and a driver's license for contract requests.", L+6, y); y+=18;
+  doc.text("* Please provide a voided check and a driver's license for contract requests.", L+6, y); y+=16;
   doc.setFontSize(7.5); doc.setTextColor(130);
   doc.text("Illustration only; not a commitment to lend. Subject to underwriting and final contract. * = advance capped at offer maximum.", L, y);
   doc.save("1twenty-electric-offers.pdf");
@@ -374,7 +444,7 @@ function recompute(){
   var help=document.getElementById("amountHelp");
   help.className="amount-help"+(capped?" warning":"");
   help.textContent=capped?"Capped at the $500,000 maximum (max without tax returns)":"Adjustable up to the $500,000 maximum";
-  renderOffers(); renderChart(); renderDetail();
+  renderOffers(); renderComparison(); renderSchedules();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
