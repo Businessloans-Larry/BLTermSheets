@@ -75,6 +75,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .closing-lender{font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
 .closing-col ul{columns:1;margin:0;padding-left:18px;font-size:12.5px;color:var(--navy2);}
 .closing-col li{margin-bottom:5px;}
+.stip-over-head{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 4px;border-top:1px dashed var(--line);padding-top:8px;}
+.stip-note{display:inline-block;font-weight:600;text-transform:none;letter-spacing:0;font-size:10px;margin-left:6px;padding:1px 7px;border-radius:20px;vertical-align:middle;}
+.stip-note.on{color:var(--green-d);background:rgba(0,205,103,.14);}
+.stip-note.off{color:#8a93a3;background:#eef0f4;}
+.stip-off{text-decoration:line-through;color:#a6adba;}
 /* comparison table */
 .cmp-title{color:var(--navy);font-size:22px;margin:34px 0 4px 0;}
 .cmp-note{font-size:12.5px;color:var(--slate);margin:0 0 12px;max-width:920px;}
@@ -147,10 +152,10 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">1Twenty Electric LLC</h1>
-  <p class="cover-subtitle">Offers from two lenders. <b>Lender A</b> &mdash; five term options (12 to 22 months) at $400,000, with 100% of remaining interest forgiven on early payoff. <b>Lender B</b> &mdash; 12- and 14-month programs up to $500,000, each available with 50% or 100% early-payoff interest forgiveness. Adjust the funding amount and everything updates live. The comparison table shows the cheapest option at each payoff point; full schedules follow.</p>
+  <p class="cover-subtitle">Offers from two lenders. <b>Lender A</b> &mdash; five term options (12 to 22 months) up to $1,000,000, with 100% of remaining interest forgiven on early payoff. <b>Lender B</b> &mdash; 12- and 14-month programs up to $500,000, each available with 50% or 100% early-payoff interest forgiveness. Adjust the funding amount and everything updates live. The comparison table shows the cheapest option at each payoff point; full schedules follow.</p>
 
   <div class="topnote">
-    <b>Note on funding amount.</b> We can fund <b>$400,000&ndash;$500,000</b> without business tax returns &mdash; we were advised the company&rsquo;s have not been filed since 2021; once filed, a larger advance may be available. Lender A is sized at $400,000 and Lender B up to $500,000. Adjust the amount below and every figure updates instantly.
+    <b>Note on funding amount.</b> We can fund <b>$400,000&ndash;$500,000</b> without business tax returns &mdash; we were advised the company&rsquo;s have not been filed since 2021. Above that, the additional documents listed below are required, and <b>Lender A can fund up to $1,000,000</b> (Lender B caps at $500,000). The amount defaults to $500,000; adjust it and every figure &mdash; including which closing docs apply &mdash; updates instantly.
   </div>
 
   <div class="borrower-bar">
@@ -161,7 +166,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Funding Amount</div>
       <div class="edit-row"><span class="edit-hint">Edit amount here<span class="edit-arrow">&#10142;</span></span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="500,000" aria-label="Funding amount"/></div></div>
-      <div id="amountHelp" class="amount-help">Adjustable up to the $500,000 maximum</div>
+      <div id="amountHelp" class="amount-help">Adjustable up to the $1,000,000 maximum &middot; defaults to $500,000</div>
     </div>
   </div>
 
@@ -170,36 +175,14 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <span class="btn-hint">Plain PDF &mdash; all offers, comparison, full schedules, and closing requirements.</span>
   </div>
 
-  <div class="closing">
-    <h3>Required Closing Documents for Funding</h3>
-    <div class="closing-grid">
-      <div class="closing-col">
-        <div class="closing-lender">Lender A</div>
-        <ul>
-          <li>Bank Verification</li>
-          <li>Proof of Ownership</li>
-          <li>Signed contract</li>
-        </ul>
-        <p class="req-foot">* Please provide a voided check and a driver&rsquo;s license for contract requests.</p>
-      </div>
-      <div class="closing-col">
-        <div class="closing-lender">Lender B</div>
-        <ul>
-          <li>Driver&rsquo;s license</li>
-          <li>Voided check</li>
-          <li>Signed contract</li>
-          <li>Channel Partners loan contract</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <div id="stipsWrap"></div>
 
   <div id="offersWrap"></div>
 
   <h2 class="cmp-title">Cheapest Option by Payoff Timeframe</h2>
   <p class="cmp-note">For each payoff timeframe, the single cheapest option and its <b>total cost of capital</b> (origination fee + interest) if you settle the balance in full at that point. Updates with the funding amount above.</p>
   <div id="comparisonWrap"></div>
-  <p class="cmp-foot">Lender A offers are sized at $400,000 and Lender B up to $500,000, so these costs reflect each offer&rsquo;s advance size &mdash; set the amount to $400,000 to compare every offer at the same size. Full per-offer figures are in the schedules below.</p>
+  <p class="cmp-foot">Lowest total cost of capital at each payoff point, compared at the current funding amount. Above $500,000 only Lender A scales up (Lender B caps at $500,000). Full per-offer figures are in the schedules below.</p>
 
   <h2 class="detail-h">Payoff &amp; Amortization Schedules</h2>
   <p class="detail-note"><b>Lender A:</b> total payback if you settle in full by the end of each month (flat weekly payments in between). <b>Lender B:</b> full week-by-week amortization, with the total interest you&rsquo;d have paid if you settle that week under 50% vs 100% forgiveness. All figures scale with the funding amount.</p>
@@ -218,7 +201,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
 <script>
 "use strict";
-var BASE = 500000, MASTER_MAX = 500000;
+var BASE = 500000, MASTER_MAX = 1000000;
 var STATE = { requested: 500000 };
 var PMT12 = 12500, PMT14 = 11250;
 var SCHED12 = [[5204.48,7295.52,637500,565102.24,492704.48],[5128.54,7371.46,625000,555166.51,485333.02],[5051.82,7448.18,612500,545192.42,477884.84],[4974.29,7525.71,600000,535179.56,470359.13],[4895.95,7604.05,587500,525127.54,462755.08],[4816.8,7683.2,575000,515035.94,455071.88],[4736.83,7763.17,562500,504904.35,447308.71],[4656.02,7843.98,550000,494732.36,439464.73],[4574.37,7925.63,537500,484519.55,431539.1],[4491.88,8008.12,525000,474265.49,423530.98],[4408.52,8091.48,512500,463969.75,415439.5],[4324.3,8175.7,500000,453631.9,407263.8],[4239.2,8260.8,487500,443251.5,399003],[4153.21,8346.79,475000,432828.1,390656.21],[4066.33,8433.67,462500,422361.27,382222.54],[3978.54,8521.46,450000,411850.54,373701.08],[3889.84,8610.16,437500,401295.46,365090.92],[3800.22,8699.78,425000,390695.57,356391.14],[3709.66,8790.34,412500,380050.4,347600.8],[3618.17,8881.83,400000,369359.48,338718.97],[3525.71,8974.29,387500,358622.34,329744.68],[3432.3,9067.7,375000,347838.49,320676.98],[3337.92,9162.08,362500,337007.45,311514.9],[3242.55,9257.45,350000,326128.72,302257.45],[3146.19,9353.81,337500,315201.82,292903.64],[3048.82,9451.18,325000,304226.23,283452.46],[2950.45,9549.55,312500,293201.45,273902.91],[2851.05,9648.95,300000,282126.98,264253.96],[2750.61,9749.39,287500,271002.28,254504.57],[2649.13,9850.87,275000,259826.85,244653.7],[2546.59,9953.41,262500,248600.14,234700.29],[2442.99,10057.01,250000,237321.64,224643.28],[2338.3,10161.7,237500,225990.79,214481.58],[2232.53,10267.47,225000,214607.05,204214.11],[2125.66,10374.34,212500,203169.88,193839.77],[2017.67,10482.33,200000,191678.72,183357.44],[1908.56,10591.44,187500,180133.0,172766.0],[1798.32,10701.68,175000,168532.16,162064.32],[1686.92,10813.08,162500,156875.62,151251.24],[1574.37,10925.63,150000,145162.8,140325.61],[1460.64,11039.36,137500,133393.12,129286.25],[1345.74,11154.26,125000,121565.99,118131.99],[1229.63,11270.37,112500,109680.81,106861.62],[1112.32,11387.68,100000,97736.97,95473.94],[993.79,11506.21,87500,85733.86,83967.73],[874.02,11625.98,75000,73670.88,72341.75],[753,11747,62500,61547.37,60594.75],[630.73,11869.27,50000,49362.74,48725.48],[507.18,11992.82,37500,37116.33,36732.66],[382.35,12117.65,25000,24807.5,24615.01],[256.22,12243.78,12500,12435.61,12371.23],[128.77,12371.23,0,0,0]];
@@ -226,25 +209,25 @@ var SCHED14 = [[5210.02,6039.98,663750,578855.01,493960.02],[5147.09,6102.91,652
 
 var GROUPS = [
  { name:"Lender A",
-   note:"Five term options, $400,000, 2.5% origination fee. Flat weekly payments, and 100% of remaining interest is forgiven if you pay off early &mdash; your total payback steps down (see the early-payoff schedule).",
+   note:"Five term options, up to $1,000,000, 2.5% origination fee. Flat weekly payments, and 100% of remaining interest is forgiven if you pay off early &mdash; your total payback steps down (see the early-payoff schedule).",
    offers:[
-   { kind:"monthly", term:"22-Month", termMonths:22, opt:"", cls:"opt-buy", base:400000, max:400000,
+   { kind:"monthly", term:"22-Month", termMonths:22, opt:"", cls:"opt-buy", base:400000, max:1000000,
      weekly:5993.33, rtr:570800, feePct:0.025, nPay:"≈95 weekly", optShort:"(2.5% fee)",
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:null },
-   { kind:"monthly", term:"21-Month", termMonths:21, opt:"", cls:"opt-buy", base:400000, max:400000,
+   { kind:"monthly", term:"21-Month", termMonths:21, opt:"", cls:"opt-buy", base:400000, max:1000000,
      weekly:6190.67, rtr:562800, feePct:0.025, nPay:"≈91 weekly", optShort:"(2.5% fee)",
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413350.44,426251.98,438689.64,450647.95,462110.90,473061.96,483484.04,493359.49,502670.07,511396.92,519520.55,527020.85,533876.99,540067.49,545570.12,550361.93,554419.19,557717.39,560231.19,561934.41,562800] },
-   { kind:"monthly", term:"18-Month", termMonths:18, opt:"", cls:"opt-buy", base:400000, max:400000,
+   { kind:"monthly", term:"18-Month", termMonths:18, opt:"", cls:"opt-buy", base:400000, max:1000000,
      weekly:6918.67, rtr:539200, feePct:0.025, nPay:"≈78 weekly", optShort:"(2.5% fee)",
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413407.51,426260.35,438539.93,450227.03,461301.79,471743.69,481531.52,490643.36,499056.53,506747.63,513692.46,519865.99,525242.38,529794.90,533495.95,536316.98,538228.49,539200] },
-   { kind:"monthly", term:"15-Month", termMonths:15, opt:"", cls:"opt-buy", base:400000, max:400000,
+   { kind:"monthly", term:"15-Month", termMonths:15, opt:"", cls:"opt-buy", base:400000, max:1000000,
      weekly:7988.00, rtr:518800, feePct:0.025, nPay:"≈65 weekly", optShort:"(2.5% fee)",
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413767.58,426818.58,439128.35,450671.38,461421.26,471350.71,480431.49,488634.38,495929.16,502284.59,507668.33,512046.94,515385.81,517649.17,518800] },
-   { kind:"monthly", term:"12-Month", termMonths:12, opt:"", cls:"opt-buy", base:400000, max:400000,
+   { kind:"monthly", term:"12-Month", termMonths:12, opt:"", cls:"opt-buy", base:400000, max:1000000,
      weekly:9530.67, rtr:495200, feePct:0.025, nPay:"≈52 weekly", optShort:"(2.5% fee)",
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413791.45,426635.59,438499.76,449350.17,459151.88,467868.71,475463.27,481896.86,487129.46,491119.65,493824.60,495200] }
@@ -276,11 +259,37 @@ var GROUPS = [
 (function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;o.gname=g.name;});});})();
 var ALL=[]; GROUPS.forEach(function(g){g.offers.forEach(function(o){ALL.push(o);});});
 
+var STIPS=[
+ { name:"Lender A", threshold:400000,
+   base:["Signed loan agreement",
+         "Proof of citizenship — Green Card / Permanent Resident Card or Passport (Joel Velasco)",
+         "Driver’s license / photo ID",
+         "DecisionLogic (bank verification)",
+         "Voided check (account ending 4950)"],
+   over:["8821 / Tax Guard (wet-signed)",
+         "Prior-year business tax return",
+         "2026 year-to-date financial statements",
+         "Current A/R and A/P reports",
+         "Upcoming contract backlog breakdown",
+         "Full year of bank statements (accounts ending 4950 & 4992)"] },
+ { name:"Lender B", threshold:500000,
+   base:["Signed loan agreement",
+         "Valid U.S. government-issued photo ID",
+         "Voided check (account ending 4950)",
+         "Additional banking may be required (if most recent banking is older than 35 days)",
+         "Payoff letter from Lending Services"],
+   over:["Call with an underwriter",
+         "Dec 2025 – Feb 2026 business bank statements (accounts ending 4950 & 4992)",
+         "Current A/R and A/P aging reports",
+         "Last 2 years business tax returns, OR most recent year with signed 8821 (business)",
+         "2026 YTD profit & loss statement and balance sheet"] }
+];
+
 function round2(x){ return Math.round((x+Number.EPSILON)*100)/100; }
 function money(x){ return "$"+Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$"+Math.round(Number(x)).toLocaleString("en-US"); }
 function kv(label,val,cls){ return '<div class="kv-row'+(cls?' '+cls:'')+'"><span class="kv-label">'+label+'</span><span class="kv-val">'+val+'</span></div>'; }
-function scale(){ var adv=Math.min(STATE.requested,MASTER_MAX); if(adv<0)adv=0; return adv/BASE; }
+function scale(){ var adv=Math.min(STATE.requested,500000); if(adv<0)adv=0; return adv/BASE; }
 
 function model(o){
   var base=o.base||BASE;
@@ -374,7 +383,7 @@ function weeklyTable(rows, pmt, s, oStd, oAcc){
 
 function renderSchedules(){
   var s=scale();
-  var sa=Math.min(STATE.requested,400000)/400000;
+  var sa=Math.min(STATE.requested,1000000)/400000;
   // Lender A — monthly early-payoff settlement (per offer with prepay data)
   var laOffs=ALL.filter(function(o){return o.kind==="monthly" && o.payoffArr;});
   var maxT=laOffs.reduce(function(m,o){return Math.max(m,o.payoffArr.length);},0);
@@ -391,7 +400,7 @@ function renderSchedules(){
     laBody+='<tr><td>Month '+mo+'</td>'+cells+'</tr>';
   }
   var laTbl='<div class="sched-block"><h3>Lender A &mdash; Early-Payoff Settlement Schedule</h3>'
-    + '<p class="sched-sub">Total payback if you settle in full by the end of each month (sized at $400,000; scales with the funding amount). You save the difference between this and the offer&rsquo;s full-term payback; the last figure in each column (highlighted) is the full-term total. The 22-month option&rsquo;s early-payoff schedule was not provided.</p>'
+    + '<p class="sched-sub">Total payback if you settle in full by the end of each month (scales with the funding amount, up to $1,000,000). You save the difference between this and the offer&rsquo;s full-term payback; the last figure in each column (highlighted) is the full-term total. The 22-month option&rsquo;s early-payoff schedule was not provided.</p>'
     + '<div class="sched-scroll"><table class="sched"><thead>'+laHead+'</thead><tbody>'+laBody+'</tbody></table></div></div>';
 
   var tbl12='<div class="sched-block"><h3>Lender B &middot; 12-Month &mdash; Weekly Schedule</h3>'
@@ -405,6 +414,24 @@ function renderSchedules(){
   document.getElementById("schedulesWrap").innerHTML = laTbl + tbl12 + tbl14;
 }
 
+function renderStips(){
+  var amt=STATE.requested;
+  var cols=STIPS.map(function(Ln){
+    var active=amt>Ln.threshold;
+    var baseLis=Ln.base.map(function(t){return '<li>'+t+'</li>';}).join("");
+    var overLis=Ln.over.map(function(t){return '<li class="stip-over'+(active?'':' stip-off')+'">'+t+'</li>';}).join("");
+    var note=active?'<span class="stip-note on">included at '+money0(amt)+'</span>'
+                   :'<span class="stip-note off">waived at or below '+money0(Ln.threshold)+'</span>';
+    return '<div class="closing-col"><div class="closing-lender">'+Ln.name+'</div>'
+      + '<ul>'+baseLis+'</ul>'
+      + '<div class="stip-over-head">Required over '+money0(Ln.threshold)+note+'</div>'
+      + '<ul>'+overLis+'</ul></div>';
+  }).join("");
+  document.getElementById("stipsWrap").innerHTML =
+    '<div class="closing"><h3>Required Closing Documents for Funding</h3>'
+    + '<div class="closing-grid">'+cols+'</div></div>';
+}
+
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc=new window.jspdf.jsPDF({unit:"pt",format:"letter"});
@@ -416,7 +443,7 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(90);
   doc.text("BusinessLoans.com     Prepared June 22, 2026 at 9:50 AM EDT     Funding "+money0(STATE.requested), L, y); y+=16;
   doc.setFontSize(8.5); doc.setTextColor(110);
-  doc.text("Fundable $400K-$500K without tax returns (not filed since 2021). Lender A: $400K, 2.5% fee, prepay discounts. Lender B: up to $500K, 50%/100% forgiveness.", L, y); y+=18;
+  doc.text("Fundable $400K-$500K without tax returns (not filed since 2021); more with the added docs. Lender A: up to $1M, 2.5% fee. Lender B: up to $500K, 50%/100% forgiveness.", L, y); y+=18;
 
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
   doc.text("Offer Summary", L, y); y+=12;
@@ -440,18 +467,24 @@ function downloadPDF(){
     y+=15;
   });
 
-  y+=20; need(140);
+  y+=20; need(180);
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Required Closing Documents for Funding", L, y); y+=15;
-  doc.setFont("helvetica","bold"); doc.setFontSize(9.5); doc.setTextColor(20);
-  doc.text("Lender A", L, y); doc.text("Lender B", 320, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(50);
-  var yA=y, yB=y;
-  ["Bank Verification","Proof of Ownership","Signed contract"].forEach(function(t){ doc.text("• "+t, L+6, yA); yA+=13; });
-  doc.setFontSize(8.5); doc.setTextColor(110); doc.text("* Voided check + driver's license for contract requests.", L+6, yA); yA+=13;
-  doc.setFontSize(9.5); doc.setTextColor(50);
-  ["Driver's license","Voided check","Signed contract","Channel Partners loan contract"].forEach(function(t){ doc.text("• "+t, 326, yB); yB+=13; });
-  y=Math.max(yA,yB)+4;
+  doc.text("Required Closing Documents for Funding  (Funding "+money0(STATE.requested)+")", L, y); y+=15;
+  var colX=[L,312], colW=[262,262], startY=y, endY=[y,y];
+  STIPS.forEach(function(Ln,ci){
+    var x=colX[ci], w=colW[ci], yy=startY, active=STATE.requested>Ln.threshold;
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.5); doc.setTextColor(20);
+    doc.text(Ln.name, x, yy); yy+=13;
+    doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(55);
+    Ln.base.forEach(function(t){ var ls=doc.splitTextToSize("• "+t, w); doc.text(ls,x,yy); yy+=ls.length*10; });
+    yy+=3;
+    doc.setFont("helvetica","bold"); doc.setFontSize(8.5); doc.setTextColor(active?20:150);
+    doc.text("Required over "+money0(Ln.threshold)+(active?"":"  (waived at this amount)"), x, yy); yy+=11;
+    doc.setFont("helvetica","normal"); doc.setTextColor(active?55:160);
+    Ln.over.forEach(function(t){ var ls=doc.splitTextToSize("• "+t, w); doc.text(ls,x,yy); yy+=ls.length*10; });
+    endY[ci]=yy;
+  });
+  y=Math.max(endY[0],endY[1])+6;
 
   function schedPage(title, sub, rows, pmt){
     newpage();
@@ -474,7 +507,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
   doc.text("Lender A — Early-Payoff Settlement (total payback if settled by end of month)", L, y); y+=14;
   var laOffs=ALL.filter(function(o){return o.kind==="monthly" && o.payoffArr;});
-  var sa=Math.min(STATE.requested,400000)/400000;
+  var sa=Math.min(STATE.requested,1000000)/400000;
   var lax=[230,345,460,R];
   doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Pay off by", L, y);
@@ -502,8 +535,8 @@ function recompute(){
   STATE.requested=r;
   var help=document.getElementById("amountHelp");
   help.className="amount-help"+(capped?" warning":"");
-  help.textContent=capped?"Capped at the $500,000 maximum (max without tax returns)":"Adjustable up to the $500,000 maximum";
-  renderOffers(); renderComparison(); renderSchedules();
+  help.textContent=capped?"Capped at the $1,000,000 maximum":"Adjustable up to the $1,000,000 maximum (Lender A); Lender B caps at $500,000";
+  renderOffers(); renderComparison(); renderSchedules(); renderStips();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
