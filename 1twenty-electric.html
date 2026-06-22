@@ -87,6 +87,11 @@ table.cmp tbody tr:last-child td{border-bottom:none;}
 .cmp-paid{color:#b6bcc8;}
 .cmp-foot{font-size:11.5px;color:var(--slate);margin:12px 0 0;max-width:940px;line-height:1.5;}
 .cmp-key{color:var(--green-d);font-weight:700;}
+table.cmp.cmp-simple{min-width:0;max-width:760px;}
+table.cmp.cmp-simple th:nth-child(2),table.cmp.cmp-simple td:nth-child(2){text-align:left;}
+.cmp-opt{color:var(--navy);font-weight:600;}
+.cmp-sub2{display:block;font-size:10.5px;font-weight:400;color:var(--slate);margin-top:2px;}
+.cmp-cost{color:var(--green-d);font-weight:700;font-size:14.5px;}
 /* schedules */
 .detail-h{color:var(--navy);font-size:22px;margin:34px 0 4px 0;}
 .detail-note{font-size:12.5px;color:var(--slate);margin:0 0 14px;max-width:920px;}
@@ -163,9 +168,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <div id="offersWrap"></div>
 
   <h2 class="cmp-title">Cheapest Option by Payoff Timeframe</h2>
-  <p class="cmp-note">If you settle the balance in full at a given point, this is your <b>total cost of capital</b> (origination fee + interest) for each offer. The lowest cost on each row is highlighted in <span class="cmp-key">green</span>. Updates with the funding amount above.</p>
+  <p class="cmp-note">For each payoff timeframe, the single cheapest option and its <b>total cost of capital</b> (origination fee + interest) if you settle the balance in full at that point. Updates with the funding amount above.</p>
   <div id="comparisonWrap"></div>
-  <p class="cmp-foot">Each cell is the all-in cost if you pay the balance off in full by that month. <span class="cmp-key">Green</span> = cheapest at that point. The early-payoff winner flips over time: the Accelerated (100%-discount) options are cheapest in the first months even with the 4% fee, while the no-fee Standard options take over by month&nbsp;9. Lender&nbsp;A (Offer&nbsp;1) carries the lowest weekly payment throughout.</p>
+  <p class="cmp-foot">The cheapest option changes with how soon you pay off: the Accelerated (100%-discount) option wins in the first months even with its 4% fee, while the no-fee Standard option wins by month&nbsp;9. Full per-offer figures are in the schedules below.</p>
 
   <h2 class="detail-h">Full Amortization Schedules</h2>
   <p class="detail-note">Week-by-week for each program. <b>Remaining payback</b> is what&rsquo;s left if you keep paying on schedule; the <b>payoff</b> columns are what it takes to settle in full that week (the early-payoff discount already applied). All figures scale with the funding amount.</p>
@@ -291,23 +296,23 @@ function renderOffers(){
   }).join("");
 }
 
+function offerLabel(o){ return o.termMonths+"-month "+o.opt.replace(" Payoff",""); }
+function offerFeeNote(o){
+  if(o.kind==="buydown") return "2% fee";
+  return o.feePct>0 ? "4% fee, 100% discount" : "no fee, 50% discount";
+}
 function renderComparison(){
   var months=[3,6,9];
-  var head='<tr><th>Pay off at</th>'+ALL.map(function(o){
-     return '<th>Offer '+o.num+'<span class="cmp-sub">'+o.term.replace("-Month","-mo")+' '+o.optShort+'</span></th>';
-  }).join("")+'</tr>';
-  var body=months.map(function(mo){
-     var vals=ALL.map(function(o){ return costAtMonth(o,mo); });
-     var present=vals.filter(function(v){return v!==null;});
-     var min=present.length?Math.min.apply(null,present):null;
-     var cells=vals.map(function(v){
-        if(v===null) return '<td class="cmp-paid">&mdash;</td>';
-        return '<td'+((v===min)?' class="cmp-best"':'')+'>'+money0(v)+'</td>';
-     }).join("");
-     return '<tr><td class="cmp-month">'+mo+' months</td>'+cells+'</tr>';
+  var rows=months.map(function(mo){
+    var best=null;
+    ALL.forEach(function(o){ var c=costAtMonth(o,mo); if(c===null)return; if(!best||c<best.c) best={o:o,c:c}; });
+    return '<tr><td class="cmp-month">'+mo+' months</td>'
+      + '<td class="cmp-opt">Offer '+best.o.num+' &middot; '+offerLabel(best.o)
+        + '<span class="cmp-sub2">'+offerFeeNote(best.o)+'</span></td>'
+      + '<td class="cmp-cost">'+money0(best.c)+'</td></tr>';
   }).join("");
   document.getElementById("comparisonWrap").innerHTML =
-     '<div class="cmp-scroll"><table class="cmp"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
+    '<table class="cmp cmp-simple"><thead><tr><th>Pay off at</th><th>Cheapest option</th><th>Total cost of capital</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }
 
 function weeklyTable(rows, pmt, s, oStd, oAcc){
@@ -373,23 +378,17 @@ function downloadPDF(){
     var v=["#"+o.num+" "+o.term+" "+o.opt.replace(" Payoff",""), o.feePct>0?money0(m.fee):"None", money0(m.adv)+(m.capped?"*":""), money0(m.net), money0(m.payback), money(m.weekly)];
     sc.forEach(function(c,j){doc.text(String(v[j]),c.x,y,{align:c.a});}); y+=13; });
 
-  y+=16; need(120); doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Total Cost of Capital by Payoff Timeframe (incl. fees) — cheapest each row in bold", L, y); y+=12;
-  var nx=ALL.length, x0=L+88, step=(R-x0)/(nx-1);
-  doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Pay off at", L, y);
-  ALL.forEach(function(o,i){ doc.text("Offer "+o.num, x0+i*step, y, {align:"right"}); });
-  y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11; doc.setFontSize(8);
+  y+=16; need(90); doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
+  doc.text("Cheapest Option by Payoff Timeframe (total cost of capital, incl. fees)", L, y); y+=12;
+  var cc=[{h:"Pay off at",x:L,a:"left"},{h:"Cheapest option",x:150,a:"left"},{h:"Total cost of capital",x:R,a:"right"}];
+  doc.setFontSize(8.5); doc.setFont("helvetica","bold"); doc.setTextColor(20); cc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=13;
   [3,6,9].forEach(function(mo){
-    var vals=ALL.map(function(o){ return costAtMonth(o,mo); });
-    var present=vals.filter(function(v){return v!==null;}); var min=Math.min.apply(null,present);
-    doc.setFont("helvetica","normal"); doc.setTextColor(45); doc.text(mo+" mo", L, y);
-    ALL.forEach(function(o,i){ var c=vals[i];
-      if(c===null){ doc.setFont("helvetica","normal"); doc.setTextColor(165); doc.text("—", x0+i*step, y, {align:"right"}); return; }
-      if(c===min){ doc.setFont("helvetica","bold"); doc.setTextColor(0,140,80); } else { doc.setFont("helvetica","normal"); doc.setTextColor(60); }
-      doc.text(money0(c), x0+i*step, y, {align:"right"});
-    });
-    y+=12;
+    var best=null; ALL.forEach(function(o){ var c=costAtMonth(o,mo); if(c===null)return; if(!best||c<best.c) best={o:o,c:c}; });
+    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
+    doc.text(mo+" months", L, y);
+    doc.text("Offer "+best.o.num+" — "+offerLabel(best.o)+" ("+offerFeeNote(best.o)+")", 150, y);
+    doc.setFont("helvetica","bold"); doc.setTextColor(0,140,80); doc.text(money0(best.c), R, y, {align:"right"});
+    y+=15;
   });
 
   function schedPage(title, sub, rows, pmt, hasInt){
