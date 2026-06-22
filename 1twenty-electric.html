@@ -147,7 +147,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">1Twenty Electric LLC</h1>
-  <p class="cover-subtitle">Offers from two lenders. <b>Lender A</b> &mdash; five term options (12 to 22 months) at $400,000, flat weekly payments with prepay discounts built in. <b>Lender B</b> &mdash; 12- and 14-month programs up to $500,000, each available with 50% or 100% early-payoff interest forgiveness. Adjust the funding amount and everything updates live. The comparison table shows the cheapest option at each payoff point; full schedules follow.</p>
+  <p class="cover-subtitle">Offers from two lenders. <b>Lender A</b> &mdash; five term options (12 to 22 months) at $400,000, with 100% of remaining interest forgiven on early payoff. <b>Lender B</b> &mdash; 12- and 14-month programs up to $500,000, each available with 50% or 100% early-payoff interest forgiveness. Adjust the funding amount and everything updates live. The comparison table shows the cheapest option at each payoff point; full schedules follow.</p>
 
   <div class="topnote">
     <b>Note on funding amount.</b> We can fund <b>$400,000&ndash;$500,000</b> without business tax returns &mdash; we were advised the company&rsquo;s have not been filed since 2021; once filed, a larger advance may be available. Lender A is sized at $400,000 and Lender B up to $500,000. Adjust the amount below and every figure updates instantly.
@@ -226,27 +226,27 @@ var SCHED14 = [[5210.02,6039.98,663750,578855.01,493960.02],[5147.09,6102.91,652
 
 var GROUPS = [
  { name:"Lender A",
-   note:"Five term options, $400,000. Flat weekly payments with prepay discounts built in &mdash; settle early and your total payback steps down (see the early-payoff schedule). 2.5% origination fee.",
+   note:"Five term options, $400,000, 2.5% origination fee. Flat weekly payments, and 100% of remaining interest is forgiven if you pay off early &mdash; your total payback steps down (see the early-payoff schedule).",
    offers:[
    { kind:"monthly", term:"22-Month", termMonths:22, opt:"", cls:"opt-buy", base:400000, max:400000,
      weekly:5993.33, rtr:570800, feePct:0.025, nPay:"≈95 weekly", optShort:"(2.5% fee)",
-     subText:"prepay discounts built in", earlyLabel:"Early payoff", earlyVal:"Prepay discounts built in",
+     subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:null },
    { kind:"monthly", term:"21-Month", termMonths:21, opt:"", cls:"opt-buy", base:400000, max:400000,
      weekly:6190.67, rtr:562800, feePct:0.025, nPay:"≈91 weekly", optShort:"(2.5% fee)",
-     subText:"prepay discounts built in", earlyLabel:"Early payoff", earlyVal:"Prepay discounts built in (see schedule)",
+     subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413350.44,426251.98,438689.64,450647.95,462110.90,473061.96,483484.04,493359.49,502670.07,511396.92,519520.55,527020.85,533876.99,540067.49,545570.12,550361.93,554419.19,557717.39,560231.19,561934.41,562800] },
    { kind:"monthly", term:"18-Month", termMonths:18, opt:"", cls:"opt-buy", base:400000, max:400000,
      weekly:6918.67, rtr:539200, feePct:0.025, nPay:"≈78 weekly", optShort:"(2.5% fee)",
-     subText:"prepay discounts built in", earlyLabel:"Early payoff", earlyVal:"Prepay discounts built in (see schedule)",
+     subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413407.51,426260.35,438539.93,450227.03,461301.79,471743.69,481531.52,490643.36,499056.53,506747.63,513692.46,519865.99,525242.38,529794.90,533495.95,536316.98,538228.49,539200] },
    { kind:"monthly", term:"15-Month", termMonths:15, opt:"", cls:"opt-buy", base:400000, max:400000,
      weekly:7988.00, rtr:518800, feePct:0.025, nPay:"≈65 weekly", optShort:"(2.5% fee)",
-     subText:"prepay discounts built in", earlyLabel:"Early payoff", earlyVal:"Prepay discounts built in (see schedule)",
+     subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413767.58,426818.58,439128.35,450671.38,461421.26,471350.71,480431.49,488634.38,495929.16,502284.59,507668.33,512046.94,515385.81,517649.17,518800] },
    { kind:"monthly", term:"12-Month", termMonths:12, opt:"", cls:"opt-buy", base:400000, max:400000,
      weekly:9530.67, rtr:495200, feePct:0.025, nPay:"≈52 weekly", optShort:"(2.5% fee)",
-     subText:"prepay discounts built in", earlyLabel:"Early payoff", earlyVal:"Prepay discounts built in (see schedule)",
+     subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413791.45,426635.59,438499.76,449350.17,459151.88,467868.71,475463.27,481896.86,487129.46,491119.65,493824.60,495200] }
  ]},
  { name:"Lender B", note:"Two terms &mdash; 12-month (52 weekly payments, $650,000 payback) and 14-month (60 weekly payments, $675,000 payback). Each term comes two ways: a no-fee Standard option (50% interest discount on early payoff) and an Accelerated option (4% fee, 100% discount).",
@@ -337,7 +337,7 @@ function renderOffers(){
 
 function offerLabel(o){ var x=o.opt.replace(" Payoff","").trim(); return o.termMonths+"-month"+(x?" "+x:""); }
 function offerFeeNote(o){
-  if(o.kind==="monthly") return "2.5% fee, prepay discount";
+  if(o.kind==="monthly") return "2.5% fee, 100% discount";
   return o.feePct>0 ? "4% fee, 100% discount" : "no fee, 50% discount";
 }
 function renderComparison(){
