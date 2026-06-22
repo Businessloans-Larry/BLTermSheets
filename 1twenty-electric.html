@@ -182,10 +182,6 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <div id="comparisonWrap"></div>
   <p class="cmp-foot">All-in totals at the funding amount shown. A dash (&mdash;) means early-payoff figures were not provided for that offer.</p>
 
-  <h2 class="detail-h">Payoff &amp; Amortization Schedules</h2>
-  <p class="detail-note"><b>Lender A:</b> total payback if you settle in full by the end of each month (flat weekly payments in between). <b>Lender B (over $500K):</b> full week-by-week amortization, with the total interest you&rsquo;d have paid if you settle that week under 50% vs 100% forgiveness. (The $500K-&amp;-under 12/15/18-month schedules are available on request.) All figures scale with the funding amount.</p>
-  <div id="schedulesWrap"></div>
-
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Offers are subject to underwriting approval and final contract. The total funding amount may not equal the amount deposited to your business checking account. Each offer is limited to the stated maximum advance. Early-payoff figures apply the stated discount for that option; the origination fee, where applicable, is included in the total cost of capital. Actual amortization may differ due to origination date, bank holidays, missed or early payments, the existence of a prior outstanding balance, and other factors.
   </div>
@@ -230,21 +226,21 @@ var GROUPS = [
      subText:"100% interest forgiven on early payoff", earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      payoffArr:[413791.45,426635.59,438499.76,449350.17,459151.88,467868.71,475463.27,481896.86,487129.46,491119.65,493824.60,495200] }
  ]},
- { name:"Lender B &middot; $500,000 &amp; under", note:"Best rates for advances of $500,000 or less &mdash; 12-, 15-, and 18-month terms, each with 100% of remaining interest forgiven on early payoff and no origination fee.",
+ { name:"Lender B &middot; $500,000 &amp; under", note:"Best rates for advances of $500,000 or less &mdash; 12-, 15-, and 18-month terms, each with 100% of remaining interest forgiven on early payoff and a 4% origination fee.",
    offers:[
    { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-acc",
-     subText:"100% interest forgiven on early payoff", optShort:"100% (no fee)",
-     max:500000, weekly:11730.77, rtr:610000, periods:52, nPay:"52 weekly", feePct:0, forgive:1,
+     subText:"100% interest forgiven on early payoff", optShort:"100% (4% fee)",
+     max:500000, weekly:11730.77, rtr:610000, periods:52, nPay:"52 weekly", feePct:0.04, forgive:1,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:12,po:401832.88},{mo:6,k:24,po:294086.16} ] },
    { kind:"forgive", term:"15-Month", termMonths:15, opt:"", cls:"opt-acc",
-     subText:"100% interest forgiven on early payoff", optShort:"100% (no fee)",
-     max:500000, weekly:9921.88, rtr:635000, periods:65, nPay:"65 weekly", feePct:0, forgive:1,
+     subText:"100% interest forgiven on early payoff", optShort:"100% (4% fee)",
+     max:500000, weekly:9921.88, rtr:635000, periods:65, nPay:"65 weekly", feePct:0.04, forgive:1,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:12,po:423920.84},{mo:6,k:24,po:340515.02} ] },
    { kind:"forgive", term:"18-Month", termMonths:18, opt:"", cls:"opt-acc",
-     subText:"100% interest forgiven on early payoff", optShort:"100% (no fee)",
-     max:500000, weekly:8461.54, rtr:660000, periods:78, nPay:"78 weekly", feePct:0, forgive:1,
+     subText:"100% interest forgiven on early payoff", optShort:"100% (4% fee)",
+     max:500000, weekly:8461.54, rtr:660000, periods:78, nPay:"78 weekly", feePct:0.04, forgive:1,
      earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
      ms:[ {mo:3,k:12,po:440502.29},{mo:6,k:24,po:375497.53} ] }
  ]},
@@ -510,43 +506,7 @@ function downloadPDF(){
   });
   y=Math.max(endY[0],endY[1])+6;
 
-  function schedPage(title, sub, rows, pmt){
-    newpage();
-    doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20); doc.text(title, L, y); y+=13;
-    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(95); doc.text(sub, L, y); y+=14;
-    var cols=[{h:"#",x:L,a:"left"},{h:"Weekly",x:115,a:"right"},{h:"Interest",x:192,a:"right"},{h:"Principal",x:278,a:"right"},{h:"Remaining",x:372,a:"right"},{h:"Tot int 50%",x:470,a:"right"},{h:"Tot int 100%",x:R,a:"right"}];
-    doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20); cols.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=10;
-    doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50);
-    rows.forEach(function(r,i){
-      if(y>760){ newpage(); doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50); }
-      var k=i+1, int50=round2(pmt*k + r[3] - BASE), int100=round2(pmt*k + r[4] - BASE);
-      var v=[String(k), money(pmt*s), money(r[0]*s), money(r[1]*s), money0(r[2]*s), money0(int50*s), money0(int100*s)];
-      cols.forEach(function(c,j){ doc.text(v[j], c.x, y, {align:c.a}); }); y+=10.5;
-    });
-  }
-  schedPage("Lender B (over $500K) — 12-Month Weekly Schedule", "Tot int = total interest paid if settled that week: 50% = Offer 9, 100% = Offer 10. Interest only; origination fee separate.", SCHED12, PMT12);
-  schedPage("Lender B (over $500K) — 14-Month Weekly Schedule", "Tot int = total interest paid if settled that week: 50% = Offer 11, 100% = Offer 12. Interest only; origination fee separate.", SCHED14, PMT14);
-
-  newpage();
-  doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Lender A — Early-Payoff Settlement (total payback if settled by end of month)", L, y); y+=14;
-  var laOffs=ALL.filter(function(o){return o.kind==="monthly" && o.payoffArr;});
-  var sa=Math.min(STATE.requested,1000000)/400000;
-  var lax=[230,345,460,R];
-  doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Pay off by", L, y);
-  laOffs.forEach(function(o,i){ doc.text("Offer "+o.num+" ("+o.termMonths+"mo)", lax[i], y, {align:"right"}); });
-  y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=10;
-  var maxT=laOffs.reduce(function(m,o){return Math.max(m,o.payoffArr.length);},0);
-  doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50);
-  for(var mo=1;mo<=maxT;mo++){
-    if(y>760){ newpage(); doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50); }
-    doc.text("Month "+mo, L, y);
-    laOffs.forEach(function(o,i){ var v=(mo<=o.payoffArr.length)?money0(round2(o.payoffArr[mo-1]*sa)):"—"; doc.text(v, lax[i], y, {align:"right"}); });
-    y+=10.5;
-  }
-  y+=10;
-  doc.setFontSize(7.5); doc.setTextColor(130);
+  y+=14; doc.setFontSize(7.5); doc.setTextColor(130);
   doc.text("Illustration only; not a commitment to lend. Subject to underwriting and final contract. * = advance capped at offer maximum.", L, y);
   doc.save("1twenty-electric-offers.pdf");
 }
@@ -560,7 +520,7 @@ function recompute(){
   var help=document.getElementById("amountHelp");
   help.className="amount-help"+(capped?" warning":"");
   help.textContent=capped?"Capped at the $1,000,000 maximum":"Adjustable up to the $1,000,000 maximum (Lender A); Lender B caps at $500,000";
-  renderOffers(); renderComparison(); renderSchedules(); renderStips();
+  renderOffers(); renderComparison(); renderStips();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
