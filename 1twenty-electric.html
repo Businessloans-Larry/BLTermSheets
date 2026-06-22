@@ -173,7 +173,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <p class="cmp-foot">The cheapest option changes with how soon you pay off: the Accelerated (100%-discount) option wins in the first months even with its 4% fee, while the no-fee Standard option wins by month&nbsp;9. Full per-offer figures are in the schedules below.</p>
 
   <h2 class="detail-h">Full Amortization Schedules</h2>
-  <p class="detail-note">Week-by-week for each program. <b>Remaining payback</b> is what&rsquo;s left if you keep paying on schedule; the <b>payoff</b> columns are what it takes to settle in full that week (the early-payoff discount already applied). All figures scale with the funding amount.</p>
+  <p class="detail-note">Week-by-week. <b>Remaining payback</b> is what&rsquo;s left if you keep paying on schedule; <b>total interest paid</b> is the cumulative interest paid through that week. All figures scale with the funding amount.</p>
   <div id="schedulesWrap"></div>
 
   <div class="closing">
@@ -315,18 +315,18 @@ function renderComparison(){
     '<table class="cmp cmp-simple"><thead><tr><th>Pay off at</th><th>Cheapest option</th><th>Total cost of capital</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }
 
-function weeklyTable(rows, pmt, s, oStd, oAcc){
-  var head='<tr><th>#</th><th>Weekly</th><th>Interest</th><th>Principal</th><th>Remaining payback</th>'
-    +'<th>Payoff &mdash; 50% interest discount (Offer '+oStd+')</th><th>Payoff &mdash; 100% interest discount (Offer '+oAcc+')</th></tr>';
+function weeklyTable(rows, pmt, s){
+  var head='<tr><th>#</th><th>Weekly</th><th>Interest</th><th>Principal</th><th>Remaining payback</th><th>Total interest paid</th></tr>';
+  var cum=0;
   var body=rows.map(function(r,i){
+    cum=round2(cum+r[0]);
     var full=(r[2]<=0.005);
     return '<tr'+(full?' class="full-row"':'')+'><td>'+(i+1)+'</td>'
       + '<td>'+money(pmt*s)+'</td>'
       + '<td>'+money(r[0]*s)+'</td>'
       + '<td>'+money(r[1]*s)+'</td>'
       + '<td>'+money0(r[2]*s)+'</td>'
-      + '<td class="po-payoff">'+money0(r[3]*s)+'</td>'
-      + '<td class="po-payoff">'+money0(r[4]*s)+'</td></tr>';
+      + '<td class="po-payoff">'+money0(cum*s)+'</td></tr>';
   }).join("");
   return '<div class="sched-scroll"><table class="sched"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
 }
@@ -346,12 +346,12 @@ function renderSchedules(){
     + brows + '</tbody></table></div></div>';
 
   var tbl12='<div class="sched-block"><h3>Lender B &middot; 12-Month &mdash; Weekly Schedule</h3>'
-    + '<p class="sched-sub">Weekly payment '+money(round2(PMT12*s))+', 52 payments, '+money0(round2(650000*s))+' total payback. The 50% interest-discount payoff is Offer 2; the 100% interest-discount payoff is Offer 3.</p>'
-    + weeklyTable(SCHED12, PMT12, s, 2, 3) + '</div>';
+    + '<p class="sched-sub">Weekly payment '+money(round2(PMT12*s))+', 52 payments, '+money0(round2(650000*s))+' total payback ('+money0(round2(150000*s))+' total interest). Applies to both the Standard and Accelerated options &mdash; payment, interest, and principal are identical; they differ only in the early-payoff discount shown above.</p>'
+    + weeklyTable(SCHED12, PMT12, s) + '</div>';
 
   var tbl14='<div class="sched-block"><h3>Lender B &middot; 14-Month &mdash; Weekly Schedule</h3>'
-    + '<p class="sched-sub">Weekly payment '+money(round2(PMT14*s))+', 60 payments, '+money0(round2(675000*s))+' total payback. The 50% interest-discount payoff is Offer 4; the 100% interest-discount payoff is Offer 5.</p>'
-    + weeklyTable(SCHED14, PMT14, s, 4, 5) + '</div>';
+    + '<p class="sched-sub">Weekly payment '+money(round2(PMT14*s))+', 60 payments, '+money0(round2(675000*s))+' total payback ('+money0(round2(175000*s))+' total interest). Applies to both the Standard and Accelerated options &mdash; payment, interest, and principal are identical; they differ only in the early-payoff discount shown above.</p>'
+    + weeklyTable(SCHED14, PMT14, s) + '</div>';
 
   document.getElementById("schedulesWrap").innerHTML = buyTbl + tbl12 + tbl14;
 }
@@ -391,21 +391,23 @@ function downloadPDF(){
     y+=15;
   });
 
-  function schedPage(title, sub, rows, pmt, hasInt){
+  function schedPage(title, sub, rows, pmt){
     newpage();
     doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20); doc.text(title, L, y); y+=13;
     doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(95); doc.text(sub, L, y); y+=14;
-    var cols=[{h:"#",x:L,a:"left"},{h:"Weekly",x:118,a:"right"},{h:"Interest",x:198,a:"right"},{h:"Principal",x:285,a:"right"},{h:"Remaining",x:380,a:"right"},{h:"Payoff 50%",x:478,a:"right"},{h:"Payoff 100%",x:R,a:"right"}];
+    var cols=[{h:"#",x:L,a:"left"},{h:"Weekly",x:130,a:"right"},{h:"Interest",x:230,a:"right"},{h:"Principal",x:330,a:"right"},{h:"Remaining payback",x:450,a:"right"},{h:"Total interest paid",x:R,a:"right"}];
     doc.setFontSize(7.5); doc.setFont("helvetica","bold"); doc.setTextColor(20); cols.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=10;
     doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50);
+    var cum=0;
     rows.forEach(function(r,i){
       if(y>760){ newpage(); doc.setFontSize(7.5); doc.setFont("helvetica","normal"); doc.setTextColor(50); }
-      var v=[String(i+1), money(pmt*s), money(r[0]*s), money(r[1]*s), money0(r[2]*s), money0(r[3]*s), money0(r[4]*s)];
+      cum=round2(cum+r[0]);
+      var v=[String(i+1), money(pmt*s), money(r[0]*s), money(r[1]*s), money0(r[2]*s), money0(cum*s)];
       cols.forEach(function(c,j){ doc.text(v[j], c.x, y, {align:c.a}); }); y+=10.5;
     });
   }
-  schedPage("Lender B — 12-Month Weekly Schedule", "52 payments. Payoff 50% = Offer 2 (50% interest discount); Payoff 100% = Offer 3.", SCHED12, PMT12);
-  schedPage("Lender B — 14-Month Weekly Schedule", "60 payments. Payoff 50% = Offer 4 (50% interest discount); Payoff 100% = Offer 5.", SCHED14, PMT14);
+  schedPage("Lender B — 12-Month Weekly Schedule", "52 payments. Same payment, interest, and principal for both options (Std & Acc); they differ only in early-payoff discount.", SCHED12, PMT12);
+  schedPage("Lender B — 14-Month Weekly Schedule", "60 payments. Same payment, interest, and principal for both options (Std & Acc); they differ only in early-payoff discount.", SCHED14, PMT14);
 
   newpage();
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
