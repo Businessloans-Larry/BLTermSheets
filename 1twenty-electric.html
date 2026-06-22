@@ -71,6 +71,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .closing ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--navy2);}
 .closing li{margin-bottom:5px;}
 .closing .req-foot{font-size:11.5px;color:var(--slate);margin:9px 0 0;font-style:italic;}
+.closing-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 30px;margin-top:6px;}
+@media(max-width:680px){.closing-grid{grid-template-columns:1fr;}}
+.closing-lender{font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.closing-col ul{columns:1;margin:0;padding-left:18px;font-size:12.5px;color:var(--navy2);}
+.closing-col li{margin-bottom:5px;}
 /* comparison table */
 .cmp-title{color:var(--navy);font-size:22px;margin:34px 0 4px 0;}
 .cmp-note{font-size:12.5px;color:var(--slate);margin:0 0 12px;max-width:920px;}
@@ -166,6 +171,30 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <span class="btn-hint">Plain PDF &mdash; all offers, comparison, full schedules, and closing requirements.</span>
   </div>
 
+  <div class="closing">
+    <h3>Required Closing Documents for Funding</h3>
+    <div class="closing-grid">
+      <div class="closing-col">
+        <div class="closing-lender">Lender A</div>
+        <ul>
+          <li>Bank Verification</li>
+          <li>Proof of Ownership</li>
+          <li>Signed contract</li>
+        </ul>
+        <p class="req-foot">* Please provide a voided check and a driver&rsquo;s license for contract requests.</p>
+      </div>
+      <div class="closing-col">
+        <div class="closing-lender">Lender B</div>
+        <ul>
+          <li>Driver&rsquo;s license</li>
+          <li>Voided check</li>
+          <li>Signed contract</li>
+          <li>Channel Partners loan contract</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div id="offersWrap"></div>
 
   <h2 class="cmp-title">Cheapest Option by Payoff Timeframe</h2>
@@ -176,15 +205,6 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <h2 class="detail-h">Full Amortization Schedules</h2>
   <p class="detail-note">Week-by-week. <b>Remaining payback</b> is what&rsquo;s left if you keep paying on schedule; the two <b>Total interest paid</b> columns show the total interest you&rsquo;ll have paid if you settle in full that week &mdash; under 50% vs 100% interest forgiveness. All figures scale with the funding amount.</p>
   <div id="schedulesWrap"></div>
-
-  <div class="closing">
-    <h3>Required Closing Documents for Funding</h3>
-    <ul>
-      <li>Bank Verification</li>
-      <li>Proof of Ownership</li>
-    </ul>
-    <p class="req-foot">* Please provide a voided check and a driver&rsquo;s license for contract requests.</p>
-  </div>
 
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Offers are subject to underwriting approval and final contract. The total funding amount may not equal the amount deposited to your business checking account. Each offer is limited to the stated maximum advance. Early-payoff figures apply the stated discount for that option; the origination fee, where applicable, is included in the total cost of capital. Actual amortization may differ due to origination date, bank holidays, missed or early payments, the existence of a prior outstanding balance, and other factors.
@@ -394,6 +414,19 @@ function downloadPDF(){
     y+=15;
   });
 
+  y+=20; need(140);
+  doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
+  doc.text("Required Closing Documents for Funding", L, y); y+=15;
+  doc.setFont("helvetica","bold"); doc.setFontSize(9.5); doc.setTextColor(20);
+  doc.text("Lender A", L, y); doc.text("Lender B", 320, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(50);
+  var yA=y, yB=y;
+  ["Bank Verification","Proof of Ownership","Signed contract"].forEach(function(t){ doc.text("• "+t, L+6, yA); yA+=13; });
+  doc.setFontSize(8.5); doc.setTextColor(110); doc.text("* Voided check + driver's license for contract requests.", L+6, yA); yA+=13;
+  doc.setFontSize(9.5); doc.setTextColor(50);
+  ["Driver's license","Voided check","Signed contract","Channel Partners loan contract"].forEach(function(t){ doc.text("• "+t, 326, yB); yB+=13; });
+  y=Math.max(yA,yB)+4;
+
   function schedPage(title, sub, rows, pmt){
     newpage();
     doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20); doc.text(title, L, y); y+=13;
@@ -422,14 +455,8 @@ function downloadPDF(){
   var o1=ALL[0], adv=round2(o1.max*s), rtr=round2(o1.rtr*s);
   o1.buyMonths.forEach(function(mo){ var f=buyFactor(o1,mo), po=round2(adv*f);
     [["Month "+mo,L,"left"],[money0(po),300,"right"],[money0(round2(rtr-po)),R,"right"]].forEach(function(c){doc.text(String(c[0]),c[1],y,{align:c[2]});}); y+=12; });
-  [["Month 7 to full term",L,"left"],[money0(rtr),300,"right"],[money0(0),R,"right"]].forEach(function(c){doc.text(String(c[0]),c[1],y,{align:c[2]});}); y+=18;
+  [["Month 7 to full term",L,"left"],[money0(rtr),300,"right"],[money0(0),R,"right"]].forEach(function(c){doc.text(String(c[0]),c[1],y,{align:c[2]});}); y+=20;
 
-  doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Required Closing Documents for Funding", L, y); y+=14;
-  doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(50);
-  ["Bank Verification","Proof of Ownership"].forEach(function(t){ doc.text("• "+t, L+6, y); y+=13; });
-  doc.setFontSize(8.5); doc.setTextColor(110);
-  doc.text("* Please provide a voided check and a driver's license for contract requests.", L+6, y); y+=16;
   doc.setFontSize(7.5); doc.setTextColor(130);
   doc.text("Illustration only; not a commitment to lend. Subject to underwriting and final contract. * = advance capped at offer maximum.", L, y);
   doc.save("1twenty-electric-offers.pdf");
