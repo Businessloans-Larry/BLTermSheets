@@ -169,10 +169,10 @@ var GROUPS = [
    { termLabel:"19-Month", max:328000, factor:1.312, weekly:5231.00, payoff:[421045.88,421951.35,422817.71,423643.85,424428.60,425170.77,425869.14,426522.45,427129.40,427688.66,428198.86,428658.58,429066.38,429420.76,429720.18,429963.06,430147.79,430272.67] }
  ]},
  { name:"Retention Pricing (10% Discount)", cls:"g-ten", note:"Retention pricing. Pay off early and a 10% discount applies to the remaining balance.", offers:[
-   { termLabel:"12-Month", max:252000, factor:1.208, weekly:5859.00, priceReduced:true, payoff:[299938.99,300649.81,301305.23,301903.57,302443.09,302922.01,303338.50,303690.65,303976.52,304194.09,304341.30] },
-   { termLabel:"15-Month", max:293000, factor:1.217, weekly:5491.00, priceReduced:true, payoff:[350973.47,351682.37,352348.54,352970.87,353548.25,354079.52,354563.51,354999.00,355384.75,355719.48,356001.89,356230.64,356404.36,356521.62] },
-   { termLabel:"18-Month", max:335000, factor:1.279, weekly:5498.00, priceReduced:true, payoff:[420032.85,420907.19,421740.43,422531.43,423279.06,423982.12,424639.40,425249.65,425811.59,426323.90,426785.22,427194.16,427549.29,427849.14,428092.21,428276.95,428401.76] },
-   { termLabel:"19-Month", max:348000, factor:1.299, weekly:5495.00, priceReduced:true, payoff:[442608.95,443531.92,444414.63,445255.96,446054.77,446809.89,447520.11,448184.18,448800.83,449368.75,449886.59,450352.96,450766.45,451125.59,451428.88,451674.78,451861.69,451987.99] }
+   { termLabel:"12-Month", max:252000, factor:1.178, weekly:5714.00, priceReduced:true, validNote:"Valid if funded by Jun 30, 2026", old:{ factor:1.208, weekly:5859.00, payoff:[299938.99,300649.81,301305.23,301903.57,302443.09,302922.01,303338.50,303690.65,303976.52,304194.09,304341.30] }, payoff:[292490.17,293183.34,293822.48,294405.96,294932.09,295399.11,295805.26,296148.66,296427.43,296639.60,296783.16] },
+   { termLabel:"15-Month", max:293000, factor:1.197, weekly:5399.95, priceReduced:true, validNote:"Valid if funded by Jun 30, 2026", old:{ factor:1.217, weekly:5491.00, payoff:[350973.47,351682.37,352348.54,352970.87,353548.25,354079.52,354563.51,354999.00,355384.75,355719.48,356001.89,356230.64,356404.36,356521.62] }, payoff:[345205.62,345902.87,346558.10,347170.20,347738.09,348260.63,348736.67,349165.00,349544.41,349873.64,350151.41,350376.40,350547.26,350662.60] },
+   { termLabel:"18-Month", max:335000, factor:1.259, weekly:5412.48, priceReduced:true, validNote:"Valid if funded by Jun 30, 2026", old:{ factor:1.279, weekly:5498.00, payoff:[420032.85,420907.19,421740.43,422531.43,423279.06,423982.12,424639.40,425249.65,425811.59,426323.90,426785.22,427194.16,427549.29,427849.14,428092.21,428276.95,428401.76] }, payoff:[413464.71,414325.37,415145.58,415924.21,416660.15,417352.22,417999.22,418599.93,419153.08,419657.38,420111.49,420514.03,420863.61,421158.77,421398.04,421579.89,421702.75] },
+   { termLabel:"19-Month", max:348000, factor:1.279, weekly:5410.80, priceReduced:true, validNote:"Valid if funded by Jun 30, 2026", old:{ factor:1.299, weekly:5495.00, payoff:[442608.95,443531.92,444414.63,445255.96,446054.77,446809.89,447520.11,448184.18,448800.83,449368.75,449886.59,450352.96,450766.45,451125.59,451428.88,451674.78,451861.69,451987.99] }, payoff:[435794.34,436703.10,437572.22,438400.59,439187.11,439930.60,440629.89,441283.73,441890.89,442450.06,442959.93,443419.12,443826.24,444179.85,444478.47,444720.59,444904.62,445028.98] }
  ]},
  { name:"100% Discount Pricing", cls:"g-hundred", note:"Higher-cost pricing with 100% early-payoff forgiveness — pay off early and the remaining interest is fully forgiven.", offers:[
    { termLabel:"12-Month", max:243000, factor:1.278, weekly:5977.00, payoff:[252699.49,261753.15,270135.19,277818.81,284776.13,290978.16,296394.76,300994.56,304744.97,307612.09,309560.65] },
@@ -204,7 +204,7 @@ function wasNew(oldStr,newStr){ return '<span class="was">'+oldStr+'</span><span
 function offerCard(o, g){
   var m = model(o);
   var cap = m.capped ? '<span class="cap-badge">offer max</span>' : '';
-  var tag = o.priceReduced ? '<div class="reduced-badge">&#9660; Price Reduced</div>' : '';
+  var tag = o.priceReduced ? '<div class="reduced-badge">&#9660; Price Reduced</div>'+(o.validNote?'<div style="font-size:9.5px;color:#00A352;font-weight:600;margin-top:3px;text-transform:none;letter-spacing:0;line-height:1.25;">'+o.validNote+'</div>':'') : '';
   var paybackVal = o.old ? wasNew(money0(m.oldPayback), money0(m.payback)) : money0(m.payback);
   var weeklyVal  = o.old ? wasNew(money(m.oldWeekly), money(m.weekly)) : money(m.weekly);
   return '<div class="offer-card '+g.cls+(o.priceReduced?' is-reduced':'')+'">'
