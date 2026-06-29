@@ -43,24 +43,17 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .la-card{border:1.5px solid var(--line);border-radius:12px;padding:6px;margin-bottom:12px;}
 .la-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 table.latable{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:640px;}
-table.latable th,table.latable td{padding:9px 10px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);vertical-align:top;}
-table.latable th{text-align:right;}
+table.latable th,table.latable td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);border-left:1px solid var(--line);vertical-align:middle;}
 table.latable th:first-child,table.latable td:first-child{text-align:left;border-left:none;}
-table.latable thead th{background:var(--navy);color:#fff;font-weight:600;font-size:13px;vertical-align:bottom;}
+table.latable thead th{background:var(--navy);color:#fff;font-weight:600;font-size:11.5px;vertical-align:bottom;line-height:1.25;}
 table.latable tbody tr:last-child td{border-bottom:none;}
-.la-sub{display:block;font-size:10px;font-weight:400;opacity:.85;margin-top:3px;text-transform:none;letter-spacing:0;}
-.la-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--navy);padding-top:11px;}
-.la-item{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 9px;border-radius:6px;margin-bottom:4px;font-variant-numeric:tabular-nums;}
-.la-item:last-child{margin-bottom:0;}
-.la-lbl{font-size:9px;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;}
-.la-v{font-weight:700;color:var(--navy);font-size:13px;white-space:nowrap;}
+table.latable tbody tr:nth-child(even){background:var(--bg);}
+.la-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--navy);}
+.la-sub2{display:block;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+.la-v{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13.5px;}
 .la-fr{font-size:10px;font-weight:600;color:var(--slate);margin-left:2px;}
-.la-pay{background:var(--bg);}
-.la-pay .la-v{font-size:14px;}
-.la-back{background:rgba(0,205,103,.09);}
-.la-back .la-v{color:var(--green-d);}
-.la-fee{background:rgba(255,200,88,.16);}
-.la-fee .la-v{color:#9a6b00;}
+.la-feev{color:#9a6b00;}
+.la-pov{color:var(--green-d);}
 @media print{.la-scroll{overflow:visible;}table.latable{min-width:0;font-size:9.5px;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card.is-featured{border-color:var(--green);box-shadow:0 0 0 1px var(--green);}
@@ -291,30 +284,29 @@ function offerCard(o){
     + '</div></div>';
 }
 
-var LA = { base:1000000, feePct:0.025, terms:[12,15,18], programs:[
-  { name:"Standard", ifpct:"100% IF", freq:"weekly", fr:"/wk", d:{12:[23499,1221000],15:[19662,1277001],18:[17039,1328000]} },
-  { name:"Retention", ifpct:"10% IF", freq:"weekly", fr:"/wk", d:{12:[22730,1181000],15:[18646,1211000],18:[16282,1269001]} },
-  { name:"Retention", ifpct:"10% IF", freq:"every 2 weeks", fr:"/2wk", d:{12:[46998,1221000],15:[38522,1251000],18:[33590,1309001]} }
+var LA = { base:1000000, feePct:0.025, options:[
+  { term:"15-Month", freq:"weekly",        fr:"/wk",  pay:19662, back:1277001, po3:1091567, po6:1166769 },
+  { term:"18-Month", freq:"weekly",        fr:"/wk",  pay:17039, back:1328000, po3:1091152, po6:1169514 },
+  { term:"18-Month", freq:"every 2 weeks", fr:"/2wk", pay:34848, back:1358000, po3:1116646, po6:1213471 }
 ]};
 function renderLenderA(){
   var s=Math.min(STATE.requested,LA.base)/LA.base; if(s<0)s=0;
   var adv=Math.min(STATE.requested,LA.base); if(adv<0)adv=0;
-  var fee=round2(adv*LA.feePct), net=round2(adv-fee);
-  var head='<tr><th>Term</th>'+LA.programs.map(function(p){
-     return '<th>'+p.name+'<span class="la-sub">'+p.ifpct+' &middot; '+p.freq+'</span></th>';
-  }).join('')+'</tr>';
-  var body=LA.terms.map(function(t){
-    return '<tr><td class="la-term">'+t+'-Month</td>'+LA.programs.map(function(p){
-       return '<td>'
-         + '<div class="la-item la-pay"><span class="la-lbl">Payment</span><span class="la-v">'+money(round2(p.d[t][0]*s))+'<span class="la-fr">'+p.fr+'</span></span></div>'
-         + '<div class="la-item la-back"><span class="la-lbl">Total payback</span><span class="la-v">'+money0(round2(p.d[t][1]*s))+'</span></div>'
-         + '<div class="la-item la-fee"><span class="la-lbl">Orig. fee (2.5%)</span><span class="la-v">'+money0(fee)+'</span></div>'
-         + '</td>';
-    }).join('')+'</tr>';
+  var fee=round2(adv*LA.feePct);
+  var head='<tr><th>Option</th><th>Payment</th><th>Total payback</th><th>Orig. fee<span class="la-sub2">2.5%</span></th><th>Payoff at<br>3 months</th><th>Payoff at<br>6 months</th></tr>';
+  var rows=LA.options.map(function(o){
+    return '<tr>'
+      + '<td class="la-term">'+o.term+'<span class="la-sub2">100% prepay &middot; '+o.freq+'</span></td>'
+      + '<td><span class="la-v">'+money(round2(o.pay*s))+'<span class="la-fr">'+o.fr+'</span></span></td>'
+      + '<td><span class="la-v">'+money0(round2(o.back*s))+'</span></td>'
+      + '<td><span class="la-v la-feev">'+money0(fee)+'</span></td>'
+      + '<td><span class="la-v la-pov">'+money0(round2(o.po3*s))+'</span></td>'
+      + '<td><span class="la-v la-pov">'+money0(round2(o.po6*s))+'</span></td>'
+      + '</tr>';
   }).join('');
   return '<h2 class="group-title">Lender A</h2>'
-   + '<p class="group-note">Advance <b>'+money0(adv)+'</b> &middot; 2.5% origination fee <b>'+money0(fee)+'</b> &middot; net advance <b>'+money0(net)+'</b>. Standard forgives 100% of remaining interest on early payoff; Retention forgives 10%. Compare the payment and total payback across all options below.</p>'
-   + '<div class="la-card"><div class="la-scroll"><table class="latable"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div></div>';
+   + '<p class="group-note">Advance <b>'+money0(adv)+'</b> &middot; net advance <b>'+money0(round2(adv-fee))+'</b> (after 2.5% origination fee). All options are <b>100% prepay</b> &mdash; pay off early and 100% of the remaining interest is forgiven. The payoff columns are the total to settle in full by month 3 or 6; the origination fee is shown separately.</p>'
+   + '<div class="la-card"><div class="la-scroll"><table class="latable"><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div></div>';
 }
 function renderOffers(){
   var html = renderLenderA() + GROUPS.map(function(g){
@@ -433,18 +425,21 @@ function downloadPDF(){
   doc.text("Lender A: up to $1,000,000, 2.5% fee, early-payoff forgiveness. Lender B: HYPOTHETICAL $1,000,000 (in underwriting review), 50% or 100% interest forgiveness.", L, y); y+=18;
 
   var sA=Math.min(STATE.requested,1000000)/1000000; if(sA<0)sA=0;
+  var feeA=round2(Math.min(STATE.requested,1000000)*0.025);
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Lender A — Compare Options", L, y); y+=12;
-  var lac=[{h:"Program",x:L,a:"left"},{h:"Term",x:250,a:"left"},{h:"Payment",x:430,a:"right"},{h:"Total Payback",x:R,a:"right"}];
+  doc.text("Lender A — Compare Options (all 100% prepay)", L, y); y+=12;
+  var lac=[{h:"Option",x:L,a:"left"},{h:"Payment",x:250,a:"right"},{h:"Payback",x:350,a:"right"},{h:"Fee",x:415,a:"right"},{h:"Payoff 3mo",x:495,a:"right"},{h:"Payoff 6mo",x:R,a:"right"}];
   doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20); lac.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
   doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(45);
-  LA.programs.forEach(function(p){ LA.terms.forEach(function(t){
-     doc.text(p.name+" "+p.ifpct+" ("+p.freq+")", L, y);
-     doc.text(t+"-mo", 250, y);
-     doc.text(money(round2(p.d[t][0]*sA))+" "+p.fr, 430, y, {align:"right"});
-     doc.text(money0(round2(p.d[t][1]*sA)), R, y, {align:"right"});
+  LA.options.forEach(function(o){
+     doc.text(o.term+" ("+o.freq+")", L, y);
+     doc.text(money0(round2(o.pay*sA))+o.fr, 250, y, {align:"right"});
+     doc.text(money0(round2(o.back*sA)), 350, y, {align:"right"});
+     doc.text(money0(feeA), 415, y, {align:"right"});
+     doc.text(money0(round2(o.po3*sA)), 495, y, {align:"right"});
+     doc.text(money0(round2(o.po6*sA)), R, y, {align:"right"});
      y+=12;
-  }); });
+  });
   y+=16; need(70);
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
   doc.text("Lender B", L, y); y+=13;
