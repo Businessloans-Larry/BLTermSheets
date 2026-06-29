@@ -40,6 +40,20 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .group-note{font-size:12px;color:var(--slate);margin:0 0 14px 0;max-width:900px;}
 .offers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px;margin-bottom:10px;}
 @media(max-width:560px){.offers-grid{grid-template-columns:1fr;}}
+.la-card{border:1.5px solid var(--line);border-radius:12px;padding:6px;margin-bottom:12px;}
+.la-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table.latable{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:560px;}
+table.latable th,table.latable td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line);border-left:1px solid var(--line);vertical-align:top;}
+table.latable th:first-child,table.latable td:first-child{text-align:left;border-left:none;}
+table.latable thead th{background:var(--navy);color:#fff;font-weight:600;font-size:13px;vertical-align:bottom;}
+table.latable tbody tr:last-child td{border-bottom:none;}
+table.latable tbody tr:nth-child(even){background:var(--bg);}
+.la-sub{display:block;font-size:10px;font-weight:400;opacity:.85;margin-top:3px;text-transform:none;letter-spacing:0;}
+.la-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--navy);}
+.la-pay{display:block;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap;}
+.la-fr{font-size:10px;font-weight:600;color:var(--slate);margin-left:2px;}
+.la-back{display:block;font-size:11px;color:var(--green-d);font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+@media print{.la-scroll{overflow:visible;}table.latable{min-width:0;font-size:10px;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card.is-featured{border-color:var(--green);box-shadow:0 0 0 1px var(--green);}
 .offer-card-header{color:#fff;padding:12px 16px;}
@@ -189,42 +203,10 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 var BASE = 500000, MASTER_MAX = 1000000;
 var STATE = { requested: 1000000 };
 var PMT12 = 12500, PMT14 = 11250;
-var SCHED12 = [[5204.48,7295.52,637500,565102.24,492704.48],[5128.54,7371.46,625000,555166.51,485333.02],[5051.82,7448.18,612500,545192.42,477884.84],[4974.29,7525.71,600000,535179.56,470359.13],[4895.95,7604.05,587500,525127.54,462755.08],[4816.8,7683.2,575000,515035.94,455071.88],[4736.83,7763.17,562500,504904.35,447308.71],[4656.02,7843.98,550000,494732.36,439464.73],[4574.37,7925.63,537500,484519.55,431539.1],[4491.88,8008.12,525000,474265.49,423530.98],[4408.52,8091.48,512500,463969.75,415439.5],[4324.3,8175.7,500000,453631.9,407263.8],[4239.2,8260.8,487500,443251.5,399003],[4153.21,8346.79,475000,432828.1,390656.21],[4066.33,8433.67,462500,422361.27,382222.54],[3978.54,8521.46,450000,411850.54,373701.08],[3889.84,8610.16,437500,401295.46,365090.92],[3800.22,8699.78,425000,390695.57,356391.14],[3709.66,8790.34,412500,380050.4,347600.8],[3618.17,8881.83,400000,369359.48,338718.97],[3525.71,8974.29,387500,358622.34,329744.68],[3432.3,9067.7,375000,347838.49,320676.98],[3337.92,9162.08,362500,337007.45,311514.9],[3242.55,9257.45,350000,326128.72,302257.45],[3146.19,9353.81,337500,315201.82,292903.64],[3048.82,9451.18,325000,304226.23,283452.46],[2950.45,9549.55,312500,293201.45,273902.91],[2851.05,9648.95,300000,282126.98,264253.96],[2750.61,9749.39,287500,271002.28,254504.57],[2649.13,9850.87,275000,259826.85,244653.7],[2546.59,9953.41,262500,248600.14,234700.29],[2442.99,10057.01,250000,237321.64,224643.28],[2338.3,10161.7,237500,225990.79,214481.58],[2232.53,10267.47,225000,214607.05,204214.11],[2125.66,10374.34,212500,203169.88,193839.77],[2017.67,10482.33,200000,191678.72,183357.44],[1908.56,10591.44,187500,180133.0,172766.0],[1798.32,10701.68,175000,168532.16,162064.32],[1686.92,10813.08,162500,156875.62,151251.24],[1574.37,10925.63,150000,145162.8,140325.61],[1460.64,11039.36,137500,133393.12,129286.25],[1345.74,11154.26,125000,121565.99,118131.99],[1229.63,11270.37,112500,109680.81,106861.62],[1112.32,11387.68,100000,97736.97,95473.94],[993.79,11506.21,87500,85733.86,83967.73],[874.02,11625.98,75000,73670.88,72341.75],[753,11747,62500,61547.37,60594.75],[630.73,11869.27,50000,49362.74,48725.48],[507.18,11992.82,37500,37116.33,36732.66],[382.35,12117.65,25000,24807.5,24615.01],[256.22,12243.78,12500,12435.61,12371.23],[128.77,12371.23,0,0,0]];
-var SCHED14 = [[5210.02,6039.98,663750,578855.01,493960.02],[5147.09,6102.91,652500,570178.56,487857.11],[5083.49,6166.51,641250,561470.3,481690.6],[5019.24,6230.76,630000,552729.92,475459.84],[4954.31,6295.69,618750,543957.07,469164.15],[4888.71,6361.29,607500,535151.43,462802.86],[4822.43,6427.57,596250,526312.65,456375.29],[4755.45,6494.55,585000,517440.37,449880.74],[4687.78,6562.22,573750,508534.26,443318.52],[4619.4,6630.6,562500,499593.96,436687.92],[4550.31,6699.69,551250,490619.12,429988.23],[4480.5,6769.5,540000,481609.37,423218.73],[4409.96,6840.04,528750,472564.35,416378.69],[4338.68,6911.32,517500,463483.69,409467.37],[4266.67,6983.33,506250,454367.02,402484.04],[4193.9,7056.1,495000,445213.97,395427.94],[4120.38,7129.62,483750,436024.16,388298.32],[4046.09,7203.91,472500,426797.21,381094.41],[3971.02,7278.98,461250,417532.72,373815.43],[3895.17,7354.83,450000,408230.3,366460.6],[3818.54,7431.46,438750,398889.57,359029.14],[3741.1,7508.9,427500,389510.12,351520.24],[3662.86,7587.14,416250,380091.55,343933.1],[3583.8,7666.2,405000,370633.45,336266.9],[3503.92,7746.08,393750,361135.41,328520.82],[3423.2,7826.8,382500,351597.01,320694.02],[3341.65,7908.35,371250,342017.84,312785.67],[3259.24,7990.76,360000,332397.46,304794.91],[3175.98,8074.02,348750,322735.45,296720.89],[3091.84,8158.16,337500,313031.37,288562.73],[3006.84,8243.16,326250,303284.79,280319.57],[2920.94,8329.06,315000,293495.26,271990.51],[2834.15,8415.85,303750,283662.33,263574.66],[2746.46,8503.54,292500,273785.56,255071.12],[2657.85,8592.15,281250,263864.49,246478.97],[2568.32,8681.68,270000,253898.65,237797.29],[2477.86,8772.14,258750,243887.58,229025.15],[2386.45,8863.55,247500,233830.8,220161.6],[2294.09,8955.91,236250,223727.85,211205.69],[2200.77,9049.23,225000,213578.23,202156.46],[2106.48,9143.52,213750,203381.47,193012.94],[2011.2,9238.8,202500,193137.07,183774.14],[1914.93,9335.07,191250,182844.54,174439.07],[1817.66,9432.34,180000,172503.37,165006.73],[1719.38,9530.62,168750,162113.06,155476.11],[1620.07,9629.93,157500,151673.09,145846.18],[1519.72,9730.28,146250,141182.95,136115.9],[1418.33,9831.67,135000,130642.12,126284.23],[1315.89,9934.11,123750,120050.06,116350.12],[1212.37,10037.63,112500,109406.25,106312.49],[1107.78,10142.22,101250,98710.14,96170.27],[1002.1,10247.9,90000,87961.19,85922.37],[895.31,10354.69,78750,77158.84,75567.68],[787.42,10462.58,67500,66302.55,65105.1],[678.4,10571.6,56250,55391.75,54533.5],[568.24,10681.76,45000,44425.87,43851.74],[456.94,10793.06,33750,33404.34,33058.68],[344.47,10905.53,22500,22326.58,22153.15],[230.84,11019.16,11250,11192.0,11133.99],[116.01,11133.99,0,0.0,0.0]];
+var SCHED12 = [];
+var SCHED14 = [];
 
 var GROUPS = [
- { name:"Lender A &middot; Standard (100% IF)",
-   note:"Standard pricing &mdash; 12-, 15-, and 18-month terms at $1,000,000. 100% of remaining interest forgiven on early payoff. 2.5% origination fee.",
-   offers:[
-   { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-acc", base:1000000,
-     subText:"100% interest forgiven on early payoff", optShort:"100% (2.5% fee)",
-     max:1000000, weekly:23499.0, rtr:1221000, periods:52, nPay:"52 weekly", feePct:0.025, forgive:1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest" },
-   { kind:"forgive", term:"15-Month", termMonths:15, opt:"", cls:"opt-acc", base:1000000,
-     subText:"100% interest forgiven on early payoff", optShort:"100% (2.5% fee)",
-     max:1000000, weekly:19662.0, rtr:1277001, periods:65, nPay:"65 weekly", feePct:0.025, forgive:1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest" },
-   { kind:"forgive", term:"18-Month", termMonths:18, opt:"", cls:"opt-acc", base:1000000,
-     subText:"100% interest forgiven on early payoff", optShort:"100% (2.5% fee)",
-     max:1000000, weekly:17039.0, rtr:1328000, periods:78, nPay:"78 weekly", feePct:0.025, forgive:1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest" }
- ]},
- { name:"Lender A &middot; Retention (10% IF)",
-   note:"Retention pricing &mdash; lower rates across 12-, 15-, and 18-month terms at $1,000,000. 10% of remaining interest forgiven on early payoff. 2.5% origination fee.",
-   offers:[
-   { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-std", base:1000000,
-     subText:"10% interest forgiven on early payoff", optShort:"10% (2.5% fee)",
-     max:1000000, weekly:22730.0, rtr:1181000, periods:52, nPay:"52 weekly", feePct:0.025, forgive:0.1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"10% of remaining interest" },
-   { kind:"forgive", term:"15-Month", termMonths:15, opt:"", cls:"opt-std", base:1000000,
-     subText:"10% interest forgiven on early payoff", optShort:"10% (2.5% fee)",
-     max:1000000, weekly:18646.0, rtr:1211000, periods:65, nPay:"65 weekly", feePct:0.025, forgive:0.1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"10% of remaining interest" },
-   { kind:"forgive", term:"18-Month", termMonths:18, opt:"", cls:"opt-std", base:1000000,
-     subText:"10% interest forgiven on early payoff", optShort:"10% (2.5% fee)",
-     max:1000000, weekly:16282.0, rtr:1269001, periods:78, nPay:"78 weekly", feePct:0.025, forgive:0.1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"10% of remaining interest" }
- ]},
  { name:"Lender B &middot; 50% Interest Forgiveness", note:"<span style='display:inline-block;background:#FFC858;color:#5c3a00;font-weight:800;font-size:11px;padding:3px 11px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em;'>Hypothetical &mdash; currently in underwriting review for $1,000,000</span><br>12-, 15-, and 18-month terms at $1,000,000 &mdash; 50% of remaining interest forgiven on early payoff, no origination fee.",
    offers:[
    { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-std",
@@ -336,11 +318,34 @@ function offerCard(o){
     + '</div></div>';
 }
 
+var LA = { base:1000000, feePct:0.025, terms:[12,15,18], programs:[
+  { name:"Standard", ifpct:"100% IF", freq:"weekly", fr:"/wk", d:{12:[23499,1221000],15:[19662,1277001],18:[17039,1328000]} },
+  { name:"Retention", ifpct:"10% IF", freq:"weekly", fr:"/wk", d:{12:[22730,1181000],15:[18646,1211000],18:[16282,1269001]} },
+  { name:"Retention", ifpct:"10% IF", freq:"every 2 weeks", fr:"/2wk", d:{12:[46998,1221000],15:[38522,1251000],18:[33590,1309001]} }
+]};
+function renderLenderA(){
+  var s=Math.min(STATE.requested,LA.base)/LA.base; if(s<0)s=0;
+  var adv=Math.min(STATE.requested,LA.base); if(adv<0)adv=0;
+  var fee=round2(adv*LA.feePct), net=round2(adv-fee);
+  var head='<tr><th>Term</th>'+LA.programs.map(function(p){
+     return '<th>'+p.name+'<span class="la-sub">'+p.ifpct+' &middot; '+p.freq+'</span></th>';
+  }).join('')+'</tr>';
+  var body=LA.terms.map(function(t){
+    return '<tr><td class="la-term">'+t+'-Month</td>'+LA.programs.map(function(p){
+       return '<td><span class="la-pay">'+money(round2(p.d[t][0]*s))+'<span class="la-fr">'+p.fr+'</span></span>'
+              + '<span class="la-back">'+money0(round2(p.d[t][1]*s))+' payback</span></td>';
+    }).join('')+'</tr>';
+  }).join('');
+  return '<h2 class="group-title">Lender A</h2>'
+   + '<p class="group-note">Advance <b>'+money0(adv)+'</b> &middot; 2.5% origination fee <b>'+money0(fee)+'</b> &middot; net advance <b>'+money0(net)+'</b>. Standard forgives 100% of remaining interest on early payoff; Retention forgives 10%. Compare the payment and total payback across all options below.</p>'
+   + '<div class="la-card"><div class="la-scroll"><table class="latable"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div></div>';
+}
 function renderOffers(){
-  document.getElementById("offersWrap").innerHTML = GROUPS.map(function(g){
+  var html = renderLenderA() + GROUPS.map(function(g){
     return '<h2 class="group-title">'+g.name+'</h2><p class="group-note">'+g.note+'</p>'
       + '<div class="offers-grid'+(g.featured?' one':'')+'">'+g.offers.map(function(o){return offerCard(o);}).join("")+'</div>';
   }).join("");
+  document.getElementById("offersWrap").innerHTML = html;
 }
 
 function offerLabel(o){ var x=o.opt.replace(" Payoff","").trim(); return o.termMonths+"-month"+(x?" "+x:""); }
@@ -451,8 +456,22 @@ function downloadPDF(){
   doc.setFontSize(8.5); doc.setTextColor(110);
   doc.text("Lender A: up to $1,000,000, 2.5% fee, early-payoff forgiveness. Lender B: HYPOTHETICAL $1,000,000 (in underwriting review), 50% or 100% interest forgiveness.", L, y); y+=18;
 
+  var sA=Math.min(STATE.requested,1000000)/1000000; if(sA<0)sA=0;
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Offer Summary", L, y); y+=12;
+  doc.text("Lender A — Compare Options", L, y); y+=12;
+  var lac=[{h:"Program",x:L,a:"left"},{h:"Term",x:250,a:"left"},{h:"Payment",x:430,a:"right"},{h:"Total Payback",x:R,a:"right"}];
+  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20); lac.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(45);
+  LA.programs.forEach(function(p){ LA.terms.forEach(function(t){
+     doc.text(p.name+" "+p.ifpct+" ("+p.freq+")", L, y);
+     doc.text(t+"-mo", 250, y);
+     doc.text(money(round2(p.d[t][0]*sA))+" "+p.fr, 430, y, {align:"right"});
+     doc.text(money0(round2(p.d[t][1]*sA)), R, y, {align:"right"});
+     y+=12;
+  }); });
+  y+=16; need(120);
+  doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
+  doc.text("Lender B — Offer Summary", L, y); y+=12;
   var sc=[{h:"Offer",x:L,a:"left"},{h:"Fee",x:250,a:"right"},{h:"Advance",x:330,a:"right"},{h:"Net",x:408,a:"right"},{h:"Payback",x:490,a:"right"},{h:"Weekly",x:R,a:"right"}];
   doc.setFontSize(8); doc.setFont("helvetica","bold"); sc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
   doc.setFont("helvetica","normal"); doc.setTextColor(45);
