@@ -42,18 +42,26 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 @media(max-width:560px){.offers-grid{grid-template-columns:1fr;}}
 .la-card{border:1.5px solid var(--line);border-radius:12px;padding:6px;margin-bottom:12px;}
 .la-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-table.latable{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:560px;}
-table.latable th,table.latable td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line);border-left:1px solid var(--line);vertical-align:top;}
+table.latable{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:640px;}
+table.latable th,table.latable td{padding:9px 10px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);vertical-align:top;}
+table.latable th{text-align:right;}
 table.latable th:first-child,table.latable td:first-child{text-align:left;border-left:none;}
 table.latable thead th{background:var(--navy);color:#fff;font-weight:600;font-size:13px;vertical-align:bottom;}
 table.latable tbody tr:last-child td{border-bottom:none;}
-table.latable tbody tr:nth-child(even){background:var(--bg);}
 .la-sub{display:block;font-size:10px;font-weight:400;opacity:.85;margin-top:3px;text-transform:none;letter-spacing:0;}
-.la-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--navy);}
-.la-pay{display:block;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap;}
+.la-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--navy);padding-top:11px;}
+.la-item{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 9px;border-radius:6px;margin-bottom:4px;font-variant-numeric:tabular-nums;}
+.la-item:last-child{margin-bottom:0;}
+.la-lbl{font-size:9px;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;}
+.la-v{font-weight:700;color:var(--navy);font-size:13px;white-space:nowrap;}
 .la-fr{font-size:10px;font-weight:600;color:var(--slate);margin-left:2px;}
-.la-back{display:block;font-size:11px;color:var(--green-d);font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums;white-space:nowrap;}
-@media print{.la-scroll{overflow:visible;}table.latable{min-width:0;font-size:10px;}}
+.la-pay{background:var(--bg);}
+.la-pay .la-v{font-size:14px;}
+.la-back{background:rgba(0,205,103,.09);}
+.la-back .la-v{color:var(--green-d);}
+.la-fee{background:rgba(255,200,88,.16);}
+.la-fee .la-v{color:#9a6b00;}
+@media print{.la-scroll{overflow:visible;}table.latable{min-width:0;font-size:9.5px;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card.is-featured{border-color:var(--green);box-shadow:0 0 0 1px var(--green);}
 .offer-card-header{color:#fff;padding:12px 16px;}
@@ -332,8 +340,11 @@ function renderLenderA(){
   }).join('')+'</tr>';
   var body=LA.terms.map(function(t){
     return '<tr><td class="la-term">'+t+'-Month</td>'+LA.programs.map(function(p){
-       return '<td><span class="la-pay">'+money(round2(p.d[t][0]*s))+'<span class="la-fr">'+p.fr+'</span></span>'
-              + '<span class="la-back">'+money0(round2(p.d[t][1]*s))+' payback</span></td>';
+       return '<td>'
+         + '<div class="la-item la-pay"><span class="la-lbl">Payment</span><span class="la-v">'+money(round2(p.d[t][0]*s))+'<span class="la-fr">'+p.fr+'</span></span></div>'
+         + '<div class="la-item la-back"><span class="la-lbl">Total payback</span><span class="la-v">'+money0(round2(p.d[t][1]*s))+'</span></div>'
+         + '<div class="la-item la-fee"><span class="la-lbl">Orig. fee (2.5%)</span><span class="la-v">'+money0(fee)+'</span></div>'
+         + '</td>';
     }).join('')+'</tr>';
   }).join('');
   return '<h2 class="group-title">Lender A</h2>'
