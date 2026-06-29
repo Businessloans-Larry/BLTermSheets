@@ -215,42 +215,7 @@ var SCHED12 = [];
 var SCHED14 = [];
 
 var GROUPS = [
- { name:"Lender B &middot; 50% Interest Forgiveness", note:"<span style='display:inline-block;background:#FFC858;color:#5c3a00;font-weight:800;font-size:11px;padding:3px 11px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em;'>Hypothetical &mdash; currently in underwriting review for $1,000,000</span><br>12-, 15-, and 18-month terms at $1,000,000 &mdash; 50% of remaining interest forgiven on early payoff, no origination fee.",
-   offers:[
-   { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-std",
-     subText:"50% interest forgiven on early payoff", optShort:"50% (no fee)",
-     max:1000000, weekly:11730.77, rtr:610000, periods:52, nPay:"52 weekly", feePct:0, forgive:0.5,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
-     ms:[ {mo:3,k:12,po:435531.82},{mo:6,k:24,po:311273.84} ] },
-   { kind:"forgive", term:"15-Month", termMonths:15, opt:"", cls:"opt-std",
-     subText:"50% interest forgiven on early payoff", optShort:"50% (no fee)",
-     max:1000000, weekly:9921.88, rtr:635000, periods:65, nPay:"65 weekly", feePct:0, forgive:0.5,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
-     ms:[ {mo:3,k:12,po:469929.14},{mo:6,k:24,po:368694.95} ] },
-   { kind:"forgive", term:"18-Month", termMonths:18, opt:"", cls:"opt-std",
-     subText:"50% interest forgiven on early payoff", optShort:"50% (no fee)",
-     max:1000000, weekly:8461.54, rtr:660000, periods:78, nPay:"78 weekly", feePct:0, forgive:0.5,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"50% of remaining interest",
-     ms:[ {mo:3,k:12,po:499481.91},{mo:6,k:24,po:416210.29} ] }
- ]},
- { name:"Lender B &middot; 100% Interest Forgiveness", note:"<span style='display:inline-block;background:#FFC858;color:#5c3a00;font-weight:800;font-size:11px;padding:3px 11px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em;'>Hypothetical &mdash; currently in underwriting review for $1,000,000</span><br>12-, 15-, and 18-month terms at $1,000,000 &mdash; 100% of remaining interest forgiven on early payoff, 4% origination fee.",
-   offers:[
-   { kind:"forgive", term:"12-Month", termMonths:12, opt:"", cls:"opt-acc",
-     subText:"100% interest forgiven on early payoff", optShort:"100% (4% fee)",
-     max:1000000, weekly:11730.77, rtr:610000, periods:52, nPay:"52 weekly", feePct:0.04, forgive:1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
-     ms:[ {mo:3,k:12,po:401832.88},{mo:6,k:24,po:294086.16} ] },
-   { kind:"forgive", term:"15-Month", termMonths:15, opt:"", cls:"opt-acc",
-     subText:"100% interest forgiven on early payoff", optShort:"100% (4% fee)",
-     max:1000000, weekly:9921.88, rtr:635000, periods:65, nPay:"65 weekly", feePct:0.04, forgive:1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
-     ms:[ {mo:3,k:12,po:423920.84},{mo:6,k:24,po:340515.02} ] },
-   { kind:"forgive", term:"18-Month", termMonths:18, opt:"", cls:"opt-acc",
-     subText:"100% interest forgiven on early payoff", optShort:"100% (4% fee)",
-     max:1000000, weekly:8461.54, rtr:660000, periods:78, nPay:"78 weekly", feePct:0.04, forgive:1,
-     earlyLabel:"Early-payoff forgiveness", earlyVal:"100% of remaining interest",
-     ms:[ {mo:3,k:12,po:440502.29},{mo:6,k:24,po:375497.53} ] }
- ]}
+ { name:"Lender B", note:"Lender B would require significantly more documentation, and at best their pricing only matches Lender A &mdash; so it&rsquo;s not worth pursuing. Lender A above is the recommended path.", offers:[] }
 ];
 (function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;o.gname=g.name;});});})();
 var ALL=[]; GROUPS.forEach(function(g){g.offers.forEach(function(o){ALL.push(o);});});
@@ -480,15 +445,12 @@ function downloadPDF(){
      doc.text(money0(round2(p.d[t][1]*sA)), R, y, {align:"right"});
      y+=12;
   }); });
-  y+=16; need(120);
+  y+=16; need(70);
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-  doc.text("Lender B — Offer Summary", L, y); y+=12;
-  var sc=[{h:"Offer",x:L,a:"left"},{h:"Fee",x:250,a:"right"},{h:"Advance",x:330,a:"right"},{h:"Net",x:408,a:"right"},{h:"Payback",x:490,a:"right"},{h:"Weekly",x:R,a:"right"}];
-  doc.setFontSize(8); doc.setFont("helvetica","bold"); sc.forEach(function(c){doc.text(c.h,c.x,y,{align:c.a});}); y+=3; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
-  doc.setFont("helvetica","normal"); doc.setTextColor(45);
-  ALL.forEach(function(o){ var m=model(o);
-    var v=["#"+o.num+" "+o.term+" "+o.opt.replace(" Payoff",""), o.feePct>0?money0(m.fee):"None", money0(m.adv)+(m.capped?"*":""), money0(m.net), money0(m.payback), money(m.weekly)];
-    sc.forEach(function(c,j){doc.text(String(v[j]),c.x,y,{align:c.a});}); y+=13; });
+  doc.text("Lender B", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(70);
+  var bn=doc.splitTextToSize("Lender B would require significantly more documentation, and at best only matches Lender A's pricing - not worth pursuing. Lender A is the recommended path.", R-L);
+  doc.text(bn, L, y); y+=bn.length*12+8;
 
   y+=20; need(180);
   doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
