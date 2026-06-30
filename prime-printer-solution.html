@@ -54,7 +54,6 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .cost-table .cost-gap{background:#fff !important;border-left:1px solid var(--line);border-right:1px solid var(--line);border-top:none;border-bottom:none;padding:0;width:18px;min-width:18px;}
 table.prepay.sched th,table.prepay.sched td{padding:5px 9px;font-size:11px;}
 table.prepay.sched thead th{font-size:10px;}
-#chartWrap{page-break-inside:avoid;margin-top:6px;}
 .offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px;}
 @media(max-width:900px){.offers-grid{grid-template-columns:1fr;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
@@ -158,7 +157,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
-    <span class="btn-hint">Plain PDF — offer summary &amp; stipulations.</span>
+    <span class="btn-hint">Plain PDF — offer summary, stipulations &amp; each option’s payment schedule.</span>
   </div>
 
   <div id="offersWrap"></div>
@@ -180,6 +179,8 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <p class="current-note">This is the deal currently on the table &mdash; about <b>$158,096 in total interest</b> on a $250,000 advance over 24 months. Every Lender A option above carries a far lower factor, and settling early forgives 50%&ndash;100% of the remaining interest &mdash; so the all-in cost drops further the sooner it&rsquo;s paid off.</p>
   </div>
 
+
+  <div id="schedWrap"></div>
 
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Offers are subject to the funder's agreement and satisfaction of the stipulations shown. The total funding amount may not equal the amount deposited to your business checking account. Settling the balance in full early forgives 50% or 100% of the remaining interest, as labeled per option. Figures scale with the requested amount; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
@@ -210,6 +211,11 @@ var GROUPS = [
 ];
 (function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;});});})();
 var ALL = []; GROUPS.forEach(function(g){g.offers.forEach(function(o){ALL.push(o);});});
+var SCHED={
+  1:{pmt:4961.54,d:["Jul 8, 2026","Jul 15, 2026","Jul 22, 2026","Jul 29, 2026","Aug 5, 2026","Aug 12, 2026","Aug 19, 2026","Aug 26, 2026","Sep 2, 2026","Sep 9, 2026","Sep 16, 2026","Sep 23, 2026","Sep 30, 2026","Oct 7, 2026","Oct 14, 2026","Oct 21, 2026","Oct 28, 2026","Nov 4, 2026","Nov 12, 2026","Nov 18, 2026","Nov 25, 2026","Dec 2, 2026","Dec 9, 2026","Dec 16, 2026","Dec 23, 2026","Dec 30, 2026","Jan 6, 2027","Jan 13, 2027","Jan 20, 2027","Jan 27, 2027","Feb 3, 2027","Feb 10, 2027","Feb 17, 2027","Feb 24, 2027","Mar 3, 2027","Mar 10, 2027","Mar 17, 2027","Mar 24, 2027","Mar 31, 2027","Apr 7, 2027","Apr 14, 2027","Apr 21, 2027","Apr 28, 2027","May 5, 2027","May 12, 2027","May 19, 2027","May 26, 2027","Jun 2, 2027","Jun 9, 2027","Jun 16, 2027","Jun 23, 2027","Jun 30, 2027","Jul 7, 2027","Jul 14, 2027","Jul 21, 2027","Jul 28, 2027","Aug 4, 2027","Aug 11, 2027","Aug 18, 2027","Aug 25, 2027","Sep 1, 2027","Sep 8, 2027","Sep 15, 2027","Sep 22, 2027","Sep 29, 2027","Oct 6, 2027","Oct 13, 2027","Oct 20, 2027","Oct 27, 2027","Nov 3, 2027","Nov 10, 2027","Nov 17, 2027","Nov 24, 2027","Dec 1, 2027","Dec 8, 2027","Dec 15, 2027","Dec 22, 2027","Dec 29, 2027"],p:[2933.54,2953.37,2973.34,2993.44,3013.67,3034.04,3054.55,3075.2,3095.99,3116.92,3137.99,3159.2,3180.56,3202.06,3223.71,3245.5,3267.44,3289.52,3311.76,3334.15,3356.69,3379.38,3402.22,3425.22,3448.38,3471.69,3495.16,3518.78,3542.57,3566.52,3590.63,3614.9,3639.34,3663.94,3688.71,3713.64,3738.75,3764.02,3789.47,3815.08,3840.87,3866.84,3892.98,3919.29,3945.79,3972.46,3999.32,4026.35,4053.57,4080.97,4108.56,4136.33,4164.29,4192.44,4220.79,4249.32,4278.04,4306.96,4336.08,4365.39,4394.9,4424.61,4454.52,4484.63,4514.95,4545.47,4576.2,4607.13,4638.28,4669.63,4701.2,4732.98,4764.97,4797.18,4829.61,4862.26,4895.13,4928.65],i:[2028.0,2008.17,1988.2,1968.1,1947.87,1927.5,1906.99,1886.34,1865.55,1844.62,1823.55,1802.34,1780.98,1759.48,1737.83,1716.04,1694.1,1672.01,1649.78,1627.39,1604.85,1582.16,1559.31,1536.32,1513.16,1489.85,1466.38,1442.75,1418.97,1395.02,1370.91,1346.64,1322.2,1297.6,1272.83,1247.89,1222.79,1197.52,1172.07,1146.45,1120.66,1094.7,1068.56,1042.24,1015.75,989.08,962.22,935.19,907.97,880.57,852.98,825.21,797.24,769.09,740.75,712.22,683.49,654.58,625.46,596.15,566.64,536.93,507.02,476.91,446.59,416.07,385.34,354.41,323.26,291.91,260.34,228.56,196.57,164.35,131.93,99.28,66.41,33.32],b:[297066.46,294113.09,291139.75,288146.32,285132.65,282098.6,279044.05,275968.85,272872.86,269755.94,266617.95,263458.75,260278.19,257076.13,253852.42,250606.92,247339.49,244049.96,240738.2,237404.05,234047.36,230667.98,227265.76,223840.54,220392.16,216920.47,213425.31,209906.53,206363.96,202797.44,199206.81,195591.91,191952.57,188288.63,184599.92,180886.28,177147.53,173383.51,169594.04,165778.96,161938.08,158071.24,154178.27,150258.97,146313.18,142340.72,138341.4,134315.05,130261.48,126180.51,122071.95,117935.62,113771.33,109578.88,105358.1,101108.78,96830.73,92523.77,88187.69,83822.3,79427.4,75002.79,70548.27,66063.64,61548.69,57003.22,52427.02,47819.89,43181.62,38511.99,33810.79,29077.81,24312.84,19515.65,14686.04,9823.78,4928.65,0.0]},
+  2:{pmt:4483.52,d:["Jul 8, 2026","Jul 15, 2026","Jul 22, 2026","Jul 29, 2026","Aug 5, 2026","Aug 12, 2026","Aug 19, 2026","Aug 26, 2026","Sep 2, 2026","Sep 9, 2026","Sep 16, 2026","Sep 23, 2026","Sep 30, 2026","Oct 7, 2026","Oct 14, 2026","Oct 21, 2026","Oct 28, 2026","Nov 4, 2026","Nov 12, 2026","Nov 18, 2026","Nov 25, 2026","Dec 2, 2026","Dec 9, 2026","Dec 16, 2026","Dec 23, 2026","Dec 30, 2026","Jan 6, 2027","Jan 13, 2027","Jan 20, 2027","Jan 27, 2027","Feb 3, 2027","Feb 10, 2027","Feb 17, 2027","Feb 24, 2027","Mar 3, 2027","Mar 10, 2027","Mar 17, 2027","Mar 24, 2027","Mar 31, 2027","Apr 7, 2027","Apr 14, 2027","Apr 21, 2027","Apr 28, 2027","May 5, 2027","May 12, 2027","May 19, 2027","May 26, 2027","Jun 2, 2027","Jun 9, 2027","Jun 16, 2027","Jun 23, 2027","Jun 30, 2027","Jul 7, 2027","Jul 14, 2027","Jul 21, 2027","Jul 28, 2027","Aug 4, 2027","Aug 11, 2027","Aug 18, 2027","Aug 25, 2027","Sep 1, 2027","Sep 8, 2027","Sep 15, 2027","Sep 22, 2027","Sep 29, 2027","Oct 6, 2027","Oct 13, 2027","Oct 20, 2027","Oct 27, 2027","Nov 3, 2027","Nov 10, 2027","Nov 17, 2027","Nov 24, 2027","Dec 1, 2027","Dec 8, 2027","Dec 15, 2027","Dec 22, 2027","Dec 29, 2027","Jan 5, 2028","Jan 12, 2028","Jan 19, 2028","Jan 26, 2028","Feb 2, 2028","Feb 9, 2028","Feb 16, 2028","Feb 23, 2028","Mar 1, 2028","Mar 8, 2028","Mar 15, 2028","Mar 22, 2028","Mar 29, 2028"],p:[2359.05,2375.75,2392.58,2409.52,2426.58,2443.77,2461.07,2478.5,2496.05,2513.73,2531.53,2549.46,2567.51,2585.69,2604.0,2622.44,2641.01,2659.72,2678.55,2697.52,2716.62,2735.86,2755.24,2774.75,2794.4,2814.18,2834.11,2854.18,2874.4,2894.75,2915.25,2935.89,2956.69,2977.62,2998.71,3019.95,3041.33,3062.87,3084.56,3106.4,3128.4,3150.55,3172.87,3195.33,3217.96,3240.75,3263.7,3286.81,3310.09,3333.53,3357.13,3380.91,3404.85,3428.96,3453.25,3477.7,3502.33,3527.13,3552.11,3577.26,3602.59,3628.11,3653.8,3679.67,3705.73,3731.97,3758.4,3785.02,3811.82,3838.81,3866.0,3893.38,3920.95,3948.71,3976.68,4004.84,4033.2,4061.76,4090.52,4119.49,4148.66,4178.04,4207.63,4237.43,4267.43,4297.65,4328.09,4358.74,4389.6,4420.69,4451.16],i:[2124.47,2107.76,2090.94,2074.0,2056.93,2039.75,2022.44,2005.02,1987.46,1969.79,1951.99,1934.06,1916.01,1897.82,1879.51,1861.07,1842.5,1823.8,1804.96,1786.0,1766.89,1747.66,1728.28,1708.77,1689.12,1669.33,1649.4,1629.33,1609.12,1588.77,1568.27,1547.62,1526.83,1505.89,1484.81,1463.57,1442.19,1420.65,1398.96,1377.11,1355.12,1332.96,1310.65,1288.18,1265.55,1242.77,1219.82,1196.7,1173.43,1149.99,1126.38,1102.61,1078.67,1054.55,1030.27,1005.82,981.19,956.39,931.41,906.26,880.92,855.41,829.72,803.84,777.79,751.54,725.12,698.5,671.7,644.7,617.52,590.14,562.57,534.8,506.84,478.68,450.32,421.76,392.99,364.03,334.85,305.47,275.89,246.09,216.08,185.86,155.43,124.78,93.91,62.83,31.52],b:[297640.95,295265.2,292872.63,290463.11,288036.52,285592.76,283131.69,280653.19,278157.13,275643.41,273111.88,270562.42,267994.91,265409.22,262805.22,260182.77,257541.76,254882.04,252203.49,249505.97,246789.34,244053.48,241298.25,238523.5,235729.11,232914.92,230080.81,227226.62,224352.23,221457.48,218542.23,215606.33,212649.65,209672.02,206673.31,203653.37,200612.04,197549.17,194464.61,191358.21,188229.81,185079.25,181906.39,178711.05,175493.09,172252.34,168988.64,165701.83,162391.74,159058.21,155701.08,152320.17,148915.32,145486.35,142033.11,138555.41,135053.08,131525.95,127973.85,124396.59,120793.99,117165.89,113512.09,109832.42,106126.68,102394.71,98636.31,94851.29,91039.47,87200.66,83334.66,79441.28,75520.34,71571.62,67594.94,63590.11,59556.91,55495.15,51404.62,47285.13,43136.47,38958.43,34750.8,30513.37,26245.94,21948.28,17620.19,13261.46,8871.85,4451.16,0.0]},
+  3:{pmt:4826.92,d:["Jul 8, 2026","Jul 15, 2026","Jul 22, 2026","Jul 29, 2026","Aug 5, 2026","Aug 12, 2026","Aug 19, 2026","Aug 26, 2026","Sep 2, 2026","Sep 9, 2026","Sep 16, 2026","Sep 23, 2026","Sep 30, 2026","Oct 7, 2026","Oct 14, 2026","Oct 21, 2026","Oct 28, 2026","Nov 4, 2026","Nov 12, 2026","Nov 18, 2026","Nov 25, 2026","Dec 2, 2026","Dec 9, 2026","Dec 16, 2026","Dec 23, 2026","Dec 30, 2026","Jan 6, 2027","Jan 13, 2027","Jan 20, 2027","Jan 27, 2027","Feb 3, 2027","Feb 10, 2027","Feb 17, 2027","Feb 24, 2027","Mar 3, 2027","Mar 10, 2027","Mar 17, 2027","Mar 24, 2027","Mar 31, 2027","Apr 7, 2027","Apr 14, 2027","Apr 21, 2027","Apr 28, 2027","May 5, 2027","May 12, 2027","May 19, 2027","May 26, 2027","Jun 2, 2027","Jun 9, 2027","Jun 16, 2027","Jun 23, 2027","Jun 30, 2027","Jul 7, 2027","Jul 14, 2027","Jul 21, 2027","Jul 28, 2027","Aug 4, 2027","Aug 11, 2027","Aug 18, 2027","Aug 25, 2027","Sep 1, 2027","Sep 8, 2027","Sep 15, 2027","Sep 22, 2027","Sep 29, 2027","Oct 6, 2027","Oct 13, 2027","Oct 20, 2027","Oct 27, 2027","Nov 3, 2027","Nov 10, 2027","Nov 17, 2027","Nov 24, 2027","Dec 1, 2027","Dec 8, 2027","Dec 15, 2027","Dec 22, 2027","Dec 29, 2027"],p:[3027.78,3045.94,3064.21,3082.59,3101.07,3119.67,3138.38,3157.2,3176.13,3195.18,3214.34,3233.62,3253.01,3272.52,3292.15,3311.89,3331.75,3351.73,3371.83,3392.06,3412.4,3432.86,3453.45,3474.16,3495.0,3515.96,3537.04,3558.25,3579.59,3601.06,3622.66,3644.38,3666.24,3688.22,3710.34,3732.59,3754.98,3777.5,3800.15,3822.94,3845.87,3868.93,3892.14,3915.48,3938.96,3962.58,3986.35,4010.25,4034.3,4058.5,4082.84,4107.32,4131.95,4156.73,4181.66,4206.74,4231.97,4257.35,4282.88,4308.56,4334.4,4360.4,4386.55,4412.85,4439.32,4465.94,4492.72,4519.67,4546.77,4574.04,4601.47,4629.07,4656.83,4684.76,4712.85,4741.12,4769.55,4797.48],i:[1799.14,1780.98,1762.71,1744.34,1725.85,1707.25,1688.54,1669.72,1650.79,1631.74,1612.58,1593.3,1573.91,1554.4,1534.78,1515.03,1495.17,1475.19,1455.09,1434.87,1414.52,1394.06,1373.47,1352.76,1331.93,1310.97,1289.88,1268.67,1247.33,1225.86,1204.27,1182.54,1160.69,1138.7,1116.58,1094.33,1071.94,1049.42,1026.77,1003.98,981.05,957.99,934.79,911.45,887.96,864.34,840.58,816.67,792.62,768.43,744.09,719.6,694.97,670.19,645.26,620.18,594.95,569.58,544.04,518.36,492.52,466.53,440.38,414.07,387.6,360.98,334.2,307.25,280.15,252.88,225.45,197.86,170.09,142.17,114.07,85.81,57.37,28.77],b:[296972.22,293926.27,290862.07,287779.48,284678.41,281558.74,278420.36,275263.16,272087.03,268891.85,265677.5,262443.88,259190.87,255918.35,252626.2,249314.31,245982.56,242630.83,239258.99,235866.94,232454.54,229021.68,225568.23,222094.06,218599.07,215083.11,211546.07,207987.82,204408.23,200807.17,197184.51,193540.13,189873.89,186185.67,182475.32,178742.73,174987.75,171210.25,167410.1,163587.15,159741.28,155872.35,151980.22,148064.74,144125.78,140163.2,136176.85,132166.6,128132.29,124073.8,119990.96,115883.64,111751.69,107594.95,103413.29,99206.55,94974.58,90717.23,86434.35,82125.79,77791.39,73430.99,69044.44,64631.59,60192.27,55726.32,51233.6,46713.93,42167.16,37593.12,32991.64,28362.58,23705.75,19020.99,14308.14,9567.02,4797.48,0.0]}
+};
 /* cost table columns grouped by term length (longest first) */
 var TERMS = [21,18];
 var COLGROUPS = TERMS.map(function(tm){ return {tm:tm, offers:ALL.filter(function(o){return o.termMo===tm;})}; }).filter(function(cg){return cg.offers.length;});
@@ -335,68 +341,41 @@ function renderOffers(){
 var MILES = [{lab:"30 days",days:30},{lab:"60 days",days:60},{lab:"3 months",mo:3},{lab:"6 months",mo:6},{lab:"9 months",mo:9},{lab:"12 months",mo:12},{lab:"15 months",mo:15},{lab:"18 months",mo:18},{lab:"21 months",mo:21},{lab:"24 months",mo:24}];
 
 /* all-in payoff cost table: offers across the top (grouped by term), milestones down the side */
-function renderChart(){
-  var head1 = '<tr><th rowspan="2" class="cost-corner">Pay off at</th>';
-  var head2 = '<tr>';
-  COLGROUPS.forEach(function(cg,gi){
-    if(gi>0) head1 += '<th rowspan="2" class="cost-gap"></th>';
-    head1 += '<th colspan="'+cg.offers.length+'" class="cost-term">'+cg.tm+'-Month</th>';
-    cg.offers.forEach(function(o){ head2 += '<th>#'+o.num+'<span class="cost-sub">'+offerShort(o)+'</span></th>'; });
-  });
-  head1 += '</tr>'; head2 += '</tr>';
-  var body = "";
-  MILES.forEach(function(mil){
-    body += '<tr><td class="cost-row-lab">'+mil.lab+'</td>';
-    COLGROUPS.forEach(function(cg,gi){
-      if(gi>0) body += '<td class="cost-gap"></td>';
-      var vals = cg.offers.map(function(o){ return totalCostAt(o,mil); });
-      var min = Math.min.apply(null, vals);
-      cg.offers.forEach(function(o,idx){
-        var best = (cg.offers.length>1 && vals[idx]===min);
-        body += '<td'+(best?' class="cost-best"':'')+'>'+money0(vals[idx])+'</td>';
-      });
-    });
-    body += '</tr>';
-  });
-  var note = '<p class="chart-note">All-in cost to pay the balance off in full at each point — origination fee + payments made + payoff amount. Columns are grouped by term length; for each term, the cheapest option in that row is highlighted in green. Funding up to $300,000; updates live with the requested amount above.</p>';
-  document.getElementById("chartWrap").innerHTML = '<h2 class="group-title">All-In Cost to Pay Off Early</h2><div class="cost-table-wrap"><table class="cost-table"><thead>'+head1+head2+'</thead><tbody>'+body+'</tbody></table></div>'+note;
-}
-
 function stipsBlock(o){
   if(!o.stips || !o.stips.length) return '';
   var head = o.stipHead || "Stipulations";
   return '<div class="stips"><h4>'+esc(head)+'</h4><ul>' + o.stips.map(function(x){return '<li>'+esc(x)+'</li>';}).join("") + '</ul></div>';
 }
 
-function renderPrepay(){
-  var html = "";
+var SCHED_PENDING = 4; /* Offer 4 (18-mo, 100% PP, 1.29) — lender schedule not yet provided */
+function renderSched(){
+  var html="";
   GROUPS.forEach(function(g){
     g.offers.forEach(function(o){
-      var m = modelOf(o);
-      var titleExtra = o.ppType==="if" ? (' &middot; '+o.fpct+' interest forgiveness') : '';
-      html += '<div class="prepay-section">'
-        + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.term+titleExtra+' — '+money0(m.advance)+(o.ppType==="if"?' — Amortization & Payoff':' — Early Payoff')+'</h2></div>'
-        + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments.</div>';
-      if(o.ppType === "if"){
-        var full = ifFull(o, m.advance), rows = "";
-        full.rows.forEach(function(r){
-          rows += '<tr><td>'+r.k+'</td><td>'+money(r.pmt)+'</td><td>'+money(r.interest)+'</td><td>'+money(r.cumInt)+'</td><td>'+money(r.principal)+'</td><td>'+money(r.bal)+'</td><td class="po-payoff">'+money(r.payoff)+'</td></tr>';
-        });
-        html += '<table class="prepay sched"><thead><tr><th>#</th><th>Payment</th><th>Interest</th><th>Cumulative Interest</th><th>Principal</th><th>Remaining Principal</th><th>Payoff if Paid in Full</th></tr></thead><tbody>'+rows+'</tbody></table>'
-          + '<div class="scale-note" style="color:var(--slate);margin-top:10px;">Full weekly amortization. "Payoff if Paid in Full" is the lump sum to settle that week, with '+o.fpct+' of remaining interest forgiven.</div>';
-      } else {
-        var cost = round2(m.payback - m.advance);
-        var savedAmt = round2(cost*0.20);
-        var payoff = round2(m.advance + cost*0.80);
-        html += '<table class="prepay"><thead><tr><th>Repay in full within</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>'
-          + '<tr><td>'+o.within+'</td><td class="po-payoff">'+money(payoff)+'</td><td class="po-saved">'+money(savedAmt)+'</td></tr>'
-          + '</tbody></table>'
-          + '<div class="scale-note" style="color:var(--slate);margin-top:10px;">Per the early-payment amendment: repay in full within '+o.within+' and the cost of capital is discounted 20% (savings shown above).</div>';
+      var sc = SCHED[o.num];
+      if(!sc){
+        if(o.num===SCHED_PENDING){
+          html += '<div class="prepay-section"><div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.term+' &middot; '+o.fpct+' interest forgiveness — Payment Schedule</h2></div>'
+            + '<div class="prepay-recap">The lender\'s payment schedule for this option hasn\'t come through yet — it will appear here as soon as it\'s received.</div></div>';
+        }
+        return;
       }
-      html += '</div>';
+      var m = modelOf(o), s2 = o.max ? m.advance/o.max : 0, rows="";
+      for(var k=0;k<sc.d.length;k++){
+        rows += '<tr><td style="text-align:left">'+(k+1)+'</td><td style="text-align:left">'+sc.d[k]+'</td><td>'+money(round2(sc.pmt*s2))+'</td><td>'+money(round2(sc.p[k]*s2))+'</td><td>'+money(round2(sc.i[k]*s2))+'</td><td>'+money(round2(sc.b[k]*s2))+'</td></tr>';
+      }
+      var note = (o.forgive>=1)
+        ? 'With 100% interest forgiveness, settling the balance in full early pays only the <b>Balance</b> shown for that week — all remaining interest is waived.'
+        : 'With '+o.fpct+' interest forgiveness, settling the balance in full early pays the Balance shown plus '+o.fpct+' of the remaining interest.';
+      html += '<div class="prepay-section">'
+        + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.term+' &middot; '+o.fpct+' interest forgiveness — '+money0(m.advance)+' — Payment Schedule</h2></div>'
+        + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments.</div>'
+        + '<table class="prepay sched"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Date</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody>'+rows+'</tbody></table>'
+        + '<div class="scale-note" style="color:var(--slate);margin-top:10px;">'+note+' Figures shown at '+money0(m.advance)+'; they scale with the requested amount above.</div>'
+        + '</div>';
     });
   });
-  document.getElementById("prepayWrap").innerHTML = html;
+  document.getElementById("schedWrap").innerHTML = html;
 }
 
 function downloadPDF(){
@@ -429,6 +408,32 @@ function downloadPDF(){
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
     so.stips.forEach(function(r){ doc.text("- "+r.replace(/&amp;/g,"&"), L, y); y+=13; });
   }
+  GROUPS.forEach(function(g){ g.offers.forEach(function(o){
+    var m=modelOf(o), sc=SCHED[o.num];
+    doc.addPage(); var yy=58;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text("#"+o.num+" "+o.term.replace("-Month","-mo")+" "+o.fpct+" IF — "+money0(m.advance)+" — Payment Schedule", L, yy); yy+=15;
+    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
+    if(!sc){ doc.text("Lender payment schedule for this option has not been provided yet.", L, yy); return; }
+    var s2=o.max?m.advance/o.max:0;
+    doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly payments", L, yy); yy+=18;
+    var sc2=[{h:"#",x:L,a:"left"},{h:"Date",x:90,a:"left"},{h:"Payment",x:250,a:"right"},{h:"Principal",x:350,a:"right"},{h:"Interest",x:440,a:"right"},{h:"Balance",x:R,a:"right"}];
+    function sh(){ doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20); sc2.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); }); yy+=3; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=11; doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45); }
+    sh();
+    for(var k=0;k<sc.d.length;k++){
+      if(yy>742){ doc.addPage(); yy=56; sh(); }
+      doc.text(String(k+1),L,yy);
+      doc.text(sc.d[k],90,yy);
+      doc.text(money(round2(sc.pmt*s2)),250,yy,{align:"right"});
+      doc.text(money(round2(sc.p[k]*s2)),350,yy,{align:"right"});
+      doc.text(money(round2(sc.i[k]*s2)),440,yy,{align:"right"});
+      doc.text(money(round2(sc.b[k]*s2)),R,yy,{align:"right"});
+      yy+=11;
+    }
+    if(yy>742){ doc.addPage(); yy=56; }
+    yy+=4; doc.setFontSize(8); doc.setTextColor(90);
+    doc.text((o.forgive>=1?"100% interest forgiveness: settle in full early and pay only the Balance shown.":o.fpct+" interest forgiveness: settle in full early and pay the Balance plus "+o.fpct+" of remaining interest."), L, yy);
+  }); });
   doc.save("prime-printer-solution-offers.pdf");
 }
 
@@ -441,7 +446,7 @@ function recompute(){
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $300,000 maximum" : "Adjustable — up to the $300,000 maximum";
-  renderOffers();
+  renderOffers(); renderSched();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
