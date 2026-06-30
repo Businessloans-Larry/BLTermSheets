@@ -142,7 +142,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">Prime Printer Solution, Inc.</h1>
-  <p class="cover-subtitle">Four interest-forgiveness funding options from Lender A — grouped by 50% and 100% early-payoff forgiveness, on 18- and 21-month terms. Adjust the requested amount and every figure updates live: payments, the full amortization schedule, and the all-in payoff comparison. Your current 24-month offer is shown lower down for comparison. Each option's schedule and stipulations are on its own page.</p>
+  <p class="cover-subtitle">Four interest-forgiveness funding options from Lender A — grouped by 50% and 100% early-payoff forgiveness, on 18- and 21-month terms. Adjust the requested amount and every figure updates live. Your current 24-month offer is shown lower down for comparison.</p>
 
   <div class="borrower-bar">
     <div>
@@ -158,7 +158,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
-    <span class="btn-hint">Plain PDF — offer summary plus each early-payoff schedule &amp; stips.</span>
+    <span class="btn-hint">Plain PDF — offer summary &amp; stipulations.</span>
   </div>
 
   <div id="offersWrap"></div>
@@ -180,8 +180,6 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <p class="current-note">This is the deal currently on the table &mdash; about <b>$158,096 in total interest</b> on a $250,000 advance over 24 months. Every Lender A option above carries a far lower factor, and settling early forgives 50%&ndash;100% of the remaining interest &mdash; so the all-in cost drops further the sooner it&rsquo;s paid off.</p>
   </div>
 
-  <div id="chartWrap"></div>
-  <div id="prepayWrap"></div>
 
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Offers are subject to the funder's agreement and satisfaction of the stipulations shown. The total funding amount may not equal the amount deposited to your business checking account. Settling the balance in full early forgives 50% or 100% of the remaining interest, as labeled per option. Figures scale with the requested amount; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
@@ -201,7 +199,7 @@ var STATE = { requested: 300000 };
 
 /* offer data — factor/rate stored, never displayed */
 var GROUPS = [
-  { label:"Lender A", note:"Interest-forgiveness term funding up to $300,000 &middot; weekly payments &middot; 18- and 21-month terms. Pay the balance off early and a share of your remaining interest is forgiven — 50% on the first set of options, 100% on the second. Each option's full amortization schedule appears below, and the all-in payoff costs are compared in the table.", offers:[
+  { label:"Lender A", note:"Interest-forgiveness term funding up to $300,000 &middot; weekly payments &middot; 18- and 21-month terms. Pay the balance off early and a share of your remaining interest is forgiven — 50% on the first set of options, 100% on the second.", offers:[
     { term:"18-Month", sub:"50% Prepay Interest Forgiveness", cls:"brand-c", max:300000, factor:1.29, nPay:78, termMo:18, rate:0.006760035770301480, forgive:0.50, fpct:"50%", origPct:0.025, origLabel:"2.5%", processing:0, ppType:"if",
       stipHead:"Stipulations — Lender A (apply to all options)",
       stips:["Bank statements — payback months (can be done with Plaid)","Bank verification","Driver's License","2025 tax return","Voided check"] },
@@ -314,6 +312,7 @@ function offerCard(o){
       + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+(m.oldPayback?'<span class="was">'+money0(m.oldPayback)+'</span>':'')+money0(m.payback)+'</span></div>'
       + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+(m.oldWeekly?'<span class="was">'+money(m.oldWeekly)+'</span>':'')+money(m.weekly)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
+      + (o.ppType==="if" ? '<div class="kv-row"><span class="kv-label">Prepay forgiveness</span><span class="kv-val">'+o.fpct+' of remaining interest</span></div>' : '')
     + '</div></div>';
 }
 
@@ -422,64 +421,15 @@ function downloadPDF(){
     cols.forEach(function(c,j){ doc.text(String(v[j]),c.x,y,{align:c.a}); });
     y+=13;
   });
-  y+=18; doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-  doc.text("All-In Cost to Pay Off Early (incl. fee)", L, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(7.5); doc.setTextColor(90);
-  doc.text(COLS.map(function(o){return "#"+o.num+" "+o.term.replace("-Month","mo")+" "+o.fpct+" IF";}).join("      "), L, y); y+=13;
-  var ncol=COLS.length, x0=210, ox=COLS.map(function(o,i){ return Math.round(x0 + (R-x0)*(i+1)/ncol); });
-  doc.setFontSize(8); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Pay off at", L, y);
-  COLS.forEach(function(o,i){ doc.text("#"+o.num, ox[i], y, {align:"right"}); });
-  y+=4; doc.setDrawColor(150); doc.line(L,y,R,y); y+=11;
-  doc.setFont("helvetica","normal"); doc.setTextColor(45);
-  MILES.forEach(function(mil){
-    doc.text(mil.lab, L, y);
-    COLS.forEach(function(o,i){ doc.text(money0(totalCostAt(o,mil)), ox[i], y, {align:"right"}); });
-    y+=12;
-  });
-  y+=3; doc.setFontSize(7.5); doc.setTextColor(90);
-  ALL.forEach(function(o){
-    var m=modelOf(o);
-    doc.addPage(); var yy=58;
+  var so = ALL.filter(function(o){return o.stips && o.stips.length;})[0];
+  if(so){
+    y+=22; if(y>700){ doc.addPage(); y=58; }
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text(lbl(o)+" — "+money0(m.advance)+(o.ppType==="if"?" — Amortization & Payoff":" — Early Payoff"), L, yy); yy+=15;
-    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
-    doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly payments", L, yy); yy+=18;
-    if(o.ppType==="if"){
-      var full=ifFull(o,m.advance);
-      var sc=[{h:"#",x:L,a:"left"},{h:"Payment",x:152,a:"right"},{h:"Interest",x:236,a:"right"},{h:"Cum. Int.",x:326,a:"right"},{h:"Principal",x:410,a:"right"},{h:"Rem. Princ.",x:490,a:"right"},{h:"Payoff",x:R,a:"right"}];
-      function schHead(){ doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20); sc.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); }); yy+=3; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=11; doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45); }
-      schHead();
-      full.rows.forEach(function(r){
-        if(yy>742){ doc.addPage(); yy=56; schHead(); }
-        doc.text(String(r.k),L,yy);
-        doc.text(money(r.pmt),152,yy,{align:"right"});
-        doc.text(money(r.interest),236,yy,{align:"right"});
-        doc.text(money(r.cumInt),326,yy,{align:"right"});
-        doc.text(money(r.principal),410,yy,{align:"right"});
-        doc.text(money(r.bal),490,yy,{align:"right"});
-        doc.text(money(r.payoff),R,yy,{align:"right"});
-        yy+=11;
-      });
-      if(yy>742){ doc.addPage(); yy=56; }
-      yy+=4; doc.setFontSize(8); doc.setTextColor(90);
-      doc.text("Payoff = lump sum to settle that week, with "+o.fpct+" of remaining interest forgiven.", L, yy); yy+=12;
-    } else {
-      var cost=round2(m.payback-m.advance), savedAmt=round2(cost*0.20), payoff=round2(m.advance+cost*0.80);
-      doc.setFontSize(10); doc.setTextColor(45);
-      doc.text("Repay in full within "+o.within+":", L, yy); yy+=15;
-      doc.text("Total payoff: "+money(payoff), L+12, yy); yy+=14;
-      doc.text("Interest saved (20% off the cost): "+money(savedAmt), L+12, yy); yy+=14;
-    }
-    if(o.stips && o.stips.length){
-      if(yy>700){ doc.addPage(); yy=56; }
-      yy+=12; doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-      doc.text((o.stipHead||"Stipulations").replace(/&amp;/g,"&")+":", L, yy); yy+=13;
-      doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-      o.stips.forEach(function(r){ doc.text("- "+r.replace(/&amp;/g,"&"), L, yy); yy+=12; });
-    }
-  });
-  doc.save("cm-truck-trailer-offers.pdf");
+    doc.text((so.stipHead||"Stipulations").replace(/&amp;/g,"&"), L, y); y+=15;
+    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
+    so.stips.forEach(function(r){ doc.text("- "+r.replace(/&amp;/g,"&"), L, y); y+=13; });
+  }
+  doc.save("prime-printer-solution-offers.pdf");
 }
 
 function recompute(){
@@ -491,7 +441,7 @@ function recompute(){
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $300,000 maximum" : "Adjustable — up to the $300,000 maximum";
-  renderOffers(); renderChart(); renderPrepay();
+  renderOffers();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
