@@ -118,7 +118,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">Credo Construction, Inc.</h1>
-  <p class="cover-subtitle">Four options from one lender — a $600,000 / 18-month and a $450,000 / 12-month structure, each offered at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). Adjust the requested amount and every figure updates live; each option caps at its own maximum, and the all-in cost reflects paying the balance off early.</p>
+  <p class="cover-subtitle">Two lenders. <b>Lender A</b> offers a $600,000 / 18-month and a $450,000 / 12-month structure, each at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). <b>Lender B</b> is a $100,000 flex line of credit with a pay-now early-payoff schedule. Adjust the requested amount and every figure updates live; each option caps at its own maximum.</p>
 
   <div class="borrower-bar">
     <div>
@@ -143,13 +143,16 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <span class="btn-hint">Plain PDF — offer summary, requirements, and the all-in cost tables.</span>
   </div>
 
-  <h2 class="section-title">Lender A — Funding Options</h2>
+  <h2 class="section-title">Funding Options</h2>
   <div id="offerWrap"></div>
 
   <div id="allinWrap"></div>
 
+  <h2 class="section-title" style="page-break-before:always;">Lender B — Pay-Now Early Payoff Schedule</h2>
+  <div id="lenderBSched"></div>
+
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. All-in cost figures scale with the requested amount and reflect paying the balance in full at the month shown, including the origination fee, all weekly payments made to that point, and the early-payoff balance; interest forgiveness is applied to the remaining interest at payoff. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. All-in cost figures scale with the requested amount and reflect paying the balance in full at the month shown, including the origination fee, all weekly payments made to that point, and the early-payoff balance; interest forgiveness is applied to the remaining interest at payoff. The Lender B flex line is a revolving line of credit; the pay-now schedule shows the cost to settle the line in full at each weekly point and is not a commitment by the lender to accept any early repurchase. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -170,7 +173,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 var STATE = { requested: 600000 };
 
 var GROUPS = [
-  { name: "100% Interest Forgiveness",
+  { name: "Lender A &middot; 100% Interest Forgiveness",
     note: "4% origination fee. The most savings if you pay the balance off early — at one month the all-in cost is only the fee plus a few weeks of interest.",
     offers: [
       { tier:"100% IF", max:600000, factor:1.34, weekly:10307.70, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%",
@@ -179,13 +182,21 @@ var GROUPS = [
         milestonePayoff:[421700.88, 354578.30, 248574.96, 130816.56] }
     ]
   },
-  { name: "50% Interest Forgiveness",
+  { name: "Lender A &middot; 50% Interest Forgiveness",
     note: "1% origination fee — lower cost up front. Half the remaining interest is forgiven on an early payoff.",
     offers: [
       { tier:"50% IF", max:600000, factor:1.34, weekly:10307.70, nPay:78, term:18, IFpct:50, origPct:0.01, origLabel:"1%",
         milestonePayoff:[670031.40, 596769.40, 487459.74, 373635.82] },
       { tier:"50% IF", max:450000, factor:1.23, weekly:10644.24, nPay:52, term:12, IFpct:50, origPct:0.01, origLabel:"1%",
         milestonePayoff:[466311.96, 384851.59, 262662.36, 134595.60] }
+    ]
+  },
+  { name: "Lender B &middot; Flex Line / LOC",
+    isLOC: true,
+    note: "A revolving line of credit. Draw $100,000 over a 180-business-day (36-week) term; pay it off early and your cost drops sharply (see the pay-now schedule below).",
+    offers: [
+      { tier:"Flex line of credit", isLOC:true, max:100000, factor:1.38, weekly:3833.33, nPay:36, termLabel:"180 business days", IFpct:null, origPct:0, maxSavings100:36944.44,
+        costCap:[1055.56,2111.11,3166.67,4222.22,12597.22,13416.67,14236.11,15055.56,15875.00,16694.44,17513.89,18333.33,19152.78,19972.22,20791.67,21611.11,22430.56,23250.00,24069.44,24888.89,25708.33,26527.78,27347.22,28166.67,28986.11,29805.56,30625.00,31444.44,32263.89,33083.33,33902.78,34722.22,35541.67,36361.11,37180.56,38000.00] }
     ]
   }
 ];
@@ -232,17 +243,26 @@ function renderOffers(){
     g.offers.forEach(function(o){
       var m = model(o);
       var capTag = m.capped ? '<span class="cap-badge">offer max '+money0(o.max)+'</span>' : '';
-      html += '<div class="offer-card">'
-        + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.term+' months</div><div class="offer-sub">'+o.tier+' &middot; '+o.origLabel+' fee &middot; weekly</div></div>'
-        + '<div class="offer-card-body">'
-          + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.adv)+capTag+'</span></div>'
-          + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
+      var termTxt = o.termLabel || (o.term + ' months');
+      var amtLabel = o.isLOC ? 'Draw amount' : 'Advance amount';
+      var subFee = (o.origPct>0) ? ' &middot; '+o.origLabel+' fee' : '';
+      var feeRows = (o.origPct>0)
+        ? '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
           + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
+        : '';
+      var lastRow = (o.IFpct!=null)
+        ? '<div class="kv-row"><span class="kv-label">Interest forgiveness</span><span class="kv-val">'+o.IFpct+'%</span></div>'
+        : '<div class="kv-row"><span class="kv-label">Max early-payoff savings</span><span class="kv-val">'+money0(o.maxSavings100*m.s)+'</span></div>';
+      html += '<div class="offer-card">'
+        + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+termTxt+'</div><div class="offer-sub">'+o.tier+subFee+' &middot; weekly</div></div>'
+        + '<div class="offer-card-body">'
+          + '<div class="kv-row"><span class="kv-label">'+amtLabel+'</span><span class="kv-val">'+money0(m.adv)+capTag+'</span></div>'
+          + feeRows
           + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
           + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
           + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
-          + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
-          + '<div class="kv-row"><span class="kv-label">Interest forgiveness</span><span class="kv-val">'+o.IFpct+'%</span></div>'
+          + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+termTxt+'</span></div>'
+          + lastRow
         + '</div></div>';
     });
     html += '</div>';
@@ -262,11 +282,12 @@ function allinRows(o){
 }
 
 function renderAllin(){
-  var html = '<h2 class="section-title">All-In Cost if Paid Off Early</h2>'
+  var html = '<h2 class="section-title">Lender A — All-In Cost if Paid Off Early</h2>'
     + '<p class="allin-intro">What this funding costs in total if the balance is paid in full at 1, 3, 6, or 9 months — '
     + 'including the origination fee, the weekly payments made to that point, and the early-payoff balance. '
     + '<b>Total paid</b> is the cash sent to the lender; <b>all-in cost</b> is that total minus the net advance you received.</p>';
   GROUPS.forEach(function(g){
+    if(g.isLOC) return;
     html += '<h3 class="grp-head">'+g.name+'</h3><div class="detail-grid">';
     g.offers.forEach(function(o){
       var m = model(o);
@@ -288,6 +309,29 @@ function renderAllin(){
   document.getElementById("allinWrap").innerHTML = html;
 }
 
+function renderLOC(){
+  var g = GROUPS.filter(function(x){ return x.isLOC; })[0];
+  if(!g){ return; }
+  var o = g.offers[0];
+  var m = model(o);
+  var html = '<p class="allin-intro">A revolving flex line — pay it off early and your cost drops sharply. '
+    + '<b>Pay-now payoff</b> is the amount to settle the line in full that week; <b>total paid</b> is everything paid by then; '
+    + '<b>total savings</b> is what you keep versus carrying it to the full '+money0(m.payback)+' payback.</p>'
+    + '<div class="detail-recap" style="margin-bottom:14px;">Draw <b>'+money0(m.adv)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/wk &middot; '+o.nPay+' weekly payments</div>'
+    + '<table class="prepay"><thead><tr><th>Week</th><th>Pay-now payoff</th><th>Total paid</th><th>Cost of capital</th><th>Total savings</th></tr></thead><tbody>';
+  for(var i=0;i<o.costCap.length;i++){
+    var totalPaid = round2((o.max + o.costCap[i]) * m.s);
+    var sumPaid = round2((i+1) * m.weekly);
+    var payNow = Math.max(0, round2(totalPaid - sumPaid));
+    var cost = round2(o.costCap[i] * m.s);
+    var sav = round2(m.payback - totalPaid);
+    html += '<tr><td>'+(i+1)+'</td><td>'+money0(payNow)+'</td><td>'+money0(totalPaid)+'</td>'
+      + '<td class="po-payoff">'+money0(cost)+'</td><td>'+money0(sav)+'</td></tr>';
+  }
+  html += '</tbody></table>';
+  document.getElementById("lenderBSched").innerHTML = html;
+}
+
 function renderStips(){
   var list = STATE.requested <= 250000 ? STIPS_MIN : STIPS_FULL;
   document.getElementById("stipList").innerHTML = list.map(function(s){ return '<li>'+s+'</li>'; }).join("");
@@ -302,16 +346,17 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
   doc.text("BusinessLoans.com     Prepared June 30, 2026 at 2:41 PM EDT     Requested "+money0(STATE.requested), L, y); y+=20;
   doc.setTextColor(20); doc.setFont("helvetica","bold"); doc.setFontSize(12);
-  doc.text("Offer Summary (Lender A)", L, y); y+=14;
+  doc.text("Offer Summary", L, y); y+=14;
   doc.setFontSize(9); doc.setFont("helvetica","bold");
-  var cols=[L, L+150, L+250, L+360, L+450];
-  doc.text("Option", cols[0], y); doc.text("Advance", cols[1], y); doc.text("Payback", cols[2], y);
+  var cols=[L, L+170, L+270, L+370, L+460];
+  doc.text("Option", cols[0], y); doc.text("Advance/Draw", cols[1], y); doc.text("Payback", cols[2], y);
   doc.text("Weekly", cols[3], y); doc.text("Net Adv.", cols[4], y); y+=4;
   doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12;
   doc.setFont("helvetica","normal");
   GROUPS.forEach(function(g){ g.offers.forEach(function(o){
     var m=model(o);
-    doc.text("#"+o.num+" "+o.IFpct+"% IF, "+o.term+"mo", cols[0], y);
+    var lbl = (o.IFpct!=null) ? ("#"+o.num+" Lender A "+o.IFpct+"% IF, "+o.term+"mo") : ("#"+o.num+" Lender B Flex LOC, 180d");
+    doc.text(lbl, cols[0], y);
     doc.text(money0(m.adv), cols[1], y); doc.text(money0(m.payback), cols[2], y);
     doc.text(money(m.weekly), cols[3], y); doc.text(money0(m.net), cols[4], y); y+=14;
   });});
@@ -322,7 +367,7 @@ function downloadPDF(){
   var stips = STATE.requested <= 250000 ? STIPS_MIN : STIPS_FULL;
   stips.forEach(function(s){ doc.text("• "+s.replace(/&amp;/g,"&"), L+6, y); y+=13; });
 
-  GROUPS.forEach(function(g){ g.offers.forEach(function(o){
+  GROUPS.forEach(function(g){ if(g.isLOC) return; g.offers.forEach(function(o){
     doc.addPage(); y=48;
     var m=model(o); var rows=allinRows(o);
     doc.setFont("helvetica","bold"); doc.setFontSize(13);
@@ -343,6 +388,34 @@ function downloadPDF(){
       doc.text(pct1(r.pct), c[3], y); y+=15;
     });
   });});
+
+  GROUPS.forEach(function(g){ if(!g.isLOC) return; g.offers.forEach(function(o){
+    doc.addPage(); y=48;
+    var m=model(o);
+    doc.setFont("helvetica","bold"); doc.setFontSize(13); doc.setTextColor(20);
+    doc.text("Offer "+o.num+" — Lender B Flex Line / LOC", L, y); y+=18;
+    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
+    doc.text("Draw "+money0(m.adv)+"   Payback "+money0(m.payback)+"   "+money(m.weekly)+"/wk   180 business days / "+o.nPay+" weekly", L, y);
+    y+=10; doc.setTextColor(20); doc.setFontSize(11); doc.setFont("helvetica","bold");
+    doc.text("Pay-Now Early Payoff Schedule", L, y); y+=16;
+    doc.setFontSize(9);
+    var c=[L, L+90, L+230, L+360, L+460];
+    function locHead(){ doc.setFont("helvetica","bold");
+      doc.text("Week", c[0], y); doc.text("Pay-now payoff", c[1], y); doc.text("Total paid", c[2], y);
+      doc.text("Cost of cap.", c[3], y); doc.text("Savings", c[4], y); y+=4;
+      doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12; doc.setFont("helvetica","normal"); }
+    locHead();
+    for(var i=0;i<o.costCap.length;i++){
+      if(y>752){ doc.addPage(); y=48; locHead(); }
+      var totalPaid=round2((o.max+o.costCap[i])*m.s);
+      var sumPaid=round2((i+1)*m.weekly);
+      var payNow=Math.max(0, round2(totalPaid-sumPaid));
+      doc.text(String(i+1), c[0], y);
+      doc.text(money0(payNow), c[1], y); doc.text(money0(totalPaid), c[2], y);
+      doc.text(money0(round2(o.costCap[i]*m.s)), c[3], y); doc.text(money0(round2(m.payback-totalPaid)), c[4], y); y+=13;
+    }
+  });});
+
   doc.save("Credo-Construction-term-sheet.pdf");
 }
 
@@ -354,7 +427,7 @@ function recompute(){
   var help=document.getElementById("amountHelp");
   if(r>600000){ help.textContent="Above the $600,000 maximum — both options shown at their caps."; help.className="amount-help warning"; }
   else { help.textContent="Adjustable — each option caps at its own maximum"; help.className="amount-help"; }
-  renderStips(); renderOffers(); renderAllin();
+  renderStips(); renderOffers(); renderAllin(); renderLOC();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
