@@ -344,36 +344,33 @@ document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
 recompute();
 </script>
 <script>
-/* term-sheet tracker beacon (v4: open ping + exit visit-summary of amount activity) */
+/* term-sheet tracker beacon (v4.1: open ping + exit visit-summary; geo on both) */
 (function(){try{
   var deal="Vegas Builds";
   var EP="https://script.google.com/macros/s/AKfycbxwmFx3rP5afIjYUeKNyXTLH-PpW41I0j4DEjQfMQ3u_he5Fun5W6Phnp_3URdkKEFd/exec";
   var start=(new Date()).getTime();
+  var loc="";
   function amt(){ var el=document.getElementById("amount"); if(!el)return null; var v=parseFloat((el.value||"").replace(/[^0-9.]/g,"")); return isNaN(v)?null:v; }
   var first=amt(), last=first, max=(first||0), changes=0, pdf=false;
   var aEl=document.getElementById("amount");
   if(aEl){ aEl.addEventListener("input",function(){ var v=amt(); if(v===null||v===last)return; changes++; last=v; if(v>max)max=v; }); }
   var pEl=document.getElementById("pdfBtn");
   if(pEl){ pEl.addEventListener("click",function(){ pdf=true; }); }
-  var bk="bl_open_pinged_"+deal;
-  if(!sessionStorage.getItem(bk)){
-    sessionStorage.setItem(bk,"1");
-    setTimeout(function(){
-      var base=EP+"?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&ua="+encodeURIComponent(navigator.userAgent);
-      var done=false;
-      function ping(loc){ if(done)return; done=true; new Image().src=base+(loc?"&loc="+encodeURIComponent(loc):"")+"&r="+(new Date()).getTime(); }
-      setTimeout(function(){ ping(""); },2000);
-      fetch("https://ipinfo.io/json").then(function(r){return r.json();}).then(function(d){ ping([d.city,d.region,d.country].filter(Boolean).join(", ")); }).catch(function(){ ping(""); });
-    },2500);
-  }
-  var sk="bl_summary_sent_"+deal, sent=false;
+  var bk="bl_open_pinged_"+deal, oSent=false;
+  function openPing(){ if(oSent||sessionStorage.getItem(bk))return; oSent=true; sessionStorage.setItem(bk,"1");
+    new Image().src=EP+"?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&ua="+encodeURIComponent(navigator.userAgent)+(loc?"&loc="+encodeURIComponent(loc):"")+"&r="+(new Date()).getTime(); }
+  /* geo on every load — used by BOTH the open ping and the exit summary */
+  try{ fetch("https://ipinfo.io/json").then(function(r){return r.json();}).then(function(d){ loc=[d.city,d.region,d.country].filter(Boolean).join(", "); openPing(); }).catch(function(){ openPing(); }); }catch(e){ openPing(); }
+  setTimeout(openPing,3000);
+  var sk="bl_summary_sent_"+deal, sSent=false;
   function summary(){
-    if(sent||sessionStorage.getItem(sk))return; sent=true; sessionStorage.setItem(sk,"1");
+    if(sSent||sessionStorage.getItem(sk))return; sSent=true; sessionStorage.setItem(sk,"1");
     var secs=Math.round(((new Date()).getTime()-start)/1000);
     var u=EP+"?deal="+encodeURIComponent(deal)+"&event=summary"
       +"&start="+(first==null?"":Math.round(first))
       +"&final="+(last==null?"":Math.round(last))
       +"&max="+Math.round(max)+"&changes="+changes+"&pdf="+(pdf?1:0)+"&secs="+secs
+      +(loc?"&loc="+encodeURIComponent(loc):"")+"&ua="+encodeURIComponent(navigator.userAgent)
       +"&u="+encodeURIComponent(location.href)+"&r="+(new Date()).getTime();
     if(navigator.sendBeacon){ try{ navigator.sendBeacon(u); }catch(e){ new Image().src=u; } } else { new Image().src=u; }
   }
