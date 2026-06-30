@@ -90,6 +90,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 @keyframes editpulse{0%,100%{opacity:.68;}50%{opacity:1;}}
 @media print{.edit-hint{display:none;}}
 
+.grp-head{font-family:'DM Serif Display',Georgia,serif;color:var(--navy);font-size:20px;margin:22px 0 4px;padding-bottom:5px;border-bottom:2px solid var(--green);}
 .grp-note{font-size:12.5px;color:var(--slate);margin:0 0 14px;}
 .stip-note{font-size:11.5px;color:#8a6d1f;margin:0 0 8px;}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start;margin-bottom:8px;}
@@ -117,7 +118,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">Credo Construction, Inc.</h1>
-  <p class="cover-subtitle">Two interest-forgiveness structures from one lender. Adjust the requested amount and every figure updates live — each option caps at its own maximum, and the all-in cost reflects paying the balance off early.</p>
+  <p class="cover-subtitle">Four options from one lender — a $600,000 / 18-month and a $450,000 / 12-month structure, each offered at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). Adjust the requested amount and every figure updates live; each option caps at its own maximum, and the all-in cost reflects paying the balance off early.</p>
 
   <div class="borrower-bar">
     <div>
@@ -168,16 +169,26 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 */
 var STATE = { requested: 600000 };
 
-var GROUPS = [{
-  name: "Lender A",
-  note: "Choose more forgiveness (lowest all-in cost if you pay early) or a lower up-front fee.",
-  offers: [
-    { tier:"100% Interest Forgiveness", max:600000, factor:1.34, weekly:10307.70, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%",
-      milestonePayoff:[577293.61, 523538.90, 438919.68, 345271.94] },
-    { tier:"50% Interest Forgiveness", max:450000, factor:1.23, weekly:10644.24, nPay:52, term:12, IFpct:50, origPct:0.01, origLabel:"1%",
-      milestonePayoff:[466311.96, 384851.59, 262662.36, 134595.60] }
-  ]
-}];
+var GROUPS = [
+  { name: "100% Interest Forgiveness",
+    note: "4% origination fee. The most savings if you pay the balance off early — at one month the all-in cost is only the fee plus a few weeks of interest.",
+    offers: [
+      { tier:"100% IF", max:600000, factor:1.34, weekly:10307.70, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%",
+        milestonePayoff:[577293.61, 523538.90, 438919.68, 345271.94] },
+      { tier:"100% IF", max:450000, factor:1.23, weekly:10644.24, nPay:52, term:12, IFpct:100, origPct:0.04, origLabel:"4%",
+        milestonePayoff:[421700.88, 354578.30, 248574.96, 130816.56] }
+    ]
+  },
+  { name: "50% Interest Forgiveness",
+    note: "1% origination fee — lower cost up front. Half the remaining interest is forgiven on an early payoff.",
+    offers: [
+      { tier:"50% IF", max:600000, factor:1.34, weekly:10307.70, nPay:78, term:18, IFpct:50, origPct:0.01, origLabel:"1%",
+        milestonePayoff:[670031.40, 596769.40, 487459.74, 373635.82] },
+      { tier:"50% IF", max:450000, factor:1.23, weekly:10644.24, nPay:52, term:12, IFpct:50, origPct:0.01, origLabel:"1%",
+        milestonePayoff:[466311.96, 384851.59, 262662.36, 134595.60] }
+    ]
+  }
+];
 var MILES = [{mo:1,k:4},{mo:3,k:13},{mo:6,k:26},{mo:9,k:39}];
 
 (function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;});});})();
@@ -215,6 +226,7 @@ function model(o){
 function renderOffers(){
   var html = "";
   GROUPS.forEach(function(g){
+    html += '<h3 class="grp-head">'+g.name+'</h3>';
     html += '<div class="grp-note">'+g.note+'</div>';
     html += '<div class="offers-grid">';
     g.offers.forEach(function(o){
@@ -253,14 +265,14 @@ function renderAllin(){
   var html = '<h2 class="section-title">All-In Cost if Paid Off Early</h2>'
     + '<p class="allin-intro">What this funding costs in total if the balance is paid in full at 1, 3, 6, or 9 months — '
     + 'including the origination fee, the weekly payments made to that point, and the early-payoff balance. '
-    + '<b>Total paid</b> is the cash sent to the lender; <b>all-in cost</b> is that total minus the net advance you received.</p>'
-    + '<div class="detail-grid">';
+    + '<b>Total paid</b> is the cash sent to the lender; <b>all-in cost</b> is that total minus the net advance you received.</p>';
   GROUPS.forEach(function(g){
+    html += '<h3 class="grp-head">'+g.name+'</h3><div class="detail-grid">';
     g.offers.forEach(function(o){
       var m = model(o);
       var rows = allinRows(o);
       html += '<div class="detail-card">'
-        + '<div class="detail-head">Offer '+o.num+' &middot; '+o.tier+'</div>'
+        + '<div class="detail-head">Offer '+o.num+' &middot; '+o.term+' months</div>'
         + '<div class="detail-recap">Advance <b>'+money0(m.adv)+'</b> &middot; net <b>'+money0(m.net)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/wk</div>'
         + '<table class="prepay"><thead><tr><th>Paid off at</th><th>Total paid</th><th>All-in cost</th><th>% of net</th></tr></thead><tbody>';
       rows.forEach(function(r){
@@ -271,8 +283,8 @@ function renderAllin(){
       });
       html += '</tbody></table></div>';
     });
+    html += '</div>';
   });
-  html += '</div>';
   document.getElementById("allinWrap").innerHTML = html;
 }
 
