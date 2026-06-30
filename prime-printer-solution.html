@@ -317,6 +317,7 @@ function offerCard(o){
       + feeRow
       + '<div class="kv-row kv-net"><span class="kv-label">Net advance</span><span class="kv-val">'+money(m.net)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+(m.oldPayback?'<span class="was">'+money0(m.oldPayback)+'</span>':'')+money0(m.payback)+'</span></div>'
+      + '<div class="kv-row"><span class="kv-label">Factor rate</span><span class="kv-val">'+o.factor+'</span></div>'
       + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+(m.oldWeekly?'<span class="was">'+money(m.oldWeekly)+'</span>':'')+money(m.weekly)+'</span></div>'
       + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
       + (o.ppType==="if" ? '<div class="kv-row"><span class="kv-label">Prepay forgiveness</span><span class="kv-val">'+o.fpct+' of remaining interest</span></div>' : '')
@@ -372,7 +373,7 @@ function renderSched(){
         : '<b>Payoff if Paid in Full</b> = the remaining Balance plus '+o.fpct+' of the remaining interest (the other '+o.fpct+' is forgiven). <b>Total Paid if Settled</b> = the payments already made through that week plus the payoff.';
       html += '<div class="prepay-section">'
         + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.term+' &middot; '+o.fpct+' interest forgiveness — '+money0(m.advance)+' — Payment Schedule</h2></div>'
-        + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments.</div>'
+        + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments &middot; factor <b>'+o.factor+'</b>.</div>'
         + '<table class="prepay sched"><thead><tr><th style="text-align:left">#</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th><th>Payoff if Paid in Full</th><th>Total Paid if Settled</th></tr></thead><tbody>'+rows+'</tbody></table>'
         + '<div class="scale-note" style="color:var(--slate);margin-top:10px;">'+note+' Figures shown at '+money0(m.advance)+'; they scale with the requested amount above.</div>'
         + '</div>';
