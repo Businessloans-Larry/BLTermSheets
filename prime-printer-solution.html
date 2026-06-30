@@ -93,6 +93,7 @@ table.prepay thead th{background:var(--navy);color:#fff;font-weight:600;font-siz
 table.prepay tbody tr:nth-child(even){background:var(--bg);}
 table.prepay tbody tr:last-child td{border-bottom:none;}
 .po-payoff{color:var(--navy);font-weight:600;}
+.po-total{color:var(--green-d);font-weight:700;}
 .po-saved{color:var(--green-d);font-weight:600;}
 .stips{margin-top:16px;border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:12px 16px;}
 .stips h4{margin:0 0 6px 0;color:var(--navy);font-family:'DM Serif Display',Georgia,serif;font-size:14px;}
@@ -364,15 +365,15 @@ function renderSched(){
       }
       var m = modelOf(o), s2 = o.max ? m.advance/o.max : 0, po = payoffArr(sc, o.forgive), rows="";
       for(var k=0;k<sc.d.length;k++){
-        rows += '<tr><td style="text-align:left">'+(k+1)+'</td><td style="text-align:left">'+sc.d[k]+'</td><td>'+money(round2(sc.pmt*s2))+'</td><td>'+money(round2(sc.p[k]*s2))+'</td><td>'+money(round2(sc.i[k]*s2))+'</td><td>'+money(round2(sc.b[k]*s2))+'</td><td class="po-payoff">'+money(round2(po[k]*s2))+'</td></tr>';
+        rows += '<tr><td style="text-align:left">'+(k+1)+'</td><td>'+money(round2(sc.pmt*s2))+'</td><td>'+money(round2(sc.p[k]*s2))+'</td><td>'+money(round2(sc.i[k]*s2))+'</td><td>'+money(round2(sc.b[k]*s2))+'</td><td class="po-payoff">'+money(round2(po[k]*s2))+'</td><td class="po-total">'+money(round2(((k+1)*sc.pmt+po[k])*s2))+'</td></tr>';
       }
       var note = (o.forgive>=1)
-        ? '<b>Payoff if Paid in Full</b> = the remaining Balance — with 100% interest forgiveness, all remaining interest is waived when you settle in full early.'
-        : '<b>Payoff if Paid in Full</b> = the remaining Balance plus '+o.fpct+' of the remaining interest (the other '+o.fpct+' is forgiven when you settle in full early).';
+        ? '<b>Payoff if Paid in Full</b> = the remaining Balance (100% of remaining interest is waived when you settle early). <b>Total Paid if Settled</b> = the payments already made through that week plus the payoff.'
+        : '<b>Payoff if Paid in Full</b> = the remaining Balance plus '+o.fpct+' of the remaining interest (the other '+o.fpct+' is forgiven). <b>Total Paid if Settled</b> = the payments already made through that week plus the payoff.';
       html += '<div class="prepay-section">'
         + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.term+' &middot; '+o.fpct+' interest forgiveness — '+money0(m.advance)+' — Payment Schedule</h2></div>'
         + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments.</div>'
-        + '<table class="prepay sched"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Date</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th><th>Payoff if Paid in Full</th></tr></thead><tbody>'+rows+'</tbody></table>'
+        + '<table class="prepay sched"><thead><tr><th style="text-align:left">#</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th><th>Payoff if Paid in Full</th><th>Total Paid if Settled</th></tr></thead><tbody>'+rows+'</tbody></table>'
         + '<div class="scale-note" style="color:var(--slate);margin-top:10px;">'+note+' Figures shown at '+money0(m.advance)+'; they scale with the requested amount above.</div>'
         + '</div>';
     });
@@ -419,23 +420,23 @@ function downloadPDF(){
     if(!sc){ doc.text("Lender payment schedule for this option has not been provided yet.", L, yy); return; }
     var s2=o.max?m.advance/o.max:0, po=payoffArr(sc,o.forgive);
     doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly payments", L, yy); yy+=18;
-    var sc2=[{h:"#",x:L,a:"left"},{h:"Date",x:80,a:"left"},{h:"Payment",x:212,a:"right"},{h:"Principal",x:288,a:"right"},{h:"Interest",x:362,a:"right"},{h:"Balance",x:438,a:"right"},{h:"Payoff",x:R,a:"right"}];
+    var sc2=[{h:"#",x:L,a:"left"},{h:"Payment",x:150,a:"right"},{h:"Principal",x:235,a:"right"},{h:"Interest",x:315,a:"right"},{h:"Balance",x:395,a:"right"},{h:"Payoff",x:475,a:"right"},{h:"Total",x:R,a:"right"}];
     function sh(){ doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20); sc2.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); }); yy+=3; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=11; doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45); }
     sh();
     for(var k=0;k<sc.d.length;k++){
       if(yy>742){ doc.addPage(); yy=56; sh(); }
       doc.text(String(k+1),L,yy);
-      doc.text(sc.d[k],80,yy);
-      doc.text(money(round2(sc.pmt*s2)),212,yy,{align:"right"});
-      doc.text(money(round2(sc.p[k]*s2)),288,yy,{align:"right"});
-      doc.text(money(round2(sc.i[k]*s2)),362,yy,{align:"right"});
-      doc.text(money(round2(sc.b[k]*s2)),438,yy,{align:"right"});
-      doc.text(money(round2(po[k]*s2)),R,yy,{align:"right"});
+      doc.text(money(round2(sc.pmt*s2)),150,yy,{align:"right"});
+      doc.text(money(round2(sc.p[k]*s2)),235,yy,{align:"right"});
+      doc.text(money(round2(sc.i[k]*s2)),315,yy,{align:"right"});
+      doc.text(money(round2(sc.b[k]*s2)),395,yy,{align:"right"});
+      doc.text(money(round2(po[k]*s2)),475,yy,{align:"right"});
+      doc.text(money(round2(((k+1)*sc.pmt+po[k])*s2)),R,yy,{align:"right"});
       yy+=11;
     }
     if(yy>742){ doc.addPage(); yy=56; }
     yy+=4; doc.setFontSize(8); doc.setTextColor(90);
-    doc.text((o.forgive>=1?"Payoff if Paid in Full = remaining Balance (100% of remaining interest forgiven).":"Payoff if Paid in Full = remaining Balance + "+o.fpct+" of remaining interest (the other "+o.fpct+" forgiven)."), L, yy);
+    doc.text((o.forgive>=1?"Payoff = remaining Balance (100% of remaining interest forgiven).  Total = payments made + payoff.":"Payoff = remaining Balance + "+o.fpct+" of remaining interest ("+o.fpct+" forgiven).  Total = payments made + payoff."), L, yy);
   }); });
   doc.save("prime-printer-solution-offers.pdf");
 }
