@@ -347,7 +347,9 @@ function stipsBlock(o){
   return '<div class="stips"><h4>'+esc(head)+'</h4><ul>' + o.stips.map(function(x){return '<li>'+esc(x)+'</li>';}).join("") + '</ul></div>';
 }
 
-var SCHED_PENDING = 4; /* Offer 4 (18-mo, 100% PP, 1.29) — lender schedule not yet provided */
+SCHED[4]=SCHED[1]; /* Offer 4 (18-mo 100% PP, 1.29): identical 1.29/18-mo amortization, 100% forgiveness applied to the payoff */
+function payoffArr(sc,forgive){ var n=sc.i.length, suf=new Array(n+1); suf[n]=0; for(var j=n-1;j>=0;j--){ suf[j]=suf[j+1]+sc.i[j]; } var out=[]; for(var q=0;q<n;q++){ out.push(round2(sc.b[q]+(1-forgive)*suf[q+1])); } return out; }
+var SCHED_PENDING = null; /* all four schedules now present */
 function renderSched(){
   var html="";
   GROUPS.forEach(function(g){
@@ -360,17 +362,17 @@ function renderSched(){
         }
         return;
       }
-      var m = modelOf(o), s2 = o.max ? m.advance/o.max : 0, rows="";
+      var m = modelOf(o), s2 = o.max ? m.advance/o.max : 0, po = payoffArr(sc, o.forgive), rows="";
       for(var k=0;k<sc.d.length;k++){
-        rows += '<tr><td style="text-align:left">'+(k+1)+'</td><td style="text-align:left">'+sc.d[k]+'</td><td>'+money(round2(sc.pmt*s2))+'</td><td>'+money(round2(sc.p[k]*s2))+'</td><td>'+money(round2(sc.i[k]*s2))+'</td><td>'+money(round2(sc.b[k]*s2))+'</td></tr>';
+        rows += '<tr><td style="text-align:left">'+(k+1)+'</td><td style="text-align:left">'+sc.d[k]+'</td><td>'+money(round2(sc.pmt*s2))+'</td><td>'+money(round2(sc.p[k]*s2))+'</td><td>'+money(round2(sc.i[k]*s2))+'</td><td>'+money(round2(sc.b[k]*s2))+'</td><td class="po-payoff">'+money(round2(po[k]*s2))+'</td></tr>';
       }
       var note = (o.forgive>=1)
-        ? 'With 100% interest forgiveness, settling the balance in full early pays only the <b>Balance</b> shown for that week — all remaining interest is waived.'
-        : 'With '+o.fpct+' interest forgiveness, settling the balance in full early pays the Balance shown plus '+o.fpct+' of the remaining interest.';
+        ? '<b>Payoff if Paid in Full</b> = the remaining Balance — with 100% interest forgiveness, all remaining interest is waived when you settle in full early.'
+        : '<b>Payoff if Paid in Full</b> = the remaining Balance plus '+o.fpct+' of the remaining interest (the other '+o.fpct+' is forgiven when you settle in full early).';
       html += '<div class="prepay-section">'
         + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.term+' &middot; '+o.fpct+' interest forgiveness — '+money0(m.advance)+' — Payment Schedule</h2></div>'
         + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments.</div>'
-        + '<table class="prepay sched"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Date</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody>'+rows+'</tbody></table>'
+        + '<table class="prepay sched"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Date</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th><th>Payoff if Paid in Full</th></tr></thead><tbody>'+rows+'</tbody></table>'
         + '<div class="scale-note" style="color:var(--slate);margin-top:10px;">'+note+' Figures shown at '+money0(m.advance)+'; they scale with the requested amount above.</div>'
         + '</div>';
     });
@@ -415,24 +417,25 @@ function downloadPDF(){
     doc.text("#"+o.num+" "+o.term.replace("-Month","-mo")+" "+o.fpct+" IF — "+money0(m.advance)+" — Payment Schedule", L, yy); yy+=15;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
     if(!sc){ doc.text("Lender payment schedule for this option has not been provided yet.", L, yy); return; }
-    var s2=o.max?m.advance/o.max:0;
+    var s2=o.max?m.advance/o.max:0, po=payoffArr(sc,o.forgive);
     doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly payments", L, yy); yy+=18;
-    var sc2=[{h:"#",x:L,a:"left"},{h:"Date",x:90,a:"left"},{h:"Payment",x:250,a:"right"},{h:"Principal",x:350,a:"right"},{h:"Interest",x:440,a:"right"},{h:"Balance",x:R,a:"right"}];
+    var sc2=[{h:"#",x:L,a:"left"},{h:"Date",x:80,a:"left"},{h:"Payment",x:212,a:"right"},{h:"Principal",x:288,a:"right"},{h:"Interest",x:362,a:"right"},{h:"Balance",x:438,a:"right"},{h:"Payoff",x:R,a:"right"}];
     function sh(){ doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20); sc2.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); }); yy+=3; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=11; doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45); }
     sh();
     for(var k=0;k<sc.d.length;k++){
       if(yy>742){ doc.addPage(); yy=56; sh(); }
       doc.text(String(k+1),L,yy);
-      doc.text(sc.d[k],90,yy);
-      doc.text(money(round2(sc.pmt*s2)),250,yy,{align:"right"});
-      doc.text(money(round2(sc.p[k]*s2)),350,yy,{align:"right"});
-      doc.text(money(round2(sc.i[k]*s2)),440,yy,{align:"right"});
-      doc.text(money(round2(sc.b[k]*s2)),R,yy,{align:"right"});
+      doc.text(sc.d[k],80,yy);
+      doc.text(money(round2(sc.pmt*s2)),212,yy,{align:"right"});
+      doc.text(money(round2(sc.p[k]*s2)),288,yy,{align:"right"});
+      doc.text(money(round2(sc.i[k]*s2)),362,yy,{align:"right"});
+      doc.text(money(round2(sc.b[k]*s2)),438,yy,{align:"right"});
+      doc.text(money(round2(po[k]*s2)),R,yy,{align:"right"});
       yy+=11;
     }
     if(yy>742){ doc.addPage(); yy=56; }
     yy+=4; doc.setFontSize(8); doc.setTextColor(90);
-    doc.text((o.forgive>=1?"100% interest forgiveness: settle in full early and pay only the Balance shown.":o.fpct+" interest forgiveness: settle in full early and pay the Balance plus "+o.fpct+" of remaining interest."), L, yy);
+    doc.text((o.forgive>=1?"Payoff if Paid in Full = remaining Balance (100% of remaining interest forgiven).":"Payoff if Paid in Full = remaining Balance + "+o.fpct+" of remaining interest (the other "+o.fpct+" forgiven)."), L, yy);
   }); });
   doc.save("prime-printer-solution-offers.pdf");
 }
