@@ -94,7 +94,15 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 .rednote b{color:#B71C1C;}
 .grp-head{font-family:'DM Serif Display',Georgia,serif;color:var(--navy);font-size:20px;margin:22px 0 4px;padding-bottom:5px;border-bottom:2px solid var(--green);}
 .grp-note{font-size:12.5px;color:var(--slate);margin:0 0 14px;}
+.grp-note b{color:var(--navy);}
 .stip-note{font-size:11.5px;color:#8a6d1f;margin:0 0 8px;}
+.offers-grid{grid-template-columns:repeat(auto-fill,minmax(248px,1fr)) !important;max-width:none !important;gap:12px;}
+.offer-card-header{padding:10px 14px;}
+.offer-term{font-size:17px;}
+.offer-sub{font-size:9.5px;}
+.offer-card-body{padding:10px 13px 12px;}
+.kv-row{padding:4.5px 0;font-size:11.8px;}
+.kv-pay .kv-val{font-size:13.5px;}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start;margin-bottom:8px;}
 .detail-card{border:1.5px solid var(--line);border-radius:10px;padding:13px 15px;break-inside:avoid;}
 .detail-head{font-family:'DM Serif Display',Georgia,serif;color:var(--navy);font-size:17px;margin-bottom:3px;}
@@ -126,10 +134,6 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
       Illustration only — see disclosure
     </div>
   </header>
-
-  <div class="cover-eyebrow">Funding Offers</div>
-  <h1 class="cover-title">Credo Construction, Inc.</h1>
-  <p class="cover-subtitle">Two lenders. <b>Lender A</b> offers a $600,000 / 18-month and a $450,000 / 12-month structure, each at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). <b>Lender B</b> is a $100,000 flex line of credit with a pay-now early-payoff schedule. <b>Lender C</b> offers a $200,000 term loan (15- or 12-month, next-day funding) that forgives all remaining interest on an early payoff. <b>Lender D</b> adds Premium and Regular term loans up to $600,000 (100% or 50% interest forgiveness, 1st position). Adjust the requested amount and every figure updates live; each option caps at its own maximum.</p>
 
   <div class="rednote">
     <b>Why this line is sized at $100,000</b> — Lender B previously reviewed Credo Construction in 2025 and is taking a conservative approach here because recent revenue and bank balances are running below that prior year. This is not a decline: the lender is willing to revisit the line amount with added context on the recent numbers (seasonality, timing of receivables, one-time items). Updated financials that speak to the trend could support a larger line.
@@ -261,11 +265,11 @@ var GROUPS = [
     ]
   },
   { name: "Lender D &middot; Term Loan",
-    note: "A new lender option — Premium and Regular term loans with 100% or 50% interest forgiveness on an early payoff, 1st position. The early-payoff all-in cost is added once the lender's amortization schedule is confirmed.",
+    note: "<b>Approved up to $600,000, but currently capped at $300,000 while the PayPal loan is outstanding.</b> Premium and Regular term loans with 100% or 50% interest forgiveness on an early payoff, 1st position. The early-payoff all-in cost is added once the lender's amortization schedule is confirmed.",
     offers: [
-      { tier:"Premium 100% IF", max:500000, factor:1.20, weekly:11538.47, nPay:52, term:12, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true },
-      { tier:"Premium 50% IF", max:400000, factor:1.27, weekly:13025.65, nPay:39, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", position:"1st", payLabel:"Biweekly", payWord:"biweekly", per:"2wk", pending:true },
-      { tier:"Regular 100% IF", max:600000, factor:1.29, weekly:9923.09, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true }
+      { tier:"Premium 100% IF", max:500000, factor:1.20, weekly:11538.47, nPay:52, term:12, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", capMax:300000, payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true },
+      { tier:"Premium 50% IF", max:400000, factor:1.27, weekly:13025.65, nPay:39, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", position:"1st", capMax:300000, payLabel:"Biweekly", payWord:"biweekly", per:"2wk", pending:true },
+      { tier:"Regular 100% IF", max:600000, factor:1.29, weekly:9923.09, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", position:"1st", capMax:300000, payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true }
     ]
   }
 ];
@@ -295,11 +299,12 @@ function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); 
 function pct1(x){ return (x*100).toFixed(1) + "%"; }
 
 function model(o){
-  var adv = Math.min(STATE.requested, o.max); if(adv < 0) adv = 0;
+  var ceiling = o.capMax ? Math.min(o.max, o.capMax) : o.max;
+  var adv = Math.min(STATE.requested, ceiling); if(adv < 0) adv = 0;
   var s = o.max ? adv/o.max : 0;
   var fee = round2(adv*o.origPct);
   var net = round2(adv - fee);
-  return { adv:adv, s:s, capped:STATE.requested > o.max,
+  return { adv:adv, s:s, ceiling:ceiling, capped:STATE.requested > ceiling,
            payback:round2(adv*o.factor), weekly:round2(o.weekly*s), fee:fee, net:net };
 }
 
@@ -311,7 +316,7 @@ function renderOffers(){
     html += '<div class="offers-grid">';
     g.offers.forEach(function(o){
       var m = model(o);
-      var capTag = m.capped ? '<span class="cap-badge">offer max '+money0(o.max)+'</span>' : '';
+      var capTag = m.capped ? '<span class="cap-badge">max '+money0(m.ceiling)+'</span>' : '';
       var termTxt = o.termLabel || (o.term + ' months');
       var amtLabel = o.isLOC ? 'Draw amount' : 'Advance amount';
       var subFee = (o.origPct>0) ? ' &middot; '+o.origLabel+' fee' : '';
@@ -377,7 +382,7 @@ function renderAllin(){
     g.offers.forEach(function(o){
       var m = model(o); var mv = milestoneVals(o);
       var term = o.isLOC ? "180d" : (o.term+"mo");
-      var capTag = m.capped ? ' <span class="cap-badge">max '+money0(o.max)+'</span>' : '';
+      var capTag = m.capped ? ' <span class="cap-badge">max '+money0(m.ceiling)+'</span>' : '';
       html += '<tr><td class="cmp-deal">#'+o.num+' '+LN+' &middot; '+o.tier+' &middot; '+term+capTag+'</td>'
         + '<td>'+money0(m.adv)+'</td><td>'+money0(m.net)+'</td><td>'+money0(m.payback)+'</td>'
         + '<td>'+money(m.weekly)+'<span class="cmp-pct">/'+(o.per||'wk')+'</span></td>';
