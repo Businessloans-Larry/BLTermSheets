@@ -119,7 +119,6 @@ table.comp{font-size:12.5px;min-width:820px;}
 table.comp th,table.comp td{padding:9px 11px;white-space:nowrap;}
 table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-space:normal;min-width:210px;}
 .cmp-pct{display:block;color:var(--slate);font-weight:400;font-size:10px;margin-top:1px;}
-.cmp-pend{text-align:center !important;color:var(--slate);font-style:italic;font-weight:500;}
 .btn-sched{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:8px;padding:10px 18px;cursor:pointer;transition:background .15s,color .15s;}
 .btn-sched:hover{background:var(--navy);color:#fff;}
 @media(max-width:760px){.detail-grid{grid-template-columns:1fr;}}
@@ -139,7 +138,7 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
   </header>
 
   <div class="rednote">
-    <b>Why this line is sized at $100,000</b> — Lender B previously reviewed Credo Construction in 2025 and is taking a conservative approach here because recent revenue and bank balances are running below that prior year. This is not a decline: the lender is willing to revisit the line amount with added context on the recent numbers (seasonality, timing of receivables, one-time items). Updated financials that speak to the trend could support a larger line.
+    <b>Minimum first funding: $350,000.</b> Although this is not a line of credit, Mulligan allows up to 2 concurrent fundings — you can start with one funding now and add a second later if needed.
   </div>
 
   <div class="borrower-bar">
@@ -155,40 +154,8 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
   </div>
 
   <div class="closing">
-    <h3>Lender A — Stipulations / Closing Requirements</h3>
-    <p class="stip-note">At <b>$250,000 or less</b>, only the signed agreement, photo ID, and voided check are required — the remaining items below are waived.</p>
+    <h3>Mulligan — Stipulations / Closing Requirements</h3>
     <ul id="stipList"></ul>
-  </div>
-
-  <div class="closing">
-    <h3>Lender B — Stipulations / Closing Requirements</h3>
-    <ul>
-      <li>Driver's license</li>
-      <li>Voided check</li>
-      <li>Plaid bank connection</li>
-    </ul>
-  </div>
-
-  <div class="closing">
-    <h3>Lender C — Stipulations / Closing Requirements</h3>
-    <ul>
-      <li>A 5-minute phone call to confirm the details</li>
-      <li>Funds as soon as the next business day</li>
-    </ul>
-  </div>
-
-  <div class="closing">
-    <h3>Lender D — Stipulations / Closing Requirements</h3>
-    <ul>
-      <li>Bank statements — payback months (can be done with Plaid)</li>
-      <li>Bank verification</li>
-      <li>Current P&amp;L + balance sheet (if over $350,000)</li>
-      <li>Driver's license</li>
-      <li>Merchant interview</li>
-      <li>Tax return 2024 (if over $450,000)</li>
-      <li>Tax return 2025</li>
-      <li>Voided check</li>
-    </ul>
   </div>
 
   <div class="actions">
@@ -207,21 +174,12 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
   </div>
 
   <div id="fullSched" style="display:none;">
-    <h2 class="section-title" style="page-break-before:always;">Lender A — Amortization Schedules</h2>
-    <div id="lenderASched"></div>
-
-    <h2 class="section-title" style="page-break-before:always;">Lender B — Pay-Now Early Payoff Schedule</h2>
-    <div id="lenderBSched"></div>
-
-    <h2 class="section-title" style="page-break-before:always;">Lender C — Amortization Schedules</h2>
-    <div id="lenderCSched"></div>
-
-    <h2 class="section-title" style="page-break-before:always;">Lender D — Amortization Schedules</h2>
-    <div id="lenderDSched"></div>
+    <h2 class="section-title" style="page-break-before:always;">Mulligan — Amortization Schedules</h2>
+    <div id="mulliganSched"></div>
   </div>
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. All-in cost figures scale with the requested amount and reflect paying the balance in full at the month shown, including the origination fee, all weekly payments made to that point, and the early-payoff balance; interest forgiveness is applied to the remaining interest at payoff. The Lender B flex line is a revolving line of credit; the pay-now schedule shows the cost to settle the line in full at each weekly point and is not a commitment by the lender to accept any early repurchase. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. All-in cost figures scale with the requested amount and reflect paying the balance in full at the month shown, including the origination fee, all weekly payments made to that point, and the early-payoff balance; interest forgiveness is applied to the remaining interest at payoff. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -241,62 +199,37 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
 */
 var STATE = { requested: 650000 };
 
-var C15_I=[1191.38,1176.32,1161.16,1145.92,1130.59,1115.16,1099.64,1084.04,1068.33,1052.54,1036.65,1020.66,1004.58,988.41,972.14,955.77,939.3,922.74,906.07,889.31,872.45,855.49,838.42,821.26,803.99,786.62,769.15,751.57,733.89,716.1,698.2,680.2,662.1,643.88,625.56,607.12,588.58,569.93,551.16,532.29,513.3,494.2,474.98,455.65,436.2,416.64,396.96,377.17,357.26,337.23,317.07,296.8,276.41,255.9,235.26,214.51,193.62,172.62,151.49,130.23,108.85,87.33,65.69,43.93,22.03];
-var C15_B=[197471.38,194927.69,192368.86,189794.78,187205.36,184600.52,181980.17,179344.2,176692.54,174025.08,171341.72,168642.39,165926.97,163195.38,160447.52,157683.28,154902.59,152105.32,149291.4,146460.71,143613.16,140748.65,137867.07,134968.33,132052.32,129118.94,126168.09,123199.66,120213.55,117209.64,114187.85,111148.05,108090.15,105014.03,101919.59,98806.71,95675.29,92525.22,89356.38,86168.67,82961.97,79736.16,76491.14,73226.79,69942.99,66639.64,63316.6,59973.77,56611.03,53228.25,49825.33,46402.13,42958.54,39494.44,36009.71,32504.21,28977.84,25430.46,21861.94,18272.17,14661.02,11028.35,7374.05,3697.97,0];
-var C12_I=[1329.09,1307.61,1285.99,1264.22,1242.31,1220.25,1198.05,1175.69,1153.19,1130.54,1107.74,1084.79,1061.69,1038.43,1015.02,991.45,967.72,943.84,919.8,895.6,871.24,846.71,822.03,797.17,772.16,746.98,721.63,696.11,670.42,644.56,618.53,592.33,565.95,539.4,512.67,485.76,458.68,431.41,403.97,376.34,348.53,320.53,292.34,263.97,235.41,206.66,177.72,148.59,119.27,89.75,60.03,30.11];
-var C12_B=[196767.56,193513.63,190238.08,186940.76,183621.53,180280.25,176916.75,173530.91,170122.57,166691.57,163237.78,159761.03,156261.18,152738.07,149191.55,145621.45,142027.64,138409.94,134768.2,131102.26,127411.96,123697.13,119957.62,116193.26,112403.88,108589.31,104749.4,100883.97,96992.85,93075.88,89132.87,85163.66,81168.08,77145.94,73097.07,69021.3,64918.44,60788.31,56630.74,52445.54,48232.53,43991.52,39722.32,35424.76,31098.63,26743.76,22359.95,17947.0,13504.73,9032.94,4531.43,0];
 
-var D8_I=[2135.69, 2101.61, 2067.28, 2032.71, 1997.9, 1962.84, 1927.53, 1891.96, 1856.15, 1820.07, 1783.75, 1747.16, 1710.31, 1673.2, 1635.83, 1598.19, 1560.28, 1522.1, 1483.66, 1444.93, 1405.93, 1366.66, 1327.1, 1287.26, 1247.14, 1206.74, 1166.04, 1125.06, 1083.78, 1042.21, 1000.35, 958.18, 915.72, 872.95, 829.88, 786.51, 742.82, 698.82, 654.51, 609.89, 564.94, 519.68, 474.09, 428.18, 381.95, 335.38, 288.48, 241.25, 193.69, 145.78, 97.53, 48.94];
-var D8_B=[295212.61, 290391.14, 285535.34, 280644.98, 275719.8, 270759.56, 265764.01, 260732.9, 255665.96, 250562.96, 245423.63, 240247.71, 235034.95, 229785.08, 224497.83, 219172.94, 213810.15, 208409.18, 202969.76, 197491.61, 191974.47, 186418.05, 180822.07, 175186.26, 169510.33, 163793.99, 158036.95, 152238.93, 146399.64, 140518.77, 134596.04, 128631.15, 122623.79, 116573.67, 110480.48, 104343.9, 98163.65, 91939.39, 85670.83, 79357.64, 72999.5, 66596.11, 60147.13, 53652.23, 47111.1, 40523.41, 33888.82, 27206.99, 20477.6, 13700.3, 6874.76, 0.0];
-var D9_I=[3494.54, 3423.24, 3351.12, 3278.15, 3204.33, 3129.65, 3054.1, 2977.67, 2900.35, 2822.13, 2743.0, 2662.95, 2581.96, 2500.03, 2417.15, 2333.3, 2248.48, 2162.66, 2075.85, 1988.03, 1899.18, 1809.3, 1718.37, 1626.38, 1533.32, 1439.18, 1343.94, 1247.59, 1150.12, 1051.51, 951.75, 850.83, 748.74, 645.46, 540.97, 435.27, 328.33, 220.15, 110.89];
-var D9_B=[293879.16, 287687.03, 281422.76, 275085.53, 268674.48, 262188.75, 255627.47, 248989.76, 242274.73, 235481.48, 228609.1, 221656.67, 214623.25, 207507.91, 200309.68, 193027.6, 185660.7, 178207.99, 170668.46, 163041.1, 155324.91, 147518.82, 139621.81, 131632.82, 123550.76, 115374.56, 107103.11, 98735.32, 90270.06, 81706.19, 73042.56, 64278.01, 55411.38, 46441.45, 37367.05, 28186.94, 18899.89, 9504.67, 0.0];
-var D10_I=[1766.14, 1748.24, 1730.22, 1712.11, 1693.88, 1675.55, 1657.11, 1638.56, 1619.91, 1601.14, 1582.26, 1563.27, 1544.17, 1524.96, 1505.63, 1486.2, 1466.64, 1446.97, 1427.19, 1407.29, 1387.27, 1367.13, 1346.88, 1326.5, 1306.01, 1285.39, 1264.66, 1243.8, 1222.82, 1201.71, 1180.48, 1159.13, 1137.65, 1116.04, 1094.31, 1072.45, 1050.46, 1028.34, 1006.09, 983.71, 961.2, 938.55, 915.77, 892.86, 869.81, 846.63, 823.31, 799.86, 776.26, 752.53, 728.65, 704.64, 680.48, 656.19, 631.75, 607.16, 582.43, 557.56, 532.54, 507.37, 482.05, 456.59, 430.97, 405.2, 379.29, 353.22, 326.99, 300.61, 274.08, 247.39, 220.54, 193.54, 166.37, 139.05, 111.56, 83.92, 56.11, 28.13];
-var D10_B=[296958.45, 293898.99, 290821.52, 287725.94, 284612.13, 281479.99, 278329.41, 275160.28, 271972.49, 268765.94, 265540.51, 262296.09, 259032.58, 255749.84, 252447.79, 249126.29, 245785.24, 242424.52, 239044.01, 235643.61, 232223.18, 228782.62, 225321.8, 221840.61, 218338.92, 214816.62, 211273.59, 207709.69, 204124.81, 200518.83, 196891.62, 193243.06, 189573.02, 185881.37, 182167.98, 178432.74, 174675.51, 170896.15, 167094.55, 163270.57, 159424.07, 155554.93, 151663.01, 147748.18, 143810.3, 139849.24, 135864.86, 131857.02, 127825.59, 123770.43, 119691.39, 115588.34, 111461.13, 107309.62, 103133.68, 98933.15, 94707.89, 90457.75, 86182.6, 81882.28, 77556.64, 73205.53, 68828.81, 64426.32, 59997.92, 55543.44, 51062.74, 46555.66, 42022.05, 37461.75, 32874.6, 28260.44, 23619.12, 18950.48, 14254.35, 9530.58, 4778.99, 0.0];
 
-var A12_I=[3965.18, 3900.15, 3834.72, 3768.9, 3702.67, 3636.04, 3569.01, 3501.57, 3433.72, 3365.44, 3296.75, 3227.64, 3158.13, 3088.17, 3017.79, 2946.98, 2875.74, 2804.07, 2731.96, 2659.41, 2586.42, 2512.98, 2439.09, 2364.75, 2289.96, 2214.72, 2139.01, 2062.84, 1986.21, 1909.11, 1831.53, 1753.5, 1674.97, 1595.98, 1516.49, 1436.53, 1356.07, 1275.13, 1193.7, 1111.76, 1029.33, 946.39, 862.94, 779.0, 694.52, 609.55, 524.05, 438.03, 351.48, 264.42, 176.81, 88.67];
-var A12_B=[639340.17, 628615.31, 617825.01, 606968.9, 596046.56, 585057.59, 574001.58, 562878.14, 551686.85, 540427.27, 529099.01, 517701.64, 506234.75, 494697.91, 483090.68, 471412.65, 459663.38, 447842.44, 435949.39, 423983.79, 411945.19, 399833.15, 387647.23, 375386.97, 363051.91, 350641.62, 338155.62, 325593.44, 312954.63, 300238.73, 287445.25, 274573.74, 261623.69, 248594.66, 235486.14, 222297.66, 209028.72, 195678.84, 182247.52, 168734.26, 155138.58, 141459.95, 127697.88, 113851.86, 99921.37, 85905.9, 71804.94, 57617.96, 43344.43, 28983.83, 14535.62, 0.0];
-var A18_I=[3969.49, 3929.61, 3889.48, 3849.11, 3808.5, 3767.63, 3726.52, 3685.15, 3643.54, 3601.67, 3559.54, 3517.15, 3474.51, 3431.61, 3388.44, 3345.01, 3301.31, 3257.35, 3213.12, 3168.62, 3123.85, 3078.8, 3033.48, 2987.89, 2942.01, 2895.86, 2849.42, 2802.7, 2755.69, 2708.4, 2660.81, 2612.94, 2564.77, 2516.31, 2467.56, 2418.51, 2369.15, 2319.5, 2269.54, 2219.28, 2168.71, 2117.83, 2066.64, 2015.14, 1963.32, 1911.19, 1858.74, 1805.97, 1752.87, 1699.46, 1645.71, 1591.64, 1537.24, 1482.5, 1427.43, 1372.03, 1316.28, 1260.2, 1203.77, 1147.0, 1089.88, 1032.42, 974.6, 916.43, 857.9, 799.02, 739.78, 680.17, 620.2, 559.87, 499.17, 438.09, 376.64, 314.82, 252.62, 190.04, 127.08, 63.77];
-var A18_B=[643469.49, 636899.1, 630288.58, 623637.69, 616946.19, 610213.82, 603440.34, 596625.49, 589769.03, 582870.7, 575930.24, 568947.39, 561921.9, 554853.51, 547741.95, 540586.96, 533388.27, 526145.62, 518858.74, 511527.36, 504151.21, 496730.01, 489263.49, 481751.38, 474193.39, 466589.25, 458938.67, 451241.37, 443497.06, 435705.46, 427866.27, 419979.21, 412043.98, 404060.29, 396027.85, 387946.36, 379815.51, 371635.01, 363404.55, 355123.83, 346792.54, 338410.37, 329977.01, 321492.15, 312955.47, 304366.66, 295725.4, 287031.37, 278284.24, 269483.7, 260629.41, 251721.05, 242758.29, 233740.79, 224668.22, 215540.25, 206356.53, 197116.73, 187820.5, 178467.5, 169057.38, 159589.8, 150064.4, 140480.83, 130838.73, 121137.75, 111377.53, 101557.7, 91677.9, 81737.77, 71736.94, 61675.03, 51551.67, 41366.49, 31119.11, 20809.15, 10436.23, 0.0];
+
+var M12_0_I=[2128.77, 2092.22, 2055.51, 2018.63, 1981.59, 1944.4, 1907.04, 1869.51, 1831.83, 1793.98, 1755.96, 1717.78, 1679.43, 1640.91, 1602.22, 1563.37, 1524.35, 1485.15, 1445.79, 1406.25, 1366.54, 1326.66, 1286.6, 1246.37, 1205.96, 1165.37, 1124.61, 1083.67, 1042.55, 1001.26, 959.78, 918.12, 876.28, 834.25, 792.05, 749.65, 707.08, 664.31, 621.36, 578.23, 534.9, 491.39, 447.68, 403.79, 359.7, 315.42, 270.95, 226.28, 181.42, 136.36, 91.1, 45.62];
+var M12_0_B=[479128.76, 470720.97, 462276.47, 453795.09, 445276.67, 436721.06, 428128.09, 419497.59, 410829.41, 402123.38, 393379.33, 384597.1, 375776.52, 366917.42, 358019.63, 349082.99, 340107.33, 331092.47, 322038.25, 312944.49, 303811.02, 294637.67, 285424.26, 276170.62, 266876.57, 257541.93, 248166.53, 238750.19, 229292.73, 219793.98, 210253.75, 200671.86, 191048.13, 181382.37, 171674.41, 161924.05, 152131.12, 142295.42, 132416.77, 122494.99, 112529.88, 102521.26, 92468.93, 82372.71, 72232.4, 62047.81, 51818.75, 41545.02, 31226.43, 20862.78, 10453.87, 0];
+var M12_25_I=[2498.08, 2456.17, 2414.03, 2371.67, 2329.09, 2286.29, 2243.26, 2200.01, 2156.53, 2112.82, 2068.88, 2024.72, 1980.32, 1935.69, 1890.82, 1845.73, 1800.39, 1754.82, 1709.0, 1662.95, 1616.66, 1570.12, 1523.34, 1476.32, 1429.05, 1381.53, 1333.76, 1285.74, 1237.47, 1188.95, 1140.18, 1091.14, 1041.85, 992.31, 942.5, 892.43, 842.1, 791.51, 740.65, 689.52, 638.13, 586.47, 534.53, 482.33, 429.85, 377.1, 324.07, 270.76, 217.17, 163.3, 109.15, 54.74];
+var M12_25_B=[468799.31, 460756.71, 452671.97, 444544.87, 436375.19, 428162.71, 419907.2, 411608.44, 403266.2, 394880.25, 386450.36, 377976.31, 369457.86, 360894.78, 352286.83, 343633.79, 334935.41, 326191.46, 317401.69, 308565.87, 299683.76, 290755.11, 281779.68, 272757.23, 263687.51, 254570.27, 245405.26, 236192.23, 226930.93, 217621.11, 208262.52, 198854.89, 189397.97, 179891.51, 170335.24, 160728.9, 151072.23, 141364.97, 131606.85, 121797.6, 111936.96, 102024.66, 92060.42, 82043.98, 71975.06, 61853.39, 51678.69, 41450.68, 31169.08, 20833.61, 10443.99, 0];
+var M15_0_I=[3185.29, 3143.85, 3102.19, 3060.29, 3018.15, 2975.77, 2933.15, 2890.29, 2847.19, 2803.84, 2760.25, 2716.41, 2672.32, 2627.99, 2583.4, 2538.56, 2493.46, 2448.11, 2402.5, 2356.64, 2310.51, 2264.12, 2217.48, 2170.56, 2123.38, 2075.93, 2028.22, 1980.23, 1931.98, 1883.44, 1834.64, 1785.56, 1736.2, 1686.55, 1636.63, 1586.43, 1535.94, 1485.17, 1434.1, 1382.75, 1331.11, 1279.18, 1226.95, 1174.42, 1121.6, 1068.48, 1015.05, 961.33, 907.3, 852.96, 798.32, 743.37, 688.1, 632.53, 576.63, 520.42, 463.9, 407.05, 349.88, 292.39, 234.57, 176.42, 117.95, 59.12];
+var M15_0_B=[554986.09, 547630.74, 540233.73, 532794.82, 525313.77, 517790.34, 510224.29, 502615.38, 494963.37, 487268.01, 479529.06, 471746.27, 463919.39, 456048.18, 448132.38, 440171.74, 432166.0, 424114.91, 416018.21, 407875.65, 399686.96, 391451.88, 383170.16, 374841.52, 366465.7, 358042.43, 349571.45, 341052.48, 332485.26, 323869.5, 315204.94, 306491.3, 297728.3, 288915.65, 280053.08, 271140.31, 262177.05, 253163.02, 244097.92, 234981.47, 225813.38, 216593.36, 207321.11, 197996.33, 188618.73, 179188.01, 169703.86, 160165.99, 150574.09, 140927.85, 131226.97, 121471.14, 111660.04, 101793.37, 91870.8, 81892.02, 71856.72, 61764.57, 51615.25, 41408.44, 31143.81, 20821.03, 10439.78, 0];
+var M15_25_I=[2795.9, 2758.69, 2721.29, 2683.71, 2645.94, 2607.99, 2569.84, 2531.51, 2492.98, 2454.26, 2415.35, 2376.25, 2336.95, 2297.46, 2257.77, 2217.89, 2177.8, 2137.52, 2097.03, 2056.35, 2015.46, 1974.37, 1933.07, 1891.57, 1849.87, 1807.95, 1765.83, 1723.5, 1680.95, 1638.2, 1595.23, 1552.05, 1508.66, 1465.04, 1421.22, 1377.17, 1332.91, 1288.42, 1243.72, 1198.79, 1153.63, 1108.26, 1062.66, 1016.83, 970.77, 924.49, 877.97, 831.22, 784.24, 737.03, 689.58, 641.9, 593.98, 545.82, 497.42, 448.78, 399.9, 350.78, 301.41, 251.79, 201.93, 151.82, 101.47, 50.86];
+var M15_25_B=[554816.35, 547295.49, 539737.23, 532141.39, 524507.78, 516836.22, 509126.51, 501378.47, 493591.9, 485766.61, 477902.41, 469999.11, 462056.51, 454074.42, 446052.64, 437990.98, 429889.23, 421747.2, 413564.68, 405341.48, 397077.39, 388772.21, 380425.73, 372037.75, 363608.07, 355136.47, 346622.75, 338066.7, 329468.1, 320826.75, 312142.43, 303414.93, 294644.04, 285829.53, 276971.2, 268068.82, 259122.18, 250131.05, 241095.22, 232014.46, 222888.54, 213717.25, 204500.36, 195237.64, 185928.86, 176573.8, 167172.22, 157723.89, 148228.58, 138686.06, 129096.09, 119458.44, 109772.87, 100039.14, 90257.01, 80426.24, 70546.59, 60617.82, 50639.68, 40611.92, 30534.3, 20406.57, 10228.49, 0];
+var M18_0_I=[3611.14, 3574.02, 3536.7, 3499.17, 3461.44, 3423.49, 3385.33, 3346.97, 3308.38, 3269.59, 3230.58, 3191.35, 3151.9, 3112.23, 3072.35, 3032.24, 2991.91, 2951.36, 2910.58, 2869.57, 2828.34, 2786.87, 2745.18, 2703.25, 2661.1, 2618.7, 2576.07, 2533.21, 2490.11, 2446.76, 2403.18, 2359.36, 2315.29, 2270.97, 2226.41, 2181.61, 2136.55, 2091.24, 2045.69, 1999.88, 1953.81, 1907.49, 1860.91, 1814.07, 1766.97, 1719.61, 1671.99, 1624.1, 1575.95, 1527.53, 1478.84, 1429.88, 1380.64, 1331.14, 1281.36, 1231.3, 1180.96, 1130.35, 1079.45, 1028.27, 976.81, 925.06, 873.02, 820.7, 768.08, 715.17, 661.97, 608.47, 554.67, 500.58, 446.18, 391.49, 336.48, 281.18, 225.56, 169.64, 113.41, 56.84];
+var M18_0_B=[643319.47, 636601.82, 629846.85, 623054.35, 616224.12, 609355.94, 602449.6, 595504.9, 588521.61, 581499.53, 574438.44, 567338.12, 560198.35, 553018.91, 545799.59, 538540.16, 531240.4, 523900.09, 516519.0, 509096.9, 501633.57, 494128.77, 486582.28, 478993.86, 471363.29, 463690.32, 455974.72, 448216.26, 440414.7, 432569.79, 424681.3, 416748.99, 408772.61, 400751.91, 392686.65, 384576.59, 376421.47, 368221.04, 359975.06, 351683.27, 343345.41, 334961.23, 326530.47, 318052.87, 309528.17, 300956.11, 292336.43, 283668.86, 274953.14, 266189.0, 257376.17, 248514.38, 239603.35, 230642.82, 221632.51, 212572.14, 203461.43, 194300.11, 185087.89, 175824.49, 166509.63, 157143.02, 147724.37, 138253.4, 128729.81, 119153.31, 109523.61, 99840.41, 90103.41, 80312.32, 70466.83, 60566.65, 50611.46, 40600.97, 30534.86, 20412.83, 10234.57, 0];
+var M18_25_I=[3248.4, 3214.24, 3179.92, 3145.42, 3110.74, 3075.9, 3040.88, 3005.68, 2970.31, 2934.76, 2899.04, 2863.13, 2827.05, 2790.79, 2754.34, 2717.72, 2680.91, 2643.91, 2606.73, 2569.37, 2531.82, 2494.08, 2456.15, 2418.03, 2379.73, 2341.23, 2302.53, 2263.65, 2224.57, 2185.3, 2145.83, 2106.16, 2066.29, 2026.23, 1985.96, 1945.49, 1904.82, 1863.95, 1822.87, 1781.59, 1740.1, 1698.41, 1656.5, 1614.39, 1572.07, 1529.53, 1486.78, 1443.82, 1400.65, 1357.25, 1313.64, 1269.82, 1225.77, 1181.51, 1137.02, 1092.31, 1047.38, 1002.22, 956.83, 911.22, 865.39, 819.32, 773.02, 726.49, 679.73, 632.74, 585.51, 538.04, 490.34, 442.4, 394.22, 345.79, 297.13, 248.22, 199.07, 149.67, 100.03, 50.15];
+var M18_25_B=[643165.06, 636295.96, 629392.54, 622454.62, 615482.02, 608474.58, 601432.12, 594354.46, 587241.43, 580092.85, 572908.55, 565688.34, 558432.05, 551139.5, 543810.5, 536444.88, 529042.45, 521603.02, 514126.41, 506612.44, 499060.92, 491471.66, 483844.47, 476179.16, 468475.55, 460733.44, 452952.63, 445132.94, 437274.17, 429376.13, 421438.62, 413461.44, 405444.39, 397387.28, 389289.9, 381152.05, 372973.53, 364754.14, 356493.67, 348191.92, 339848.68, 331463.75, 323036.91, 314567.96, 306056.69, 297502.88, 288906.32, 280266.8, 271584.11, 262858.02, 254088.32, 245274.8, 236417.23, 227515.4, 218569.08, 209578.05, 200542.09, 191460.97, 182334.46, 173162.34, 163944.39, 154680.37, 145370.05, 136013.2, 126609.59, 117158.99, 107661.16, 98115.86, 88522.86, 78881.92, 69192.8, 59455.25, 49669.04, 39833.92, 29949.65, 20015.98, 10032.67, 0];
 
 var GROUPS = [
-  { name: "Lender A &middot; 100% Interest Forgiveness",
-    note: "4% origination fee. The most savings if you pay the balance off early. Struck-through payback and payment show the prior pricing at the same amount — the new rate is a real reduction.",
-    redNote: "<b>Up to 2 concurrent fundings:</b> although this is not a line of credit, this lender allows up to two fundings at once — you can start with a lower amount now and add a second funding later if needed.",
+  { name: "Mulligan &middot; 0% Origination Fee",
+    note: "No origination fee — you receive the full amount. 50% interest forgiveness on an early payoff.",
     offers: [
-      { tier:"100% IF", max:650000, factor:1.26, weekly:10500.00, old:{factor:1.34}, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[623637.69,561921.9,466589.25,363404.55], iArr:A18_I, bArr:A18_B },
-      { tier:"100% IF", max:650000, factor:1.17, weekly:14625.00, old:{factor:1.23}, nPay:52, term:12, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[606968.9, 506234.75, 350641.62, 182247.52], iArr:A12_I, bArr:A12_B }
+      { tier:"50% IF", max:650000, factor:1.235, weekly:10291.67, nPay:78, term:18, IFpct:50, origPct:0, mk:[4,13,26,39], milestonePayoff:[692318.83,614578.32,499428.45,380674.97], iArr:M18_0_I, bArr:M18_0_B },
+      { tier:"50% IF", max:562300, factor:1.195, weekly:10499.20, nPay:64, term:15, IFpct:50, origPct:0, mk:[4,13,26,38], milestonePayoff:[581373.26,499689.15,378505.86,263070.96], iArr:M15_0_I, bArr:M15_0_B },
+      { tier:"50% IF", max:487500, factor:1.12, weekly:10500.01, nPay:52, term:12, IFpct:50, origPct:0, mk:[4,13,26,39], milestonePayoff:[478897.53,392638.2,265270.83,134458.19], iArr:M12_0_I, bArr:M12_0_B }
     ]
   },
-  { name: "Lender A &middot; 50% Interest Forgiveness",
-    note: "1% origination fee — lower cost up front. Half the remaining interest is forgiven on an early payoff. Struck-through figures show the prior pricing at the same amount.",
+  { name: "Mulligan &middot; 2.5% Origination Fee",
+    note: "2.5% origination fee — a lower total payback in exchange for the fee. 50% interest forgiveness on an early payoff.",
     offers: [
-      { tier:"50% IF", max:650000, factor:1.26, weekly:10500.00, old:{factor:1.34}, nPay:78, term:18, IFpct:50, origPct:0.01, origLabel:"1%", mk:[4,13,26,39], milestonePayoff:[700318.84,622210.95,506294.62,386452.28], iArr:A18_I, bArr:A18_B },
-      { tier:"50% IF", max:650000, factor:1.17, weekly:14625.00, old:{factor:1.23}, nPay:52, term:12, IFpct:50, origPct:0.01, origLabel:"1%", mk:[4,13,26,39], milestonePayoff:[654484.41, 538304.79, 365445.63, 186185.98], iArr:A12_I, bArr:A12_B }
-    ]
-  },
-  { name: "Lender B &middot; Flex Line / LOC",
-    isLOC: true,
-    note: "A revolving line of credit. Draw $100,000 over a 180-business-day (36-week) term; pay it off early and your cost drops sharply (see the pay-now schedule below).",
-    offers: [
-      { tier:"Flex line of credit", isLOC:true, max:100000, factor:1.38, weekly:3833.33, nPay:36, termLabel:"180 business days", IFpct:null, origPct:0, maxSavings100:36944.44,
-        costCap:[1055.56,2111.11,3166.67,4222.22,12597.22,13416.67,14236.11,15055.56,15875.00,16694.44,17513.89,18333.33,19152.78,19972.22,20791.67,21611.11,22430.56,23250.00,24069.44,24888.89,25708.33,26527.78,27347.22,28166.67,28986.11,29805.56,30625.00,31444.44,32263.89,33083.33,33902.78,34722.22,35541.67,36361.11,37180.56,38000.00] }
-    ]
-  },
-  { name: "Lender C &middot; Term Loan (100% Prepay-Eligible)",
-    note: "A fast term loan — the full remaining interest is forgiven on an early payoff (2.5% origination fee). Daily or weekly payments available (weekly shown); funds as soon as the next business day.",
-    offers: [
-      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.209, weekly:3720.00, nPay:65, term:15, IFpct:100, origPct:0.025, origLabel:"2.5%",
-        milestonePayoff:[189794.78, 165926.97, 129118.94, 89356.38], iArr:C15_I, bArr:C15_B },
-      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.186, weekly:4561.5385, nPay:52, term:12, IFpct:100, origPct:0.025, origLabel:"2.5%",
-        milestonePayoff:[186940.76, 156261.18, 108589.31, 56630.74], iArr:C12_I, bArr:C12_B }
-    ]
-  },
-  { name: "Lender D &middot; Term Loan",
-    note: "<b>Approved up to $600,000, but currently capped at $300,000 while the PayPal loan is outstanding.</b> Premium term loans with 100% or 50% interest forgiveness on an early payoff, 1st position.",
-    offers: [
-      { tier:"Premium 100% IF", max:300000, factor:1.20, weekly:6923.08, nPay:52, term:12, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", mk:[4,13,26,39], milestonePayoff:[280644.98,235034.95,163793.99,85670.83], iArr:D8_I, bArr:D8_B },
-      { tier:"Premium 50% IF", max:300000, factor:1.25, weekly:9615.38, nPay:39, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", position:"1st", payLabel:"Biweekly", payWord:"biweekly", per:"2wk", mk:[2,7,13,20], milestonePayoff:[321728.14,281659.91,232311.65,172866.76], iArr:D9_I, bArr:D9_B },
-      { tier:"Premium 100% IF", max:300000, factor:1.25, weekly:4807.69, nPay:78, term:18, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", mk:[4,13,26,39], milestonePayoff:[287725.94,259032.58,214816.62,167094.55], iArr:D10_I, bArr:D10_B }
+      { tier:"50% IF", max:650000, factor:1.21, weekly:10083.34, nPay:78, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", mk:[4,13,26,39], milestonePayoff:[684310.63,606924.31,492533.3,374871.71], iArr:M18_25_I, bArr:M18_25_B },
+      { tier:"50% IF", max:562300, factor:1.17, weekly:10279.55, nPay:64, term:15, IFpct:50, origPct:0.025, origLabel:"2.5%", mk:[4,13,26,38], milestonePayoff:[574457.1,493156.68,372879.59,258699.57], iArr:M15_25_I, bArr:M15_25_B },
+      { tier:"50% IF", max:476800, factor:1.145, weekly:10498.77, nPay:52, term:12, IFpct:50, origPct:0.025, origLabel:"2.5%", mk:[4,13,26,39], milestonePayoff:[474242.89,389454.92,263769.12,134045.41], iArr:M12_25_I, bArr:M12_25_B }
     ]
   }
 ];
@@ -349,12 +282,13 @@ function renderOffers(){
       var m = model(o);
       var capTag = m.capped ? '<span class="cap-badge">max '+money0(m.ceiling)+'</span>' : '';
       var termTxt = o.termLabel || (o.term + ' months');
-      var amtLabel = o.isLOC ? 'Draw amount' : 'Advance amount';
+      var amtLabel = 'Advance amount';
       var subFee = (o.origPct>0) ? ' &middot; '+o.origLabel+' fee' : '';
       var feeRows = (o.origPct>0)
         ? '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
           + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
-        : '';
+        : '<div class="kv-row kv-fee"><span class="kv-label">Origination fee</span><span class="kv-val">None</span></div>'
+          + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>';
       var lastRow = (o.IFpct!=null)
         ? '<div class="kv-row"><span class="kv-label">'+(o.ifLabel||'Interest forgiveness')+'</span><span class="kv-val">'+o.IFpct+'%</span></div>'
         : '<div class="kv-row"><span class="kv-label">Max early-payoff savings</span><span class="kv-val">'+money0(o.maxSavings100*m.s)+'</span></div>';
@@ -389,15 +323,6 @@ function allinRows(o){
 }
 
 function milestoneVals(o){
-  var m = model(o);
-  if(o.pending){ return null; }
-  if(o.isLOC){
-    var idx=[3,12,25,35]; // week indices for 1 / 3 / 6 / 9 months (capped at the 36-week term)
-    return idx.map(function(ix){
-      var ai = round2(o.costCap[Math.min(ix,o.costCap.length-1)]*m.s);
-      return { allIn:ai, pct: m.net? ai/m.net : 0 };
-    });
-  }
   return allinRows(o).map(function(r){ return { allIn:r.allIn, pct:r.pct }; });
 }
 
@@ -408,53 +333,22 @@ function renderAllin(){
     + '<th>Option</th><th>Advance</th><th>Net</th><th>Payback</th><th>Weekly</th>'
     + '<th>Paid off<br/>1 mo</th><th>Paid off<br/>3 mo</th><th>Paid off<br/>6 mo</th><th>Paid off<br/>9 mo</th>'
     + '</tr></thead><tbody>';
-  var anyPending = false;
   GROUPS.forEach(function(g){
     var LN = g.name.split(" &middot; ")[0];
     g.offers.forEach(function(o){
       var m = model(o); var mv = milestoneVals(o);
-      var term = o.isLOC ? "180d" : (o.term+"mo");
       var capTag = m.capped ? ' <span class="cap-badge">max '+money0(m.ceiling)+'</span>' : '';
-      html += '<tr><td class="cmp-deal">#'+o.num+' '+LN+' &middot; '+o.tier+' &middot; '+term+capTag+'</td>'
+      html += '<tr><td class="cmp-deal">#'+o.num+' '+LN+' &middot; '+o.tier+' &middot; '+o.term+'mo'+capTag+'</td>'
         + '<td>'+money0(m.adv)+'</td><td>'+money0(m.net)+'</td><td>'+money0(m.payback)+'</td>'
         + '<td>'+money(m.weekly)+'<span class="cmp-pct">/'+(o.per||'wk')+'</span></td>';
-      if(mv){
-        mv.forEach(function(v){
-          html += '<td class="po-payoff">'+money0(v.allIn)+'<span class="cmp-pct">'+pct1(v.pct)+'</span></td>';
-        });
-      } else {
-        anyPending = true;
-        html += '<td class="cmp-pend" colspan="4">Schedule pending *</td>';
-      }
+      mv.forEach(function(v){
+        html += '<td class="po-payoff">'+money0(v.allIn)+'<span class="cmp-pct">'+pct1(v.pct)+'</span></td>';
+      });
       html += '</tr>';
     });
   });
   html += '</tbody></table></div>';
-  if(anyPending){ html += '<p class="allin-intro" style="margin-top:6px;">* Lender D early-payoff all-in cost is added once the lender\'s amortization schedule is confirmed.</p>'; }
   document.getElementById("allinWrap").innerHTML = html;
-}
-
-function renderLOC(){
-  var g = GROUPS.filter(function(x){ return x.isLOC; })[0];
-  if(!g){ return; }
-  var o = g.offers[0];
-  var m = model(o);
-  var html = '<p class="allin-intro">A revolving flex line — pay it off early and your cost drops sharply. '
-    + '<b>Pay-now payoff</b> is the amount to settle the line in full that week; <b>total paid</b> is everything paid by then; '
-    + '<b>total savings</b> is what you keep versus carrying it to the full '+money0(m.payback)+' payback.</p>'
-    + '<div class="detail-recap" style="margin-bottom:14px;">Draw <b>'+money0(m.adv)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/wk &middot; '+o.nPay+' weekly payments</div>'
-    + '<table class="prepay"><thead><tr><th>Week</th><th>Pay-now payoff</th><th>Total paid</th><th>Cost of capital</th><th>Total savings</th></tr></thead><tbody>';
-  for(var i=0;i<o.costCap.length;i++){
-    var totalPaid = round2((o.max + o.costCap[i]) * m.s);
-    var sumPaid = round2((i+1) * m.weekly);
-    var payNow = Math.max(0, round2(totalPaid - sumPaid));
-    var cost = round2(o.costCap[i] * m.s);
-    var sav = round2(m.payback - totalPaid);
-    html += '<tr><td>'+(i+1)+'</td><td>'+money0(payNow)+'</td><td>'+money0(totalPaid)+'</td>'
-      + '<td class="po-payoff">'+money0(cost)+'</td><td>'+money0(sav)+'</td></tr>';
-  }
-  html += '</tbody></table>';
-  document.getElementById("lenderBSched").innerHTML = html;
 }
 
 function schedRowsHTML(o){
@@ -487,8 +381,7 @@ function renderSched(prefix, containerId){
 }
 
 function renderStips(){
-  var list = STATE.requested <= 250000 ? STIPS_MIN : STIPS_FULL;
-  document.getElementById("stipList").innerHTML = list.map(function(s){ return '<li>'+s+'</li>'; }).join("");
+  document.getElementById("stipList").innerHTML = STIPS_FULL.map(function(s){ return '<li>'+s+'</li>'; }).join("");
 }
 
 function downloadPDF(){
@@ -509,7 +402,7 @@ function downloadPDF(){
   doc.setFont("helvetica","normal");
   GROUPS.forEach(function(g){ var LN=g.name.split(" &middot; ")[0]; g.offers.forEach(function(o){
     var m=model(o);
-    var desc = o.isLOC ? "Flex LOC, 180d" : (o.IFpct+"% "+(o.ifShort||"IF")+", "+o.term+"mo");
+    var desc = o.IFpct+"% IF, "+o.term+"mo";
     doc.text("#"+o.num+" "+LN+" "+desc, cols[0], y);
     doc.text(money0(m.adv), cols[1], y); doc.text(money0(m.payback), cols[2], y);
     doc.text(money(m.weekly), cols[3], y); doc.text(money0(m.net), cols[4], y); y+=14;
@@ -518,11 +411,10 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(11);
   doc.text("Closing Requirements", L, y); y+=14;
   doc.setFont("helvetica","normal"); doc.setFontSize(9);
-  var stips = STATE.requested <= 250000 ? STIPS_MIN : STIPS_FULL;
+  var stips = STIPS_FULL;
   stips.forEach(function(s){ doc.text("• "+s.replace(/&amp;/g,"&"), L+6, y); y+=13; });
 
-  GROUPS.forEach(function(g){ if(g.isLOC) return; g.offers.forEach(function(o){
-    if(o.pending) return;
+  GROUPS.forEach(function(g){ g.offers.forEach(function(o){
     doc.addPage(); y=48;
     var m=model(o); var rows=allinRows(o);
     doc.setFont("helvetica","bold"); doc.setFontSize(13);
@@ -542,33 +434,6 @@ function downloadPDF(){
       doc.text(money0(r.totalPaid), c[1], y); doc.text(money0(r.allIn), c[2], y);
       doc.text(pct1(r.pct), c[3], y); y+=15;
     });
-  });});
-
-  GROUPS.forEach(function(g){ if(!g.isLOC) return; g.offers.forEach(function(o){
-    doc.addPage(); y=48;
-    var m=model(o);
-    doc.setFont("helvetica","bold"); doc.setFontSize(13); doc.setTextColor(20);
-    doc.text("Offer "+o.num+" — Lender B Flex Line / LOC", L, y); y+=18;
-    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-    doc.text("Draw "+money0(m.adv)+"   Payback "+money0(m.payback)+"   "+money(m.weekly)+"/wk   180 business days / "+o.nPay+" weekly", L, y);
-    y+=10; doc.setTextColor(20); doc.setFontSize(11); doc.setFont("helvetica","bold");
-    doc.text("Pay-Now Early Payoff Schedule", L, y); y+=16;
-    doc.setFontSize(9);
-    var c=[L, L+90, L+230, L+360, L+460];
-    function locHead(){ doc.setFont("helvetica","bold");
-      doc.text("Week", c[0], y); doc.text("Pay-now payoff", c[1], y); doc.text("Total paid", c[2], y);
-      doc.text("Cost of cap.", c[3], y); doc.text("Savings", c[4], y); y+=4;
-      doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12; doc.setFont("helvetica","normal"); }
-    locHead();
-    for(var i=0;i<o.costCap.length;i++){
-      if(y>752){ doc.addPage(); y=48; locHead(); }
-      var totalPaid=round2((o.max+o.costCap[i])*m.s);
-      var sumPaid=round2((i+1)*m.weekly);
-      var payNow=Math.max(0, round2(totalPaid-sumPaid));
-      doc.text(String(i+1), c[0], y);
-      doc.text(money0(payNow), c[1], y); doc.text(money0(totalPaid), c[2], y);
-      doc.text(money0(round2(o.costCap[i]*m.s)), c[3], y); doc.text(money0(round2(m.payback-totalPaid)), c[4], y); y+=13;
-    }
   });});
 
   GROUPS.forEach(function(g){ var LN=g.name.split(" &middot; ")[0]; g.offers.forEach(function(o){
@@ -609,7 +474,7 @@ function recompute(){
   var help=document.getElementById("amountHelp");
   if(r>650000){ help.textContent="Above the $650,000 maximum — options shown at their caps."; help.className="amount-help warning"; }
   else { help.textContent="Adjustable — each option caps at its own maximum"; help.className="amount-help"; }
-  renderStips(); renderOffers(); renderAllin(); renderLOC(); renderSched("Lender A","lenderASched"); renderSched("Lender C","lenderCSched"); renderSched("Lender D","lenderDSched");
+  renderStips(); renderOffers(); renderAllin(); renderSched("Mulligan","mulliganSched");
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
