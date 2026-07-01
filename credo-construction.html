@@ -103,6 +103,11 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 .detail-card table.prepay td,.detail-card table.prepay th{padding:6px 10px;font-size:11.5px;}
 .allin-intro{font-size:12.5px;color:var(--slate);max-width:880px;margin:0 0 16px;}
 .allin-intro b{color:var(--navy);}
+.cmp-wrap{overflow-x:auto;margin-bottom:8px;}
+table.comp{font-size:12.5px;min-width:820px;}
+table.comp th,table.comp td{padding:9px 11px;white-space:nowrap;}
+table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-space:normal;min-width:210px;}
+.cmp-pct{display:block;color:var(--slate);font-weight:400;font-size:10px;margin-top:1px;}
 @media(max-width:760px){.detail-grid{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -312,31 +317,40 @@ function allinRows(o){
   });
 }
 
-function renderAllin(){
-  var html = '<h2 class="section-title">All-In Cost if Paid Off Early</h2>'
-    + '<p class="allin-intro">What this funding costs in total if the balance is paid in full at 1, 3, 6, or 9 months — '
-    + 'including the origination fee, the weekly payments made to that point, and the early-payoff balance. '
-    + '<b>Total paid</b> is the cash sent to the lender; <b>all-in cost</b> is that total minus the net advance you received.</p>';
-  GROUPS.forEach(function(g){
-    if(g.isLOC) return;
-    html += '<h3 class="grp-head">'+g.name+'</h3><div class="detail-grid">';
-    g.offers.forEach(function(o){
-      var m = model(o);
-      var rows = allinRows(o);
-      html += '<div class="detail-card">'
-        + '<div class="detail-head">Offer '+o.num+' &middot; '+o.term+' months</div>'
-        + '<div class="detail-recap">Advance <b>'+money0(m.adv)+'</b> &middot; net <b>'+money0(m.net)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/wk</div>'
-        + '<table class="prepay"><thead><tr><th>Paid off at</th><th>Total paid</th><th>All-in cost</th><th>% of net</th></tr></thead><tbody>';
-      rows.forEach(function(r){
-        html += '<tr><td>'+r.mo+' month'+(r.mo===1?'':'s')+'</td>'
-          + '<td>'+money0(r.totalPaid)+'</td>'
-          + '<td class="po-payoff">'+money0(r.allIn)+'</td>'
-          + '<td>'+pct1(r.pct)+'</td></tr>';
-      });
-      html += '</tbody></table></div>';
+function milestoneVals(o){
+  var m = model(o);
+  if(o.isLOC){
+    var idx=[3,12,25,35]; // week indices for 1 / 3 / 6 / 9 months (capped at the 36-week term)
+    return idx.map(function(ix){
+      var ai = round2(o.costCap[Math.min(ix,o.costCap.length-1)]*m.s);
+      return { allIn:ai, pct: m.net? ai/m.net : 0 };
     });
-    html += '</div>';
+  }
+  return allinRows(o).map(function(r){ return { allIn:r.allIn, pct:r.pct }; });
+}
+
+function renderAllin(){
+  var html = '<h2 class="section-title">All-In Cost — Side-by-Side Comparison</h2>'
+    + '<p class="allin-intro">Every option in one place. <b>All-in cost</b> is everything paid — origination fee, the weekly payments made to that point, and the early-payoff balance — minus the net advance, if the balance is settled in full at that month. The small figure is that cost as a % of the net advance. Each option is shown at its own maximum unless you lower the requested amount; lower it and the whole table updates.</p>'
+    + '<div class="cmp-wrap"><table class="prepay comp"><thead><tr>'
+    + '<th>Option</th><th>Advance</th><th>Net</th><th>Payback</th><th>Weekly</th>'
+    + '<th>Paid off<br/>1 mo</th><th>Paid off<br/>3 mo</th><th>Paid off<br/>6 mo</th><th>Paid off<br/>9 mo</th>'
+    + '</tr></thead><tbody>';
+  GROUPS.forEach(function(g){
+    var LN = g.name.split(" &middot; ")[0];
+    g.offers.forEach(function(o){
+      var m = model(o); var mv = milestoneVals(o);
+      var term = o.isLOC ? "180d" : (o.term+"mo");
+      var capTag = m.capped ? ' <span class="cap-badge">max '+money0(o.max)+'</span>' : '';
+      html += '<tr><td class="cmp-deal">#'+o.num+' '+LN+' &middot; '+o.tier+' &middot; '+term+capTag+'</td>'
+        + '<td>'+money0(m.adv)+'</td><td>'+money0(m.net)+'</td><td>'+money0(m.payback)+'</td><td>'+money(m.weekly)+'</td>';
+      mv.forEach(function(v){
+        html += '<td class="po-payoff">'+money0(v.allIn)+'<span class="cmp-pct">'+pct1(v.pct)+'</span></td>';
+      });
+      html += '</tr>';
+    });
   });
+  html += '</tbody></table></div>';
   document.getElementById("allinWrap").innerHTML = html;
 }
 
