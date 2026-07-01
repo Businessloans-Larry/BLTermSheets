@@ -257,7 +257,8 @@ var A18_B=[643469.49, 636899.1, 630288.58, 623637.69, 616946.19, 610213.82, 6034
 
 var GROUPS = [
   { name: "Lender A &middot; 100% Interest Forgiveness",
-    note: "4% origination fee. The most savings if you pay the balance off early. <b>Note:</b> although this is not a line of credit, this lender allows up to 2 concurrent fundings — you can start with a lower amount and add a second funding later if needed.",
+    note: "4% origination fee. The most savings if you pay the balance off early.",
+    redNote: "<b>Up to 2 concurrent fundings:</b> although this is not a line of credit, this lender allows up to two fundings at once — you can start with a lower amount now and add a second funding later if needed.",
     offers: [
       { tier:"100% IF", max:650000, factor:1.26, weekly:10500.00, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[623637.69,561921.9,466589.25,363404.55], iArr:A18_I, bArr:A18_B },
       { tier:"100% IF", max:500000, factor:1.17, weekly:11250.00, nPay:52, term:12, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[466899.15,389411.35,269724.32,140190.4], iArr:A12_I, bArr:A12_B }
@@ -336,6 +337,7 @@ function renderOffers(){
   GROUPS.forEach(function(g){
     html += '<h3 class="grp-head">'+g.name+'</h3>';
     html += '<div class="grp-note">'+g.note+'</div>';
+    if(g.redNote){ html += '<div class="rednote">'+g.redNote+'</div>'; }
     html += '<div class="offers-grid">';
     g.offers.forEach(function(o){
       var m = model(o);
