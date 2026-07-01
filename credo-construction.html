@@ -103,6 +103,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 .offer-card-body{padding:10px 13px 12px;}
 .kv-row{padding:4.5px 0;font-size:11.8px;}
 .kv-pay .kv-val{font-size:13.5px;}
+.kv-val .was{display:block;text-decoration:line-through;color:#9aa3b0;font-weight:400;font-size:11px;line-height:1.25;}
+.kv-val .now{display:block;color:var(--navy);font-weight:700;line-height:1.25;}
+.disc-tag{display:inline-block;background:var(--gold);color:var(--navy);font-weight:700;font-size:8.5px;letter-spacing:.04em;padding:1px 6px;border-radius:4px;vertical-align:middle;text-transform:uppercase;}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start;margin-bottom:8px;}
 .detail-card{border:1.5px solid var(--line);border-radius:10px;padding:13px 15px;break-inside:avoid;}
 .detail-head{font-family:'DM Serif Display',Georgia,serif;color:var(--navy);font-size:17px;margin-bottom:3px;}
@@ -257,18 +260,18 @@ var A18_B=[643469.49, 636899.1, 630288.58, 623637.69, 616946.19, 610213.82, 6034
 
 var GROUPS = [
   { name: "Lender A &middot; 100% Interest Forgiveness",
-    note: "4% origination fee. The most savings if you pay the balance off early.",
+    note: "4% origination fee. The most savings if you pay the balance off early. Struck-through payback and payment show the prior pricing at the same amount — the new rate is a real reduction.",
     redNote: "<b>Up to 2 concurrent fundings:</b> although this is not a line of credit, this lender allows up to two fundings at once — you can start with a lower amount now and add a second funding later if needed.",
     offers: [
-      { tier:"100% IF", max:650000, factor:1.26, weekly:10500.00, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[623637.69,561921.9,466589.25,363404.55], iArr:A18_I, bArr:A18_B },
-      { tier:"100% IF", max:650000, factor:1.17, weekly:14625.00, nPay:52, term:12, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[606968.9, 506234.75, 350641.62, 182247.52], iArr:A12_I, bArr:A12_B }
+      { tier:"100% IF", max:650000, factor:1.26, weekly:10500.00, old:{factor:1.34}, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[623637.69,561921.9,466589.25,363404.55], iArr:A18_I, bArr:A18_B },
+      { tier:"100% IF", max:650000, factor:1.17, weekly:14625.00, old:{factor:1.23}, nPay:52, term:12, IFpct:100, origPct:0.04, origLabel:"4%", mk:[4,13,26,39], milestonePayoff:[606968.9, 506234.75, 350641.62, 182247.52], iArr:A12_I, bArr:A12_B }
     ]
   },
   { name: "Lender A &middot; 50% Interest Forgiveness",
-    note: "1% origination fee — lower cost up front. Half the remaining interest is forgiven on an early payoff.",
+    note: "1% origination fee — lower cost up front. Half the remaining interest is forgiven on an early payoff. Struck-through figures show the prior pricing at the same amount.",
     offers: [
-      { tier:"50% IF", max:650000, factor:1.26, weekly:10500.00, nPay:78, term:18, IFpct:50, origPct:0.01, origLabel:"1%", mk:[4,13,26,39], milestonePayoff:[700318.84,622210.95,506294.62,386452.28], iArr:A18_I, bArr:A18_B },
-      { tier:"50% IF", max:650000, factor:1.17, weekly:14625.00, nPay:52, term:12, IFpct:50, origPct:0.01, origLabel:"1%", mk:[4,13,26,39], milestonePayoff:[654484.41, 538304.79, 365445.63, 186185.98], iArr:A12_I, bArr:A12_B }
+      { tier:"50% IF", max:650000, factor:1.26, weekly:10500.00, old:{factor:1.34}, nPay:78, term:18, IFpct:50, origPct:0.01, origLabel:"1%", mk:[4,13,26,39], milestonePayoff:[700318.84,622210.95,506294.62,386452.28], iArr:A18_I, bArr:A18_B },
+      { tier:"50% IF", max:650000, factor:1.17, weekly:14625.00, old:{factor:1.23}, nPay:52, term:12, IFpct:50, origPct:0.01, origLabel:"1%", mk:[4,13,26,39], milestonePayoff:[654484.41, 538304.79, 365445.63, 186185.98], iArr:A12_I, bArr:A12_B }
     ]
   },
   { name: "Lender B &middot; Flex Line / LOC",
@@ -321,6 +324,7 @@ function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
 function money(x){ return "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); }
 function pct1(x){ return (x*100).toFixed(1) + "%"; }
+function wasNew(o,n){ return '<span class="was">'+o+'</span><span class="now">'+n+'</span>'; }
 
 function model(o){
   var ceiling = o.capMax ? Math.min(o.max, o.capMax) : o.max;
@@ -328,8 +332,10 @@ function model(o){
   var s = o.max ? adv/o.max : 0;
   var fee = round2(adv*o.origPct);
   var net = round2(adv - fee);
-  return { adv:adv, s:s, ceiling:ceiling, capped:STATE.requested > ceiling,
+  var r = { adv:adv, s:s, ceiling:ceiling, capped:STATE.requested > ceiling,
            payback:round2(adv*o.factor), weekly:round2(o.weekly*s), fee:fee, net:net };
+  if(o.old){ r.oldPayback = round2(adv*o.old.factor); r.oldWeekly = round2(r.oldPayback / o.nPay); }
+  return r;
 }
 
 function renderOffers(){
@@ -353,12 +359,12 @@ function renderOffers(){
         ? '<div class="kv-row"><span class="kv-label">'+(o.ifLabel||'Interest forgiveness')+'</span><span class="kv-val">'+o.IFpct+'%</span></div>'
         : '<div class="kv-row"><span class="kv-label">Max early-payoff savings</span><span class="kv-val">'+money0(o.maxSavings100*m.s)+'</span></div>';
       html += '<div class="offer-card">'
-        + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+termTxt+'</div><div class="offer-sub">'+o.tier+subFee+' &middot; weekly</div></div>'
+        + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+termTxt+(o.old?' <span class="disc-tag">Rate reduced</span>':'')+'</div><div class="offer-sub">'+o.tier+subFee+' &middot; weekly</div></div>'
         + '<div class="offer-card-body">'
           + '<div class="kv-row"><span class="kv-label">'+amtLabel+'</span><span class="kv-val">'+money0(m.adv)+capTag+'</span></div>'
           + feeRows
-          + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
-          + '<div class="kv-row kv-pay"><span class="kv-label">'+(o.payLabel||'Weekly')+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
+          + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+(m.oldPayback?wasNew(money0(m.oldPayback),money0(m.payback)):money0(m.payback))+'</span></div>'
+          + '<div class="kv-row kv-pay"><span class="kv-label">'+(o.payLabel||'Weekly')+' payment</span><span class="kv-val">'+(m.oldWeekly?wasNew(money(m.oldWeekly),money(m.weekly)):money(m.weekly))+'</span></div>'
           + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+(o.payWord||'weekly')+'</span></div>'
           + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+termTxt+'</span></div>'
           + (o.position ? '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">'+o.position+'</span></div>' : '')
