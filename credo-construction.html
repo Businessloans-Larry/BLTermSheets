@@ -158,6 +158,15 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
   </div>
 
   <div class="closing">
+    <h3>Lender B — Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Driver's license</li>
+      <li>Voided check</li>
+      <li>Plaid bank connection</li>
+    </ul>
+  </div>
+
+  <div class="closing">
     <h3>Lender C — Stipulations / Closing Requirements</h3>
     <ul>
       <li>A 5-minute phone call to confirm the details</li>
@@ -200,6 +209,9 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
 
     <h2 class="section-title" style="page-break-before:always;">Lender C — Amortization Schedules</h2>
     <div id="lenderCSched"></div>
+
+    <h2 class="section-title" style="page-break-before:always;">Lender D — Amortization Schedules</h2>
+    <div id="lenderDSched"></div>
   </div>
 
   <div class="disclosure">
@@ -227,6 +239,13 @@ var C15_I=[1191.38,1176.32,1161.16,1145.92,1130.59,1115.16,1099.64,1084.04,1068.
 var C15_B=[197471.38,194927.69,192368.86,189794.78,187205.36,184600.52,181980.17,179344.2,176692.54,174025.08,171341.72,168642.39,165926.97,163195.38,160447.52,157683.28,154902.59,152105.32,149291.4,146460.71,143613.16,140748.65,137867.07,134968.33,132052.32,129118.94,126168.09,123199.66,120213.55,117209.64,114187.85,111148.05,108090.15,105014.03,101919.59,98806.71,95675.29,92525.22,89356.38,86168.67,82961.97,79736.16,76491.14,73226.79,69942.99,66639.64,63316.6,59973.77,56611.03,53228.25,49825.33,46402.13,42958.54,39494.44,36009.71,32504.21,28977.84,25430.46,21861.94,18272.17,14661.02,11028.35,7374.05,3697.97,0];
 var C12_I=[1329.09,1307.61,1285.99,1264.22,1242.31,1220.25,1198.05,1175.69,1153.19,1130.54,1107.74,1084.79,1061.69,1038.43,1015.02,991.45,967.72,943.84,919.8,895.6,871.24,846.71,822.03,797.17,772.16,746.98,721.63,696.11,670.42,644.56,618.53,592.33,565.95,539.4,512.67,485.76,458.68,431.41,403.97,376.34,348.53,320.53,292.34,263.97,235.41,206.66,177.72,148.59,119.27,89.75,60.03,30.11];
 var C12_B=[196767.56,193513.63,190238.08,186940.76,183621.53,180280.25,176916.75,173530.91,170122.57,166691.57,163237.78,159761.03,156261.18,152738.07,149191.55,145621.45,142027.64,138409.94,134768.2,131102.26,127411.96,123697.13,119957.62,116193.26,112403.88,108589.31,104749.4,100883.97,96992.85,93075.88,89132.87,85163.66,81168.08,77145.94,73097.07,69021.3,64918.44,60788.31,56630.74,52445.54,48232.53,43991.52,39722.32,35424.76,31098.63,26743.76,22359.95,17947.0,13504.73,9032.94,4531.43,0];
+
+var D8_I=[2135.69, 2101.61, 2067.28, 2032.71, 1997.9, 1962.84, 1927.53, 1891.96, 1856.15, 1820.07, 1783.75, 1747.16, 1710.31, 1673.2, 1635.83, 1598.19, 1560.28, 1522.1, 1483.66, 1444.93, 1405.93, 1366.66, 1327.1, 1287.26, 1247.14, 1206.74, 1166.04, 1125.06, 1083.78, 1042.21, 1000.35, 958.18, 915.72, 872.95, 829.88, 786.51, 742.82, 698.82, 654.51, 609.89, 564.94, 519.68, 474.09, 428.18, 381.95, 335.38, 288.48, 241.25, 193.69, 145.78, 97.53, 48.94];
+var D8_B=[295212.61, 290391.14, 285535.34, 280644.98, 275719.8, 270759.56, 265764.01, 260732.9, 255665.96, 250562.96, 245423.63, 240247.71, 235034.95, 229785.08, 224497.83, 219172.94, 213810.15, 208409.18, 202969.76, 197491.61, 191974.47, 186418.05, 180822.07, 175186.26, 169510.33, 163793.99, 158036.95, 152238.93, 146399.64, 140518.77, 134596.04, 128631.15, 122623.79, 116573.67, 110480.48, 104343.9, 98163.65, 91939.39, 85670.83, 79357.64, 72999.5, 66596.11, 60147.13, 53652.23, 47111.1, 40523.41, 33888.82, 27206.99, 20477.6, 13700.3, 6874.76, 0.0];
+var D9_I=[3494.54, 3423.24, 3351.12, 3278.15, 3204.33, 3129.65, 3054.1, 2977.67, 2900.35, 2822.13, 2743.0, 2662.95, 2581.96, 2500.03, 2417.15, 2333.3, 2248.48, 2162.66, 2075.85, 1988.03, 1899.18, 1809.3, 1718.37, 1626.38, 1533.32, 1439.18, 1343.94, 1247.59, 1150.12, 1051.51, 951.75, 850.83, 748.74, 645.46, 540.97, 435.27, 328.33, 220.15, 110.89];
+var D9_B=[293879.16, 287687.03, 281422.76, 275085.53, 268674.48, 262188.75, 255627.47, 248989.76, 242274.73, 235481.48, 228609.1, 221656.67, 214623.25, 207507.91, 200309.68, 193027.6, 185660.7, 178207.99, 170668.46, 163041.1, 155324.91, 147518.82, 139621.81, 131632.82, 123550.76, 115374.56, 107103.11, 98735.32, 90270.06, 81706.19, 73042.56, 64278.01, 55411.38, 46441.45, 37367.05, 28186.94, 18899.89, 9504.67, 0.0];
+var D10_I=[1766.14, 1748.24, 1730.22, 1712.11, 1693.88, 1675.55, 1657.11, 1638.56, 1619.91, 1601.14, 1582.26, 1563.27, 1544.17, 1524.96, 1505.63, 1486.2, 1466.64, 1446.97, 1427.19, 1407.29, 1387.27, 1367.13, 1346.88, 1326.5, 1306.01, 1285.39, 1264.66, 1243.8, 1222.82, 1201.71, 1180.48, 1159.13, 1137.65, 1116.04, 1094.31, 1072.45, 1050.46, 1028.34, 1006.09, 983.71, 961.2, 938.55, 915.77, 892.86, 869.81, 846.63, 823.31, 799.86, 776.26, 752.53, 728.65, 704.64, 680.48, 656.19, 631.75, 607.16, 582.43, 557.56, 532.54, 507.37, 482.05, 456.59, 430.97, 405.2, 379.29, 353.22, 326.99, 300.61, 274.08, 247.39, 220.54, 193.54, 166.37, 139.05, 111.56, 83.92, 56.11, 28.13];
+var D10_B=[296958.45, 293898.99, 290821.52, 287725.94, 284612.13, 281479.99, 278329.41, 275160.28, 271972.49, 268765.94, 265540.51, 262296.09, 259032.58, 255749.84, 252447.79, 249126.29, 245785.24, 242424.52, 239044.01, 235643.61, 232223.18, 228782.62, 225321.8, 221840.61, 218338.92, 214816.62, 211273.59, 207709.69, 204124.81, 200518.83, 196891.62, 193243.06, 189573.02, 185881.37, 182167.98, 178432.74, 174675.51, 170896.15, 167094.55, 163270.57, 159424.07, 155554.93, 151663.01, 147748.18, 143810.3, 139849.24, 135864.86, 131857.02, 127825.59, 123770.43, 119691.39, 115588.34, 111461.13, 107309.62, 103133.68, 98933.15, 94707.89, 90457.75, 86182.6, 81882.28, 77556.64, 73205.53, 68828.81, 64426.32, 59997.92, 55543.44, 51062.74, 46555.66, 42022.05, 37461.75, 32874.6, 28260.44, 23619.12, 18950.48, 14254.35, 9530.58, 4778.99, 0.0];
 
 var GROUPS = [
   { name: "Lender A &middot; 100% Interest Forgiveness",
@@ -265,11 +284,11 @@ var GROUPS = [
     ]
   },
   { name: "Lender D &middot; Term Loan",
-    note: "<b>Approved up to $600,000, but currently capped at $300,000 while the PayPal loan is outstanding.</b> Premium and Regular term loans with 100% or 50% interest forgiveness on an early payoff, 1st position. The early-payoff all-in cost is added once the lender's amortization schedule is confirmed.",
+    note: "<b>Approved up to $600,000, but currently capped at $300,000 while the PayPal loan is outstanding.</b> Premium and Regular term loans with 100% or 50% interest forgiveness on an early payoff, 1st position.",
     offers: [
-      { tier:"Premium 100% IF", max:500000, factor:1.20, weekly:11538.47, nPay:52, term:12, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", capMax:300000, payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true },
-      { tier:"Premium 50% IF", max:400000, factor:1.27, weekly:13025.65, nPay:39, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", position:"1st", capMax:300000, payLabel:"Biweekly", payWord:"biweekly", per:"2wk", pending:true },
-      { tier:"Regular 100% IF", max:600000, factor:1.29, weekly:9923.09, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", position:"1st", capMax:300000, payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true }
+      { tier:"Premium 100% IF", max:300000, factor:1.20, weekly:6923.08, nPay:52, term:12, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", mk:[4,13,26,39], milestonePayoff:[280644.98,235034.95,163793.99,85670.83], iArr:D8_I, bArr:D8_B },
+      { tier:"Premium 50% IF", max:300000, factor:1.25, weekly:9615.38, nPay:39, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", position:"1st", payLabel:"Biweekly", payWord:"biweekly", per:"2wk", mk:[2,7,13,20], milestonePayoff:[321728.14,281659.91,232311.65,172866.76], iArr:D9_I, bArr:D9_B },
+      { tier:"Regular 100% IF", max:300000, factor:1.25, weekly:4807.69, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", mk:[4,13,26,39], milestonePayoff:[287725.94,259032.58,214816.62,167094.55], iArr:D10_I, bArr:D10_B }
     ]
   }
 ];
@@ -349,7 +368,8 @@ function allinRows(o){
   var m = model(o);
   return MILES.map(function(ms, i){
     var payoff = round2(o.milestonePayoff[i]*m.s);
-    var paidWk = round2(ms.k*m.weekly);
+    var k = (o.mk ? o.mk[i] : ms.k);
+    var paidWk = round2(k*m.weekly);
     var totalPaid = round2(paidWk + payoff);
     var allIn = round2(totalPaid - m.net);
     return { mo:ms.mo, totalPaid:totalPaid, allIn:allIn, pct: m.net? allIn/m.net : 0 };
@@ -425,27 +445,33 @@ function renderLOC(){
   document.getElementById("lenderBSched").innerHTML = html;
 }
 
-function renderLenderC(){
-  var g = GROUPS.filter(function(x){ return x.name.indexOf("Lender C")===0; })[0];
-  if(!g){ return; }
+function schedRowsHTML(o){
+  var m = model(o); var s = m.s;
+  var totalInt = round2(m.payback - m.adv);
+  var fgNote = (o.IFpct>=100)
+    ? 'With 100% interest forgiveness, the payoff to settle in full equals the remaining balance.'
+    : 'With '+o.IFpct+'% interest forgiveness, the payoff to settle in full is the remaining balance plus the un-forgiven '+(100-o.IFpct)+'% of the remaining interest.';
+  var html = '<h3 class="grp-head">Offer '+o.num+' &middot; '+(o.termLabel||(o.term+' months'))+'</h3>'
+    + '<div class="detail-recap" style="margin-bottom:12px;">Advance <b>'+money0(m.adv)+'</b> &middot; net <b>'+money0(m.net)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/'+(o.per||'wk')+' &middot; '+o.nPay+' '+(o.payWord||'weekly')+' payments. '+fgNote+'</div>'
+    + '<table class="prepay"><thead><tr><th>#</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Cumulative interest</th><th>Remaining balance</th><th>Payoff in full</th></tr></thead><tbody>';
+  var cum = 0;
+  for(var i=0;i<o.iArr.length;i++){
+    var intr = round2(o.iArr[i]*s);
+    cum = round2(cum + intr);
+    var prin = round2(m.weekly - intr);
+    var bal = round2(o.bArr[i]*s);
+    var remInt = round2(totalInt - cum);
+    var payoff = round2(bal + (1 - o.IFpct/100)*remInt);
+    html += '<tr><td>'+(i+1)+'</td><td>'+money0(m.weekly)+'</td><td>'+money0(intr)+'</td><td>'+money0(prin)+'</td><td>'+money0(cum)+'</td><td>'+money0(bal)+'</td><td class="po-payoff">'+money0(payoff)+'</td></tr>';
+  }
+  html += '</tbody></table>';
+  return html;
+}
+function renderSched(prefix, containerId){
+  var el = document.getElementById(containerId); if(!el){ return; }
   var html = "";
-  g.offers.forEach(function(o){
-    var m = model(o); var s = m.s;
-    html += '<h3 class="grp-head">Offer '+o.num+' &middot; '+o.term+' months</h3>'
-      + '<div class="detail-recap" style="margin-bottom:12px;">Advance <b>'+money0(m.adv)+'</b> &middot; net <b>'+money0(m.net)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/wk &middot; '+o.nPay+' weekly payments. With 100% prepay eligibility, the payoff to settle in full equals the remaining balance shown (all remaining interest is forgiven).</div>'
-      + '<table class="prepay"><thead><tr><th>Payment #</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Cumulative interest</th><th>Remaining balance / payoff</th></tr></thead><tbody>';
-    var cum = 0;
-    for(var i=0;i<o.iArr.length;i++){
-      cum += o.iArr[i];
-      var intr = round2(o.iArr[i]*s);
-      var prin = round2(m.weekly - intr);
-      var bal = round2(o.bArr[i]*s);
-      var cumS = round2(cum*s);
-      html += '<tr><td>'+(i+1)+'</td><td>'+money0(m.weekly)+'</td><td>'+money0(intr)+'</td><td>'+money0(prin)+'</td><td>'+money0(cumS)+'</td><td class="po-payoff">'+money0(bal)+'</td></tr>';
-    }
-    html += '</tbody></table>';
-  });
-  document.getElementById("lenderCSched").innerHTML = html;
+  GROUPS.forEach(function(g){ if(g.name.indexOf(prefix)!==0){ return; } g.offers.forEach(function(o){ if(o.iArr){ html += schedRowsHTML(o); } }); });
+  el.innerHTML = html;
 }
 
 function renderStips(){
@@ -533,29 +559,30 @@ function downloadPDF(){
     }
   });});
 
-  GROUPS.forEach(function(g){ if(g.name.indexOf("Lender C")!==0) return; g.offers.forEach(function(o){
+  GROUPS.forEach(function(g){ var LN=g.name.split(" &middot; ")[0]; g.offers.forEach(function(o){
+    if(!o.iArr) return;
     doc.addPage(); y=48;
-    var m=model(o); var s=m.s;
+    var m=model(o); var s=m.s; var totalInt=round2(m.payback-m.adv);
     doc.setFont("helvetica","bold"); doc.setFontSize(13); doc.setTextColor(20);
-    doc.text("Offer "+o.num+" — Lender C Term Loan, "+o.term+" months", L, y); y+=18;
+    doc.text("Offer "+o.num+" — "+LN+" Term Loan, "+(o.termLabel||(o.term+" months")), L, y); y+=18;
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-    doc.text("Advance "+money0(m.adv)+"   Net "+money0(m.net)+"   Payback "+money0(m.payback)+"   "+money(m.weekly)+"/wk   "+o.nPay+" weekly", L, y);
+    doc.text("Advance "+money0(m.adv)+"   Net "+money0(m.net)+"   Payback "+money0(m.payback)+"   "+money(m.weekly)+"/"+(o.per||"wk")+"   "+o.nPay+" "+(o.payWord||"weekly"), L, y);
     y+=10; doc.setTextColor(20); doc.setFontSize(11); doc.setFont("helvetica","bold");
-    doc.text("Amortization Schedule (payoff = remaining balance)", L, y); y+=16;
+    doc.text("Amortization Schedule"+(o.IFpct>=100?" (payoff = remaining balance)":" (payoff = balance + un-forgiven interest)"), L, y); y+=16;
     doc.setFontSize(9);
-    var c=[L, L+45, L+140, L+235, L+330, L+430];
+    var c=[L, L+34, L+118, L+200, L+282, L+372, L+462];
     function cHead(){ doc.setFont("helvetica","bold");
       doc.text("#",c[0],y); doc.text("Payment",c[1],y); doc.text("Interest",c[2],y);
-      doc.text("Principal",c[3],y); doc.text("Cum. int.",c[4],y); doc.text("Balance/payoff",c[5],y); y+=4;
+      doc.text("Principal",c[3],y); doc.text("Cum.int",c[4],y); doc.text("Balance",c[5],y); doc.text("Payoff",c[6],y); y+=4;
       doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12; doc.setFont("helvetica","normal"); }
     cHead();
     var cum=0;
     for(var i=0;i<o.iArr.length;i++){
-      cum+=o.iArr[i];
+      var intr=round2(o.iArr[i]*s); cum=round2(cum+intr);
       if(y>752){ doc.addPage(); y=48; cHead(); }
-      var intr=round2(o.iArr[i]*s), prin=round2(m.weekly-intr), bal=round2(o.bArr[i]*s), cumS=round2(cum*s);
+      var prin=round2(m.weekly-intr), bal=round2(o.bArr[i]*s), remInt=round2(totalInt-cum), payoff=round2(bal+(1-o.IFpct/100)*remInt);
       doc.text(String(i+1),c[0],y); doc.text(money0(m.weekly),c[1],y); doc.text(money0(intr),c[2],y);
-      doc.text(money0(prin),c[3],y); doc.text(money0(cumS),c[4],y); doc.text(money0(bal),c[5],y); y+=12;
+      doc.text(money0(prin),c[3],y); doc.text(money0(cum),c[4],y); doc.text(money0(bal),c[5],y); doc.text(money0(payoff),c[6],y); y+=12;
     }
   });});
 
@@ -570,7 +597,7 @@ function recompute(){
   var help=document.getElementById("amountHelp");
   if(r>600000){ help.textContent="Above the $600,000 maximum — both options shown at their caps."; help.className="amount-help warning"; }
   else { help.textContent="Adjustable — each option caps at its own maximum"; help.className="amount-help"; }
-  renderStips(); renderOffers(); renderAllin(); renderLOC(); renderLenderC();
+  renderStips(); renderOffers(); renderAllin(); renderLOC(); renderSched("Lender C","lenderCSched"); renderSched("Lender D","lenderDSched");
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
