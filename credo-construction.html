@@ -84,8 +84,8 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 }
 
 .edit-row{display:flex;align-items:center;justify-content:flex-end;gap:14px;}
-.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:23px;color:#FFC858;white-space:nowrap;display:inline-flex;align-items:center;text-shadow:0 1px 3px rgba(0,0,0,.35);animation:editpulse 1.2s ease-in-out infinite;}
-.edit-arrow{font-size:34px;margin-left:8px;line-height:1;animation:editnudge .9s ease-in-out infinite;}
+.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:30px;color:#FFC858;white-space:nowrap;display:inline-flex;align-items:center;text-shadow:0 1px 3px rgba(0,0,0,.35);animation:editpulse 1.2s ease-in-out infinite;}
+.edit-arrow{font-size:44px;margin-left:8px;line-height:1;animation:editnudge .9s ease-in-out infinite;}
 @keyframes editnudge{0%,100%{transform:translateX(0);}50%{transform:translateX(12px);}}
 @keyframes editpulse{0%,100%{opacity:.68;}50%{opacity:1;}}
 @media print{.edit-hint{display:none;}}
@@ -108,7 +108,11 @@ table.comp{font-size:12.5px;min-width:820px;}
 table.comp th,table.comp td{padding:9px 11px;white-space:nowrap;}
 table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-space:normal;min-width:210px;}
 .cmp-pct{display:block;color:var(--slate);font-weight:400;font-size:10px;margin-top:1px;}
+.cmp-pend{text-align:center !important;color:var(--slate);font-style:italic;font-weight:500;}
+.btn-sched{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:8px;padding:10px 18px;cursor:pointer;transition:background .15s,color .15s;}
+.btn-sched:hover{background:var(--navy);color:#fff;}
 @media(max-width:760px){.detail-grid{grid-template-columns:1fr;}}
+@media print{#fullSched{display:block !important;} .btn-sched{display:none;}}
 </style>
 </head>
 <body>
@@ -125,7 +129,7 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">Credo Construction, Inc.</h1>
-  <p class="cover-subtitle">Two lenders. <b>Lender A</b> offers a $600,000 / 18-month and a $450,000 / 12-month structure, each at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). <b>Lender B</b> is a $100,000 flex line of credit with a pay-now early-payoff schedule. <b>Lender C</b> offers a $200,000 term loan (15- or 12-month, next-day funding) that forgives all remaining interest on an early payoff. Adjust the requested amount and every figure updates live; each option caps at its own maximum.</p>
+  <p class="cover-subtitle">Two lenders. <b>Lender A</b> offers a $600,000 / 18-month and a $450,000 / 12-month structure, each at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). <b>Lender B</b> is a $100,000 flex line of credit with a pay-now early-payoff schedule. <b>Lender C</b> offers a $200,000 term loan (15- or 12-month, next-day funding) that forgives all remaining interest on an early payoff. <b>Lender D</b> adds Premium and Regular term loans up to $600,000 (100% or 50% interest forgiveness, 1st position). Adjust the requested amount and every figure updates live; each option caps at its own maximum.</p>
 
   <div class="rednote">
     <b>Why this line is sized at $100,000</b> — Lender B previously reviewed Credo Construction in 2025 and is taking a conservative approach here because recent revenue and bank balances are running below that prior year. This is not a decline: the lender is willing to revisit the line amount with added context on the recent numbers (seasonality, timing of receivables, one-time items). Updated financials that speak to the trend could support a larger line.
@@ -157,6 +161,20 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
     </ul>
   </div>
 
+  <div class="closing">
+    <h3>Lender D — Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Bank statements — payback months (can be done with Plaid)</li>
+      <li>Bank verification</li>
+      <li>Current P&amp;L + balance sheet (if over $350,000)</li>
+      <li>Driver's license</li>
+      <li>Merchant interview</li>
+      <li>Tax return 2024 (if over $450,000)</li>
+      <li>Tax return 2025</li>
+      <li>Voided check</li>
+    </ul>
+  </div>
+
   <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
     <span class="btn-hint">Plain PDF — offer summary, requirements, and the all-in cost tables.</span>
@@ -167,11 +185,18 @@ table.comp td.cmp-deal{text-align:left;font-weight:600;color:var(--navy);white-s
 
   <div id="allinWrap"></div>
 
-  <h2 class="section-title" style="page-break-before:always;">Lender B — Pay-Now Early Payoff Schedule</h2>
-  <div id="lenderBSched"></div>
+  <div class="actions" style="margin-top:14px;">
+    <button id="schedToggle" class="btn-sched">Show full amortization schedules &#9662;</button>
+    <span class="btn-hint">Week-by-week detail for every option. Hidden by default; always included in the PDF.</span>
+  </div>
 
-  <h2 class="section-title" style="page-break-before:always;">Lender C — Amortization Schedules</h2>
-  <div id="lenderCSched"></div>
+  <div id="fullSched" style="display:none;">
+    <h2 class="section-title" style="page-break-before:always;">Lender B — Pay-Now Early Payoff Schedule</h2>
+    <div id="lenderBSched"></div>
+
+    <h2 class="section-title" style="page-break-before:always;">Lender C — Amortization Schedules</h2>
+    <div id="lenderCSched"></div>
+  </div>
 
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. All-in cost figures scale with the requested amount and reflect paying the balance in full at the month shown, including the origination fee, all weekly payments made to that point, and the early-payoff balance; interest forgiveness is applied to the remaining interest at payoff. The Lender B flex line is a revolving line of credit; the pay-now schedule shows the cost to settle the line in full at each weekly point and is not a commitment by the lender to accept any early repurchase. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
@@ -234,6 +259,14 @@ var GROUPS = [
       { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.186, weekly:4561.5385, nPay:52, term:12, IFpct:100, origPct:0.025, origLabel:"2.5%",
         milestonePayoff:[186940.76, 156261.18, 108589.31, 56630.74], iArr:C12_I, bArr:C12_B }
     ]
+  },
+  { name: "Lender D &middot; Term Loan",
+    note: "A new lender option — Premium and Regular term loans with 100% or 50% interest forgiveness on an early payoff, 1st position. The early-payoff all-in cost is added once the lender's amortization schedule is confirmed.",
+    offers: [
+      { tier:"Premium 100% IF", max:500000, factor:1.20, weekly:11538.47, nPay:52, term:12, IFpct:100, origPct:0.03, origLabel:"3%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true },
+      { tier:"Premium 50% IF", max:400000, factor:1.27, weekly:13025.65, nPay:39, term:18, IFpct:50, origPct:0.025, origLabel:"2.5%", position:"1st", payLabel:"Biweekly", payWord:"biweekly", per:"2wk", pending:true },
+      { tier:"Regular 100% IF", max:600000, factor:1.29, weekly:9923.09, nPay:78, term:18, IFpct:100, origPct:0.04, origLabel:"4%", position:"1st", payLabel:"Weekly", payWord:"weekly", per:"wk", pending:true }
+    ]
   }
 ];
 var MILES = [{mo:1,k:4},{mo:3,k:13},{mo:6,k:26},{mo:9,k:39}];
@@ -295,9 +328,10 @@ function renderOffers(){
           + '<div class="kv-row"><span class="kv-label">'+amtLabel+'</span><span class="kv-val">'+money0(m.adv)+capTag+'</span></div>'
           + feeRows
           + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
-          + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
-          + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
+          + '<div class="kv-row kv-pay"><span class="kv-label">'+(o.payLabel||'Weekly')+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
+          + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+(o.payWord||'weekly')+'</span></div>'
           + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+termTxt+'</span></div>'
+          + (o.position ? '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">'+o.position+'</span></div>' : '')
           + lastRow
         + '</div></div>';
     });
@@ -319,6 +353,7 @@ function allinRows(o){
 
 function milestoneVals(o){
   var m = model(o);
+  if(o.pending){ return null; }
   if(o.isLOC){
     var idx=[3,12,25,35]; // week indices for 1 / 3 / 6 / 9 months (capped at the 36-week term)
     return idx.map(function(ix){
@@ -336,6 +371,7 @@ function renderAllin(){
     + '<th>Option</th><th>Advance</th><th>Net</th><th>Payback</th><th>Weekly</th>'
     + '<th>Paid off<br/>1 mo</th><th>Paid off<br/>3 mo</th><th>Paid off<br/>6 mo</th><th>Paid off<br/>9 mo</th>'
     + '</tr></thead><tbody>';
+  var anyPending = false;
   GROUPS.forEach(function(g){
     var LN = g.name.split(" &middot; ")[0];
     g.offers.forEach(function(o){
@@ -343,14 +379,21 @@ function renderAllin(){
       var term = o.isLOC ? "180d" : (o.term+"mo");
       var capTag = m.capped ? ' <span class="cap-badge">max '+money0(o.max)+'</span>' : '';
       html += '<tr><td class="cmp-deal">#'+o.num+' '+LN+' &middot; '+o.tier+' &middot; '+term+capTag+'</td>'
-        + '<td>'+money0(m.adv)+'</td><td>'+money0(m.net)+'</td><td>'+money0(m.payback)+'</td><td>'+money(m.weekly)+'</td>';
-      mv.forEach(function(v){
-        html += '<td class="po-payoff">'+money0(v.allIn)+'<span class="cmp-pct">'+pct1(v.pct)+'</span></td>';
-      });
+        + '<td>'+money0(m.adv)+'</td><td>'+money0(m.net)+'</td><td>'+money0(m.payback)+'</td>'
+        + '<td>'+money(m.weekly)+'<span class="cmp-pct">/'+(o.per||'wk')+'</span></td>';
+      if(mv){
+        mv.forEach(function(v){
+          html += '<td class="po-payoff">'+money0(v.allIn)+'<span class="cmp-pct">'+pct1(v.pct)+'</span></td>';
+        });
+      } else {
+        anyPending = true;
+        html += '<td class="cmp-pend" colspan="4">Schedule pending *</td>';
+      }
       html += '</tr>';
     });
   });
   html += '</tbody></table></div>';
+  if(anyPending){ html += '<p class="allin-intro" style="margin-top:6px;">* Lender D early-payoff all-in cost is added once the lender\'s amortization schedule is confirmed.</p>'; }
   document.getElementById("allinWrap").innerHTML = html;
 }
 
@@ -418,7 +461,7 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","bold");
   var cols=[L, L+170, L+270, L+370, L+460];
   doc.text("Option", cols[0], y); doc.text("Advance/Draw", cols[1], y); doc.text("Payback", cols[2], y);
-  doc.text("Weekly", cols[3], y); doc.text("Net Adv.", cols[4], y); y+=4;
+  doc.text("Payment", cols[3], y); doc.text("Net Adv.", cols[4], y); y+=4;
   doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12;
   doc.setFont("helvetica","normal");
   GROUPS.forEach(function(g){ var LN=g.name.split(" &middot; ")[0]; g.offers.forEach(function(o){
@@ -436,6 +479,7 @@ function downloadPDF(){
   stips.forEach(function(s){ doc.text("• "+s.replace(/&amp;/g,"&"), L+6, y); y+=13; });
 
   GROUPS.forEach(function(g){ if(g.isLOC) return; g.offers.forEach(function(o){
+    if(o.pending) return;
     doc.addPage(); y=48;
     var m=model(o); var rows=allinRows(o);
     doc.setFont("helvetica","bold"); doc.setFontSize(13);
@@ -528,6 +572,12 @@ document.getElementById("amount").addEventListener("blur", function(){
   var el=this; var v=parseFloat((el.value||"").replace(/[^0-9.]/g,"")); if(!isNaN(v)) el.value=v.toLocaleString("en-US");
 });
 document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
+document.getElementById("schedToggle").addEventListener("click", function(){
+  var el=document.getElementById("fullSched");
+  var open = el.style.display!=="none";
+  el.style.display = open ? "none" : "block";
+  this.innerHTML = (open ? "Show" : "Hide") + " full amortization schedules " + (open ? "▾" : "▴");
+});
 recompute();
 </script>
 <script>
