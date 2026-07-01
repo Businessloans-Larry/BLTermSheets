@@ -165,6 +165,9 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <h2 class="section-title" style="page-break-before:always;">Lender B — Pay-Now Early Payoff Schedule</h2>
   <div id="lenderBSched"></div>
 
+  <h2 class="section-title" style="page-break-before:always;">Lender C — Amortization Schedules</h2>
+  <div id="lenderCSched"></div>
+
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. All-in cost figures scale with the requested amount and reflect paying the balance in full at the month shown, including the origination fee, all weekly payments made to that point, and the early-payoff balance; interest forgiveness is applied to the remaining interest at payoff. The Lender B flex line is a revolving line of credit; the pay-now schedule shows the cost to settle the line in full at each weekly point and is not a commitment by the lender to accept any early repurchase. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
@@ -185,6 +188,11 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
      amortization (verified against their schedules) and scale by advance.
 */
 var STATE = { requested: 600000 };
+
+var C15_I=[1191.38,1176.32,1161.16,1145.92,1130.59,1115.16,1099.64,1084.04,1068.33,1052.54,1036.65,1020.66,1004.58,988.41,972.14,955.77,939.3,922.74,906.07,889.31,872.45,855.49,838.42,821.26,803.99,786.62,769.15,751.57,733.89,716.1,698.2,680.2,662.1,643.88,625.56,607.12,588.58,569.93,551.16,532.29,513.3,494.2,474.98,455.65,436.2,416.64,396.96,377.17,357.26,337.23,317.07,296.8,276.41,255.9,235.26,214.51,193.62,172.62,151.49,130.23,108.85,87.33,65.69,43.93,22.03];
+var C15_B=[197471.38,194927.69,192368.86,189794.78,187205.36,184600.52,181980.17,179344.2,176692.54,174025.08,171341.72,168642.39,165926.97,163195.38,160447.52,157683.28,154902.59,152105.32,149291.4,146460.71,143613.16,140748.65,137867.07,134968.33,132052.32,129118.94,126168.09,123199.66,120213.55,117209.64,114187.85,111148.05,108090.15,105014.03,101919.59,98806.71,95675.29,92525.22,89356.38,86168.67,82961.97,79736.16,76491.14,73226.79,69942.99,66639.64,63316.6,59973.77,56611.03,53228.25,49825.33,46402.13,42958.54,39494.44,36009.71,32504.21,28977.84,25430.46,21861.94,18272.17,14661.02,11028.35,7374.05,3697.97,0];
+var C12_I=[1329.09,1307.61,1285.99,1264.22,1242.31,1220.25,1198.05,1175.69,1153.19,1130.54,1107.74,1084.79,1061.69,1038.43,1015.02,991.45,967.72,943.84,919.8,895.6,871.24,846.71,822.03,797.17,772.16,746.98,721.63,696.11,670.42,644.56,618.53,592.33,565.95,539.4,512.67,485.76,458.68,431.41,403.97,376.34,348.53,320.53,292.34,263.97,235.41,206.66,177.72,148.59,119.27,89.75,60.03,30.11];
+var C12_B=[196767.56,193513.63,190238.08,186940.76,183621.53,180280.25,176916.75,173530.91,170122.57,166691.57,163237.78,159761.03,156261.18,152738.07,149191.55,145621.45,142027.64,138409.94,134768.2,131102.26,127411.96,123697.13,119957.62,116193.26,112403.88,108589.31,104749.4,100883.97,96992.85,93075.88,89132.87,85163.66,81168.08,77145.94,73097.07,69021.3,64918.44,60788.31,56630.74,52445.54,48232.53,43991.52,39722.32,35424.76,31098.63,26743.76,22359.95,17947.0,13504.73,9032.94,4531.43,0];
 
 var GROUPS = [
   { name: "Lender A &middot; 100% Interest Forgiveness",
@@ -214,12 +222,12 @@ var GROUPS = [
     ]
   },
   { name: "Lender C &middot; Term Loan (100% Prepay-Eligible)",
-    note: "A fast term loan — the full remaining interest is forgiven on an early payoff. Daily or weekly payments available (weekly shown); funds as soon as the next business day.",
+    note: "A fast term loan — the full remaining interest is forgiven on an early payoff (2.5% origination fee). Daily or weekly payments available (weekly shown); funds as soon as the next business day.",
     offers: [
-      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.233, weekly:3793.8462, nPay:65, term:15, IFpct:100, origPct:0,
-        milestonePayoff:[190005.45, 166532.71, 130077.87, 90368.79] },
-      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.188, weekly:4569.2308, nPay:52, term:12, IFpct:100, origPct:0,
-        milestonePayoff:[186963.17, 156322.75, 108676.26, 56699.84] }
+      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.209, weekly:3720.00, nPay:65, term:15, IFpct:100, origPct:0.025, origLabel:"2.5%",
+        milestonePayoff:[189794.78, 165926.97, 129118.94, 89356.38], iArr:C15_I, bArr:C15_B },
+      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.186, weekly:4561.5385, nPay:52, term:12, IFpct:100, origPct:0.025, origLabel:"2.5%",
+        milestonePayoff:[186940.76, 156261.18, 108589.31, 56630.74], iArr:C12_I, bArr:C12_B }
     ]
   }
 ];
@@ -355,6 +363,29 @@ function renderLOC(){
   document.getElementById("lenderBSched").innerHTML = html;
 }
 
+function renderLenderC(){
+  var g = GROUPS.filter(function(x){ return x.name.indexOf("Lender C")===0; })[0];
+  if(!g){ return; }
+  var html = "";
+  g.offers.forEach(function(o){
+    var m = model(o); var s = m.s;
+    html += '<h3 class="grp-head">Offer '+o.num+' &middot; '+o.term+' months</h3>'
+      + '<div class="detail-recap" style="margin-bottom:12px;">Advance <b>'+money0(m.adv)+'</b> &middot; net <b>'+money0(m.net)+'</b> &middot; payback <b>'+money0(m.payback)+'</b> &middot; '+money(m.weekly)+'/wk &middot; '+o.nPay+' weekly payments. With 100% prepay eligibility, the payoff to settle in full equals the remaining balance shown (all remaining interest is forgiven).</div>'
+      + '<table class="prepay"><thead><tr><th>Payment #</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Cumulative interest</th><th>Remaining balance / payoff</th></tr></thead><tbody>';
+    var cum = 0;
+    for(var i=0;i<o.iArr.length;i++){
+      cum += o.iArr[i];
+      var intr = round2(o.iArr[i]*s);
+      var prin = round2(m.weekly - intr);
+      var bal = round2(o.bArr[i]*s);
+      var cumS = round2(cum*s);
+      html += '<tr><td>'+(i+1)+'</td><td>'+money0(m.weekly)+'</td><td>'+money0(intr)+'</td><td>'+money0(prin)+'</td><td>'+money0(cumS)+'</td><td class="po-payoff">'+money0(bal)+'</td></tr>';
+    }
+    html += '</tbody></table>';
+  });
+  document.getElementById("lenderCSched").innerHTML = html;
+}
+
 function renderStips(){
   var list = STATE.requested <= 250000 ? STIPS_MIN : STIPS_FULL;
   document.getElementById("stipList").innerHTML = list.map(function(s){ return '<li>'+s+'</li>'; }).join("");
@@ -439,6 +470,32 @@ function downloadPDF(){
     }
   });});
 
+  GROUPS.forEach(function(g){ if(g.name.indexOf("Lender C")!==0) return; g.offers.forEach(function(o){
+    doc.addPage(); y=48;
+    var m=model(o); var s=m.s;
+    doc.setFont("helvetica","bold"); doc.setFontSize(13); doc.setTextColor(20);
+    doc.text("Offer "+o.num+" — Lender C Term Loan, "+o.term+" months", L, y); y+=18;
+    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
+    doc.text("Advance "+money0(m.adv)+"   Net "+money0(m.net)+"   Payback "+money0(m.payback)+"   "+money(m.weekly)+"/wk   "+o.nPay+" weekly", L, y);
+    y+=10; doc.setTextColor(20); doc.setFontSize(11); doc.setFont("helvetica","bold");
+    doc.text("Amortization Schedule (payoff = remaining balance)", L, y); y+=16;
+    doc.setFontSize(9);
+    var c=[L, L+45, L+140, L+235, L+330, L+430];
+    function cHead(){ doc.setFont("helvetica","bold");
+      doc.text("#",c[0],y); doc.text("Payment",c[1],y); doc.text("Interest",c[2],y);
+      doc.text("Principal",c[3],y); doc.text("Cum. int.",c[4],y); doc.text("Balance/payoff",c[5],y); y+=4;
+      doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12; doc.setFont("helvetica","normal"); }
+    cHead();
+    var cum=0;
+    for(var i=0;i<o.iArr.length;i++){
+      cum+=o.iArr[i];
+      if(y>752){ doc.addPage(); y=48; cHead(); }
+      var intr=round2(o.iArr[i]*s), prin=round2(m.weekly-intr), bal=round2(o.bArr[i]*s), cumS=round2(cum*s);
+      doc.text(String(i+1),c[0],y); doc.text(money0(m.weekly),c[1],y); doc.text(money0(intr),c[2],y);
+      doc.text(money0(prin),c[3],y); doc.text(money0(cumS),c[4],y); doc.text(money0(bal),c[5],y); y+=12;
+    }
+  });});
+
   doc.save("Credo-Construction-term-sheet.pdf");
 }
 
@@ -450,7 +507,7 @@ function recompute(){
   var help=document.getElementById("amountHelp");
   if(r>600000){ help.textContent="Above the $600,000 maximum — both options shown at their caps."; help.className="amount-help warning"; }
   else { help.textContent="Adjustable — each option caps at its own maximum"; help.className="amount-help"; }
-  renderStips(); renderOffers(); renderAllin(); renderLOC();
+  renderStips(); renderOffers(); renderAllin(); renderLOC(); renderLenderC();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
