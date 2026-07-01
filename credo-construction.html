@@ -120,7 +120,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="cover-eyebrow">Funding Offers</div>
   <h1 class="cover-title">Credo Construction, Inc.</h1>
-  <p class="cover-subtitle">Two lenders. <b>Lender A</b> offers a $600,000 / 18-month and a $450,000 / 12-month structure, each at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). <b>Lender B</b> is a $100,000 flex line of credit with a pay-now early-payoff schedule. Adjust the requested amount and every figure updates live; each option caps at its own maximum.</p>
+  <p class="cover-subtitle">Two lenders. <b>Lender A</b> offers a $600,000 / 18-month and a $450,000 / 12-month structure, each at 100% interest forgiveness (4% fee) or 50% interest forgiveness (1% fee). <b>Lender B</b> is a $100,000 flex line of credit with a pay-now early-payoff schedule. <b>Lender C</b> offers a $200,000 term loan (15- or 12-month, next-day funding) that forgives all remaining interest on an early payoff. Adjust the requested amount and every figure updates live; each option caps at its own maximum.</p>
 
   <div class="rednote">
     <b>Why this line is sized at $100,000</b> — Lender B previously reviewed Credo Construction in 2025 and is taking a conservative approach here because recent revenue and bank balances are running below that prior year. This is not a decline: the lender is willing to revisit the line amount with added context on the recent numbers (seasonality, timing of receivables, one-time items). Updated financials that speak to the trend could support a larger line.
@@ -142,6 +142,14 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     <h3>Lender A — Stipulations / Closing Requirements</h3>
     <p class="stip-note">At <b>$250,000 or less</b>, only the signed agreement, photo ID, and voided check are required — the remaining items below are waived.</p>
     <ul id="stipList"></ul>
+  </div>
+
+  <div class="closing">
+    <h3>Lender C — Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>A 5-minute phone call to confirm the details</li>
+      <li>Funds as soon as the next business day</li>
+    </ul>
   </div>
 
   <div class="actions">
@@ -204,6 +212,15 @@ var GROUPS = [
       { tier:"Flex line of credit", isLOC:true, max:100000, factor:1.38, weekly:3833.33, nPay:36, termLabel:"180 business days", IFpct:null, origPct:0, maxSavings100:36944.44,
         costCap:[1055.56,2111.11,3166.67,4222.22,12597.22,13416.67,14236.11,15055.56,15875.00,16694.44,17513.89,18333.33,19152.78,19972.22,20791.67,21611.11,22430.56,23250.00,24069.44,24888.89,25708.33,26527.78,27347.22,28166.67,28986.11,29805.56,30625.00,31444.44,32263.89,33083.33,33902.78,34722.22,35541.67,36361.11,37180.56,38000.00] }
     ]
+  },
+  { name: "Lender C &middot; Term Loan (100% Prepay-Eligible)",
+    note: "A fast term loan — the full remaining interest is forgiven on an early payoff. Daily or weekly payments available (weekly shown); funds as soon as the next business day.",
+    offers: [
+      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.233, weekly:3793.8462, nPay:65, term:15, IFpct:100, origPct:0,
+        milestonePayoff:[190005.45, 166532.71, 130077.87, 90368.79] },
+      { tier:"100% prepay", ifShort:"prepay", ifLabel:"Prepayment benefit", max:200000, factor:1.188, weekly:4569.2308, nPay:52, term:12, IFpct:100, origPct:0,
+        milestonePayoff:[186963.17, 156322.75, 108676.26, 56699.84] }
+    ]
   }
 ];
 var MILES = [{mo:1,k:4},{mo:3,k:13},{mo:6,k:26},{mo:9,k:39}];
@@ -257,7 +274,7 @@ function renderOffers(){
           + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
         : '';
       var lastRow = (o.IFpct!=null)
-        ? '<div class="kv-row"><span class="kv-label">Interest forgiveness</span><span class="kv-val">'+o.IFpct+'%</span></div>'
+        ? '<div class="kv-row"><span class="kv-label">'+(o.ifLabel||'Interest forgiveness')+'</span><span class="kv-val">'+o.IFpct+'%</span></div>'
         : '<div class="kv-row"><span class="kv-label">Max early-payoff savings</span><span class="kv-val">'+money0(o.maxSavings100*m.s)+'</span></div>';
       html += '<div class="offer-card">'
         + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+termTxt+'</div><div class="offer-sub">'+o.tier+subFee+' &middot; weekly</div></div>'
@@ -288,7 +305,7 @@ function allinRows(o){
 }
 
 function renderAllin(){
-  var html = '<h2 class="section-title">Lender A — All-In Cost if Paid Off Early</h2>'
+  var html = '<h2 class="section-title">All-In Cost if Paid Off Early</h2>'
     + '<p class="allin-intro">What this funding costs in total if the balance is paid in full at 1, 3, 6, or 9 months — '
     + 'including the origination fee, the weekly payments made to that point, and the early-payoff balance. '
     + '<b>Total paid</b> is the cash sent to the lender; <b>all-in cost</b> is that total minus the net advance you received.</p>';
@@ -359,10 +376,10 @@ function downloadPDF(){
   doc.text("Weekly", cols[3], y); doc.text("Net Adv.", cols[4], y); y+=4;
   doc.setDrawColor(180); doc.line(L,y,L+W,y); y+=12;
   doc.setFont("helvetica","normal");
-  GROUPS.forEach(function(g){ g.offers.forEach(function(o){
+  GROUPS.forEach(function(g){ var LN=g.name.split(" &middot; ")[0]; g.offers.forEach(function(o){
     var m=model(o);
-    var lbl = (o.IFpct!=null) ? ("#"+o.num+" Lender A "+o.IFpct+"% IF, "+o.term+"mo") : ("#"+o.num+" Lender B Flex LOC, 180d");
-    doc.text(lbl, cols[0], y);
+    var desc = o.isLOC ? "Flex LOC, 180d" : (o.IFpct+"% "+(o.ifShort||"IF")+", "+o.term+"mo");
+    doc.text("#"+o.num+" "+LN+" "+desc, cols[0], y);
     doc.text(money0(m.adv), cols[1], y); doc.text(money0(m.payback), cols[2], y);
     doc.text(money(m.weekly), cols[3], y); doc.text(money0(m.net), cols[4], y); y+=14;
   });});
