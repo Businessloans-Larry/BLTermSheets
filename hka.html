@@ -117,17 +117,6 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     </div>
   </div>
 
-  <div class="closing">
-    <h3>Closing Requirements</h3>
-    <ul>
-      <li>Signed funding agreement</li>
-      <li>Driver's License</li>
-      <li>Voided check &amp; bank verification</li>
-      <li>Most recent business bank statements</li>
-      <li>Proof of ownership</li>
-    </ul>
-  </div>
-
   <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
     <span class="btn-hint">Plain PDF — offer summary for each option.</span>
@@ -139,7 +128,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   <div id="prepayWrap"></div>
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the applicable lender's ISO agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the day range shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the applicable lender's ISO agreement. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the day range shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -171,9 +160,9 @@ var MASTER_MAX = 4000000;
 var STATE = { requested: 4000000 };
 
 var OFFERS = [
-  { name:"Lender A", advance:2500000, factor:1.32, weekly:75000, nPay:"44", term:"44", termLabel:"44-Week", origPct:0.04, origLabel:"4%", processing:0, position:"3rd" },
-  { name:"Lender B", advance:4000000, factor:1.36, weekly:160000, nPay:"34", term:"34", termLabel:"34-Week (Blended)", origPct:0.04, origLabel:"4%", processing:0, position:"3rd" },
-  { name:"Lender C", advance:2500000, factor:1.29, weekly:80625, nPay:"40", term:"40", termLabel:"40-Week", origPct:0.025, origLabel:"2.5%", processing:0, position:"3rd" }
+  { name:"Lender A", advance:2500000, factor:1.32, weekly:75000, nPay:"44", term:"44", termLabel:"44-Week", origPct:0.04, origLabel:"4%", processing:0 },
+  { name:"Lender B", advance:4000000, factor:1.36, weekly:160000, nPay:"34", term:"34", termLabel:"34-Week (Blended)", origPct:0.04, origLabel:"4%", processing:0 },
+  { name:"Lender C", advance:2500000, factor:1.29, weekly:80625, nPay:"40", term:"40", termLabel:"40-Week", origPct:0.025, origLabel:"2.5%", processing:0 }
 ];
 
 /* number offers in array order — shown in each card's title */
@@ -199,7 +188,7 @@ function renderOffers(){
     var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
     var procRow = o.processing ? '<div class="kv-row kv-fee"><span class="kv-label">Processing fee</span><span class="kv-val">'+money(o.processing)+'</span></div>' : '';
     return '<div class="offer-card">'
-      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+'</div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; weekly</div></div>'
+      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+'</div><div class="offer-sub">'+o.name+' &middot; weekly</div></div>'
       + '<div class="offer-card-body">'
         + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
         + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
@@ -209,7 +198,6 @@ function renderOffers(){
         + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
         + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' weeks</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">'+o.position+'</span></div>'
       + '</div></div>';
   }).join("");
 }
@@ -255,15 +243,9 @@ function downloadPDF(){
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" weeks"]);
-    rows.push(["Position", o.position]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
-  y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
-  doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Closing requirements:", L, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Signed funding agreement","Driver's License","Voided check & bank verification","Most recent business bank statements","Proof of ownership"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   OFFERS.forEach(function(o){
     if(!o.prepay) return;
     var m = model(o); var p = o.prepay; var s = m.s;
