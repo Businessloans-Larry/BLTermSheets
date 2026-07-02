@@ -18,7 +18,6 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .cover-header-meta strong{color:var(--navy);font-size:13px;letter-spacing:.04em;}
 .cover-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-d);font-weight:700;margin-bottom:6px;}
 .cover-title{color:var(--navy);font-size:32px;line-height:1.05;margin:0 0 6px 0;}
-.cover-subtitle{font-size:14px;color:var(--slate);margin:0 0 18px 0;max-width:860px;}
 .borrower-bar{background:var(--navy);color:#fff;padding:18px 24px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:24px;flex-wrap:wrap;}
 .borrower-bar-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:5px;}
 .borrower-bar-name{font-family:'DM Serif Display',Georgia,serif;font-size:21px;line-height:1.15;}
@@ -29,10 +28,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .amount-input{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--green-d);background:transparent;border:none;outline:none;width:160px;text-align:left;}
 .amount-help{font-size:10.5px;color:rgba(255,255,255,.65);margin-top:6px;}
 .amount-help.warning{color:var(--gold);font-weight:600;}
-.edit-row{display:flex;align-items:center;justify-content:flex-end;gap:12px;}
-.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:var(--gold);white-space:nowrap;display:inline-flex;align-items:center;}
-.edit-arrow{font-size:26px;margin-left:6px;animation:nudge 1.05s ease-in-out infinite;}
-@keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(8px);}}
+.edit-row{display:flex;align-items:center;justify-content:flex-end;gap:14px;}
+.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:30px;color:var(--gold);white-space:nowrap;display:inline-flex;align-items:center;text-shadow:0 1px 3px rgba(0,0,0,.35);animation:editpulse 1.2s ease-in-out infinite;}
+.edit-arrow{font-size:44px;margin-left:8px;line-height:1;animation:editnudge .9s ease-in-out infinite;}
+@keyframes editnudge{0%,100%{transform:translateX(0);}50%{transform:translateX(12px);}}
+@keyframes editpulse{0%,100%{opacity:.68;}50%{opacity:1;}}
 @media print{.edit-hint{display:none;}}
 .group-title{color:var(--navy);font-size:22px;margin:24px 0 4px;}
 .group-note{font-size:12px;color:var(--slate);margin:0 0 14px;}
@@ -147,7 +147,6 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   </header>
 
   <div class="cover-eyebrow">Funding Offers</div>
-  <p class="cover-subtitle">Four interest-forgiveness funding options from Lender A — grouped by 50% and 100% early-payoff forgiveness, on 18- and 21-month terms. Adjust the requested amount and every figure updates live. Your current 24-month offer is shown lower down for comparison.</p>
 
   <div class="borrower-bar">
     <div>
