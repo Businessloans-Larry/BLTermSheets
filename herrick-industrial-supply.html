@@ -42,7 +42,13 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .single-wrap{max-width:560px;}
 .offers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:12px;max-width:none;}
 @media(max-width:520px){.offers-grid{grid-template-columns:1fr;}}
-.grid-note{font-size:11.5px;color:var(--slate);max-width:820px;margin:12px 0 0;line-height:1.55;}
+.grid-note{font-size:11.5px;color:var(--slate);max-width:820px;margin:12px 0 18px;line-height:1.55;}
+.offer-group{margin-top:26px;}
+.offer-group:first-of-type{margin-top:6px;}
+.group-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;border-bottom:2px solid var(--line);padding-bottom:7px;margin:0 0 14px;}
+.group-title{font-family:'DM Serif Display',Georgia,serif;color:var(--navy);font-size:21px;margin:0;}
+.group-tag{font-size:11.5px;color:var(--slate);}
+.offer-card.g-if100 .offer-card-header{background:linear-gradient(135deg,#036B39 0%,#00A452 100%);}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card-header{color:#fff;padding:10px 13px;background:linear-gradient(135deg,#002F68 0%,#1A2763 100%);}
 .offer-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;line-height:1.12;}
@@ -133,7 +139,7 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <h2 class="section-title">Funding Offers</h2>
   <div class="offers-grid" id="offerWrap"></div>
-  <p class="grid-note">All eleven offers are Term Loans in 1st position, up to a $300,000 advance. Collection is available <b>daily or weekly</b> — weekly payments are shown. A higher <b>early-payoff</b> percentage means more of the remaining interest is forgiven if you pay the balance off early.</p>
+  <p class="grid-note">All eleven offers are Term Loans in 1st position, up to a $300,000 advance, grouped below by <b>early-payoff (interest-forgiveness) eligibility</b>. An origination fee is deducted from the amount deposited — <b>4%</b> on the 24-month options, <b>2.5%</b> on all others. Collection is available <b>daily or weekly</b>; weekly payments are shown.</p>
 
   <div id="prepayWrap"></div>
 
@@ -170,25 +176,34 @@ var MASTER_MAX = 300000;
 var ADV_MAX = 300000;
 var STATE = { requested: 300000 };
 
-/* All offers: OnDeck Term Loan, $300,000 max, 1st position. factor = internal sell rate
-   (NEVER displayed); payback = advance x factor; weekly = payback / nPay.
-   prepay = early-payoff interest-forgiveness eligibility (%). */
-var OFFERS = [
-  { termLabel:"24-Month", term:24, factor:1.265, prepay:25,  nPay:104, position:"1st" },
-  { termLabel:"24-Month", term:24, factor:1.297, prepay:100, nPay:104, position:"1st" },
-  { termLabel:"18-Month", term:18, factor:1.199, prepay:25,  nPay:78,  position:"1st" },
-  { termLabel:"18-Month", term:18, factor:1.223, prepay:100, nPay:78,  position:"1st" },
-  { termLabel:"15-Month", term:15, factor:1.167, prepay:25,  nPay:65,  position:"1st" },
-  { termLabel:"15-Month", term:15, factor:1.188, prepay:100, nPay:65,  position:"1st" },
-  { termLabel:"12-Month", term:12, factor:1.134, prepay:25,  nPay:52,  position:"1st" },
-  { termLabel:"12-Month", term:12, factor:1.151, prepay:100, nPay:52,  position:"1st" },
-  { termLabel:"9-Month",  term:9,  factor:1.101, prepay:25,  nPay:39,  position:"1st" },
-  { termLabel:"9-Month",  term:9,  factor:1.114, prepay:100, nPay:39,  position:"1st" },
-  { termLabel:"6-Month",  term:6,  factor:1.1,   prepay:25,  nPay:26,  position:"1st" }
+/* OnDeck Term Loan, $300,000 max, 1st position, split into two early-payoff (interest-
+   forgiveness / "IF") categories. factor = internal sell rate (NEVER displayed);
+   payback = advance x factor; weekly = payback / nPay; origination fee is deducted from
+   the deposited amount (4% on the 24-month options, 2.5% on all others). */
+var GROUPS = [
+  { name:"25% Interest Forgiveness", cls:"g-if25",
+    note:"Pay off early and 25% of the remaining interest is forgiven",
+    offers:[
+      { termLabel:"24-Month", term:24, factor:1.265, nPay:104, origPct:0.04,  origLabel:"4%",   position:"1st" },
+      { termLabel:"18-Month", term:18, factor:1.199, nPay:78,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"15-Month", term:15, factor:1.167, nPay:65,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"12-Month", term:12, factor:1.134, nPay:52,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"9-Month",  term:9,  factor:1.101, nPay:39,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"6-Month",  term:6,  factor:1.1,   nPay:26,  origPct:0.025, origLabel:"2.5%", position:"1st" }
+    ]},
+  { name:"100% Interest Forgiveness", cls:"g-if100",
+    note:"Pay off early and 100% of the remaining interest is forgiven — principal only",
+    offers:[
+      { termLabel:"24-Month", term:24, factor:1.297, nPay:104, origPct:0.04,  origLabel:"4%",   position:"1st" },
+      { termLabel:"18-Month", term:18, factor:1.223, nPay:78,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"15-Month", term:15, factor:1.188, nPay:65,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"12-Month", term:12, factor:1.151, nPay:52,  origPct:0.025, origLabel:"2.5%", position:"1st" },
+      { termLabel:"9-Month",  term:9,  factor:1.114, nPay:39,  origPct:0.025, origLabel:"2.5%", position:"1st" }
+    ]}
 ];
 
-/* number offers in array order — shown in each card's title */
-(function(){var n=0;OFFERS.forEach(function(o){o.num=++n;});})();
+/* number offers across all groups in array order — shown in each card's title */
+(function(){var n=0;GROUPS.forEach(function(g){g.offers.forEach(function(o){o.num=++n;});});})();
 
 function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
 function money(x){ return "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -196,24 +211,32 @@ function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); 
 
 function model(o){
   var adv = Math.min(STATE.requested, ADV_MAX); if(adv < 0) adv = 0;
+  var fee = round2(adv * o.origPct);
   var payback = round2(adv * o.factor);
   return { advance:adv, capped:STATE.requested > ADV_MAX,
-    payback:payback, weekly:round2(payback / o.nPay) };
+    fee:fee, net:round2(adv - fee), payback:payback, weekly:round2(payback / o.nPay) };
+}
+
+function offerCard(o, cls){
+  var m = model(o);
+  var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
+  return '<div class="offer-card '+cls+'">'
+    + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+'</div><div class="offer-sub">Term Loan &middot; '+o.position+' Position</div></div>'
+    + '<div class="offer-card-body">'
+      + '<div class="kv-row"><span class="kv-label">Advance</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
+      + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
+      + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
+      + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
+      + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
+      + '<div class="kv-row"><span class="kv-label">Payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
+    + '</div></div>';
 }
 
 function renderOffers(){
-  document.getElementById("offerWrap").innerHTML = OFFERS.map(function(o){
-    var m = model(o);
-    var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
-    return '<div class="offer-card">'
-      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+'</div><div class="offer-sub">Term Loan &middot; '+o.position+' Position</div></div>'
-      + '<div class="offer-card-body">'
-        + '<div class="kv-row"><span class="kv-label">Advance</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Total payback</span><span class="kv-val">'+money0(m.payback)+'</span></div>'
-        + '<div class="kv-row kv-pay"><span class="kv-label">Weekly payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Payments</span><span class="kv-val">'+o.nPay+' weekly</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Early payoff</span><span class="kv-val">'+o.prepay+'% interest forgiven</span></div>'
-      + '</div></div>';
+  document.getElementById("offerWrap").innerHTML = GROUPS.map(function(g){
+    var cards = g.offers.map(function(o){ return offerCard(o, g.cls); }).join("");
+    return '<div class="offer-group"><div class="group-head"><h3 class="group-title">'+g.name+'</h3>'
+      + '<span class="group-tag">'+g.note+'</span></div><div class="offers-grid">'+cards+'</div></div>';
   }).join("");
 }
 
@@ -232,30 +255,39 @@ function downloadPDF(){
   doc.text("Funding Offers — Herrick Industrial Supply Co Inc", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
   doc.text("BusinessLoans.com     Prepared July 7, 2026 at 10:50 AM EDT     Requested "+money0(STATE.requested), L, y); y+=26;
-  var cols=[{h:"Offer",x:L,a:"left"},{h:"Term",x:130,a:"left"},{h:"Advance",x:300,a:"right"},{h:"Total Payback",x:400,a:"right"},{h:"Weekly",x:478,a:"right"},{h:"Early Payoff",x:R,a:"right"}];
-  doc.setFont("helvetica","bold"); doc.setFontSize(9.5); doc.setTextColor(20);
-  cols.forEach(function(c){ doc.text(c.h,c.x,y,{align:c.a}); });
-  y+=5; doc.setDrawColor(150); doc.line(L,y,R,y); y+=15;
-  doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-  OFFERS.forEach(function(o){
-    var m=model(o);
-    if(y>720){ doc.addPage(); y=60; }
-    doc.text("Offer "+o.num, L, y);
-    doc.text(o.termLabel, 130, y);
-    doc.text(money0(m.advance), 300, y, {align:"right"});
-    doc.text(money0(m.payback), 400, y, {align:"right"});
-    doc.text(money(m.weekly), 478, y, {align:"right"});
-    doc.text(o.prepay+"% forgiven", R, y, {align:"right"});
-    y+=16;
+  var cols=[{h:"Offer",x:L,a:"left"},{h:"Term",x:150,a:"left"},{h:"Orig. Fee",x:300,a:"right"},{h:"Net Adv.",x:388,a:"right"},{h:"Total Payback",x:478,a:"right"},{h:"Weekly",x:R,a:"right"}];
+  GROUPS.forEach(function(g){
+    if(y>680){ doc.addPage(); y=60; }
+    doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(0,47,104);
+    doc.text(g.name, L, y); y+=13;
+    doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(110);
+    doc.text(g.note, L, y); y+=10;
+    doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+    cols.forEach(function(c){ doc.text(c.h,c.x,y,{align:c.a}); });
+    y+=4; doc.setDrawColor(150); doc.line(L,y,R,y); y+=14;
+    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
+    g.offers.forEach(function(o){
+      var m=model(o);
+      if(y>730){ doc.addPage(); y=60; }
+      doc.text("Offer "+o.num, L, y);
+      doc.text(o.termLabel, 150, y);
+      doc.text(money0(m.fee)+" ("+o.origLabel+")", 300, y, {align:"right"});
+      doc.text(money0(m.net), 388, y, {align:"right"});
+      doc.text(money0(m.payback), 478, y, {align:"right"});
+      doc.text(money(m.weekly), R, y, {align:"right"});
+      y+=16;
+    });
+    y+=12;
   });
-  y+=10; doc.setDrawColor(205); doc.line(L,y,R,y); y+=18;
+  if(y>690){ doc.addPage(); y=60; }
+  doc.setDrawColor(205); doc.line(L,y,R,y); y+=18;
   doc.setFont("helvetica","bold"); doc.setFontSize(10); doc.setTextColor(20);
   doc.text("Closing Requirements", L, y); y+=14;
   doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
   ["Voided business check","5-minute online closing — funds deposited same day"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=13; });
   y+=8; doc.setFontSize(8); doc.setTextColor(110);
-  ["All offers are Term Loans, 1st position, $300,000 maximum. Collection available daily or weekly; weekly payments shown.",
-   "Early-payoff percentage is the share of remaining interest forgiven if the balance is paid in full early. Amounts reflect the requested amount at the top of the sheet. Illustration only — not a commitment to lend."
+  ["All offers are Term Loans, 1st position, $300,000 maximum. Origination fee (deducted from the amount deposited) is 4% on the 24-month options and 2.5% on all others. Collection available daily or weekly; weekly payments shown.",
+   "Interest Forgiveness is the share of remaining interest waived if the balance is paid in full early. Amounts reflect the requested amount at the top of the sheet. Illustration only — not a commitment to lend."
   ].forEach(function(t){ var lines=doc.splitTextToSize(t, R-L); lines.forEach(function(ln){ if(y>772){doc.addPage(); y=60;} doc.text(ln,L,y); y+=11; }); y+=3; });
   doc.save("herrick-industrial-supply-offers.pdf");
 }
