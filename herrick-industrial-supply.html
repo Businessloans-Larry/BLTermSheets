@@ -49,6 +49,20 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .group-title{font-family:'DM Serif Display',Georgia,serif;color:var(--navy);font-size:21px;margin:0;}
 .group-tag{font-size:11.5px;color:var(--slate);}
 .offer-card.g-if100 .offer-card-header{background:linear-gradient(135deg,#036B39 0%,#00A452 100%);}
+.compare-section{margin-top:36px;}
+table.compare{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;border:1px solid var(--line);border-radius:10px;overflow:hidden;max-width:860px;}
+table.compare th,table.compare td{padding:9px 14px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;}
+table.compare th:first-child,table.compare td:first-child{text-align:left;}
+table.compare thead th{color:#fff;font-weight:600;font-size:11.5px;letter-spacing:.02em;}
+table.compare thead th.c25{background:var(--navy);}
+table.compare thead th.c100{background:#036B39;}
+table.compare tbody tr:nth-child(even){background:var(--bg);}
+table.compare tbody tr:last-child td{border-bottom:none;}
+table.compare td.term{font-weight:600;color:var(--navy);}
+table.compare td.v25{font-weight:600;color:var(--navy);}
+table.compare td.v100{font-weight:600;color:var(--green-d);}
+table.compare .gs{border-left:2px solid #cfd6e0;}
+@media print{.compare-section{page-break-before:always;} table.compare tr{page-break-inside:avoid;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card-header{color:#fff;padding:10px 13px;background:linear-gradient(135deg,#002F68 0%,#1A2763 100%);}
 .offer-term{font-family:'DM Serif Display',Georgia,serif;font-size:16px;line-height:1.12;}
@@ -138,10 +152,11 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   </div>
 
   <h2 class="section-title">Funding Offers</h2>
-  <div class="offers-grid" id="offerWrap"></div>
+  <div id="offerWrap"></div>
   <p class="grid-note">All eleven offers are Term Loans in 1st position, up to a $300,000 advance, grouped below by <b>early-payoff (interest-forgiveness) eligibility</b>. An origination fee is deducted from the amount deposited — <b>4%</b> on the 24-month options, <b>2.5%</b> on all others. Collection is available <b>daily or weekly</b>; weekly payments are shown.</p>
 
   <div id="prepayWrap"></div>
+  <div id="compareWrap"></div>
 
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the ISO agreement with Lender A and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the day range shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
@@ -247,6 +262,30 @@ function renderPrepay(){
   var el = document.getElementById("prepayWrap"); if(el) el.innerHTML = "";
 }
 
+function renderCompare(){
+  var g25 = GROUPS[0].offers, g100 = GROUPS[1].offers;
+  var by100 = {}; g100.forEach(function(o){ by100[o.term] = o; });
+  var rows = g25.map(function(o){
+    var a = model(o);
+    var ob = by100[o.term]; var b = ob ? model(ob) : null;
+    return '<tr><td class="term">'+o.termLabel+'</td>'
+      + '<td class="v25">'+money0(a.payback)+'</td>'
+      + '<td>'+money(a.weekly)+'</td>'
+      + '<td class="v100 gs">'+(b ? money0(b.payback) : "&mdash;")+'</td>'
+      + '<td>'+(b ? money(b.weekly) : "&mdash;")+'</td></tr>';
+  }).join("");
+  document.getElementById("compareWrap").innerHTML =
+      '<div class="compare-section">'
+    + '<div class="prepay-head"><h2 class="prepay-title">25% vs 100% Interest Forgiveness &mdash; Side by Side</h2></div>'
+    + '<div class="prepay-recap">At each term the advance and origination fee are identical &mdash; only the <b>total payback</b> and <b>weekly payment</b> change between the two early-payoff options. Figures reflect the requested amount above.</div>'
+    + '<table class="compare"><thead>'
+    + '<tr><th rowspan="2">Term</th><th colspan="2" class="c25">25% Interest Forgiveness</th><th colspan="2" class="c100">100% Interest Forgiveness</th></tr>'
+    + '<tr><th class="c25">Total Payback</th><th class="c25">Weekly</th><th class="c100 gs">Total Payback</th><th class="c100">Weekly</th></tr>'
+    + '</thead><tbody>'+rows+'</tbody></table>'
+    + '<p class="grid-note" style="margin-top:10px;">The 6-Month option is offered at 25% interest forgiveness only.</p>'
+    + '</div>';
+}
+
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
@@ -301,7 +340,7 @@ function recompute(){
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $300,000 maximum" : "Adjustable — up to the $300,000 maximum";
-  renderOffers(); renderPrepay();
+  renderOffers(); renderPrepay(); renderCompare();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
