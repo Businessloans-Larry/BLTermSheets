@@ -42,6 +42,10 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .single-wrap{max-width:560px;}
 .offers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:900px;}
 @media(max-width:760px){.offers-grid{grid-template-columns:1fr;}}
+.lender-cols{display:grid;gap:18px;align-items:start;}
+.lender-col{min-width:0;display:flex;flex-direction:column;gap:12px;}
+.lender-col .lender-head{margin-top:0;}
+@media(max-width:820px){.lender-cols{grid-template-columns:1fr !important;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card-header{color:#fff;padding:14px 18px;background:linear-gradient(135deg,#002F68 0%,#1A2763 100%);}
 .offer-term{font-family:'DM Serif Display',Georgia,serif;font-size:20px;line-height:1.1;}
@@ -301,11 +305,13 @@ function renderOffers(){
       return '<div class="lender-group">'+head+note+chart(g)+'</div>';
     }).join("");
   } else {
-    document.getElementById("offerWrap").innerHTML = order.map(function(g){
+    var cols = order.map(function(g){
       var head = showHead ? '<h2 class="lender-head">'+g.name+'</h2>' : '';
       var note = LENDER_NOTES[g.name] ? '<div class="lender-note">'+LENDER_NOTES[g.name]+'</div>' : '';
-      return '<div class="lender-group">'+head+note+'<div class="offers-grid">'+g.offers.map(card).join("")+'</div></div>';
+      return '<div class="lender-col">'+head+note+g.offers.map(card).join("")+'</div>';
     }).join("");
+    document.getElementById("offerWrap").innerHTML =
+      '<div class="lender-cols" style="grid-template-columns:repeat('+order.length+',minmax(0,1fr))">'+cols+'</div>';
   }
 }
 
