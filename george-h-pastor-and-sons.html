@@ -253,7 +253,7 @@ function renderOffers(){
     var fgRow = o.forgive ? '<div class="kv-row"><span class="kv-label">Early-payoff interest forgiveness</span><span class="kv-val">'+o.forgive+'</span></div>' : '';
     var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
     return '<div class="offer-card">'
-      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+'</div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
+      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+'</div><div class="offer-sub">'+o.position+' Position &middot; '+fw+'</div></div>'
       + '<div class="offer-card-body">'
         + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
         + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
@@ -297,7 +297,11 @@ function renderOffers(){
       return '<div class="lender-group">'+head+note+chart(g)+'</div>';
     }).join("");
   } else {
-    document.getElementById("offerWrap").innerHTML = '<div class="offers-grid">'+OFFERS.map(card).join("")+'</div>';
+    document.getElementById("offerWrap").innerHTML = order.map(function(g){
+      var head = showHead ? '<h2 class="lender-head">'+g.name+'</h2>' : '';
+      var note = LENDER_NOTES[g.name] ? '<div class="lender-note">'+LENDER_NOTES[g.name]+'</div>' : '';
+      return '<div class="lender-group">'+head+note+'<div class="offers-grid">'+g.offers.map(card).join("")+'</div></div>';
+    }).join("");
   }
 }
 
