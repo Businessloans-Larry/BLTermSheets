@@ -23,10 +23,10 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .borrower-bar-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:5px;}
 .borrower-bar-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;line-height:1.15;}
 .borrower-bar-funding{text-align:right;}
-.amount-input-wrap{display:inline-flex;align-items:center;background:#fff;border-radius:9px;padding:5px 16px;border:2px solid var(--green);transition:border-color .15s,box-shadow .15s;}
+.amount-input-wrap{display:inline-flex;align-items:center;background:#fff;border-radius:11px;padding:8px 18px;border:3px solid var(--gold);box-shadow:0 0 0 5px rgba(255,200,88,.30),0 4px 14px rgba(0,0,0,.28);transition:border-color .15s,box-shadow .15s;}
 .amount-input-wrap:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,88,.25);}
-.amount-prefix{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--green-d);margin-right:1px;}
-.amount-input{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--green-d);background:transparent;border:none;outline:none;width:170px;text-align:left;}
+.amount-prefix{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:var(--green-d);margin-right:1px;}
+.amount-input{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:var(--green-d);background:transparent;border:none;outline:none;width:200px;text-align:left;}
 .amount-help{font-size:10.5px;color:rgba(255,255,255,.65);margin-top:6px;}
 .amount-help.warning{color:var(--gold);font-weight:600;}
 .closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:14px 18px;margin-bottom:22px;}
@@ -104,11 +104,11 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 }
 
 .edit-row{display:flex;align-items:center;justify-content:flex-end;gap:14px;}
-.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:30px;color:#FFC858;white-space:nowrap;display:inline-flex;align-items:center;text-shadow:0 1px 3px rgba(0,0,0,.35);animation:editpulse 1.2s ease-in-out infinite;}
-.edit-arrow{font-size:44px;margin-left:8px;line-height:1;animation:editnudge .9s ease-in-out infinite;}
+.edit-hint{font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#002F68;background:#FFC858;padding:9px 20px;border-radius:12px;white-space:nowrap;display:inline-flex;align-items:center;box-shadow:0 5px 16px rgba(0,0,0,.38);animation:editpulse 1.15s ease-in-out infinite;}
+.edit-arrow{font-size:58px;line-height:1;color:#FFC858;text-shadow:0 2px 5px rgba(0,0,0,.45);animation:editnudge .85s ease-in-out infinite;}
 @keyframes editnudge{0%,100%{transform:translateX(0);}50%{transform:translateX(12px);}}
-@keyframes editpulse{0%,100%{opacity:.68;}50%{opacity:1;}}
-@media print{.edit-hint{display:none;}}
+@keyframes editpulse{0%,100%{opacity:.82;transform:scale(1);}50%{opacity:1;transform:scale(1.05);}}
+@media print{.edit-hint,.edit-arrow{display:none;}}
 </style>
 </head>
 <body>
@@ -132,8 +132,8 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Requested Amount</div>
-      <div class="edit-row"><span class="edit-hint">Edit amount here<span class="edit-arrow">&#10142;</span></span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="400,000" aria-label="Requested amount"/></div></div>
-      <div id="amountHelp" class="amount-help">Adjustable — each offer caps at its own maximum</div>
+      <div class="edit-row"><span class="edit-hint">&#9998; You can edit this amount</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="400,000" aria-label="Requested amount"/></div></div>
+      <div id="amountHelp" class="amount-help">↑ Type any amount — every offer updates instantly</div>
     </div>
   </div>
 
@@ -383,7 +383,7 @@ function recompute(){
   STATE.requested = r;
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
-  help.textContent = capped ? "Capped at the $400,000 maximum" : "Adjustable — each offer caps at its own maximum";
+  help.textContent = capped ? "Capped at the $400,000 maximum" : "↑ Type any amount — every offer updates instantly";
   renderOffers(); renderPrepay();
 }
 document.getElementById("amount").addEventListener("input", recompute);
