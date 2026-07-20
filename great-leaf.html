@@ -110,6 +110,17 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 @keyframes editnudge{0%,100%{transform:translateX(0);}50%{transform:translateX(12px);}}
 @keyframes editpulse{0%,100%{opacity:.82;transform:scale(1);}50%{opacity:1;transform:scale(1.05);}}
 @media print{.edit-hint,.edit-arrow{display:none;}}
+@keyframes editnudgeV{0%,100%{transform:rotate(90deg) translateX(0);}50%{transform:rotate(90deg) translateX(9px);}}
+@media(max-width:640px){
+  .borrower-bar{flex-direction:column;align-items:stretch;gap:14px;padding:18px 18px 20px;}
+  .borrower-bar-funding{text-align:left;width:100%;}
+  .edit-row{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;margin-top:4px;}
+  .edit-hint{font-size:20px;padding:9px 16px;white-space:normal;justify-content:center;text-align:center;line-height:1.15;}
+  .edit-arrow{align-self:center;font-size:38px;transform:rotate(90deg);animation:editnudgeV .85s ease-in-out infinite;}
+  .amount-input-wrap{box-sizing:border-box;width:100%;justify-content:flex-start;padding:11px 16px;}
+  .amount-input{flex:1;min-width:0;width:auto;font-size:27px;}
+  .amount-help{text-align:left;}
+}
 .snap{border:2px solid var(--green,#00CD67);background:linear-gradient(180deg,rgba(0,205,103,.12),rgba(0,205,103,.03));border-radius:14px;padding:16px 20px;margin:0 0 22px;}
 .snap-badge{display:inline-block;background:var(--green,#00CD67);color:#05351c;font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:10px;}
 .snap-line{font-family:'DM Serif Display',Georgia,serif;font-size:23px;line-height:1.32;color:var(--navy,#002F68);}
