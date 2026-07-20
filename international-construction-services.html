@@ -33,11 +33,31 @@ h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .amount-input{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:var(--green-d);background:transparent;border:none;outline:none;width:180px;text-align:left;}
 .amount-help{font-size:11px;color:rgba(255,255,255,.7);margin-top:6px;text-align:right;}
 .subnote{font-size:11.5px;color:var(--slate);margin:0 2px 22px;}
+/* v2: date sub-line, Call/Text/Email strip, recommended snapshot */
+.borrower-bar-sub{font-size:12px;opacity:.82;margin-top:4px;color:#fff;}
+.cta{border:2px solid var(--navy);border-radius:14px;background:#fff;}
+.cta-slim{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:11px 16px;margin:0 0 16px;text-align:left;}
+.cta-slim .cta-prompt{font-family:'DM Serif Display',Georgia,serif;font-size:17px;color:var(--navy);}
+.cta-btns{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;border-radius:9px;font-size:14px;padding:8px 15px;justify-content:center;}
+.cta-call{background:var(--green);color:#05351c;}
+.cta-text{background:var(--navy);color:#fff;}
+.cta-email{background:#fff;color:var(--navy);border:2px solid var(--navy);cursor:pointer;}
+.cta-direct{flex-basis:100%;margin:0;font-size:12px;color:#5a6472;}
+.snap{border:2px solid var(--green);background:linear-gradient(180deg,rgba(0,205,103,.12),rgba(0,205,103,.03));border-radius:14px;padding:16px 20px;margin:0 0 22px;}
+.snap-badge{display:inline-block;background:var(--green);color:#05351c;font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:10px;}
+.snap-line{font-family:'DM Serif Display',Georgia,serif;font-size:23px;line-height:1.32;color:var(--navy);}
+.snap-payoff{font-size:15px;color:var(--navy);margin-top:9px;}
+.snap-payoff b{color:var(--green-d);}
+.snap-speed{font-size:14px;color:var(--green-d);font-weight:700;margin-top:8px;}
+.rec-badge{display:inline-block;font-size:10px;font-weight:800;color:#059b53;background:#fff;border:1px solid rgba(0,205,103,.7);padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle;white-space:nowrap;}
+@media print{.cta-slim{display:none;}}
 /* offer cards */
 .lender-head{color:var(--navy);font-size:15px;text-transform:uppercase;letter-spacing:.12em;border-bottom:1px solid var(--line);padding-bottom:6px;margin:26px 0 14px;}
 .offers{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 @media(max-width:760px){.offers{grid-template-columns:1fr;}}
 .offer-card{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;break-inside:avoid;}
+.offer-card.rec{border:2px solid var(--green);box-shadow:0 0 0 3px rgba(0,205,103,.16);}
 .offer-card-head{background:linear-gradient(135deg,#002F68,#1A3E82);color:#fff;padding:16px 20px;}
 .offer-card.b .offer-card-head{background:linear-gradient(135deg,#00A352,#00CD67);}
 .offer-term{font-family:'DM Serif Display',Georgia,serif;font-size:23px;line-height:1.1;}
@@ -141,12 +161,30 @@ table.amm-sched tr.fgstart td{border-top:2px solid var(--green);}
     <div>
       <div class="borrower-bar-label">Prepared For</div>
       <div class="borrower-bar-name">International Construction Services</div>
+      <div class="borrower-bar-sub">Prepared July 20, 2026 · 12:05 PM EDT</div>
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Amount</div>
       <div class="edit-row"><span class="edit-hint">&#9998; You can edit this amount</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="850,000" aria-label="Amount"/></div></div>
     </div>
   </div>
+  <div class="cta cta-slim">
+    <span class="cta-prompt">Ready to move forward?</span>
+    <span class="cta-btns">
+      <a class="cta-btn cta-call" href="tel:+18437799063">&#128222; Call Larry</a>
+      <a class="cta-btn cta-text" href="sms:+18437799063?&body=Hi%20Larry%2C%20I%27d%20like%20to%20move%20forward%20on%20the%20International%20Construction%20Services%20funding%20offer.">&#128172; Text Larry</a>
+      <a class="cta-btn cta-email" href="mailto:larry@businessloans.com?subject=Moving%20forward%20-%20International%20Construction%20Services&body=Hi%20Larry%2C%20I%27ve%20reviewed%20the%20offers%20and%20I%27d%20like%20to%20move%20forward.%20Please%20send%20next%20steps.">&#9993; Email Larry</a>
+    </span>
+    <span class="cta-direct">Or reach me directly &mdash; (843) 779-9063 &middot; larry@businessloans.com</span>
+  </div>
+
+  <div class="snap">
+    <div class="snap-badge">&#9733; Recommended</div>
+    <div class="snap-line">Start with the <b>Line of Credit</b> &mdash; a 5-minute call to open, a $1,000 minimum draw, and you only pay interest on what you actually use.</div>
+    <div class="snap-payoff">Pay off early at any time and <b>100% of remaining interest is waived</b>. The $850,000 term loan is there when you need a larger lump sum.</div>
+    <div class="snap-speed">&#9889; Signed today, funded in as little as 24&ndash;48 hours.</div>
+  </div>
+
   <p class="subnote">Adjust the amount above &mdash; the term loan scales up to its $850,000 maximum, and the line of credit caps at its $200,000 limit. Every figure and schedule updates instantly.</p>
 
   <div id="offerWrap" class="offers"></div>
@@ -199,7 +237,7 @@ var STATE = { requested: 850000 };
 var OFFERS = [
   { lender:"Lender A", cls:"a", kind:"loc",  name:"Line of Credit",
     advance:200000, factor:321015.16/200000, pay:3086.68, nPay:104, freq:"weekly",
-    termLabel:"24-Month", origPct:0, dailyRate:"0.1412%", minDraw:1000, sid:"LOC",
+    termLabel:"24-Month", origPct:0, dailyRate:"0.1412%", minDraw:1000, sid:"LOC", rec:true,
     sub:"Revolving line \u00b7 weekly payments \u00b7 100% prepay any time" },
   { lender:"Lender B", cls:"b", kind:"term", name:"Term Loan",
     advance:850000, factor:1075250/850000, pay:20677.89, nPay:52, freq:"biweekly",
@@ -275,8 +313,10 @@ function renderOffers(){
       : '<div class="hstrip"><span class="ico">&#9873;</span><b>Interest forgiveness:</b> settle early in the first 12 months and '
         + '<b>50%</b> of the remaining interest is waived &mdash; from month&nbsp;13 on, <b>100%</b> is waived. '
         + 'Renewals qualify for 100% forgiveness.</div>';
-    html += '<div class="offer-card '+o.cls+'">'
-      + '<div class="offer-card-head"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+' '+ (o.kind==="loc"?"Line of Credit":"Term Loan") +'</div>'
+    var recCls = o.rec ? " rec" : "";
+    var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
+    html += '<div class="offer-card '+o.cls+recCls+'">'
+      + '<div class="offer-card-head"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+' '+ (o.kind==="loc"?"Line of Credit":"Term Loan") + recBadge +'</div>'
       + '<div class="offer-sub">'+o.sub+badge+cap+'</div></div>'
       + '<div class="offer-rows">'+rows+'</div>'+strip+'</div>';
   });
@@ -344,7 +384,8 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
   doc.text("BusinessLoans.com", L, y); y+=13;
   doc.text("Prepared July 20, 2026 at 12:05 PM EDT", L, y); y+=13;
-  doc.text("Amount shown: "+money0(STATE.requested), L, y); y+=20;
+  doc.text("Amount shown: "+money0(STATE.requested), L, y); y+=14;
+  doc.text("Questions? Call or text Larry (843) 779-9063  \u00b7  larry@businessloans.com", L, y); y+=20;
   doc.setTextColor(20);
 
   doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.text("Offer Summary", L, y); y+=6;
@@ -426,6 +467,17 @@ document.addEventListener("DOMContentLoaded",function(){
   el.addEventListener("input",recompute);
   el.addEventListener("blur",function(){ el.value=Math.round(STATE.requested).toLocaleString("en-US"); });
   document.getElementById("pdfBtn").addEventListener("click",downloadPDF);
+  /* desktop email fix: mailto dead-clicks on webmail-only desktops -> copy address instead */
+  (function(){
+    var e=document.querySelector(".cta-email"); if(!e) return;
+    var orig=e.innerHTML;
+    e.addEventListener("click",function(ev){
+      if(/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) return;
+      ev.preventDefault();
+      e.innerHTML="\u2713 Email copied!"; setTimeout(function(){ e.innerHTML=orig; },2600);
+      try{ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText("larry@businessloans.com"); } }catch(_){}
+    });
+  })();
   var btn=document.getElementById("ammBtn"), wrap=document.getElementById("ammWrap");
   btn.addEventListener("click",function(){ wrap.hidden=!wrap.hidden; btn.innerHTML=(wrap.hidden?"\u25BC Show":"\u25B2 Hide")+" full amortization schedules"; });
   recompute();
