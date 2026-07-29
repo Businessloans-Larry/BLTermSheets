@@ -187,8 +187,8 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 
   <div class="snap">
     <div class="snap-badge">&#9733; Recommended</div>
-    <div class="snap-line">We recommend <b>Offer 3</b> (18-Month) &mdash; the lowest weekly payment, with the same early-payoff schedule as the shorter terms.</div>
-    <div class="snap-payoff"><b>Pay off early at any time and save</b> &mdash; the early-payoff schedule is identical across all three terms.</div>
+    <div class="snap-line">We recommend <b>Offer 3</b> &mdash; the Lender A 18-Month term &mdash; for the lowest weekly payment among the Lender A options.</div>
+    <div class="snap-payoff"><b>Pay off early at any time and save</b> &mdash; the Lender A early-payoff schedule is identical across all three of its terms.</div>
     <div class="snap-speed">&#9889; Signed today, funded in as little as 24&ndash;48 hours.</div>
   </div>
 
@@ -213,13 +213,13 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   </div>
 
   <h2 class="section-title">Offers</h2>
-  <div style="font-size:13px;color:#5b6472;margin:-6px 0 16px;">All offers are <b>2nd position</b> &middot; weekly payments &middot; shown at $500,000 requested.</div>
+  <div style="font-size:13px;color:#5b6472;margin:-6px 0 16px;">Weekly payments &middot; each lender&rsquo;s position is shown under its name &middot; adjust the requested amount above.</div>
   <div id="offerWrap"></div>
 
   <div id="prepayWrap"></div>
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the ISO agreement with Lender A and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the payoff window shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the applicable ISO agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the payoff window shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -250,18 +250,19 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
 var MASTER_MAX = 500000;
 var STATE = { requested: 500000 };
 
-var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
+var LENDER_NOTES = { "Lender A":"2nd position · weekly payments", "Lender B":"1st position · weekly payments" };
 var OFFERS = [
   { name:"Lender A", advance:500000, factor:1.302,  weekly:12519.24, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd" },
   { name:"Lender A", advance:500000, factor:1.3575, weekly:10442.31, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd" },
-  { name:"Lender A", advance:500000, factor:1.413,  weekly:9057.70,  nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", rec:true }
+  { name:"Lender A", advance:500000, factor:1.413,  weekly:9057.70,  nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", rec:true },
+  { name:"Lender B", advance:400000, factor:1.27,   weekly:6864.87,  nPay:"74", term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st" }
 ];
 
-/* Early-payoff schedule — SHARED across all three terms (identical payoff each month). Payoff at MASTER_MAX; scales linearly with the requested amount. */
-var PREPAY = {
-  months:[1,2,3,4,5,6],
-  payoff:[565000,575000,585000,595000,605000,615000]
-};
+/* Early-payoff schedules per lender. payoff stored at each lender's base advance; scales linearly with that lender's funded amount. */
+var PREPAY_GROUPS = [
+  { name:"Lender A", base:500000, applies:"all Lender A terms (12 / 15 / 18-Month)", months:[1,2,3,4,5,6], payoff:[565000,575000,585000,595000,605000,615000] },
+  { name:"Lender B", base:400000, applies:"the Lender B 18-Month offer", months:[1,2,3,4,5,6,7,8,9], payoff:[460000,460000,460000,460000,460000,460000,460000,468000,472000] }
+];
 
 /* number offers in array order — shown in each card's title */
 (function(){var n=0;OFFERS.forEach(function(o){o.num=++n;});})();
@@ -351,17 +352,21 @@ function renderOffers(){
 }
 
 function renderPrepay(){
-  var s = STATE.requested / MASTER_MAX;
-  var html = '<div class="prepay-section">'
-    + '<div class="prepay-head"><h2 class="prepay-title">Early Payoff Schedule</h2></div>'
-    + '<div class="prepay-recap">This early-payoff schedule is the <b>same for all three terms</b>. Pay the balance in full within the month shown and the total payoff is the amount below. Figures scale with the requested amount (<b>'+money0(STATE.requested)+'</b>).</div>';
-  html += '<table class="prepay"><thead><tr><th>Pay off within</th><th>Total Payoff</th></tr></thead><tbody>';
-  for(var i=0;i<PREPAY.months.length;i++){
-    var mo = PREPAY.months[i];
-    html += '<tr><td>'+mo+(mo===1?' month':' months')+'</td>'
-      + '<td class="po-payoff">'+money0(round2(PREPAY.payoff[i]*s))+'</td></tr>';
-  }
-  html += '</tbody></table></div>';
+  var html = "";
+  PREPAY_GROUPS.forEach(function(g){
+    var adv = Math.min(STATE.requested, g.base); if(adv<0) adv=0;
+    var s = g.base ? adv/g.base : 0;
+    html += '<div class="prepay-section">'
+      + '<div class="prepay-head"><h2 class="prepay-title">'+g.name+' &mdash; Early Payoff Schedule</h2></div>'
+      + '<div class="prepay-recap">Applies to <b>'+g.applies+'</b>. Pay the balance in full within the month shown and the total payoff is the amount below. Figures scale with the amount funded (<b>'+money0(adv)+'</b>).</div>';
+    html += '<table class="prepay"><thead><tr><th>Pay off within</th><th>Total Payoff</th></tr></thead><tbody>';
+    for(var i=0;i<g.months.length;i++){
+      var mo = g.months[i];
+      html += '<tr><td>'+mo+(mo===1?' month':' months')+'</td>'
+        + '<td class="po-payoff">'+money0(round2(g.payoff[i]*s))+'</td></tr>';
+    }
+    html += '</tbody></table></div>';
+  });
   document.getElementById("prepayWrap").innerHTML = html;
 }
 
@@ -395,26 +400,27 @@ function downloadPDF(){
   doc.text("Stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided Check","Bank Connection","Proof of Ownership","Tax Return"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
-  (function(){
-    var s = STATE.requested / MASTER_MAX;
+  PREPAY_GROUPS.forEach(function(g){
+    var adv = Math.min(STATE.requested, g.base); if(adv<0) adv=0;
+    var s = g.base ? adv/g.base : 0;
     doc.addPage(); var yy=60;
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text("Early Payoff Schedule \u2014 same for all terms", L, yy); yy+=15;
+    doc.text(g.name+" \u2014 Early Payoff Schedule", L, yy); yy+=15;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
-    doc.text("Total payoff if paid in full within the month shown. Scales with the requested amount ("+money0(STATE.requested)+").", L, yy); yy+=20;
+    doc.text("Applies to "+g.applies+". Total payoff if paid in full within the month shown. Scales with the amount funded ("+money0(adv)+").", L, yy); yy+=20;
     var ch=[{h:"Pay off within",x:L,a:"left"},{h:"Total Payoff",x:R,a:"right"}];
     doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
     ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
     yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=13;
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-    for(var i=0;i<PREPAY.months.length;i++){
+    for(var i=0;i<g.months.length;i++){
       if(yy>772){ doc.addPage(); yy=60; }
-      var mo=PREPAY.months[i];
+      var mo=g.months[i];
       doc.text(mo+(mo===1?" month":" months"), L, yy);
-      doc.text(money0(round2(PREPAY.payoff[i]*s)), R, yy, {align:"right"});
+      doc.text(money0(round2(g.payoff[i]*s)), R, yy, {align:"right"});
       yy+=15;
     }
-  })();
+  });
   doc.save("kansas-city-vascular-offers.pdf");
 }
 
