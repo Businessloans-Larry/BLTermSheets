@@ -144,6 +144,35 @@ footer{margin-top:22px;padding-top:14px;border-top:2px solid var(--line);font-si
   .amount-input{flex:1;min-width:0;width:auto;font-size:27px;}
   .amount-help{text-align:left;}
 }
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+/* ---- Mobile (phones ≤600px): stack wide tables into per-row cards ---- */
+@media(max-width:600px){
+  .container{padding:16px 14px;}
+  .section-title{font-size:19px;}
+  .chart-wrap{overflow:visible;}
+  .offer-chart{min-width:0;font-size:13.5px;display:block;}
+  .offer-chart thead{display:none;}
+  .offer-chart tbody,.offer-chart tr,.offer-chart td{display:block;width:auto;}
+  .offer-chart tbody tr,.offer-chart tbody tr:nth-child(even){background:#fff;border:1.5px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden;}
+  .offer-chart tbody tr:hover{background:#fff;}
+  .offer-chart td{display:flex;justify-content:space-between;align-items:baseline;gap:18px;text-align:right;white-space:normal;padding:9px 15px;border-bottom:1px solid var(--line);}
+  .offer-chart td:last-child{border-bottom:none;}
+  .offer-chart td::before{content:attr(data-label);flex:0 0 auto;text-align:left;color:var(--slate);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;}
+  .offer-chart td.ch-num{background:var(--navy);color:#fff;justify-content:center;gap:9px;font-family:'DM Serif Display',Georgia,serif;font-size:19px;padding:11px;}
+  .offer-chart td.ch-num::before{content:"Offer";color:#fff;opacity:.72;font-family:'Inter',sans-serif;font-weight:700;font-size:12px;align-self:center;}
+  .offer-chart td.ch-term{background:rgba(0,47,104,.05);}
+  .offer-chart tr.ch-rec{border:2px solid var(--green);box-shadow:0 0 0 3px rgba(0,205,103,.16);}
+  .offer-chart tr.ch-rec td:first-child{box-shadow:none;background:var(--green);color:#05351c;}
+  .offer-chart tr.ch-rec td:first-child::before{color:#05351c;opacity:.85;}
+  .prepay{display:block;border:none;}
+  .prepay thead{display:none;}
+  .prepay tbody,.prepay tr,.prepay td{display:block;width:auto;}
+  .prepay tbody tr,.prepay tbody tr:nth-child(even){background:#fff;border:1px solid var(--line);border-radius:10px;margin:0 0 12px;overflow:hidden;}
+  .prepay td{display:flex;justify-content:space-between;gap:18px;text-align:right;padding:8px 14px;border-bottom:1px dotted var(--line);}
+  .prepay td:last-child{border-bottom:none;}
+  .prepay td::before{content:attr(data-label);text-align:left;color:var(--slate);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;}
+  .prepay td:first-child{background:rgba(0,47,104,.05);font-weight:700;color:var(--navy);}
+}
 </style>
 </head>
 <body>
@@ -345,17 +374,17 @@ function renderOffers(){
     var rows = g.offers.slice().sort(function(a,b){ return (a.term-0)-(b.term-0); }).map(function(o){
       var m = model(o); var fw = fwOf(o);
       var capTag = m.capped ? ' <span class="cap-badge">max</span>' : '';
-      var fg = hasForgive ? '<td>'+(o.forgive||"—")+'</td>' : '';
+      var fg = hasForgive ? '<td data-label="Early Payoff">'+(o.forgive||"—")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
-      return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num">'+star+o.num+'</td>'
-        + '<td class="ch-term">'+o.termLabel+recBadge+'</td>'
-        + '<td>'+money0(m.advance)+capTag+'</td>'
-        + '<td>'+money(m.fee)+'</td>'
-        + '<td class="ch-net">'+money(m.net)+'</td>'
-        + '<td class="ch-payback">'+money0(m.payback)+'</td>'
-        + '<td class="ch-pay">'+money(m.weekly)+'</td>'
-        + '<td>'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
+      return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num+'</td>'
+        + '<td class="ch-term" data-label="Term">'+o.termLabel+recBadge+'</td>'
+        + '<td data-label="Advance">'+money0(m.advance)+capTag+'</td>'
+        + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
+        + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
+        + '<td class="ch-payback" data-label="Total Payback">'+money0(m.payback)+'</td>'
+        + '<td class="ch-pay" data-label="'+fwCap+' Payment">'+money(m.weekly)+'</td>'
+        + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
     var fgHead = hasForgive ? '<th>Early Payoff</th>' : '';
     return '<div class="chart-wrap"><table class="offer-chart"><thead><tr>'
@@ -382,13 +411,13 @@ function renderPrepay(){
       + '<div class="prepay-head"><h2 class="prepay-title">'+o.name+' '+o.termLabel+' — Early Payoff Schedule — '+money0(m.advance)+'</h2></div>'
       + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments. Total payoff and interest saved if paid in full within the day range shown.</div>';
     if(m.advance !== o.advance) html += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m.advance)+').</div>';
-    html += '<table class="prepay"><thead><tr><th>Pay off within (days)</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
+    html += '<div class="tscroll"><table class="prepay"><thead><tr><th>Pay off within (days)</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
     for(var i=0;i<p.ranges.length;i++){
-      html += '<tr><td>'+p.ranges[i]+' days</td>'
-        + '<td class="po-payoff">'+money(round2(p.payoff[i]*s))+'</td>'
-        + '<td class="po-saved">'+money(round2(p.saved[i]*s))+'</td></tr>';
+      html += '<tr><td data-label="Pay off within">'+p.ranges[i]+' days</td>'
+        + '<td class="po-payoff" data-label="Total Payoff">'+money(round2(p.payoff[i]*s))+'</td>'
+        + '<td class="po-saved" data-label="Interest Saved">'+money(round2(p.saved[i]*s))+'</td></tr>';
     }
-    html += '</tbody></table></div>';
+    html += '</tbody></table></div></div>';
   });
   document.getElementById("prepayWrap").innerHTML = html;
 }
