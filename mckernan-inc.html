@@ -38,6 +38,23 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .actions{margin:0 0 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .btn-pdf{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;background:var(--green);color:#fff;border:none;border-radius:8px;padding:11px 20px;cursor:pointer;transition:background .15s;}
 .btn-pdf:hover{background:var(--green-d);}
+.btn-rev{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;background:#C0392B;color:#fff;border:none;border-radius:8px;padding:11px 20px;cursor:pointer;transition:background .15s;}
+.btn-rev:hover{background:#a93226;}
+.hidebtn{font-family:'Inter',sans-serif;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:transparent;color:inherit;opacity:.55;border:1px solid currentColor;border-radius:5px;padding:2px 7px;margin-left:8px;cursor:pointer;vertical-align:middle;}
+.hidebtn:hover{opacity:1;}
+.hiddenbar{margin:10px 0 0;font-size:12.5px;color:var(--slate);background:var(--bg);border:1px dashed var(--line);border-radius:9px;padding:9px 14px;}
+.hiddenbar button{background:var(--navy);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-weight:700;font-size:12px;cursor:pointer;margin-left:6px;}
+.rev-ov{position:fixed;inset:0;background:rgba(0,20,45,.55);display:none;align-items:center;justify-content:center;z-index:60;padding:18px;}
+.rev-ov.on{display:flex;}
+.rev-box{background:#fff;border-radius:14px;max-width:460px;width:100%;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.35);}
+.rev-box h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;color:var(--navy);margin:0 0 6px;font-size:21px;}
+.rev-box p{font-size:12.5px;color:var(--slate);margin:0 0 10px;}
+.rev-box textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radius:9px;padding:10px;font-family:'Inter',sans-serif;font-size:14px;resize:vertical;box-sizing:border-box;}
+.rev-actions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;align-items:center;}
+.rev-send{background:#C0392B;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:700;font-size:13px;cursor:pointer;}
+.rev-cancel{background:#fff;color:var(--slate);border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;font-weight:600;font-size:13px;cursor:pointer;}
+.rev-done{color:var(--green-d);font-weight:700;font-size:14px;margin-top:10px;display:none;}
+@media print{.btn-rev,.hidebtn,.hiddenbar,.rev-ov{display:none!important;}}
 .btn-hint{font-size:11.5px;color:var(--slate);}
 .section-title{color:var(--navy);font-size:18px;margin:2px 0 7px;}
 .single-wrap{max-width:560px;}
@@ -289,6 +306,7 @@ table.amm-sched tbody tr:last-child td{font-weight:700;}
 
     <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
+    <button id="revBtn" class="btn-rev" type="button">&#9998; Request revisions</button>
     <span class="btn-hint">Plain PDF — offer summary and stipulations.</span>
   </div>
 
@@ -355,6 +373,16 @@ var OFFERS = [
 /* number offers in array order — shown in each card's title */
 (function(){var n=0;OFFERS.forEach(function(o){o.num=++n;});})();
 
+/* ---- hide-for-comparison (per-visitor; resets when they open a new browser session) ---- */
+var HIDDEN = (function(){ try{ return new Set(JSON.parse(sessionStorage.getItem("bl_hide_"+location.pathname)||"[]")); }catch(e){ return new Set(); } })();
+function hideSave(){ try{ sessionStorage.setItem("bl_hide_"+location.pathname, JSON.stringify(Array.from(HIDDEN))); }catch(e){} }
+function rerenderAll(){ renderOffers(); if (typeof renderPrepay === "function") renderPrepay(); }
+document.addEventListener("click", function(e){
+  var b = e.target && e.target.closest ? e.target.closest(".hidebtn") : null;
+  if(b){ var n = Number(b.getAttribute("data-hide")); if(HIDDEN.has(n)) HIDDEN.delete(n); else HIDDEN.add(n); hideSave(); rerenderAll(); return; }
+  if(e.target && e.target.id === "showAllBtn"){ HIDDEN.clear(); hideSave(); rerenderAll(); }
+});
+
 function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
 function money(x){ return "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); }
@@ -374,11 +402,12 @@ function renderOffers(){
      Offers grouped by o.name; the group <h2> shows only when there is more than one group.
      o.freq "monthly" flips the payment labels + adds a Monthly tag (defaults to weekly). */
   var order = [], byName = {};
-  OFFERS.forEach(function(o){
+  var LIVEOFF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
+  LIVEOFF.forEach(function(o){
     if(!(o.name in byName)){ byName[o.name] = { name:o.name, offers:[] }; order.push(byName[o.name]); }
     byName[o.name].offers.push(o);
   });
-  var useChart = OFFERS.length >= 3;
+  var useChart = LIVEOFF.length >= 3;
   var showHead = order.length > 1;
   function fwOf(o){ return o.freq==="monthly" ? "monthly" : "weekly"; }
   function cap(x){ return x.charAt(0).toUpperCase()+x.slice(1); }
@@ -390,7 +419,7 @@ function renderOffers(){
     var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
     var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
     return '<div class="offer-card'+(o.rec?' rec':'')+'">'
-      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+'</div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
+      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
       + '<div class="offer-card-body">'
         + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
         + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
@@ -414,7 +443,7 @@ function renderOffers(){
       var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"—")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
-      return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num+'</td>'
+      return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
         + '<td class="ch-term" data-label="Term">'+o.termLabel+recBadge+'</td>'
         + '<td data-label="Advance">'+money0(m.advance)+capTag+'</td>'
         + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
@@ -435,13 +464,15 @@ function renderOffers(){
       return '<div class="lender-group">'+head+note+chart(g)+'</div>';
     }).join("");
   } else {
-    document.getElementById("offerWrap").innerHTML = '<div class="offers-grid">'+OFFERS.map(card).join("")+'</div>';
+    document.getElementById("offerWrap").innerHTML = '<div class="offers-grid">'+LIVEOFF.map(card).join("")+'</div>';
   }
+  if(HIDDEN.size){ document.getElementById("offerWrap").innerHTML += '<div class="hiddenbar">'+HIDDEN.size+' offer'+(HIDDEN.size>1?'s':'')+' hidden from this comparison<button id="showAllBtn" type="button">Show all offers</button></div>'; }
 }
 
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
+  var OFFERS_PDF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
   var L=54, R=558, y=70;
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers — McKernan Inc", L, y); y+=20;
@@ -453,7 +484,7 @@ function downloadPDF(){
   doc.setFontSize(9); cols.forEach(function(c){ doc.text(c.h,c.x,y,{align:c.a}); });
   y+=4; doc.setDrawColor(150); doc.line(L,y,R,y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-  OFFERS.forEach(function(o){
+  OFFERS_PDF.forEach(function(o){
     var m = model(o);
     doc.text(o.num+" — "+o.name+" · "+o.termLabel+(m.capped?" (max)":""), L, y);
     doc.text(money0(m.advance), 230, y, {align:"right"});
@@ -515,6 +546,19 @@ document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
 })();
 recompute();
 </script>
+<div class="rev-ov" id="revOv">
+  <div class="rev-box">
+    <h3>Request revisions</h3>
+    <p>Tell Larry what you&rsquo;d like changed &mdash; a different amount, term, payment, anything. He&rsquo;ll get it instantly.</p>
+    <textarea id="revTxt" placeholder="I&rsquo;d like to see&hellip;"></textarea>
+    <div class="rev-actions">
+      <button class="rev-cancel" id="revCancel" type="button">Cancel</button>
+      <button class="rev-send" id="revSend" type="button">Send to Larry</button>
+    </div>
+    <div class="rev-done" id="revDone">&#10003; Sent &mdash; Larry will get back to you shortly.</div>
+  </div>
+</div>
+
 <script>
 /* term-sheet tracker beacon (v4.1: open ping + exit visit-summary; geo on both) */
 (function(){try{
@@ -549,6 +593,23 @@ recompute();
   window.addEventListener("pagehide",summary);
   window.addEventListener("beforeunload",summary);
   document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden") summary(); });
+  /* ---- Request revisions: merchant message goes straight to Larry via the tracker ---- */
+  var rb=document.getElementById("revBtn"), ro=document.getElementById("revOv");
+  if(rb&&ro){
+    var rt=document.getElementById("revTxt"), rs=document.getElementById("revSend"), rc=document.getElementById("revCancel"), rd=document.getElementById("revDone");
+    rb.addEventListener("click",function(){ ro.classList.add("on"); rd.style.display="none"; rs.style.display=""; setTimeout(function(){ rt.focus(); },60); });
+    rc.addEventListener("click",function(){ ro.classList.remove("on"); });
+    ro.addEventListener("click",function(e){ if(e.target===ro) ro.classList.remove("on"); });
+    rs.addEventListener("click",function(){
+      var msg=(rt.value||"").trim(); if(!msg){ rt.focus(); return; }
+      var u=EP+"?event=revision&deal="+encodeURIComponent(deal)+"&msg="+encodeURIComponent(msg.slice(0,1200))
+        +(loc?"&loc="+encodeURIComponent(loc):"")+"&ua="+encodeURIComponent(navigator.userAgent)
+        +"&u="+encodeURIComponent(location.href)+"&r="+(new Date()).getTime();
+      try{ if(navigator.sendBeacon){ navigator.sendBeacon(u); } else { new Image().src=u; } }catch(e2){ try{ new Image().src=u; }catch(e3){} }
+      rs.style.display="none"; rd.style.display="block"; rt.value="";
+      setTimeout(function(){ ro.classList.remove("on"); },1900);
+    });
+  }
 }catch(e){}})();
 </script>
 </body></html>
