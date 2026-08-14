@@ -83,7 +83,7 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 @media print{.cta-slim{display:none;}}
 /* reactive offer chart (default for 3+ offers) */
 .chart-wrap{overflow-x:auto;margin:0 0 3px;-webkit-overflow-scrolling:touch;}
-.offer-chart{width:100%;border-collapse:collapse;font-size:13px;min-width:640px;}
+.offer-chart{width:100%;border-collapse:collapse;font-size:13px;min-width:880px;}
 .offer-chart th{background:var(--navy);color:#fff;font-weight:600;text-align:right;padding:5px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
 .offer-chart th:first-child{text-align:center;border-top-left-radius:8px;}
 .offer-chart th:nth-child(2){text-align:left;}
@@ -115,6 +115,12 @@ table.prepay th:first-child,table.prepay td:first-child{text-align:left;}
 table.prepay thead th{background:var(--navy);color:#fff;font-weight:600;font-size:12.5px;}
 table.prepay tbody tr:nth-child(even){background:var(--bg);}
 table.prepay tbody tr:last-child td{border-bottom:none;}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;align-items:start;margin-top:12px;}
+.detail-card{border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;break-inside:avoid;background:#fff;}
+.dc-head{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--navy);font-family:'DM Serif Display',Georgia,serif;font-size:15px;}
+.dc-tag{font-size:10px;text-transform:uppercase;letter-spacing:.05em;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:2px 9px;color:var(--slate);white-space:nowrap;font-family:'Inter',sans-serif;}
+.dc-recap{font-size:11px;color:var(--slate);margin:4px 0 8px;}
+.detail-card table.prepay th,.detail-card table.prepay td{padding:5px 9px;font-size:11.5px;}
 .po-payoff{color:var(--navy);font-weight:600;}
 .po-saved{color:var(--green-d);font-weight:600;}
 .disclosure{margin-top:16px;padding:12px 15px;background:var(--bg);border-radius:10px;border:1px solid var(--line);font-size:11px;color:var(--slate);line-height:1.5;}
@@ -187,7 +193,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTguMiA3OC4yIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwMmY2ODt9LmNscy0ye2ZpbGw6IzAwY2Q2Nzt9LmNscy0ze2ZpbGw6IzAwY2RlZjt9LmNscy00e2ZpbGw6IzYwYWZmMDt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImxuMSI+PHJlY3QgeD0iLTYiIHk9Ii02IiB3aWR0aD0iMzY2IiBoZWlnaHQ9IjkwIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImxuMiI+PHJlY3QgeD0iLTYiIHk9Ijg0IiB3aWR0aD0iMzY2IiBoZWlnaHQ9Ijc2Ii8+PC9jbGlwUGF0aD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2xuMSkiPjxnPjxnPjxnPjxnPjxnPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyLjkyLDMxLjY0SDE2Ljc3VjQyLjgyaDYuMTVBMTEuNzQsMTEuNzQsMCwxLDEsMTEuMTgsNTQuNTZoMFYyNS44MWExMCwxMCwwLDAsMC0xMC0xMEgwVjU0LjU2SDBBMjIuOTIsMjIuOTIsMCwxLDAsMjIuOTIsMzEuNjRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgsMjYuMDVIMTYuNzdWMjQuODdhMTAsMTAsMCwwLDEsMTAtMTBIMjh2MS4xOEExMCwxMCwwLDAsMSwxOCwyNi4wNVoiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNCwwbC0uODMuODNhMTAsMTAsMCwwLDAsMCwxNC4xNWwuODMuODMuODQtLjgzYTEwLDEwLDAsMCwwLDAtMTQuMTVMMTQsMFoiLz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMjkuMDUsMTUxLjQyYTEuODQsMS44NCwwLDAsMSwxLjg2LTEuODYsMS43OSwxLjc5LDAsMCwxLDEuMzEuNTQsMS44MSwxLjgxLDAsMCwxLC41NCwxLjMyLDEuODYsMS44NiwwLDEsMS0zLjcxLDBaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjU1LjU2LDE1MC40MWE4LjMyLDguMzIsMCwwLDEtMywyLjM0LDguNjIsOC42MiwwLDAsMS0zLjU5Ljc2LDEwLjE4LDEwLjE4LDAsMCwxLTMuNzktLjcsOC40NCw4LjQ0LDAsMCwxLTMtMS45NSw5LDksMCwwLDEtMS45NC0zLDEwLjYyLDEwLjYyLDAsMCwxLDAtNy41Myw5LDksMCwwLDEsMS45NC0zLDguNDQsOC40NCwwLDAsMSwzLTIsMTAsMTAsMCwwLDEsMy43OS0uNyw4LjMsOC4zLDAsMCwxLDMuNjUuODEsMTAsMTAsMCwwLDEsMywyLjI4bC0xLjg2LDEuNGE3Ljg2LDcuODYsMCwwLDAtMi4yLTEuNzYsNS4zNyw1LjM3LDAsMCwwLTIuNTktLjY0LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4LDcsNywwLDAsMC0yLjI0LDEuNTYsNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMiw4LjY0LDguNjQsMCwwLDAsMCw1LjY4LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi45MSw2LjkxLDAsMCwwLDIuMjQsMS41Nyw3LjM0LDcuMzQsMCwwLDAsMi45NC41OCw1LjQyLDUuNDIsMCwwLDAsMi42OC0uNjgsNi44Niw2Ljg2LDAsMCwwLDIuMTEtMS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1OS43NywxNDQuMTFhMTAsMTAsMCwwLDEsLjY5LTMuNzYsOS4xNyw5LjE3LDAsMCwxLDEuOTMtMyw4LjU3LDguNTcsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOS44OCw5Ljg4LDAsMCwxLDMuNzcuNyw4LjczLDguNzMsMCwwLDEsNC45Miw0LjkzLDEwLjQ4LDEwLjQ4LDAsMCwxLDAsNy41Myw4LjczLDguNzMsMCwwLDEtNC45Miw0LjkzLDEwLjA4LDEwLjA4LDAsMCwxLTMuNzcuNywxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNTcsOC41NywwLDAsMS0zLTEuOTUsOS4xNyw5LjE3LDAsMCwxLTEuOTMtM0ExMCwxMCwwLDAsMSwyNTkuNzcsMTQ0LjExWm0yLjMxLDBhOC4yNiw4LjI2LDAsMCwwLC40OSwyLjg0LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi44LDYuOCwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNy4yNiw3LjI2LDAsMCwwLDIuOTMtLjU4LDYuNjIsNi42MiwwLDAsMCwzLjY2LTMuODksOC42NCw4LjY0LDAsMCwwLDAtNS42OCw2LjU2LDYuNTYsMCwwLDAtMy42Ni0zLjg4LDcuMSw3LjEsMCwwLDAtMi45My0uNTgsNy4xOCw3LjE4LDAsMCwwLTIuOTQuNThBNi45Myw2LjkzLDAsMCwwLDI2NCwxMzlhNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMkE4LjM1LDguMzUsMCwwLDAsMjYyLjA4LDE0NC4xMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yODQuMzEsMTQwLjIxYzAtLjMzLDAtLjc0LDAtMS4yMnMwLTEtLjA2LTEuNDUsMC0uOTQtLjA2LTEuMzcsMC0uNzUsMC0xaDIuMzJjMCwuNjcuMDUsMS4zMS4wNiwxLjkzYTUuODgsNS44OCwwLDAsMCwuMSwxLjJoLjExYTYuMjYsNi4yNiwwLDAsMSwyLjMyLTIuNTMsNi43Niw2Ljc2LDAsMCwxLDMuNzktMS4wNyw2LjEzLDYuMTMsMCwwLDEsMy4yNS45MSw1LjIsNS4yLDAsMCwxLDIuMTIsMyw1LjgyLDUuODIsMCwwLDEsMi41My0yLjk0LDcuMiw3LjIsMCwwLDEsMy41NC0uOTMsNy42LDcuNiwwLDAsMSwzLjQuNjYsNS40NCw1LjQ0LDAsMCwxLDIuMDcsMS43Miw2LjQ5LDYuNDksMCwwLDEsMSwyLjQ1LDE0LjIzLDE0LjIzLDAsMCwxLC4yOSwyLjg2VjE1M2gtMi4zMlYxNDIuNTNhMTEuMzQsMTEuMzQsMCwwLDAtLjE5LTIuMTEsNS42NCw1LjY0LDAsMCwwLS42OC0xLjgzLDMuNTIsMy41MiwwLDAsMC0xLjM1LTEuMyw0LjY1LDQuNjUsMCwwLDAtMi4yNi0uNDgsNS4zMyw1LjMzLDAsMCwwLTIuNjcuNiw0LjgxLDQuODEsMCwwLDAtMS42NCwxLjUyLDYuMzgsNi4zOCwwLDAsMC0uODUsMiw5LDksMCwwLDAtLjI1LDIuMDV2MTBoLTIuMzJWMTQyLjNhNy41OSw3LjU5LDAsMCwwLS45MS00LDMsMywwLDAsMC0yLjgtMS41MSw2Ljc1LDYuNzUsMCwwLDAtMi40Mi40NCw1LjI1LDUuMjUsMCwwLDAtMiwxLjM2LDYuNDgsNi40OCwwLDAsMC0xLjMxLDIuMjgsOS43NSw5Ljc1LDAsMCwwLS40OCwzLjIyVjE1M2gtMi4zMloiLz48L2c+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIuMjQsNzdIODEuMzJWNzIuODRhMTUuMzYsMTUuMzYsMCwwLDEtMTEuMTgsNC42NCwxNC40NywxNC40NywwLDAsMS0xMC41OC00QzU2LDY5LjkxLDU1LDY1LjcsNTUsNjAuOFYzMi4xNkg2Ni4xOFY1OS4yNWMwLDYuMTEsMy44Nyw4LjE3LDcuNCw4LjE3czcuNDgtMi4wNiw3LjQ4LTguMTdWMzIuMTZIOTIuMjRaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM4LjQyLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNC0zLTQuNDgsMC02LjM3LDIuMDYtNi4zNyw0LjNzMS4yOSwzLjUyLDQuNjUsMy44N2w3LC42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNSwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1TDEwOSw2My43MmMzLjYxLDMuNyw4LjUxLDQuMjIsMTEuOTUsNC4yMiwzLjg3LDAsNy45Mi0xLjI5LDcuOTItNC42NSwwLTIuMjMtMS4xMi0zLjc4LTQuNzMtNC4xM2wtNy4wNi0uNjhDMTA5LDU3LjcsMTA0LDU0LjE4LDEwNCw0NS45MmMwLTkuMzcsOC4xNy0xNC4yOCwxNy4yOS0xNC4yOEMxMjguMzYsMzEuNjQsMTM0LjEyLDMyLjkzLDEzOC40MiwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNzMsMjQuNTFIMTUwLjI5VjE1LjM5aDExLjQ0Wk0xNjEuNjQsNzdIMTUwLjQ2VjMzLjQ1aDExLjE4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwOC4wOCwzNS42YzMuNjEsMy43LDQuNTYsNy44Myw0LjU2LDEyLjczVjc3SDIwMS40NlY0OS44OGMwLTYuMTEtMy43OS04LjE3LTcuNC04LjE3cy03LjQ4LDIuMDYtNy40OCw4LjE3Vjc3SDE3NS40VjMyLjE2aDEwLjkydjQuMTNhMTUuMzMsMTUuMzMsMCwwLDEsMTEuMTgtNC42NUMyMDIsMzEuNjQsMjA1LjU5LDMzLDIwOC4wOCwzNS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI2Mi43OCw1My4zMnY0LjczaC0yOGMwLDUuODQsMy40NCwxMCw5LjgsMTAsNC45MSwwLDcuMzEtMS40NiwxMC4wNy00LjIxbDYuODgsNi42MmMtNC41Niw0LjY0LTksNy0xNyw3LTEwLjY3LDAtMjAuNzMtNC44MS0yMC43My0yMywwLTE0LjYyLDcuOTEtMjIuODgsMTkuNTItMjIuODhDMjU1LjcyLDMxLjY0LDI2Mi43OCw0MC41OSwyNjIuNzgsNTMuMzJabS0yNy4wOS03Ljc0YTEwLjg5LDEwLjg5LDAsMCwwLS45NSw0LjgxaDE2Ljk0YTEwLjg5LDEwLjg5LDAsMCwwLS45NC00LjgxLDguNDEsOC40MSwwLDAsMC0xNS4wNSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwNi43MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcsMC0xMy4zMy0uNzctMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4Yy04LjA4LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMjk2LjY2LDMxLjY0LDMwMi40MiwzMi45MywzMDYuNzIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzUxLjEsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDYtNi4zNiw0LjNzMS4yOSwzLjUyLDQuNjQsMy44N2w3LjA1LjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LjA2LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zLTcuMzFjMy42MiwzLjcsOC41Miw0LjIyLDEyLDQuMjIsMy44NywwLDcuOTEtMS4yOSw3LjkxLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDUtLjY4Yy04LjA5LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjgtMTQuMjhDMzQxLDMxLjY0LDM0Ni44LDMyLjkzLDM1MS4xLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTI0LjczLDEzOS41NWMwLDIuNjYsMS4xMiw0LDQsNEgzM3Y5LjQ2SDI2LjYyYy05LjIsMC0xMy4wNy02LjM2LTEzLjA3LTEyLjgxVjkxLjgySDI0LjczWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTczLjMyLDE0OC4wNmMtMi44NCwyLjkzLTcuMzEsNS41MS0xMy45Myw1LjUxcy0xMS0yLjU4LTEzLjg0LTUuNTFjLTQtNC4zLTUuMDgtOS4zNy01LjA4LTE3LjQ2czEtMTMuMDcsNS4wOC0xNy4zN2MyLjgzLTIuOTIsNy4yMi01LjUsMTMuODQtNS41czExLjA5LDIuNDksMTMuOTMsNS41YzQsNC4zLDUuMDgsOS4yOSw1LjA4LDE3LjM3Uzc3LjQ1LDE0My44NSw3My4zMiwxNDguMDZabS04LjY4LTI4LjI5YTcuMDcsNy4wNywwLDAsMC01LjI1LTIsNyw3LDAsMCwwLTUuMTYsMmMtMi4zMiwyLjI0LTIuNTgsNi4yOC0yLjU4LDEwLjgzcy4yNiw4LjY5LDIuNTgsMTAuOTNhNyw3LDAsMCwwLDUuMTYsMiw3LjA3LDcuMDcsMCwwLDAsNS4yNS0yYzIuMzItMi4yNCwyLjU4LTYuMjgsMi41OC0xMC45M1M2NywxMjIsNjQuNjQsMTE5Ljc3WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTEyNC4yMywxMjMuNTV2MjkuNUgxMTMuMzF2LTMuODdjLTMsMy01Ljg0LDQuMy0xMSw0LjNzLTguODYtMS4zOC0xMS40NC00YTE0LjMzLDE0LjMzLDAsMCwxLTMuNy0xMC4wNmMwLTcuMTMsNC45LTEzLDE1LjQ4LTEzaDEwLjR2LTIuMjRjMC00LjktMi40LTctOC4zNC03LTQsMC02LjE5LDEuMTItOC42LDMuODdsLTctN2M0LjM5LTQuODEsOC42LTYuMzYsMTYuMDgtNi4zNkMxMTcuNzgsMTA3LjczLDEyNC4yMywxMTMuMDYsMTI0LjIzLDEyMy41NVptLTE5LjY5LDEwLjU4Yy00LjQ3LDAtNi42MiwxLjgxLTYuNjIsNS4xNiwwLDMuMSwyLjE1LDUuMDcsNi43OSw1LjA3LDIuNzYsMCw0LjczLS4zNCw2LjYyLTIuMTUsMS4yOS0xLjExLDEuNzItMi44MywxLjcyLTUuNjd2LTIuNDFaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMTcwLjI0LDExMS42OWMzLjYyLDMuNjksNC41Niw3LjgyLDQuNTYsMTIuNzJ2MjguNjRIMTYzLjYyVjEyNmMwLTYuMS0zLjc4LTguMTctNy4zOS04LjE3cy03LjQ5LDIuMDctNy40OSw4LjE3djI3LjA5SDEzNy41NnYtNDQuOGgxMC45M3Y0LjEyYTE1LjM0LDE1LjM0LDAsMCwxLDExLjE4LTQuNjRDMTY0LjE0LDEwNy43MywxNjcuNzUsMTA5LjExLDE3MC4yNCwxMTEuNjlaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMjIwLjQ3LDExM2wtNi44OCw3Yy0yLjU4LTIuMzItNi40NS0zLTEwLjQxLTMtNC40NywwLTYuMzYsMi4wNy02LjM2LDQuM3MxLjI5LDMuNTMsNC42NCwzLjg3bDcsLjY5YzguODYuODYsMTMuMzMsNS41LDEzLjMzLDEzLjE2LDAsOS44OS04LjQyLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzgtMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjY5LDguNTEsNC4yMSwxMS45NSw0LjIxLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY0LDAtMi4yNC0xLjEyLTMuNzktNC43My00LjEzbC03LjA1LS42OWMtOC4wOC0uNzctMTMuMDctNC4zLTEzLjA3LTEyLjU1LDAtOS4zOCw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzIxMC40MSwxMDcuNzMsMjE2LjE3LDEwOSwyMjAuNDcsMTEzWiIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ni45MiAtNzYuMSkiIGNsaXAtcGF0aD0idXJsKCNsbjIpIj48Zz48Zz48Zz48Zz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMi45MiwzMS42NEgxNi43N1Y0Mi44Mmg2LjE1QTExLjc0LDExLjc0LDAsMSwxLDExLjE4LDU0LjU2aDBWMjUuODFhMTAsMTAsMCwwLDAtMTAtMTBIMFY1NC41NkgwQTIyLjkyLDIyLjkyLDAsMSwwLDIyLjkyLDMxLjY0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE4LDI2LjA1SDE2Ljc3VjI0Ljg3YTEwLDEwLDAsMCwxLDEwLTEwSDI4djEuMThBMTAsMTAsMCwwLDEsMTgsMjYuMDVaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTQsMGwtLjgzLjgzYTEwLDEwLDAsMCwwLDAsMTQuMTVsLjgzLjgzLjg0LS44M2ExMCwxMCwwLDAsMCwwLTE0LjE1TDE0LDBaIi8+PGc+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjI5LjA1LDE1MS40MmExLjg0LDEuODQsMCwwLDEsMS44Ni0xLjg2LDEuNzksMS43OSwwLDAsMSwxLjMxLjU0LDEuODEsMS44MSwwLDAsMSwuNTQsMS4zMiwxLjg2LDEuODYsMCwxLDEtMy43MSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1NS41NiwxNTAuNDFhOC4zMiw4LjMyLDAsMCwxLTMsMi4zNCw4LjYyLDguNjIsMCwwLDEtMy41OS43NiwxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNDQsOC40NCwwLDAsMS0zLTEuOTUsOSw5LDAsMCwxLTEuOTQtMywxMC42MiwxMC42MiwwLDAsMSwwLTcuNTMsOSw5LDAsMCwxLDEuOTQtMyw4LjQ0LDguNDQsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOC4zLDguMywwLDAsMSwzLjY1LjgxLDEwLDEwLDAsMCwxLDMsMi4yOGwtMS44NiwxLjRhNy44Niw3Ljg2LDAsMCwwLTIuMi0xLjc2LDUuMzcsNS4zNywwLDAsMC0yLjU5LS42NCw3LjE4LDcuMTgsMCwwLDAtMi45NC41OCw3LDcsMCwwLDAtMi4yNCwxLjU2LDYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzIsOC42NCw4LjY0LDAsMCwwLDAsNS42OCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOTEsNi45MSwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNS40Miw1LjQyLDAsMCwwLDIuNjgtLjY4LDYuODYsNi44NiwwLDAsMCwyLjExLTEuOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNTkuNzcsMTQ0LjExYTEwLDEwLDAsMCwxLC42OS0zLjc2LDkuMTcsOS4xNywwLDAsMSwxLjkzLTMsOC41Nyw4LjU3LDAsMCwxLDMtMiwxMCwxMCwwLDAsMSwzLjc5LS43LDkuODgsOS44OCwwLDAsMSwzLjc3LjcsOC43Myw4LjczLDAsMCwxLDQuOTIsNC45MywxMC40OCwxMC40OCwwLDAsMSwwLDcuNTMsOC43Myw4LjczLDAsMCwxLTQuOTIsNC45MywxMC4wOCwxMC4wOCwwLDAsMS0zLjc3LjcsMTAuMTgsMTAuMTgsMCwwLDEtMy43OS0uNyw4LjU3LDguNTcsMCwwLDEtMy0xLjk1LDkuMTcsOS4xNywwLDAsMS0xLjkzLTNBMTAsMTAsMCwwLDEsMjU5Ljc3LDE0NC4xMVptMi4zMSwwYTguMjYsOC4yNiwwLDAsMCwuNDksMi44NCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOCw2LjgsMCwwLDAsMi4yNCwxLjU3LDcuMzQsNy4zNCwwLDAsMCwyLjk0LjU4LDcuMjYsNy4yNiwwLDAsMCwyLjkzLS41OCw2LjYyLDYuNjIsMCwwLDAsMy42Ni0zLjg5LDguNjQsOC42NCwwLDAsMCwwLTUuNjgsNi41Niw2LjU2LDAsMCwwLTMuNjYtMy44OCw3LjEsNy4xLDAsMCwwLTIuOTMtLjU4LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4QTYuOTMsNi45MywwLDAsMCwyNjQsMTM5YTYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzJBOC4zNSw4LjM1LDAsMCwwLDI2Mi4wOCwxNDQuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjg0LjMxLDE0MC4yMWMwLS4zMywwLS43NCwwLTEuMjJzMC0xLS4wNi0xLjQ1LDAtLjk0LS4wNi0xLjM3LDAtLjc1LDAtMWgyLjMyYzAsLjY3LjA1LDEuMzEuMDYsMS45M2E1Ljg4LDUuODgsMCwwLDAsLjEsMS4yaC4xMWE2LjI2LDYuMjYsMCwwLDEsMi4zMi0yLjUzLDYuNzYsNi43NiwwLDAsMSwzLjc5LTEuMDcsNi4xMyw2LjEzLDAsMCwxLDMuMjUuOTEsNS4yLDUuMiwwLDAsMSwyLjEyLDMsNS44Miw1LjgyLDAsMCwxLDIuNTMtMi45NCw3LjIsNy4yLDAsMCwxLDMuNTQtLjkzLDcuNiw3LjYsMCwwLDEsMy40LjY2LDUuNDQsNS40NCwwLDAsMSwyLjA3LDEuNzIsNi40OSw2LjQ5LDAsMCwxLDEsMi40NSwxNC4yMywxNC4yMywwLDAsMSwuMjksMi44NlYxNTNoLTIuMzJWMTQyLjUzYTExLjM0LDExLjM0LDAsMCwwLS4xOS0yLjExLDUuNjQsNS42NCwwLDAsMC0uNjgtMS44MywzLjUyLDMuNTIsMCwwLDAtMS4zNS0xLjMsNC42NSw0LjY1LDAsMCwwLTIuMjYtLjQ4LDUuMzMsNS4zMywwLDAsMC0yLjY3LjYsNC44MSw0LjgxLDAsMCwwLTEuNjQsMS41Miw2LjM4LDYuMzgsMCwwLDAtLjg1LDIsOSw5LDAsMCwwLS4yNSwyLjA1djEwaC0yLjMyVjE0Mi4zYTcuNTksNy41OSwwLDAsMC0uOTEtNCwzLDMsMCwwLDAtMi44LTEuNTEsNi43NSw2Ljc1LDAsMCwwLTIuNDIuNDQsNS4yNSw1LjI1LDAsMCwwLTIsMS4zNiw2LjQ4LDYuNDgsMCwwLDAtMS4zMSwyLjI4LDkuNzUsOS43NSwwLDAsMC0uNDgsMy4yMlYxNTNoLTIuMzJaIi8+PC9nPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyLjI0LDc3SDgxLjMyVjcyLjg0YTE1LjM2LDE1LjM2LDAsMCwxLTExLjE4LDQuNjQsMTQuNDcsMTQuNDcsMCwwLDEtMTAuNTgtNEM1Niw2OS45MSw1NSw2NS43LDU1LDYwLjhWMzIuMTZINjYuMThWNTkuMjVjMCw2LjExLDMuODcsOC4xNyw3LjQsOC4xN3M3LjQ4LTIuMDYsNy40OC04LjE3VjMyLjE2SDkyLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOC40MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzctMTkuMDktNi40NUwxMDksNjMuNzJjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4QzEwOSw1Ny43LDEwNCw1NC4xOCwxMDQsNDUuOTJjMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMTI4LjM2LDMxLjY0LDEzNC4xMiwzMi45MywxMzguNDIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxLjczLDI0LjUxSDE1MC4yOVYxNS4zOWgxMS40NFpNMTYxLjY0LDc3SDE1MC40NlYzMy40NWgxMS4xOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMDguMDgsMzUuNmMzLjYxLDMuNyw0LjU2LDcuODMsNC41NiwxMi43M1Y3N0gyMDEuNDZWNDkuODhjMC02LjExLTMuNzktOC4xNy03LjQtOC4xN3MtNy40OCwyLjA2LTcuNDgsOC4xN1Y3N0gxNzUuNFYzMi4xNmgxMC45MnY0LjEzYTE1LjMzLDE1LjMzLDAsMCwxLDExLjE4LTQuNjVDMjAyLDMxLjY0LDIwNS41OSwzMywyMDguMDgsMzUuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjIuNzgsNTMuMzJ2NC43M2gtMjhjMCw1Ljg0LDMuNDQsMTAsOS44LDEwLDQuOTEsMCw3LjMxLTEuNDYsMTAuMDctNC4yMWw2Ljg4LDYuNjJjLTQuNTYsNC42NC05LDctMTcsNy0xMC42NywwLTIwLjczLTQuODEtMjAuNzMtMjMsMC0xNC42Miw3LjkxLTIyLjg4LDE5LjUyLTIyLjg4QzI1NS43MiwzMS42NCwyNjIuNzgsNDAuNTksMjYyLjc4LDUzLjMyWm0tMjcuMDktNy43NGExMC44OSwxMC44OSwwLDAsMC0uOTUsNC44MWgxNi45NGExMC44OSwxMC44OSwwLDAsMC0uOTQtNC44MSw4LjQxLDguNDEsMCwwLDAtMTUuMDUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zMDYuNzIsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40LTMtNC40OCwwLTYuMzcsMi4wNi02LjM3LDQuM3MxLjI5LDMuNTIsNC42NSwzLjg3bDcsLjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy43LDguNTEsNC4yMiwxMS45NSw0LjIyLDMuODcsMCw3LjkyLTEuMjksNy45Mi00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA2LS42OGMtOC4wOC0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI5LTE0LjI4QzI5Ni42NiwzMS42NCwzMDIuNDIsMzIuOTMsMzA2LjcyLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1MS4xLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNDEtMy00LjQ3LDAtNi4zNiwyLjA2LTYuMzYsNC4zczEuMjksMy41Miw0LjY0LDMuODdsNy4wNS42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNiwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1bDcuMy03LjMxYzMuNjIsMy43LDguNTIsNC4yMiwxMiw0LjIyLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA1LS42OGMtOC4wOS0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzM0MSwzMS42NCwzNDYuOCwzMi45MywzNTEuMSwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0yNC43MywxMzkuNTVjMCwyLjY2LDEuMTIsNCw0LDRIMzN2OS40NkgyNi42MmMtOS4yLDAtMTMuMDctNi4zNi0xMy4wNy0xMi44MVY5MS44MkgyNC43M1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik03My4zMiwxNDguMDZjLTIuODQsMi45My03LjMxLDUuNTEtMTMuOTMsNS41MXMtMTEtMi41OC0xMy44NC01LjUxYy00LTQuMy01LjA4LTkuMzctNS4wOC0xNy40NnMxLTEzLjA3LDUuMDgtMTcuMzdjMi44My0yLjkyLDcuMjItNS41LDEzLjg0LTUuNXMxMS4wOSwyLjQ5LDEzLjkzLDUuNWM0LDQuMyw1LjA4LDkuMjksNS4wOCwxNy4zN1M3Ny40NSwxNDMuODUsNzMuMzIsMTQ4LjA2Wm0tOC42OC0yOC4yOWE3LjA3LDcuMDcsMCwwLDAtNS4yNS0yLDcsNywwLDAsMC01LjE2LDJjLTIuMzIsMi4yNC0yLjU4LDYuMjgtMi41OCwxMC44M3MuMjYsOC42OSwyLjU4LDEwLjkzYTcsNywwLDAsMCw1LjE2LDIsNy4wNyw3LjA3LDAsMCwwLDUuMjUtMmMyLjMyLTIuMjQsMi41OC02LjI4LDIuNTgtMTAuOTNTNjcsMTIyLDY0LjY0LDExOS43N1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMjQuMjMsMTIzLjU1djI5LjVIMTEzLjMxdi0zLjg3Yy0zLDMtNS44NCw0LjMtMTEsNC4zcy04Ljg2LTEuMzgtMTEuNDQtNGExNC4zMywxNC4zMywwLDAsMS0zLjctMTAuMDZjMC03LjEzLDQuOS0xMywxNS40OC0xM2gxMC40di0yLjI0YzAtNC45LTIuNC03LTguMzQtNy00LDAtNi4xOSwxLjEyLTguNiwzLjg3bC03LTdjNC4zOS00LjgxLDguNi02LjM2LDE2LjA4LTYuMzZDMTE3Ljc4LDEwNy43MywxMjQuMjMsMTEzLjA2LDEyNC4yMywxMjMuNTVabS0xOS42OSwxMC41OGMtNC40NywwLTYuNjIsMS44MS02LjYyLDUuMTYsMCwzLjEsMi4xNSw1LjA3LDYuNzksNS4wNywyLjc2LDAsNC43My0uMzQsNi42Mi0yLjE1LDEuMjktMS4xMSwxLjcyLTIuODMsMS43Mi01LjY3di0yLjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTE3MC4yNCwxMTEuNjljMy42MiwzLjY5LDQuNTYsNy44Miw0LjU2LDEyLjcydjI4LjY0SDE2My42MlYxMjZjMC02LjEtMy43OC04LjE3LTcuMzktOC4xN3MtNy40OSwyLjA3LTcuNDksOC4xN3YyNy4wOUgxMzcuNTZ2LTQ0LjhoMTAuOTN2NC4xMmExNS4zNCwxNS4zNCwwLDAsMSwxMS4xOC00LjY0QzE2NC4xNCwxMDcuNzMsMTY3Ljc1LDEwOS4xMSwxNzAuMjQsMTExLjY5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTIyMC40NywxMTNsLTYuODgsN2MtMi41OC0yLjMyLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDctNi4zNiw0LjNzMS4yOSwzLjUzLDQuNjQsMy44N2w3LC42OWM4Ljg2Ljg2LDEzLjMzLDUuNSwxMy4zMywxMy4xNiwwLDkuODktOC40MiwxNC42Mi0xOSwxNC42Mi03LjA1LDAtMTMuMzMtLjc4LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy42OSw4LjUxLDQuMjEsMTEuOTUsNC4yMSwzLjg3LDAsNy45MS0xLjI5LDcuOTEtNC42NCwwLTIuMjQtMS4xMi0zLjc5LTQuNzMtNC4xM2wtNy4wNS0uNjljLTguMDgtLjc3LTEzLjA3LTQuMy0xMy4wNy0xMi41NSwwLTkuMzgsOC4xNy0xNC4yOCwxNy4yOC0xNC4yOEMyMTAuNDEsMTA3LjczLDIxNi4xNywxMDksMjIwLjQ3LDExM1oiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="BusinessLoans.com"/>
     <div class="cover-header-meta">
       <strong>FUNDING TERM SHEET</strong><br/>
-      Prepared August 14, 2026 at 1:25 PM EDT<br/>
+      Prepared August 14, 2026 at 1:37 PM EDT<br/>
       Illustration only — see disclosure
     </div>
   </header>
@@ -198,11 +204,11 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <div>
       <div class="borrower-bar-label">Prepared For</div>
       <div class="borrower-bar-name">Designated Defense Security Services</div>
-      <div class="borrower-bar-sub">Prepared August 14, 2026 at 1:25 PM EDT</div>
+      <div class="borrower-bar-sub">Prepared August 14, 2026 at 1:37 PM EDT</div>
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Requested Amount</div>
-      <div class="edit-row"><span class="edit-hint">&#9998; You can edit this amount</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="300,000" aria-label="Requested amount"/></div></div>
+      <div class="edit-row"><span class="edit-hint">&#9998; You can edit this amount</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="250,000" aria-label="Requested amount"/></div></div>
       <div id="amountHelp" class="amount-help">↑ Type any amount — every offer updates instantly</div>
     </div>
   </div>
@@ -253,13 +259,15 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
   <div id="prepayWrap"></div>
 
+  <div id="schedWrap"></div>
+
   <div class="disclosure">
     <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to final lender approval and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff treatment varies by the program shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
     <span>BusinessLoans.com &middot; Funding Offers for Designated Defense Security Services</span>
-    <span>Prepared August 14, 2026 at 1:25 PM EDT</span>
+    <span>Prepared August 14, 2026 at 1:37 PM EDT</span>
   </footer>
 
 </div>
@@ -277,27 +285,19 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
      saved = payback - payoff; payoff+saved MUST equal payback on every row.
      NEVER show buy/sell/factor rate, commission, or APR.
    - Stips: the two .closing blocks (page) + the two arrays inside downloadPDF().
-   - Timestamp: replace August 14, 2026 at 1:25 PM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
+   - Timestamp: replace August 14, 2026 at 1:37 PM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
    - Tracker `deal` = merchant name (fires the open-alert email).
    See references/patterns.md for groups, month-payoff schedules, the side-by-side
    detail grid, MCA amortization, and the price-reduced strikethrough.
    ========================================================================= */
-var MASTER_MAX = 300000;
-var STATE = { requested: 300000 };
+var MASTER_MAX = 250000;
+var STATE = { requested: 250000 };
 
 var LENDER_NOTES = {
-  "Kapitus — 100% Early Payoff Program":"Pay off early at any time and <b>100% of the remaining interest is waived</b>.",
-  "Kapitus — Standard Program":"Pay off early & save — a discounted payoff applies when paid ahead of schedule.",
   "PEAC — 100% Early Payoff Program":"Pay off early at any time and <b>100% of the remaining interest is waived</b>.",
   "PEAC — Standard Program":"No origination fee. Pay off early & save — a discounted payoff applies when paid ahead of schedule."
 };
 var OFFERS = [
-  { name:"Kapitus — 100% Early Payoff Program", advance:300000, factor:1.358, weekly:7841.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"", forgive:"100% interest waived" },
-  { name:"Kapitus — 100% Early Payoff Program", advance:300000, factor:1.456, weekly:6726.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"", forgive:"100% interest waived" },
-  { name:"Kapitus — 100% Early Payoff Program", advance:300000, factor:1.486, weekly:6435.00, nPay:"69", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"", forgive:"100% interest waived" },
-  { name:"Kapitus — Standard Program", advance:300000, factor:1.308, weekly:7552.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"" },
-  { name:"Kapitus — Standard Program", advance:300000, factor:427801/300000, weekly:6587.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"" },
-  { name:"Kapitus — Standard Program", advance:300000, factor:436801/300000, weekly:6305.00, nPay:"69", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"" },
   { name:"PEAC — 100% Early Payoff Program", advance:250000, factor:1.33, weekly:5115.38, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"", forgive:"100% interest waived" },
   { name:"PEAC — 100% Early Payoff Program", advance:250000, factor:1.38, weekly:4423.08, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"", forgive:"100% interest waived" },
   { name:"PEAC — Standard Program", advance:250000, factor:1.33, weekly:5115.38, nPay:"65", term:"15", termLabel:"15-Month", origPct:0, origLabel:"0%", processing:0, position:"" },
@@ -374,11 +374,13 @@ function renderOffers(){
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback">'+money0(m.payback)+'</td>'
         + '<td class="ch-pay" data-label="'+fwCap+' Payment">'+money(m.weekly)+'</td>'
-        + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
+        + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'
+        + '<td data-label="Factor Rate">'+o.factor.toFixed(2)+'</td>'
+        + '<td data-label="Annualized Factor">'+(1+(o.factor-1)*12/(o.term-0)).toFixed(3)+'</td>'+fg+'</tr>';
     }).join("");
     var fgHead = hasForgive ? '<th>Early Payoff</th>' : '';
     return '<div class="chart-wrap"><table class="offer-chart"><thead><tr>'
-      + '<th>Offer</th><th>Term</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th><th>Total Payback</th><th>'+fwCap+' Payment</th><th># Payments</th>'+fgHead
+      + '<th>Offer</th><th>Term</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th><th>Total Payback</th><th>'+fwCap+' Payment</th><th># Payments</th><th>Factor Rate</th><th>Annualized Factor</th>'+fgHead
       + '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   if(useChart){
@@ -412,6 +414,28 @@ function renderPrepay(){
   document.getElementById("prepayWrap").innerHTML = html;
 }
 
+var SCHED = [{"num":1,"n":65,"payback":332500,"tag":"100% Early Payoff","rows":[[4,238504,258965,73535],[8,226583,267506,64994],[12,214220,275605,56895],[16,201401,283247,49253],[20,188107,290415,42085],[24,174322,297091,35409],[28,160027,303257,29243],[32,145203,308895,23605],[36,129830,313984,18516],[40,113889,318505,13995],[44,97359,322436,10064],[48,80217,325755,6745],[52,62441,328440,4060],[56,44007,330468,2032],[60,24892,331814,686],[64,5069,332453,47],[65,0,332500,0]]},{"num":2,"n":78,"payback":345000,"tag":"100% Early Payoff","rows":[[4,240857,258549,86451],[8,231393,266778,78222],[12,221597,274674,70326],[16,211456,282226,62774],[20,200960,289421,55579],[24,190094,296248,48752],[28,178848,302694,42306],[32,167206,308744,36256],[36,155155,314386,30614],[40,142681,319604,25396],[44,129768,324384,20616],[48,116403,328710,16290],[52,102567,332568,12432],[56,88246,335939,9061],[60,73422,338807,6193],[64,58077,341154,3846],[68,42193,342963,2037],[72,25752,344213,787],[76,8732,344887,113],[78,0,345000,0]]},{"num":3,"n":65,"payback":332500,"tag":"Standard","rows":[[4,238504,306763,25737],[8,226583,309752,22748],[12,214220,312587,19913],[16,201401,315261,17239],[20,188107,317770,14730],[24,174322,320107,12393],[28,160027,322265,10235],[32,145203,324238,8262],[36,129830,326019,6481],[40,113889,327602,4898],[44,97359,328978,3522],[48,80217,330139,2361],[52,62441,331079,1421],[56,44007,331789,711],[60,24892,332260,240],[64,5069,332484,16],[65,0,332500,0]]},{"num":4,"n":78,"payback":340000,"tag":"Standard","rows":[[4,240700,311348,28652],[8,231089,314086,25914],[12,221157,316712,23288],[16,210893,319223,20777],[20,200286,321613,18387],[24,189325,323879,16121],[28,177997,326017,13983],[32,166291,328022,11978],[36,154194,329891,10109],[40,141693,331618,8382],[44,128774,333199,6801],[48,115424,334629,5371],[52,101627,335903,4097],[56,87370,337015,2985],[60,72636,337961,2039],[64,57410,338734,1266],[68,41675,339330,670],[72,25415,339741,259],[76,8611,339963,37],[78,0,340000,0]]},{"num":5,"n":87,"payback":342500,"tag":"Standard","rows":[[4,241751,312750,29750],[8,233250,315285,27215],[12,224487,317730,24770],[16,215454,320080,22420],[20,206145,322333,20167],[24,196549,324486,18014],[28,186659,326536,15964],[32,176465,328480,14020],[36,165958,330314,12186],[40,155128,332035,10465],[44,143965,333639,8861],[48,132460,335124,7376],[52,120601,336485,6015],[56,108378,337718,4782],[60,95780,338820,3680],[64,82794,339787,2713],[68,69410,340614,1886],[72,55614,341297,1203],[76,41395,341832,668],[80,26739,342214,286],[84,11633,342438,62],[87,0,342500,0]]}];
+function renderSched(){
+  var el = document.getElementById("schedWrap"); if(!el) return;
+  var html = '<div class="prepay-section"><div class="prepay-head"><h2 class="prepay-title">PEAC Amortization &amp; Early-Payoff Schedules</h2></div>'
+    + '<div class="prepay-recap">Every 4th weekly payment shown (4 weeks &asymp; 1 month), plus the final payment. <b>Payoff if Paid in Full</b> is your total cost if you pay off at that point &middot; <b>You Save</b> is the interest you avoid. Figures scale with the requested amount.</div>'
+    + '<div class="detail-grid">';
+  SCHED.forEach(function(sc){
+    var o = OFFERS[sc.num-1]; var m = model(o); var s = m.s;
+    html += '<div class="detail-card"><div class="dc-head"><span>Offer '+sc.num+' &middot; '+o.termLabel+'</span><span class="dc-tag">'+sc.tag+'</span></div>'
+      + '<div class="dc-recap">'+money(m.weekly)+'/wk &times; '+o.nPay+' &middot; total payback '+money0(m.payback)+'</div>'
+      + '<table class="prepay"><thead><tr><th>Wk</th><th>Balance</th><th>Payoff if Paid in Full</th><th>You Save</th></tr></thead><tbody>';
+    sc.rows.forEach(function(r){
+      html += '<tr><td data-label="Week">'+r[0]+(r[0]===sc.n?' (final)':'')+'</td>'
+        + '<td data-label="Balance">'+money0(r[1]*s)+'</td>'
+        + '<td class="po-payoff" data-label="Payoff if Paid in Full">'+money0(r[2]*s)+'</td>'
+        + '<td class="po-saved" data-label="You Save">'+money0(r[3]*s)+'</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  });
+  html += '</div></div>';
+  el.innerHTML = html;
+}
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
@@ -419,7 +443,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers — Designated Defense Security Services", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared August 14, 2026 at 1:25 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
+  doc.text("BusinessLoans.com     Prepared August 14, 2026 at 1:37 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   OFFERS.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -433,6 +457,8 @@ function downloadPDF(){
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" months"]);
+    rows.push(["Factor rate", o.factor.toFixed(2)]);
+    rows.push(["Annualized factor rate", (1+(o.factor-1)*12/(o.term-0)).toFixed(3)]);
     rows.push(["Early payoff", o.forgive ? "100% of remaining interest waived" : "Pay off early & save"]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
@@ -463,6 +489,27 @@ function downloadPDF(){
       yy+=15;
     }
   });
+  SCHED.forEach(function(sc){
+    var o = OFFERS[sc.num-1]; var m = model(o); var s = m.s;
+    doc.addPage(); var yy=60;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text("Offer "+sc.num+" — PEAC "+o.termLabel+" ("+sc.tag+") — Amortization & Early Payoff", L, yy); yy+=15;
+    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
+    doc.text("Payment "+money(m.weekly)+"/week   "+o.nPay+" payments   Total payback "+money0(m.payback)+"   Every 4th week shown", L, yy); yy+=20;
+    var ch=[{h:"Week",x:L,a:"left"},{h:"Balance",x:300,a:"right"},{h:"Payoff if Paid in Full",x:445,a:"right"},{h:"You Save",x:R,a:"right"}];
+    doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+    ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
+    yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=13;
+    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
+    sc.rows.forEach(function(r){
+      if(yy>772){ doc.addPage(); yy=60; }
+      doc.text(String(r[0])+(r[0]===sc.n?" (final)":""), L, yy);
+      doc.text(money0(r[1]*s), 300, yy, {align:"right"});
+      doc.text(money0(r[2]*s), 445, yy, {align:"right"});
+      doc.text(money0(r[3]*s), R, yy, {align:"right"});
+      yy+=13;
+    });
+  });
   doc.save("designated-defense-offers.pdf");
 }
 
@@ -474,8 +521,8 @@ function recompute(){
   STATE.requested = r;
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
-  help.textContent = capped ? "Capped at the $300,000 maximum" : "↑ Type any amount — every offer updates instantly";
-  renderOffers(); renderPrepay();
+  help.textContent = capped ? "Capped at the $250,000 maximum" : "↑ Type any amount — every offer updates instantly";
+  renderOffers(); renderPrepay(); renderSched();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
