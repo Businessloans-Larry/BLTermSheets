@@ -98,6 +98,32 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .offer-chart tr.ch-rec td:first-child{box-shadow:inset 4px 0 0 var(--green);}
 .rec-star{color:var(--green-d);margin-right:4px;}
 @media print{.cta-slim{display:none;}}
+/* ---- amortization schedule (behind the toggle button) ---- */
+.amm-toggle-wrap{margin:18px 0 0;text-align:center;}
+.btn-amm{font-family:'Inter',sans-serif;font-weight:700;font-size:14.5px;background:#C0392B;color:#fff;border:none;border-radius:9px;padding:13px 26px;cursor:pointer;transition:background .15s,transform .05s;box-shadow:0 3px 12px rgba(192,57,43,.30);letter-spacing:.02em;}
+.btn-amm:hover{background:#A5281B;}
+.btn-amm:active{transform:translateY(1px);}
+.amm-intro{text-align:center;font-size:12px;color:var(--slate);margin:8px auto 0;max-width:820px;}
+.amm-wrap{margin-top:16px;}
+.amm-wrap[hidden]{display:none;}
+.amm-card{border:1.5px solid var(--line);border-radius:9px;padding:10px 13px;break-inside:avoid;background:#fff;}
+.amm-card h4{color:var(--navy);font-size:15px;margin:0 0 2px;}
+.amm-recap{font-size:11.5px;color:var(--slate);margin:0 0 8px;line-height:1.5;}
+.amm-recap b{color:var(--navy);}
+.amm-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table.amm-sched{width:100%;border-collapse:collapse;font-size:11.5px;min-width:720px;}
+table.amm-sched th{background:var(--navy);color:#fff;font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:.02em;padding:5px 7px;text-align:right;line-height:1.25;}
+table.amm-sched th:first-child{text-align:left;}
+table.amm-sched td{padding:4px 7px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--navy);}
+table.amm-sched td:first-child{text-align:left;font-weight:700;}
+table.amm-sched tbody tr:nth-child(even){background:var(--bg);}
+table.amm-sched .po{color:var(--navy);font-weight:700;}
+table.amm-sched .disc{color:var(--green-d);font-weight:600;}
+table.amm-sched .eff{color:#C0392B;font-weight:800;}
+table.amm-sched tr.fgstep td{background:rgba(0,205,103,.16);box-shadow:inset 0 0 0 1px rgba(0,163,82,.35);}
+.amm-note{border:2px solid var(--green);background:linear-gradient(180deg,rgba(0,205,103,.13),rgba(0,205,103,.03));border-radius:10px;padding:10px 14px;margin:0 0 10px;font-size:12.5px;color:var(--navy);line-height:1.5;}
+.amm-note b{color:var(--green-d);}
+@media print{.amm-wrap[hidden]{display:block;}.amm-toggle-wrap,.amm-intro{display:none;}table.amm-sched{min-width:0;font-size:7.5px;}}
 /* reactive offer chart (default for 3+ offers) */
 .chart-wrap{overflow-x:auto;margin:0 0 3px;-webkit-overflow-scrolling:touch;}
 .offer-chart{width:100%;border-collapse:collapse;font-size:13px;min-width:640px;}
@@ -206,7 +232,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTguMiA3OC4yIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwMmY2ODt9LmNscy0ye2ZpbGw6IzAwY2Q2Nzt9LmNscy0ze2ZpbGw6IzAwY2RlZjt9LmNscy00e2ZpbGw6IzYwYWZmMDt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImxuMSI+PHJlY3QgeD0iLTYiIHk9Ii02IiB3aWR0aD0iMzY2IiBoZWlnaHQ9IjkwIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImxuMiI+PHJlY3QgeD0iLTYiIHk9Ijg0IiB3aWR0aD0iMzY2IiBoZWlnaHQ9Ijc2Ii8+PC9jbGlwUGF0aD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2xuMSkiPjxnPjxnPjxnPjxnPjxnPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyLjkyLDMxLjY0SDE2Ljc3VjQyLjgyaDYuMTVBMTEuNzQsMTEuNzQsMCwxLDEsMTEuMTgsNTQuNTZoMFYyNS44MWExMCwxMCwwLDAsMC0xMC0xMEgwVjU0LjU2SDBBMjIuOTIsMjIuOTIsMCwxLDAsMjIuOTIsMzEuNjRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgsMjYuMDVIMTYuNzdWMjQuODdhMTAsMTAsMCwwLDEsMTAtMTBIMjh2MS4xOEExMCwxMCwwLDAsMSwxOCwyNi4wNVoiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNCwwbC0uODMuODNhMTAsMTAsMCwwLDAsMCwxNC4xNWwuODMuODMuODQtLjgzYTEwLDEwLDAsMCwwLDAtMTQuMTVMMTQsMFoiLz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMjkuMDUsMTUxLjQyYTEuODQsMS44NCwwLDAsMSwxLjg2LTEuODYsMS43OSwxLjc5LDAsMCwxLDEuMzEuNTQsMS44MSwxLjgxLDAsMCwxLC41NCwxLjMyLDEuODYsMS44NiwwLDEsMS0zLjcxLDBaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjU1LjU2LDE1MC40MWE4LjMyLDguMzIsMCwwLDEtMywyLjM0LDguNjIsOC42MiwwLDAsMS0zLjU5Ljc2LDEwLjE4LDEwLjE4LDAsMCwxLTMuNzktLjcsOC40NCw4LjQ0LDAsMCwxLTMtMS45NSw5LDksMCwwLDEtMS45NC0zLDEwLjYyLDEwLjYyLDAsMCwxLDAtNy41Myw5LDksMCwwLDEsMS45NC0zLDguNDQsOC40NCwwLDAsMSwzLTIsMTAsMTAsMCwwLDEsMy43OS0uNyw4LjMsOC4zLDAsMCwxLDMuNjUuODEsMTAsMTAsMCwwLDEsMywyLjI4bC0xLjg2LDEuNGE3Ljg2LDcuODYsMCwwLDAtMi4yLTEuNzYsNS4zNyw1LjM3LDAsMCwwLTIuNTktLjY0LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4LDcsNywwLDAsMC0yLjI0LDEuNTYsNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMiw4LjY0LDguNjQsMCwwLDAsMCw1LjY4LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi45MSw2LjkxLDAsMCwwLDIuMjQsMS41Nyw3LjM0LDcuMzQsMCwwLDAsMi45NC41OCw1LjQyLDUuNDIsMCwwLDAsMi42OC0uNjgsNi44Niw2Ljg2LDAsMCwwLDIuMTEtMS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1OS43NywxNDQuMTFhMTAsMTAsMCwwLDEsLjY5LTMuNzYsOS4xNyw5LjE3LDAsMCwxLDEuOTMtMyw4LjU3LDguNTcsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOS44OCw5Ljg4LDAsMCwxLDMuNzcuNyw4LjczLDguNzMsMCwwLDEsNC45Miw0LjkzLDEwLjQ4LDEwLjQ4LDAsMCwxLDAsNy41Myw4LjczLDguNzMsMCwwLDEtNC45Miw0LjkzLDEwLjA4LDEwLjA4LDAsMCwxLTMuNzcuNywxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNTcsOC41NywwLDAsMS0zLTEuOTUsOS4xNyw5LjE3LDAsMCwxLTEuOTMtM0ExMCwxMCwwLDAsMSwyNTkuNzcsMTQ0LjExWm0yLjMxLDBhOC4yNiw4LjI2LDAsMCwwLC40OSwyLjg0LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi44LDYuOCwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNy4yNiw3LjI2LDAsMCwwLDIuOTMtLjU4LDYuNjIsNi42MiwwLDAsMCwzLjY2LTMuODksOC42NCw4LjY0LDAsMCwwLDAtNS42OCw2LjU2LDYuNTYsMCwwLDAtMy42Ni0zLjg4LDcuMSw3LjEsMCwwLDAtMi45My0uNTgsNy4xOCw3LjE4LDAsMCwwLTIuOTQuNThBNi45Myw2LjkzLDAsMCwwLDI2NCwxMzlhNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMkE4LjM1LDguMzUsMCwwLDAsMjYyLjA4LDE0NC4xMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yODQuMzEsMTQwLjIxYzAtLjMzLDAtLjc0LDAtMS4yMnMwLTEtLjA2LTEuNDUsMC0uOTQtLjA2LTEuMzcsMC0uNzUsMC0xaDIuMzJjMCwuNjcuMDUsMS4zMS4wNiwxLjkzYTUuODgsNS44OCwwLDAsMCwuMSwxLjJoLjExYTYuMjYsNi4yNiwwLDAsMSwyLjMyLTIuNTMsNi43Niw2Ljc2LDAsMCwxLDMuNzktMS4wNyw2LjEzLDYuMTMsMCwwLDEsMy4yNS45MSw1LjIsNS4yLDAsMCwxLDIuMTIsMyw1LjgyLDUuODIsMCwwLDEsMi41My0yLjk0LDcuMiw3LjIsMCwwLDEsMy41NC0uOTMsNy42LDcuNiwwLDAsMSwzLjQuNjYsNS40NCw1LjQ0LDAsMCwxLDIuMDcsMS43Miw2LjQ5LDYuNDksMCwwLDEsMSwyLjQ1LDE0LjIzLDE0LjIzLDAsMCwxLC4yOSwyLjg2VjE1M2gtMi4zMlYxNDIuNTNhMTEuMzQsMTEuMzQsMCwwLDAtLjE5LTIuMTEsNS42NCw1LjY0LDAsMCwwLS42OC0xLjgzLDMuNTIsMy41MiwwLDAsMC0xLjM1LTEuMyw0LjY1LDQuNjUsMCwwLDAtMi4yNi0uNDgsNS4zMyw1LjMzLDAsMCwwLTIuNjcuNiw0LjgxLDQuODEsMCwwLDAtMS42NCwxLjUyLDYuMzgsNi4zOCwwLDAsMC0uODUsMiw5LDksMCwwLDAtLjI1LDIuMDV2MTBoLTIuMzJWMTQyLjNhNy41OSw3LjU5LDAsMCwwLS45MS00LDMsMywwLDAsMC0yLjgtMS41MSw2Ljc1LDYuNzUsMCwwLDAtMi40Mi40NCw1LjI1LDUuMjUsMCwwLDAtMiwxLjM2LDYuNDgsNi40OCwwLDAsMC0xLjMxLDIuMjgsOS43NSw5Ljc1LDAsMCwwLS40OCwzLjIyVjE1M2gtMi4zMloiLz48L2c+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIuMjQsNzdIODEuMzJWNzIuODRhMTUuMzYsMTUuMzYsMCwwLDEtMTEuMTgsNC42NCwxNC40NywxNC40NywwLDAsMS0xMC41OC00QzU2LDY5LjkxLDU1LDY1LjcsNTUsNjAuOFYzMi4xNkg2Ni4xOFY1OS4yNWMwLDYuMTEsMy44Nyw4LjE3LDcuNCw4LjE3czcuNDgtMi4wNiw3LjQ4LTguMTdWMzIuMTZIOTIuMjRaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM4LjQyLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNC0zLTQuNDgsMC02LjM3LDIuMDYtNi4zNyw0LjNzMS4yOSwzLjUyLDQuNjUsMy44N2w3LC42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNSwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1TDEwOSw2My43MmMzLjYxLDMuNyw4LjUxLDQuMjIsMTEuOTUsNC4yMiwzLjg3LDAsNy45Mi0xLjI5LDcuOTItNC42NSwwLTIuMjMtMS4xMi0zLjc4LTQuNzMtNC4xM2wtNy4wNi0uNjhDMTA5LDU3LjcsMTA0LDU0LjE4LDEwNCw0NS45MmMwLTkuMzcsOC4xNy0xNC4yOCwxNy4yOS0xNC4yOEMxMjguMzYsMzEuNjQsMTM0LjEyLDMyLjkzLDEzOC40MiwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNzMsMjQuNTFIMTUwLjI5VjE1LjM5aDExLjQ0Wk0xNjEuNjQsNzdIMTUwLjQ2VjMzLjQ1aDExLjE4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwOC4wOCwzNS42YzMuNjEsMy43LDQuNTYsNy44Myw0LjU2LDEyLjczVjc3SDIwMS40NlY0OS44OGMwLTYuMTEtMy43OS04LjE3LTcuNC04LjE3cy03LjQ4LDIuMDYtNy40OCw4LjE3Vjc3SDE3NS40VjMyLjE2aDEwLjkydjQuMTNhMTUuMzMsMTUuMzMsMCwwLDEsMTEuMTgtNC42NUMyMDIsMzEuNjQsMjA1LjU5LDMzLDIwOC4wOCwzNS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI2Mi43OCw1My4zMnY0LjczaC0yOGMwLDUuODQsMy40NCwxMCw5LjgsMTAsNC45MSwwLDcuMzEtMS40NiwxMC4wNy00LjIxbDYuODgsNi42MmMtNC41Niw0LjY0LTksNy0xNyw3LTEwLjY3LDAtMjAuNzMtNC44MS0yMC43My0yMywwLTE0LjYyLDcuOTEtMjIuODgsMTkuNTItMjIuODhDMjU1LjcyLDMxLjY0LDI2Mi43OCw0MC41OSwyNjIuNzgsNTMuMzJabS0yNy4wOS03Ljc0YTEwLjg5LDEwLjg5LDAsMCwwLS45NSw0LjgxaDE2Ljk0YTEwLjg5LDEwLjg5LDAsMCwwLS45NC00LjgxLDguNDEsOC40MSwwLDAsMC0xNS4wNSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwNi43MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcsMC0xMy4zMy0uNzctMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4Yy04LjA4LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMjk2LjY2LDMxLjY0LDMwMi40MiwzMi45MywzMDYuNzIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzUxLjEsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDYtNi4zNiw0LjNzMS4yOSwzLjUyLDQuNjQsMy44N2w3LjA1LjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LjA2LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zLTcuMzFjMy42MiwzLjcsOC41Miw0LjIyLDEyLDQuMjIsMy44NywwLDcuOTEtMS4yOSw3LjkxLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDUtLjY4Yy04LjA5LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjgtMTQuMjhDMzQxLDMxLjY0LDM0Ni44LDMyLjkzLDM1MS4xLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTI0LjczLDEzOS41NWMwLDIuNjYsMS4xMiw0LDQsNEgzM3Y5LjQ2SDI2LjYyYy05LjIsMC0xMy4wNy02LjM2LTEzLjA3LTEyLjgxVjkxLjgySDI0LjczWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTczLjMyLDE0OC4wNmMtMi44NCwyLjkzLTcuMzEsNS41MS0xMy45Myw1LjUxcy0xMS0yLjU4LTEzLjg0LTUuNTFjLTQtNC4zLTUuMDgtOS4zNy01LjA4LTE3LjQ2czEtMTMuMDcsNS4wOC0xNy4zN2MyLjgzLTIuOTIsNy4yMi01LjUsMTMuODQtNS41czExLjA5LDIuNDksMTMuOTMsNS41YzQsNC4zLDUuMDgsOS4yOSw1LjA4LDE3LjM3Uzc3LjQ1LDE0My44NSw3My4zMiwxNDguMDZabS04LjY4LTI4LjI5YTcuMDcsNy4wNywwLDAsMC01LjI1LTIsNyw3LDAsMCwwLTUuMTYsMmMtMi4zMiwyLjI0LTIuNTgsNi4yOC0yLjU4LDEwLjgzcy4yNiw4LjY5LDIuNTgsMTAuOTNhNyw3LDAsMCwwLDUuMTYsMiw3LjA3LDcuMDcsMCwwLDAsNS4yNS0yYzIuMzItMi4yNCwyLjU4LTYuMjgsMi41OC0xMC45M1M2NywxMjIsNjQuNjQsMTE5Ljc3WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTEyNC4yMywxMjMuNTV2MjkuNUgxMTMuMzF2LTMuODdjLTMsMy01Ljg0LDQuMy0xMSw0LjNzLTguODYtMS4zOC0xMS40NC00YTE0LjMzLDE0LjMzLDAsMCwxLTMuNy0xMC4wNmMwLTcuMTMsNC45LTEzLDE1LjQ4LTEzaDEwLjR2LTIuMjRjMC00LjktMi40LTctOC4zNC03LTQsMC02LjE5LDEuMTItOC42LDMuODdsLTctN2M0LjM5LTQuODEsOC42LTYuMzYsMTYuMDgtNi4zNkMxMTcuNzgsMTA3LjczLDEyNC4yMywxMTMuMDYsMTI0LjIzLDEyMy41NVptLTE5LjY5LDEwLjU4Yy00LjQ3LDAtNi42MiwxLjgxLTYuNjIsNS4xNiwwLDMuMSwyLjE1LDUuMDcsNi43OSw1LjA3LDIuNzYsMCw0LjczLS4zNCw2LjYyLTIuMTUsMS4yOS0xLjExLDEuNzItMi44MywxLjcyLTUuNjd2LTIuNDFaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMTcwLjI0LDExMS42OWMzLjYyLDMuNjksNC41Niw3LjgyLDQuNTYsMTIuNzJ2MjguNjRIMTYzLjYyVjEyNmMwLTYuMS0zLjc4LTguMTctNy4zOS04LjE3cy03LjQ5LDIuMDctNy40OSw4LjE3djI3LjA5SDEzNy41NnYtNDQuOGgxMC45M3Y0LjEyYTE1LjM0LDE1LjM0LDAsMCwxLDExLjE4LTQuNjRDMTY0LjE0LDEwNy43MywxNjcuNzUsMTA5LjExLDE3MC4yNCwxMTEuNjlaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMjIwLjQ3LDExM2wtNi44OCw3Yy0yLjU4LTIuMzItNi40NS0zLTEwLjQxLTMtNC40NywwLTYuMzYsMi4wNy02LjM2LDQuM3MxLjI5LDMuNTMsNC42NCwzLjg3bDcsLjY5YzguODYuODYsMTMuMzMsNS41LDEzLjMzLDEzLjE2LDAsOS44OS04LjQyLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzgtMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjY5LDguNTEsNC4yMSwxMS45NSw0LjIxLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY0LDAtMi4yNC0xLjEyLTMuNzktNC43My00LjEzbC03LjA1LS42OWMtOC4wOC0uNzctMTMuMDctNC4zLTEzLjA3LTEyLjU1LDAtOS4zOCw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzIxMC40MSwxMDcuNzMsMjE2LjE3LDEwOSwyMjAuNDcsMTEzWiIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ni45MiAtNzYuMSkiIGNsaXAtcGF0aD0idXJsKCNsbjIpIj48Zz48Zz48Zz48Zz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMi45MiwzMS42NEgxNi43N1Y0Mi44Mmg2LjE1QTExLjc0LDExLjc0LDAsMSwxLDExLjE4LDU0LjU2aDBWMjUuODFhMTAsMTAsMCwwLDAtMTAtMTBIMFY1NC41NkgwQTIyLjkyLDIyLjkyLDAsMSwwLDIyLjkyLDMxLjY0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE4LDI2LjA1SDE2Ljc3VjI0Ljg3YTEwLDEwLDAsMCwxLDEwLTEwSDI4djEuMThBMTAsMTAsMCwwLDEsMTgsMjYuMDVaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTQsMGwtLjgzLjgzYTEwLDEwLDAsMCwwLDAsMTQuMTVsLjgzLjgzLjg0LS44M2ExMCwxMCwwLDAsMCwwLTE0LjE1TDE0LDBaIi8+PGc+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjI5LjA1LDE1MS40MmExLjg0LDEuODQsMCwwLDEsMS44Ni0xLjg2LDEuNzksMS43OSwwLDAsMSwxLjMxLjU0LDEuODEsMS44MSwwLDAsMSwuNTQsMS4zMiwxLjg2LDEuODYsMCwxLDEtMy43MSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1NS41NiwxNTAuNDFhOC4zMiw4LjMyLDAsMCwxLTMsMi4zNCw4LjYyLDguNjIsMCwwLDEtMy41OS43NiwxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNDQsOC40NCwwLDAsMS0zLTEuOTUsOSw5LDAsMCwxLTEuOTQtMywxMC42MiwxMC42MiwwLDAsMSwwLTcuNTMsOSw5LDAsMCwxLDEuOTQtMyw4LjQ0LDguNDQsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOC4zLDguMywwLDAsMSwzLjY1LjgxLDEwLDEwLDAsMCwxLDMsMi4yOGwtMS44NiwxLjRhNy44Niw3Ljg2LDAsMCwwLTIuMi0xLjc2LDUuMzcsNS4zNywwLDAsMC0yLjU5LS42NCw3LjE4LDcuMTgsMCwwLDAtMi45NC41OCw3LDcsMCwwLDAtMi4yNCwxLjU2LDYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzIsOC42NCw4LjY0LDAsMCwwLDAsNS42OCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOTEsNi45MSwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNS40Miw1LjQyLDAsMCwwLDIuNjgtLjY4LDYuODYsNi44NiwwLDAsMCwyLjExLTEuOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNTkuNzcsMTQ0LjExYTEwLDEwLDAsMCwxLC42OS0zLjc2LDkuMTcsOS4xNywwLDAsMSwxLjkzLTMsOC41Nyw4LjU3LDAsMCwxLDMtMiwxMCwxMCwwLDAsMSwzLjc5LS43LDkuODgsOS44OCwwLDAsMSwzLjc3LjcsOC43Myw4LjczLDAsMCwxLDQuOTIsNC45MywxMC40OCwxMC40OCwwLDAsMSwwLDcuNTMsOC43Myw4LjczLDAsMCwxLTQuOTIsNC45MywxMC4wOCwxMC4wOCwwLDAsMS0zLjc3LjcsMTAuMTgsMTAuMTgsMCwwLDEtMy43OS0uNyw4LjU3LDguNTcsMCwwLDEtMy0xLjk1LDkuMTcsOS4xNywwLDAsMS0xLjkzLTNBMTAsMTAsMCwwLDEsMjU5Ljc3LDE0NC4xMVptMi4zMSwwYTguMjYsOC4yNiwwLDAsMCwuNDksMi44NCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOCw2LjgsMCwwLDAsMi4yNCwxLjU3LDcuMzQsNy4zNCwwLDAsMCwyLjk0LjU4LDcuMjYsNy4yNiwwLDAsMCwyLjkzLS41OCw2LjYyLDYuNjIsMCwwLDAsMy42Ni0zLjg5LDguNjQsOC42NCwwLDAsMCwwLTUuNjgsNi41Niw2LjU2LDAsMCwwLTMuNjYtMy44OCw3LjEsNy4xLDAsMCwwLTIuOTMtLjU4LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4QTYuOTMsNi45MywwLDAsMCwyNjQsMTM5YTYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzJBOC4zNSw4LjM1LDAsMCwwLDI2Mi4wOCwxNDQuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjg0LjMxLDE0MC4yMWMwLS4zMywwLS43NCwwLTEuMjJzMC0xLS4wNi0xLjQ1LDAtLjk0LS4wNi0xLjM3LDAtLjc1LDAtMWgyLjMyYzAsLjY3LjA1LDEuMzEuMDYsMS45M2E1Ljg4LDUuODgsMCwwLDAsLjEsMS4yaC4xMWE2LjI2LDYuMjYsMCwwLDEsMi4zMi0yLjUzLDYuNzYsNi43NiwwLDAsMSwzLjc5LTEuMDcsNi4xMyw2LjEzLDAsMCwxLDMuMjUuOTEsNS4yLDUuMiwwLDAsMSwyLjEyLDMsNS44Miw1LjgyLDAsMCwxLDIuNTMtMi45NCw3LjIsNy4yLDAsMCwxLDMuNTQtLjkzLDcuNiw3LjYsMCwwLDEsMy40LjY2LDUuNDQsNS40NCwwLDAsMSwyLjA3LDEuNzIsNi40OSw2LjQ5LDAsMCwxLDEsMi40NSwxNC4yMywxNC4yMywwLDAsMSwuMjksMi44NlYxNTNoLTIuMzJWMTQyLjUzYTExLjM0LDExLjM0LDAsMCwwLS4xOS0yLjExLDUuNjQsNS42NCwwLDAsMC0uNjgtMS44MywzLjUyLDMuNTIsMCwwLDAtMS4zNS0xLjMsNC42NSw0LjY1LDAsMCwwLTIuMjYtLjQ4LDUuMzMsNS4zMywwLDAsMC0yLjY3LjYsNC44MSw0LjgxLDAsMCwwLTEuNjQsMS41Miw2LjM4LDYuMzgsMCwwLDAtLjg1LDIsOSw5LDAsMCwwLS4yNSwyLjA1djEwaC0yLjMyVjE0Mi4zYTcuNTksNy41OSwwLDAsMC0uOTEtNCwzLDMsMCwwLDAtMi44LTEuNTEsNi43NSw2Ljc1LDAsMCwwLTIuNDIuNDQsNS4yNSw1LjI1LDAsMCwwLTIsMS4zNiw2LjQ4LDYuNDgsMCwwLDAtMS4zMSwyLjI4LDkuNzUsOS43NSwwLDAsMC0uNDgsMy4yMlYxNTNoLTIuMzJaIi8+PC9nPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyLjI0LDc3SDgxLjMyVjcyLjg0YTE1LjM2LDE1LjM2LDAsMCwxLTExLjE4LDQuNjQsMTQuNDcsMTQuNDcsMCwwLDEtMTAuNTgtNEM1Niw2OS45MSw1NSw2NS43LDU1LDYwLjhWMzIuMTZINjYuMThWNTkuMjVjMCw2LjExLDMuODcsOC4xNyw3LjQsOC4xN3M3LjQ4LTIuMDYsNy40OC04LjE3VjMyLjE2SDkyLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOC40MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzctMTkuMDktNi40NUwxMDksNjMuNzJjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4QzEwOSw1Ny43LDEwNCw1NC4xOCwxMDQsNDUuOTJjMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMTI4LjM2LDMxLjY0LDEzNC4xMiwzMi45MywxMzguNDIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxLjczLDI0LjUxSDE1MC4yOVYxNS4zOWgxMS40NFpNMTYxLjY0LDc3SDE1MC40NlYzMy40NWgxMS4xOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMDguMDgsMzUuNmMzLjYxLDMuNyw0LjU2LDcuODMsNC41NiwxMi43M1Y3N0gyMDEuNDZWNDkuODhjMC02LjExLTMuNzktOC4xNy03LjQtOC4xN3MtNy40OCwyLjA2LTcuNDgsOC4xN1Y3N0gxNzUuNFYzMi4xNmgxMC45MnY0LjEzYTE1LjMzLDE1LjMzLDAsMCwxLDExLjE4LTQuNjVDMjAyLDMxLjY0LDIwNS41OSwzMywyMDguMDgsMzUuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjIuNzgsNTMuMzJ2NC43M2gtMjhjMCw1Ljg0LDMuNDQsMTAsOS44LDEwLDQuOTEsMCw3LjMxLTEuNDYsMTAuMDctNC4yMWw2Ljg4LDYuNjJjLTQuNTYsNC42NC05LDctMTcsNy0xMC42NywwLTIwLjczLTQuODEtMjAuNzMtMjMsMC0xNC42Miw3LjkxLTIyLjg4LDE5LjUyLTIyLjg4QzI1NS43MiwzMS42NCwyNjIuNzgsNDAuNTksMjYyLjc4LDUzLjMyWm0tMjcuMDktNy43NGExMC44OSwxMC44OSwwLDAsMC0uOTUsNC44MWgxNi45NGExMC44OSwxMC44OSwwLDAsMC0uOTQtNC44MSw4LjQxLDguNDEsMCwwLDAtMTUuMDUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zMDYuNzIsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40LTMtNC40OCwwLTYuMzcsMi4wNi02LjM3LDQuM3MxLjI5LDMuNTIsNC42NSwzLjg3bDcsLjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy43LDguNTEsNC4yMiwxMS45NSw0LjIyLDMuODcsMCw3LjkyLTEuMjksNy45Mi00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA2LS42OGMtOC4wOC0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI5LTE0LjI4QzI5Ni42NiwzMS42NCwzMDIuNDIsMzIuOTMsMzA2LjcyLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1MS4xLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNDEtMy00LjQ3LDAtNi4zNiwyLjA2LTYuMzYsNC4zczEuMjksMy41Miw0LjY0LDMuODdsNy4wNS42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNiwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1bDcuMy03LjMxYzMuNjIsMy43LDguNTIsNC4yMiwxMiw0LjIyLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA1LS42OGMtOC4wOS0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzM0MSwzMS42NCwzNDYuOCwzMi45MywzNTEuMSwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0yNC43MywxMzkuNTVjMCwyLjY2LDEuMTIsNCw0LDRIMzN2OS40NkgyNi42MmMtOS4yLDAtMTMuMDctNi4zNi0xMy4wNy0xMi44MVY5MS44MkgyNC43M1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik03My4zMiwxNDguMDZjLTIuODQsMi45My03LjMxLDUuNTEtMTMuOTMsNS41MXMtMTEtMi41OC0xMy44NC01LjUxYy00LTQuMy01LjA4LTkuMzctNS4wOC0xNy40NnMxLTEzLjA3LDUuMDgtMTcuMzdjMi44My0yLjkyLDcuMjItNS41LDEzLjg0LTUuNXMxMS4wOSwyLjQ5LDEzLjkzLDUuNWM0LDQuMyw1LjA4LDkuMjksNS4wOCwxNy4zN1M3Ny40NSwxNDMuODUsNzMuMzIsMTQ4LjA2Wm0tOC42OC0yOC4yOWE3LjA3LDcuMDcsMCwwLDAtNS4yNS0yLDcsNywwLDAsMC01LjE2LDJjLTIuMzIsMi4yNC0yLjU4LDYuMjgtMi41OCwxMC44M3MuMjYsOC42OSwyLjU4LDEwLjkzYTcsNywwLDAsMCw1LjE2LDIsNy4wNyw3LjA3LDAsMCwwLDUuMjUtMmMyLjMyLTIuMjQsMi41OC02LjI4LDIuNTgtMTAuOTNTNjcsMTIyLDY0LjY0LDExOS43N1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMjQuMjMsMTIzLjU1djI5LjVIMTEzLjMxdi0zLjg3Yy0zLDMtNS44NCw0LjMtMTEsNC4zcy04Ljg2LTEuMzgtMTEuNDQtNGExNC4zMywxNC4zMywwLDAsMS0zLjctMTAuMDZjMC03LjEzLDQuOS0xMywxNS40OC0xM2gxMC40di0yLjI0YzAtNC45LTIuNC03LTguMzQtNy00LDAtNi4xOSwxLjEyLTguNiwzLjg3bC03LTdjNC4zOS00LjgxLDguNi02LjM2LDE2LjA4LTYuMzZDMTE3Ljc4LDEwNy43MywxMjQuMjMsMTEzLjA2LDEyNC4yMywxMjMuNTVabS0xOS42OSwxMC41OGMtNC40NywwLTYuNjIsMS44MS02LjYyLDUuMTYsMCwzLjEsMi4xNSw1LjA3LDYuNzksNS4wNywyLjc2LDAsNC43My0uMzQsNi42Mi0yLjE1LDEuMjktMS4xMSwxLjcyLTIuODMsMS43Mi01LjY3di0yLjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTE3MC4yNCwxMTEuNjljMy42MiwzLjY5LDQuNTYsNy44Miw0LjU2LDEyLjcydjI4LjY0SDE2My42MlYxMjZjMC02LjEtMy43OC04LjE3LTcuMzktOC4xN3MtNy40OSwyLjA3LTcuNDksOC4xN3YyNy4wOUgxMzcuNTZ2LTQ0LjhoMTAuOTN2NC4xMmExNS4zNCwxNS4zNCwwLDAsMSwxMS4xOC00LjY0QzE2NC4xNCwxMDcuNzMsMTY3Ljc1LDEwOS4xMSwxNzAuMjQsMTExLjY5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTIyMC40NywxMTNsLTYuODgsN2MtMi41OC0yLjMyLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDctNi4zNiw0LjNzMS4yOSwzLjUzLDQuNjQsMy44N2w3LC42OWM4Ljg2Ljg2LDEzLjMzLDUuNSwxMy4zMywxMy4xNiwwLDkuODktOC40MiwxNC42Mi0xOSwxNC42Mi03LjA1LDAtMTMuMzMtLjc4LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy42OSw4LjUxLDQuMjEsMTEuOTUsNC4yMSwzLjg3LDAsNy45MS0xLjI5LDcuOTEtNC42NCwwLTIuMjQtMS4xMi0zLjc5LTQuNzMtNC4xM2wtNy4wNS0uNjljLTguMDgtLjc3LTEzLjA3LTQuMy0xMy4wNy0xMi41NSwwLTkuMzgsOC4xNy0xNC4yOCwxNy4yOC0xNC4yOEMyMTAuNDEsMTA3LjczLDIxNi4xNywxMDksMjIwLjQ3LDExM1oiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="BusinessLoans.com"/>
     <div class="cover-header-meta">
       <strong>FUNDING TERM SHEET</strong><br/>
-      Prepared August 13, 2026 at 8:13 PM EDT<br/>
+      Prepared August 13, 2026 at 8:25 PM EDT<br/>
       Illustration only — see disclosure
     </div>
   </header>
@@ -217,7 +243,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <div>
       <div class="borrower-bar-label">Prepared For</div>
       <div class="borrower-bar-name">Auto Experts USA LLC</div>
-      <div class="borrower-bar-sub">Prepared August 13, 2026 at 8:13 PM EDT</div>
+      <div class="borrower-bar-sub">Prepared August 13, 2026 at 8:25 PM EDT</div>
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Requested Amount</div>
@@ -275,21 +301,27 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div class="actions">
     <button id="pdfBtn" class="btn-pdf">&#11015; Download PDF</button>
     <button id="revBtn" class="btn-rev" type="button">&#9998; Request revisions</button>
-    <span class="btn-hint">Plain PDF — offer summary plus the early-payoff schedule.</span>
+    <span class="btn-hint">Plain PDF — offer summary, requirements, and the full amortization schedule.</span>
   </div>
 
   <h2 class="section-title">Offer</h2>
   <div id="offerWrap"></div>
 
+  <div class="amm-toggle-wrap">
+    <button id="ammBtn" class="btn-amm">&#9660; Show the full amortization &amp; early-payoff schedule</button>
+    <div class="amm-intro">All 52 payments: the balance, the interest, what it costs to clear the loan after any payment &mdash; and the effective factor rate you would end up paying if you did. Scales with the amount above.</div>
+  </div>
+  <div id="ammWrap" class="amm-wrap" hidden></div>
+
   <div id="prepayWrap"></div>
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. The offer is subject to underwriting and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Payments are made every two weeks. The total payback shown is the full amount if the balance is carried to the end of the term &mdash; you can pay off early and save, with 50% of remaining interest waived in the first 12 months and 100% waived thereafter. All figures scale with the requested amount and cap at the offer maximum. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. The offer is subject to underwriting and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Payments are made every two weeks. The total payback shown is the full amount if the balance is carried to the end of the term &mdash; you can pay off early and save, with 50% of remaining interest waived in the first 12 months and 100% waived thereafter. The amortization schedule shown is the lender's own schedule for a $2,000,000 advance; every figure scales with the requested amount and caps at the offer maximum. The effective factor rate on each row is what you would have paid in total &mdash; payments made plus the discounted payoff &mdash; divided by the advance, rounded to three decimals. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
     <span>BusinessLoans.com &middot; Funding Offers for Auto Experts USA LLC</span>
-    <span>Prepared August 13, 2026 at 8:13 PM EDT</span>
+    <span>Prepared August 13, 2026 at 8:25 PM EDT</span>
   </footer>
 
 </div>
@@ -307,7 +339,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
      saved = payback - payoff; payoff+saved MUST equal payback on every row.
      NEVER show buy/sell/factor rate, commission, or APR.
    - Stips: the two .closing blocks (page) + the two arrays inside downloadPDF().
-   - Timestamp: replace August 13, 2026 at 8:13 PM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
+   - Timestamp: replace August 13, 2026 at 8:25 PM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
    - Tracker `deal` = merchant name (fires the open-alert email).
    See references/patterns.md for groups, month-payoff schedules, the side-by-side
    detail grid, MCA amortization, and the price-reduced strikethrough.
@@ -319,7 +351,67 @@ var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header"
 var OFFERS = [
   { name:"Mulligan Funding — Reserve", advance:2000000, factor:1.265, weekly:48653.85, nPay:"52", term:"24", termLabel:"24-Month",
     origPct:0.03, origLabel:"3%", processing:0, position:"1st", freq:"biweekly",
-    forgive:"50% of interest waived months 0–12 · 100% waived thereafter" }
+    forgive:"50% of interest waived months 0–12 · 100% waived thereafter",
+    /* Lender's own amortization schedule, verbatim (Auto-Experts-US-2000000-24m.pdf, 8/14/26),
+       stated at the $2,000,000 base and scaled by model().s. Each row:
+       [outstanding balance, interest paid, principal paid, total cost of credit,
+        interest discount if paid early, discounted payoff balance].
+       Effective factor = (payback - interest discount) / advance -- scale-invariant. */
+    fgStep:27,
+  rows:[
+    [2481346.15,18549.89,30103.96,18549.89,255725.05,2225621.09],
+    [2432692.30,18270.67,30383.18,36820.56,246589.72,2186102.58],
+    [2384038.45,17988.87,30664.98,54809.43,237595.29,2146443.17],
+    [2335384.60,17704.46,30949.39,72513.89,228743.05,2106641.54],
+    [2286730.75,17417.40,31236.45,89931.29,220034.36,2066696.40],
+    [2238076.90,17127.69,31526.16,107058.98,211470.51,2026606.39],
+    [2189423.05,16835.28,31818.57,123894.26,203052.87,1986370.18],
+    [2140769.20,16540.17,32113.68,140434.43,194782.79,1945986.42],
+    [2092115.35,16242.31,32411.54,156676.74,186661.63,1905453.72],
+    [2043461.50,15941.70,32712.15,172618.44,178690.78,1864770.72],
+    [1994807.65,15638.30,33015.55,188256.74,170871.63,1823936.02],
+    [1946153.80,15332.08,33321.77,203588.82,163205.59,1782948.21],
+    [1897499.95,15023.02,33630.83,218611.84,155694.08,1741805.87],
+    [1848846.10,14711.10,33942.75,233322.94,148338.53,1700507.57],
+    [1800192.25,14396.28,34257.57,247719.22,141140.39,1659051.86],
+    [1751538.40,14078.54,34575.31,261797.76,134101.12,1617437.28],
+    [1702884.55,13757.86,34895.99,275555.62,127222.19,1575662.36],
+    [1654230.70,13434.20,35219.65,288989.82,120505.09,1533725.61],
+    [1605576.85,13107.54,35546.31,302097.36,113951.32,1491625.53],
+    [1556923.00,12777.85,35876.00,314875.21,107562.40,1449360.60],
+    [1508269.15,12445.10,36208.75,327320.31,101339.85,1406929.30],
+    [1459615.30,12109.27,36544.58,339429.58,95285.21,1364330.09],
+    [1410961.45,11770.32,36883.53,351199.90,89400.05,1321561.40],
+    [1362307.60,11428.23,37225.62,362628.13,83685.93,1278621.67],
+    [1313653.75,11082.96,37570.89,373711.09,78144.46,1235509.29],
+    [1264999.90,10734.49,37919.36,384445.58,72777.21,1192222.69],
+    [1216346.05,10382.79,38271.06,394828.37,135171.63,1081174.42],
+    [1167692.20,10027.83,38626.02,404856.20,125143.80,1042548.40],
+    [1119038.35,9669.58,38984.27,414525.78,115474.22,1003564.13],
+    [1070384.50,9308.00,39345.85,423833.78,106166.22,964218.28],
+    [1021730.65,8943.07,39710.78,432776.85,97223.15,924507.50],
+    [973076.80,8574.76,40079.09,441351.61,88648.39,884428.41],
+    [924422.95,8203.02,40450.83,449554.63,80445.37,843977.58],
+    [875769.10,7827.84,40826.01,457382.47,72617.53,803151.57],
+    [827115.25,7449.19,41204.66,464831.66,65168.34,761946.91],
+    [778461.40,7067.01,41586.84,471898.67,58101.33,720360.07],
+    [729807.55,6681.30,41972.55,478579.97,51420.03,678387.52],
+    [681153.70,6292.01,42361.84,484871.98,45128.02,636025.68],
+    [632499.85,5899.10,42754.75,490771.08,39228.92,593270.93],
+    [583846.00,5502.55,43151.30,496273.63,33726.37,550119.63],
+    [535192.15,5102.33,43551.52,501375.96,28624.04,506568.11],
+    [486538.30,4698.39,43955.46,506074.35,23925.65,462612.65],
+    [437884.45,4290.71,44363.14,510365.06,19634.94,418249.51],
+    [389230.60,3879.24,44774.61,514244.30,15755.70,373474.90],
+    [340576.75,3463.96,45189.89,517708.26,12291.74,328285.01],
+    [291922.90,3044.83,45609.02,520753.09,9246.91,282675.99],
+    [243269.05,2621.80,46032.05,523374.89,6625.11,236643.94],
+    [194615.20,2194.86,46458.99,525569.75,4430.25,190184.95],
+    [145961.35,1763.95,46889.90,527333.70,2666.30,143295.05],
+    [97307.50,1329.05,47324.80,528662.75,1337.25,95970.25],
+    [48653.65,890.12,47763.73,529552.87,447.13,48206.52],
+    [0.00,447.13,48206.52,530000.00,0.00,0.00]
+  ] }
 ];
 
 
@@ -329,7 +421,7 @@ var OFFERS = [
 /* ---- hide-for-comparison (per-visitor; resets when they open a new browser session) ---- */
 var HIDDEN = (function(){ try{ return new Set(JSON.parse(sessionStorage.getItem("bl_hide_"+location.pathname)||"[]")); }catch(e){ return new Set(); } })();
 function hideSave(){ try{ sessionStorage.setItem("bl_hide_"+location.pathname, JSON.stringify(Array.from(HIDDEN))); }catch(e){} }
-function rerenderAll(){ renderOffers(); if (typeof renderPrepay === "function") renderPrepay(); }
+function rerenderAll(){ renderOffers(); if (typeof renderPrepay === "function") renderPrepay(); if (typeof renderAmm === "function") renderAmm(); }
 document.addEventListener("click", function(e){
   var b = e.target && e.target.closest ? e.target.closest(".hidebtn") : null;
   if(b){ var n = Number(b.getAttribute("data-hide")); if(HIDDEN.has(n)) HIDDEN.delete(n); else HIDDEN.add(n); hideSave(); rerenderAll(); return; }
@@ -442,6 +534,37 @@ function renderPrepay(){
   document.getElementById("prepayWrap").innerHTML = html;
 }
 
+function eff3(disc, payback, advance){ return advance ? (payback - disc)/advance : 0; }
+
+function renderAmm(){
+  var html = OFFERS.filter(function(o){ return !HIDDEN.has(o.num) && o.rows; }).map(function(o){
+    var m = model(o); var sc = m.s; var body = "";
+    for(var i=0;i<o.rows.length;i++){
+      var r = o.rows[i];               /* bal, interest, principal, cumInterest, discount, payoff */
+      var f = eff3(r[4], o.advance*o.factor, o.advance);
+      body += '<tr'+((i+1)===o.fgStep?' class="fgstep"':'')+'>'
+        + '<td data-label="Payment #">'+(i+1)+((i+1)===o.fgStep?' &#9733;':'')+'</td>'
+        + '<td data-label="Outstanding Balance">'+money(round2(r[0]*sc))+'</td>'
+        + '<td data-label="Interest Paid">'+money(round2(r[1]*sc))+'</td>'
+        + '<td data-label="Principal Paid">'+money(round2(r[2]*sc))+'</td>'
+        + '<td data-label="Total Cost of Credit">'+money(round2(r[3]*sc))+'</td>'
+        + '<td class="disc" data-label="Interest Discount if Paid Early">'+money(round2(r[4]*sc))+'</td>'
+        + '<td class="po" data-label="Discounted Payoff Balance">'+money(round2(r[5]*sc))+'</td>'
+        + '<td class="eff" data-label="Effective Factor Rate">'+f.toFixed(3)+'</td></tr>';
+    }
+    var fs = o.fgStep, prev = o.rows[fs-2], now = o.rows[fs-1];
+    var fPrev = eff3(prev[4], o.advance*o.factor, o.advance), fNow = eff3(now[4], o.advance*o.factor, o.advance);
+    var note = '<div class="amm-note">&#9733; <b>The best payoff window opens at payment '+fs+'.</b> Through payment '+(fs-1)+' half of the remaining interest is waived; from payment '+fs+' on, <b>all of it is</b>. Paying off right after payment '+fs+' costs an effective <b>'+fNow.toFixed(3)+'</b> &mdash; less than paying off one payment earlier at '+fPrev.toFixed(3)+'. The earlier you clear it, the lower the effective rate: <b>'+eff3(o.rows[0][4], o.advance*o.factor, o.advance).toFixed(3)+'</b> after the first payment.</div>';
+    return '<div class="amm-card">'
+      + '<h4>Offer '+o.num+' &middot; '+o.name+' &middot; '+o.termLabel+' &middot; Amortization &amp; Early-Payoff Schedule</h4>'
+      + '<div class="amm-recap">Advance <b>'+money0(m.advance)+'</b> &middot; total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+o.nPay+'</b> bi-weekly payments of <b>'+money(m.weekly)+'</b>. &ldquo;Discounted Payoff Balance&rdquo; is what clears the loan once that payment has cleared, after the interest discount. &ldquo;Effective Factor Rate&rdquo; is every dollar you would have paid by then &mdash; payments made plus that payoff &mdash; divided by the advance.</div>'
+      + note
+      + '<div class="amm-scroll"><table class="amm-sched"><thead><tr><th>Payment #</th><th>Outstanding Balance</th><th>Interest Paid</th><th>Principal Paid</th><th>Total Cost of Credit</th><th>Interest Discount if Paid Early</th><th>Discounted Payoff Balance</th><th>Effective Factor Rate</th></tr></thead><tbody>'+body+'</tbody></table></div>'
+      + '</div>';
+  }).join("");
+  document.getElementById("ammWrap").innerHTML = html;
+}
+
 function downloadPDF(){
   if(!(window.jspdf && window.jspdf.jsPDF)){ alert("PDF tool is still loading — give it a second and try again."); return; }
   var doc = new window.jspdf.jsPDF({unit:"pt", format:"letter"});
@@ -450,7 +573,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers — Auto Experts USA LLC", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared August 13, 2026 at 8:13 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
+  doc.text("BusinessLoans.com     Prepared August 13, 2026 at 8:25 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -478,6 +601,35 @@ function downloadPDF(){
   doc.text("Why this offer:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Funded in as little as 24-48 hours once the agreement is signed","Industry-best pricing at this size","No prepayment penalty - 50% of remaining interest waived months 0-12, 100% waived thereafter","Renewals are eligible for 100% interest forgiveness","At $500,000 or below, no additional requirements beyond the core documents"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  OFFERS_PDF.forEach(function(o){
+    if(!o.rows) return;
+    var m = model(o); var sc = m.s;
+    doc.addPage(); var yy=54;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text(o.termLabel+" Amortization & Early-Payoff Schedule - "+money0(m.advance), L, yy); yy+=14;
+    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(90);
+    doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+" bi-weekly   "+o.nPay+" payments.  Effective factor rate = payments made plus the payoff at that point, divided by the advance.", L, yy); yy+=16;
+    var cx=[L,150,222,292,368,446,516,R];
+    var hd=["#","Outstanding","Interest","Principal","Total Cost","Discount","Payoff","Eff. Factor"];
+    function hdr(){
+      doc.setFont("helvetica","bold"); doc.setFontSize(7.5); doc.setTextColor(20);
+      for(var j=0;j<hd.length;j++){ doc.text(hd[j], cx[j], yy, {align: j===0?"left":"right"}); }
+      yy+=3; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=10;
+      doc.setFont("helvetica","normal"); doc.setFontSize(7.5); doc.setTextColor(45);
+    }
+    hdr();
+    for(var i=0;i<o.rows.length;i++){
+      if(yy>772){ doc.addPage(); yy=54; hdr(); }
+      var r=o.rows[i];
+      var vals=[String(i+1), money(round2(r[0]*sc)), money(round2(r[1]*sc)), money(round2(r[2]*sc)),
+                money(round2(r[3]*sc)), money(round2(r[4]*sc)), money(round2(r[5]*sc)),
+                eff3(r[4], o.advance*o.factor, o.advance).toFixed(3)];
+      if((i+1)===o.fgStep) doc.setFont("helvetica","bold");
+      for(var j=0;j<vals.length;j++){ doc.text(vals[j], cx[j], yy, {align: j===0?"left":"right"}); }
+      if((i+1)===o.fgStep) doc.setFont("helvetica","normal");
+      yy+=11;
+    }
+  });
   OFFERS_PDF.forEach(function(o){
     if(!o.prepay) return;
     var m = model(o); var p = o.prepay; var s = m.s;
@@ -511,7 +663,7 @@ function recompute(){
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $2,000,000 maximum" : "\u2191 Type any amount — the offer updates instantly";
-  renderOffers(); renderPrepay();
+  renderOffers(); renderPrepay(); renderAmm();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
@@ -521,6 +673,11 @@ document.getElementById("amount").addEventListener("blur", function(){
   recompute();
 });
 document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
+document.getElementById("ammBtn").addEventListener("click", function(){
+  var wrap = document.getElementById("ammWrap");
+  wrap.hidden = !wrap.hidden;
+  this.innerHTML = (wrap.hidden ? "&#9660; Show" : "&#9650; Hide") + " the full amortization &amp; early-payoff schedule";
+});
 /* v2 desktop email fix: mailto dead-clicks on webmail-only desktops -> copy the address + flash confirmation. Phones keep native mailto. */
 (function(){
   var e=document.querySelector('.cta-email'); if(!e) return;
