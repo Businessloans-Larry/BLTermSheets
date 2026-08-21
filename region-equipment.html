@@ -77,6 +77,10 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .freq-badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7a4e00;background:#FFE08A;border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle;}
 .kv-struct .kv-val,.kv-payoffnote .kv-val{font-size:12.5px;font-weight:600;text-align:right;max-width:60%;line-height:1.35;}
 .kv-payoffnote .kv-val{color:var(--green-d);}
+.prepay td.po-ic,.prepay td.po-sir{font-variant-numeric:tabular-nums;font-weight:700;}
+.prepay td.po-sir{color:var(--navy);}
+.prepay-foot{font-size:11px;line-height:1.5;color:var(--slate);margin:6px 0 0;}
+.prepay-foot b{color:var(--navy);}
 .prepay-note{font-size:12.5px;line-height:1.5;color:var(--navy);background:rgba(255,200,88,.16);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:8px 12px;margin:0 0 9px;}
 .closing a.stip-link{color:var(--green-d);font-weight:700;}
 /* ---- v2 (DEFAULT on every sheet): date sub-line, Call/Text/Email strip, recommended snapshot + highlight ---- */
@@ -210,7 +214,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTguMiA3OC4yIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwMmY2ODt9LmNscy0ye2ZpbGw6IzAwY2Q2Nzt9LmNscy0ze2ZpbGw6IzAwY2RlZjt9LmNscy00e2ZpbGw6IzYwYWZmMDt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImxuMSI+PHJlY3QgeD0iLTYiIHk9Ii02IiB3aWR0aD0iMzY2IiBoZWlnaHQ9IjkwIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImxuMiI+PHJlY3QgeD0iLTYiIHk9Ijg0IiB3aWR0aD0iMzY2IiBoZWlnaHQ9Ijc2Ii8+PC9jbGlwUGF0aD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2xuMSkiPjxnPjxnPjxnPjxnPjxnPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyLjkyLDMxLjY0SDE2Ljc3VjQyLjgyaDYuMTVBMTEuNzQsMTEuNzQsMCwxLDEsMTEuMTgsNTQuNTZoMFYyNS44MWExMCwxMCwwLDAsMC0xMC0xMEgwVjU0LjU2SDBBMjIuOTIsMjIuOTIsMCwxLDAsMjIuOTIsMzEuNjRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgsMjYuMDVIMTYuNzdWMjQuODdhMTAsMTAsMCwwLDEsMTAtMTBIMjh2MS4xOEExMCwxMCwwLDAsMSwxOCwyNi4wNVoiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNCwwbC0uODMuODNhMTAsMTAsMCwwLDAsMCwxNC4xNWwuODMuODMuODQtLjgzYTEwLDEwLDAsMCwwLDAtMTQuMTVMMTQsMFoiLz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMjkuMDUsMTUxLjQyYTEuODQsMS44NCwwLDAsMSwxLjg2LTEuODYsMS43OSwxLjc5LDAsMCwxLDEuMzEuNTQsMS44MSwxLjgxLDAsMCwxLC41NCwxLjMyLDEuODYsMS44NiwwLDEsMS0zLjcxLDBaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjU1LjU2LDE1MC40MWE4LjMyLDguMzIsMCwwLDEtMywyLjM0LDguNjIsOC42MiwwLDAsMS0zLjU5Ljc2LDEwLjE4LDEwLjE4LDAsMCwxLTMuNzktLjcsOC40NCw4LjQ0LDAsMCwxLTMtMS45NSw5LDksMCwwLDEtMS45NC0zLDEwLjYyLDEwLjYyLDAsMCwxLDAtNy41Myw5LDksMCwwLDEsMS45NC0zLDguNDQsOC40NCwwLDAsMSwzLTIsMTAsMTAsMCwwLDEsMy43OS0uNyw4LjMsOC4zLDAsMCwxLDMuNjUuODEsMTAsMTAsMCwwLDEsMywyLjI4bC0xLjg2LDEuNGE3Ljg2LDcuODYsMCwwLDAtMi4yLTEuNzYsNS4zNyw1LjM3LDAsMCwwLTIuNTktLjY0LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4LDcsNywwLDAsMC0yLjI0LDEuNTYsNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMiw4LjY0LDguNjQsMCwwLDAsMCw1LjY4LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi45MSw2LjkxLDAsMCwwLDIuMjQsMS41Nyw3LjM0LDcuMzQsMCwwLDAsMi45NC41OCw1LjQyLDUuNDIsMCwwLDAsMi42OC0uNjgsNi44Niw2Ljg2LDAsMCwwLDIuMTEtMS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1OS43NywxNDQuMTFhMTAsMTAsMCwwLDEsLjY5LTMuNzYsOS4xNyw5LjE3LDAsMCwxLDEuOTMtMyw4LjU3LDguNTcsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOS44OCw5Ljg4LDAsMCwxLDMuNzcuNyw4LjczLDguNzMsMCwwLDEsNC45Miw0LjkzLDEwLjQ4LDEwLjQ4LDAsMCwxLDAsNy41Myw4LjczLDguNzMsMCwwLDEtNC45Miw0LjkzLDEwLjA4LDEwLjA4LDAsMCwxLTMuNzcuNywxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNTcsOC41NywwLDAsMS0zLTEuOTUsOS4xNyw5LjE3LDAsMCwxLTEuOTMtM0ExMCwxMCwwLDAsMSwyNTkuNzcsMTQ0LjExWm0yLjMxLDBhOC4yNiw4LjI2LDAsMCwwLC40OSwyLjg0LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi44LDYuOCwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNy4yNiw3LjI2LDAsMCwwLDIuOTMtLjU4LDYuNjIsNi42MiwwLDAsMCwzLjY2LTMuODksOC42NCw4LjY0LDAsMCwwLDAtNS42OCw2LjU2LDYuNTYsMCwwLDAtMy42Ni0zLjg4LDcuMSw3LjEsMCwwLDAtMi45My0uNTgsNy4xOCw3LjE4LDAsMCwwLTIuOTQuNThBNi45Myw2LjkzLDAsMCwwLDI2NCwxMzlhNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMkE4LjM1LDguMzUsMCwwLDAsMjYyLjA4LDE0NC4xMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yODQuMzEsMTQwLjIxYzAtLjMzLDAtLjc0LDAtMS4yMnMwLTEtLjA2LTEuNDUsMC0uOTQtLjA2LTEuMzcsMC0uNzUsMC0xaDIuMzJjMCwuNjcuMDUsMS4zMS4wNiwxLjkzYTUuODgsNS44OCwwLDAsMCwuMSwxLjJoLjExYTYuMjYsNi4yNiwwLDAsMSwyLjMyLTIuNTMsNi43Niw2Ljc2LDAsMCwxLDMuNzktMS4wNyw2LjEzLDYuMTMsMCwwLDEsMy4yNS45MSw1LjIsNS4yLDAsMCwxLDIuMTIsMyw1LjgyLDUuODIsMCwwLDEsMi41My0yLjk0LDcuMiw3LjIsMCwwLDEsMy41NC0uOTMsNy42LDcuNiwwLDAsMSwzLjQuNjYsNS40NCw1LjQ0LDAsMCwxLDIuMDcsMS43Miw2LjQ5LDYuNDksMCwwLDEsMSwyLjQ1LDE0LjIzLDE0LjIzLDAsMCwxLC4yOSwyLjg2VjE1M2gtMi4zMlYxNDIuNTNhMTEuMzQsMTEuMzQsMCwwLDAtLjE5LTIuMTEsNS42NCw1LjY0LDAsMCwwLS42OC0xLjgzLDMuNTIsMy41MiwwLDAsMC0xLjM1LTEuMyw0LjY1LDQuNjUsMCwwLDAtMi4yNi0uNDgsNS4zMyw1LjMzLDAsMCwwLTIuNjcuNiw0LjgxLDQuODEsMCwwLDAtMS42NCwxLjUyLDYuMzgsNi4zOCwwLDAsMC0uODUsMiw5LDksMCwwLDAtLjI1LDIuMDV2MTBoLTIuMzJWMTQyLjNhNy41OSw3LjU5LDAsMCwwLS45MS00LDMsMywwLDAsMC0yLjgtMS41MSw2Ljc1LDYuNzUsMCwwLDAtMi40Mi40NCw1LjI1LDUuMjUsMCwwLDAtMiwxLjM2LDYuNDgsNi40OCwwLDAsMC0xLjMxLDIuMjgsOS43NSw5Ljc1LDAsMCwwLS40OCwzLjIyVjE1M2gtMi4zMloiLz48L2c+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIuMjQsNzdIODEuMzJWNzIuODRhMTUuMzYsMTUuMzYsMCwwLDEtMTEuMTgsNC42NCwxNC40NywxNC40NywwLDAsMS0xMC41OC00QzU2LDY5LjkxLDU1LDY1LjcsNTUsNjAuOFYzMi4xNkg2Ni4xOFY1OS4yNWMwLDYuMTEsMy44Nyw4LjE3LDcuNCw4LjE3czcuNDgtMi4wNiw3LjQ4LTguMTdWMzIuMTZIOTIuMjRaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM4LjQyLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNC0zLTQuNDgsMC02LjM3LDIuMDYtNi4zNyw0LjNzMS4yOSwzLjUyLDQuNjUsMy44N2w3LC42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNSwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1TDEwOSw2My43MmMzLjYxLDMuNyw4LjUxLDQuMjIsMTEuOTUsNC4yMiwzLjg3LDAsNy45Mi0xLjI5LDcuOTItNC42NSwwLTIuMjMtMS4xMi0zLjc4LTQuNzMtNC4xM2wtNy4wNi0uNjhDMTA5LDU3LjcsMTA0LDU0LjE4LDEwNCw0NS45MmMwLTkuMzcsOC4xNy0xNC4yOCwxNy4yOS0xNC4yOEMxMjguMzYsMzEuNjQsMTM0LjEyLDMyLjkzLDEzOC40MiwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNzMsMjQuNTFIMTUwLjI5VjE1LjM5aDExLjQ0Wk0xNjEuNjQsNzdIMTUwLjQ2VjMzLjQ1aDExLjE4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwOC4wOCwzNS42YzMuNjEsMy43LDQuNTYsNy44Myw0LjU2LDEyLjczVjc3SDIwMS40NlY0OS44OGMwLTYuMTEtMy43OS04LjE3LTcuNC04LjE3cy03LjQ4LDIuMDYtNy40OCw4LjE3Vjc3SDE3NS40VjMyLjE2aDEwLjkydjQuMTNhMTUuMzMsMTUuMzMsMCwwLDEsMTEuMTgtNC42NUMyMDIsMzEuNjQsMjA1LjU5LDMzLDIwOC4wOCwzNS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI2Mi43OCw1My4zMnY0LjczaC0yOGMwLDUuODQsMy40NCwxMCw5LjgsMTAsNC45MSwwLDcuMzEtMS40NiwxMC4wNy00LjIxbDYuODgsNi42MmMtNC41Niw0LjY0LTksNy0xNyw3LTEwLjY3LDAtMjAuNzMtNC44MS0yMC43My0yMywwLTE0LjYyLDcuOTEtMjIuODgsMTkuNTItMjIuODhDMjU1LjcyLDMxLjY0LDI2Mi43OCw0MC41OSwyNjIuNzgsNTMuMzJabS0yNy4wOS03Ljc0YTEwLjg5LDEwLjg5LDAsMCwwLS45NSw0LjgxaDE2Ljk0YTEwLjg5LDEwLjg5LDAsMCwwLS45NC00LjgxLDguNDEsOC40MSwwLDAsMC0xNS4wNSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwNi43MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcsMC0xMy4zMy0uNzctMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4Yy04LjA4LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMjk2LjY2LDMxLjY0LDMwMi40MiwzMi45MywzMDYuNzIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzUxLjEsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDYtNi4zNiw0LjNzMS4yOSwzLjUyLDQuNjQsMy44N2w3LjA1LjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LjA2LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zLTcuMzFjMy42MiwzLjcsOC41Miw0LjIyLDEyLDQuMjIsMy44NywwLDcuOTEtMS4yOSw3LjkxLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDUtLjY4Yy04LjA5LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjgtMTQuMjhDMzQxLDMxLjY0LDM0Ni44LDMyLjkzLDM1MS4xLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTI0LjczLDEzOS41NWMwLDIuNjYsMS4xMiw0LDQsNEgzM3Y5LjQ2SDI2LjYyYy05LjIsMC0xMy4wNy02LjM2LTEzLjA3LTEyLjgxVjkxLjgySDI0LjczWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTczLjMyLDE0OC4wNmMtMi44NCwyLjkzLTcuMzEsNS41MS0xMy45Myw1LjUxcy0xMS0yLjU4LTEzLjg0LTUuNTFjLTQtNC4zLTUuMDgtOS4zNy01LjA4LTE3LjQ2czEtMTMuMDcsNS4wOC0xNy4zN2MyLjgzLTIuOTIsNy4yMi01LjUsMTMuODQtNS41czExLjA5LDIuNDksMTMuOTMsNS41YzQsNC4zLDUuMDgsOS4yOSw1LjA4LDE3LjM3Uzc3LjQ1LDE0My44NSw3My4zMiwxNDguMDZabS04LjY4LTI4LjI5YTcuMDcsNy4wNywwLDAsMC01LjI1LTIsNyw3LDAsMCwwLTUuMTYsMmMtMi4zMiwyLjI0LTIuNTgsNi4yOC0yLjU4LDEwLjgzcy4yNiw4LjY5LDIuNTgsMTAuOTNhNyw3LDAsMCwwLDUuMTYsMiw3LjA3LDcuMDcsMCwwLDAsNS4yNS0yYzIuMzItMi4yNCwyLjU4LTYuMjgsMi41OC0xMC45M1M2NywxMjIsNjQuNjQsMTE5Ljc3WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTEyNC4yMywxMjMuNTV2MjkuNUgxMTMuMzF2LTMuODdjLTMsMy01Ljg0LDQuMy0xMSw0LjNzLTguODYtMS4zOC0xMS40NC00YTE0LjMzLDE0LjMzLDAsMCwxLTMuNy0xMC4wNmMwLTcuMTMsNC45LTEzLDE1LjQ4LTEzaDEwLjR2LTIuMjRjMC00LjktMi40LTctOC4zNC03LTQsMC02LjE5LDEuMTItOC42LDMuODdsLTctN2M0LjM5LTQuODEsOC42LTYuMzYsMTYuMDgtNi4zNkMxMTcuNzgsMTA3LjczLDEyNC4yMywxMTMuMDYsMTI0LjIzLDEyMy41NVptLTE5LjY5LDEwLjU4Yy00LjQ3LDAtNi42MiwxLjgxLTYuNjIsNS4xNiwwLDMuMSwyLjE1LDUuMDcsNi43OSw1LjA3LDIuNzYsMCw0LjczLS4zNCw2LjYyLTIuMTUsMS4yOS0xLjExLDEuNzItMi44MywxLjcyLTUuNjd2LTIuNDFaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMTcwLjI0LDExMS42OWMzLjYyLDMuNjksNC41Niw3LjgyLDQuNTYsMTIuNzJ2MjguNjRIMTYzLjYyVjEyNmMwLTYuMS0zLjc4LTguMTctNy4zOS04LjE3cy03LjQ5LDIuMDctNy40OSw4LjE3djI3LjA5SDEzNy41NnYtNDQuOGgxMC45M3Y0LjEyYTE1LjM0LDE1LjM0LDAsMCwxLDExLjE4LTQuNjRDMTY0LjE0LDEwNy43MywxNjcuNzUsMTA5LjExLDE3MC4yNCwxMTEuNjlaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMjIwLjQ3LDExM2wtNi44OCw3Yy0yLjU4LTIuMzItNi40NS0zLTEwLjQxLTMtNC40NywwLTYuMzYsMi4wNy02LjM2LDQuM3MxLjI5LDMuNTMsNC42NCwzLjg3bDcsLjY5YzguODYuODYsMTMuMzMsNS41LDEzLjMzLDEzLjE2LDAsOS44OS04LjQyLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzgtMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjY5LDguNTEsNC4yMSwxMS45NSw0LjIxLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY0LDAtMi4yNC0xLjEyLTMuNzktNC43My00LjEzbC03LjA1LS42OWMtOC4wOC0uNzctMTMuMDctNC4zLTEzLjA3LTEyLjU1LDAtOS4zOCw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzIxMC40MSwxMDcuNzMsMjE2LjE3LDEwOSwyMjAuNDcsMTEzWiIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ni45MiAtNzYuMSkiIGNsaXAtcGF0aD0idXJsKCNsbjIpIj48Zz48Zz48Zz48Zz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMi45MiwzMS42NEgxNi43N1Y0Mi44Mmg2LjE1QTExLjc0LDExLjc0LDAsMSwxLDExLjE4LDU0LjU2aDBWMjUuODFhMTAsMTAsMCwwLDAtMTAtMTBIMFY1NC41NkgwQTIyLjkyLDIyLjkyLDAsMSwwLDIyLjkyLDMxLjY0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE4LDI2LjA1SDE2Ljc3VjI0Ljg3YTEwLDEwLDAsMCwxLDEwLTEwSDI4djEuMThBMTAsMTAsMCwwLDEsMTgsMjYuMDVaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTQsMGwtLjgzLjgzYTEwLDEwLDAsMCwwLDAsMTQuMTVsLjgzLjgzLjg0LS44M2ExMCwxMCwwLDAsMCwwLTE0LjE1TDE0LDBaIi8+PGc+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjI5LjA1LDE1MS40MmExLjg0LDEuODQsMCwwLDEsMS44Ni0xLjg2LDEuNzksMS43OSwwLDAsMSwxLjMxLjU0LDEuODEsMS44MSwwLDAsMSwuNTQsMS4zMiwxLjg2LDEuODYsMCwxLDEtMy43MSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1NS41NiwxNTAuNDFhOC4zMiw4LjMyLDAsMCwxLTMsMi4zNCw4LjYyLDguNjIsMCwwLDEtMy41OS43NiwxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNDQsOC40NCwwLDAsMS0zLTEuOTUsOSw5LDAsMCwxLTEuOTQtMywxMC42MiwxMC42MiwwLDAsMSwwLTcuNTMsOSw5LDAsMCwxLDEuOTQtMyw4LjQ0LDguNDQsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOC4zLDguMywwLDAsMSwzLjY1LjgxLDEwLDEwLDAsMCwxLDMsMi4yOGwtMS44NiwxLjRhNy44Niw3Ljg2LDAsMCwwLTIuMi0xLjc2LDUuMzcsNS4zNywwLDAsMC0yLjU5LS42NCw3LjE4LDcuMTgsMCwwLDAtMi45NC41OCw3LDcsMCwwLDAtMi4yNCwxLjU2LDYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzIsOC42NCw4LjY0LDAsMCwwLDAsNS42OCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOTEsNi45MSwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNS40Miw1LjQyLDAsMCwwLDIuNjgtLjY4LDYuODYsNi44NiwwLDAsMCwyLjExLTEuOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNTkuNzcsMTQ0LjExYTEwLDEwLDAsMCwxLC42OS0zLjc2LDkuMTcsOS4xNywwLDAsMSwxLjkzLTMsOC41Nyw4LjU3LDAsMCwxLDMtMiwxMCwxMCwwLDAsMSwzLjc5LS43LDkuODgsOS44OCwwLDAsMSwzLjc3LjcsOC43Myw4LjczLDAsMCwxLDQuOTIsNC45MywxMC40OCwxMC40OCwwLDAsMSwwLDcuNTMsOC43Myw4LjczLDAsMCwxLTQuOTIsNC45MywxMC4wOCwxMC4wOCwwLDAsMS0zLjc3LjcsMTAuMTgsMTAuMTgsMCwwLDEtMy43OS0uNyw4LjU3LDguNTcsMCwwLDEtMy0xLjk1LDkuMTcsOS4xNywwLDAsMS0xLjkzLTNBMTAsMTAsMCwwLDEsMjU5Ljc3LDE0NC4xMVptMi4zMSwwYTguMjYsOC4yNiwwLDAsMCwuNDksMi44NCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOCw2LjgsMCwwLDAsMi4yNCwxLjU3LDcuMzQsNy4zNCwwLDAsMCwyLjk0LjU4LDcuMjYsNy4yNiwwLDAsMCwyLjkzLS41OCw2LjYyLDYuNjIsMCwwLDAsMy42Ni0zLjg5LDguNjQsOC42NCwwLDAsMCwwLTUuNjgsNi41Niw2LjU2LDAsMCwwLTMuNjYtMy44OCw3LjEsNy4xLDAsMCwwLTIuOTMtLjU4LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4QTYuOTMsNi45MywwLDAsMCwyNjQsMTM5YTYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzJBOC4zNSw4LjM1LDAsMCwwLDI2Mi4wOCwxNDQuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjg0LjMxLDE0MC4yMWMwLS4zMywwLS43NCwwLTEuMjJzMC0xLS4wNi0xLjQ1LDAtLjk0LS4wNi0xLjM3LDAtLjc1LDAtMWgyLjMyYzAsLjY3LjA1LDEuMzEuMDYsMS45M2E1Ljg4LDUuODgsMCwwLDAsLjEsMS4yaC4xMWE2LjI2LDYuMjYsMCwwLDEsMi4zMi0yLjUzLDYuNzYsNi43NiwwLDAsMSwzLjc5LTEuMDcsNi4xMyw2LjEzLDAsMCwxLDMuMjUuOTEsNS4yLDUuMiwwLDAsMSwyLjEyLDMsNS44Miw1LjgyLDAsMCwxLDIuNTMtMi45NCw3LjIsNy4yLDAsMCwxLDMuNTQtLjkzLDcuNiw3LjYsMCwwLDEsMy40LjY2LDUuNDQsNS40NCwwLDAsMSwyLjA3LDEuNzIsNi40OSw2LjQ5LDAsMCwxLDEsMi40NSwxNC4yMywxNC4yMywwLDAsMSwuMjksMi44NlYxNTNoLTIuMzJWMTQyLjUzYTExLjM0LDExLjM0LDAsMCwwLS4xOS0yLjExLDUuNjQsNS42NCwwLDAsMC0uNjgtMS44MywzLjUyLDMuNTIsMCwwLDAtMS4zNS0xLjMsNC42NSw0LjY1LDAsMCwwLTIuMjYtLjQ4LDUuMzMsNS4zMywwLDAsMC0yLjY3LjYsNC44MSw0LjgxLDAsMCwwLTEuNjQsMS41Miw2LjM4LDYuMzgsMCwwLDAtLjg1LDIsOSw5LDAsMCwwLS4yNSwyLjA1djEwaC0yLjMyVjE0Mi4zYTcuNTksNy41OSwwLDAsMC0uOTEtNCwzLDMsMCwwLDAtMi44LTEuNTEsNi43NSw2Ljc1LDAsMCwwLTIuNDIuNDQsNS4yNSw1LjI1LDAsMCwwLTIsMS4zNiw2LjQ4LDYuNDgsMCwwLDAtMS4zMSwyLjI4LDkuNzUsOS43NSwwLDAsMC0uNDgsMy4yMlYxNTNoLTIuMzJaIi8+PC9nPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyLjI0LDc3SDgxLjMyVjcyLjg0YTE1LjM2LDE1LjM2LDAsMCwxLTExLjE4LDQuNjQsMTQuNDcsMTQuNDcsMCwwLDEtMTAuNTgtNEM1Niw2OS45MSw1NSw2NS43LDU1LDYwLjhWMzIuMTZINjYuMThWNTkuMjVjMCw2LjExLDMuODcsOC4xNyw3LjQsOC4xN3M3LjQ4LTIuMDYsNy40OC04LjE3VjMyLjE2SDkyLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOC40MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzctMTkuMDktNi40NUwxMDksNjMuNzJjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4QzEwOSw1Ny43LDEwNCw1NC4xOCwxMDQsNDUuOTJjMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMTI4LjM2LDMxLjY0LDEzNC4xMiwzMi45MywxMzguNDIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxLjczLDI0LjUxSDE1MC4yOVYxNS4zOWgxMS40NFpNMTYxLjY0LDc3SDE1MC40NlYzMy40NWgxMS4xOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMDguMDgsMzUuNmMzLjYxLDMuNyw0LjU2LDcuODMsNC41NiwxMi43M1Y3N0gyMDEuNDZWNDkuODhjMC02LjExLTMuNzktOC4xNy03LjQtOC4xN3MtNy40OCwyLjA2LTcuNDgsOC4xN1Y3N0gxNzUuNFYzMi4xNmgxMC45MnY0LjEzYTE1LjMzLDE1LjMzLDAsMCwxLDExLjE4LTQuNjVDMjAyLDMxLjY0LDIwNS41OSwzMywyMDguMDgsMzUuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjIuNzgsNTMuMzJ2NC43M2gtMjhjMCw1Ljg0LDMuNDQsMTAsOS44LDEwLDQuOTEsMCw3LjMxLTEuNDYsMTAuMDctNC4yMWw2Ljg4LDYuNjJjLTQuNTYsNC42NC05LDctMTcsNy0xMC42NywwLTIwLjczLTQuODEtMjAuNzMtMjMsMC0xNC42Miw3LjkxLTIyLjg4LDE5LjUyLTIyLjg4QzI1NS43MiwzMS42NCwyNjIuNzgsNDAuNTksMjYyLjc4LDUzLjMyWm0tMjcuMDktNy43NGExMC44OSwxMC44OSwwLDAsMC0uOTUsNC44MWgxNi45NGExMC44OSwxMC44OSwwLDAsMC0uOTQtNC44MSw4LjQxLDguNDEsMCwwLDAtMTUuMDUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zMDYuNzIsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40LTMtNC40OCwwLTYuMzcsMi4wNi02LjM3LDQuM3MxLjI5LDMuNTIsNC42NSwzLjg3bDcsLjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy43LDguNTEsNC4yMiwxMS45NSw0LjIyLDMuODcsMCw3LjkyLTEuMjksNy45Mi00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA2LS42OGMtOC4wOC0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI5LTE0LjI4QzI5Ni42NiwzMS42NCwzMDIuNDIsMzIuOTMsMzA2LjcyLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1MS4xLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNDEtMy00LjQ3LDAtNi4zNiwyLjA2LTYuMzYsNC4zczEuMjksMy41Miw0LjY0LDMuODdsNy4wNS42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNiwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1bDcuMy03LjMxYzMuNjIsMy43LDguNTIsNC4yMiwxMiw0LjIyLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA1LS42OGMtOC4wOS0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzM0MSwzMS42NCwzNDYuOCwzMi45MywzNTEuMSwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0yNC43MywxMzkuNTVjMCwyLjY2LDEuMTIsNCw0LDRIMzN2OS40NkgyNi42MmMtOS4yLDAtMTMuMDctNi4zNi0xMy4wNy0xMi44MVY5MS44MkgyNC43M1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik03My4zMiwxNDguMDZjLTIuODQsMi45My03LjMxLDUuNTEtMTMuOTMsNS41MXMtMTEtMi41OC0xMy44NC01LjUxYy00LTQuMy01LjA4LTkuMzctNS4wOC0xNy40NnMxLTEzLjA3LDUuMDgtMTcuMzdjMi44My0yLjkyLDcuMjItNS41LDEzLjg0LTUuNXMxMS4wOSwyLjQ5LDEzLjkzLDUuNWM0LDQuMyw1LjA4LDkuMjksNS4wOCwxNy4zN1M3Ny40NSwxNDMuODUsNzMuMzIsMTQ4LjA2Wm0tOC42OC0yOC4yOWE3LjA3LDcuMDcsMCwwLDAtNS4yNS0yLDcsNywwLDAsMC01LjE2LDJjLTIuMzIsMi4yNC0yLjU4LDYuMjgtMi41OCwxMC44M3MuMjYsOC42OSwyLjU4LDEwLjkzYTcsNywwLDAsMCw1LjE2LDIsNy4wNyw3LjA3LDAsMCwwLDUuMjUtMmMyLjMyLTIuMjQsMi41OC02LjI4LDIuNTgtMTAuOTNTNjcsMTIyLDY0LjY0LDExOS43N1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMjQuMjMsMTIzLjU1djI5LjVIMTEzLjMxdi0zLjg3Yy0zLDMtNS44NCw0LjMtMTEsNC4zcy04Ljg2LTEuMzgtMTEuNDQtNGExNC4zMywxNC4zMywwLDAsMS0zLjctMTAuMDZjMC03LjEzLDQuOS0xMywxNS40OC0xM2gxMC40di0yLjI0YzAtNC45LTIuNC03LTguMzQtNy00LDAtNi4xOSwxLjEyLTguNiwzLjg3bC03LTdjNC4zOS00LjgxLDguNi02LjM2LDE2LjA4LTYuMzZDMTE3Ljc4LDEwNy43MywxMjQuMjMsMTEzLjA2LDEyNC4yMywxMjMuNTVabS0xOS42OSwxMC41OGMtNC40NywwLTYuNjIsMS44MS02LjYyLDUuMTYsMCwzLjEsMi4xNSw1LjA3LDYuNzksNS4wNywyLjc2LDAsNC43My0uMzQsNi42Mi0yLjE1LDEuMjktMS4xMSwxLjcyLTIuODMsMS43Mi01LjY3di0yLjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTE3MC4yNCwxMTEuNjljMy42MiwzLjY5LDQuNTYsNy44Miw0LjU2LDEyLjcydjI4LjY0SDE2My42MlYxMjZjMC02LjEtMy43OC04LjE3LTcuMzktOC4xN3MtNy40OSwyLjA3LTcuNDksOC4xN3YyNy4wOUgxMzcuNTZ2LTQ0LjhoMTAuOTN2NC4xMmExNS4zNCwxNS4zNCwwLDAsMSwxMS4xOC00LjY0QzE2NC4xNCwxMDcuNzMsMTY3Ljc1LDEwOS4xMSwxNzAuMjQsMTExLjY5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTIyMC40NywxMTNsLTYuODgsN2MtMi41OC0yLjMyLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDctNi4zNiw0LjNzMS4yOSwzLjUzLDQuNjQsMy44N2w3LC42OWM4Ljg2Ljg2LDEzLjMzLDUuNSwxMy4zMywxMy4xNiwwLDkuODktOC40MiwxNC42Mi0xOSwxNC42Mi03LjA1LDAtMTMuMzMtLjc4LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy42OSw4LjUxLDQuMjEsMTEuOTUsNC4yMSwzLjg3LDAsNy45MS0xLjI5LDcuOTEtNC42NCwwLTIuMjQtMS4xMi0zLjc5LTQuNzMtNC4xM2wtNy4wNS0uNjljLTguMDgtLjc3LTEzLjA3LTQuMy0xMy4wNy0xMi41NSwwLTkuMzgsOC4xNy0xNC4yOCwxNy4yOC0xNC4yOEMyMTAuNDEsMTA3LjczLDIxNi4xNywxMDksMjIwLjQ3LDExM1oiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="BusinessLoans.com"/>
     <div class="cover-header-meta">
       <strong>FUNDING TERM SHEET</strong><br/>
-      Prepared August 21, 2026 at 9:38 AM EDT<br/>
+      Prepared August 21, 2026 at 10:08 AM EDT<br/>
       Illustration only — see disclosure
     </div>
   </header>
@@ -221,7 +225,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <div>
       <div class="borrower-bar-label">Prepared For</div>
       <div class="borrower-bar-name">Region Equipment</div>
-      <div class="borrower-bar-sub">Prepared August 21, 2026 at 9:38 AM EDT</div>
+      <div class="borrower-bar-sub">Prepared August 21, 2026 at 10:08 AM EDT</div>
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Amount You Want</div>
@@ -291,7 +295,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
   <footer>
     <span>BusinessLoans.com &middot; Funding Offers for Region Equipment</span>
-    <span>Prepared August 21, 2026 at 9:38 AM EDT</span>
+    <span>Prepared August 21, 2026 at 10:08 AM EDT</span>
   </footer>
 
 </div>
@@ -309,7 +313,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
      saved = payback - payoff; payoff+saved MUST equal payback on every row.
      NEVER show buy/sell/factor rate, commission, or APR.
    - Stips: the two .closing blocks (page) + the two arrays inside downloadPDF().
-   - Timestamp: replace August 21, 2026 at 9:38 AM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
+   - Timestamp: replace August 21, 2026 at 10:08 AM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
    - Tracker `deal` = merchant name (fires the open-alert email).
    See references/patterns.md for groups, month-payoff schedules, the side-by-side
    detail grid, MCA amortization, and the price-reduced strikethrough.
@@ -322,85 +326,125 @@ var OFFERS = [
   { name:"Lender A", advance:200000, factor:1.35, weekly:5192.31,
     nPay:"52", term:"12", termLabel:"12-Month Flex Line", origPct:0, origLabel:"none", processing:0, position:"1st",
     lineLabel:"Line amount (maximum draw)", minDrawPct:0.10, minDrawLabel:"Minimum draw to open (10% of line)",
-    structure:"Draw up to the line amount; repaid in fixed weekly payments.",
+    structure:"Revolving &mdash; draw, repay, and redraw up to the line amount. Repaid in fixed weekly payments.",
     payoffNote:"Discounted early payoff available &mdash; see the schedule below.",
     prepay:{ freq:"week", hasDate:true, lead:"Pay off after",
-      note:"The lowest-cost exit is inside the first 4 weeks, where the payoff is your remaining principal only. From week 5 on, payoff switches to the funder&rsquo;s discounted balance and the all-in cost steps up.",
+      note:"Weeks 1&ndash;4 are a principal-only window &mdash; the cheapest time to exit, and the effective rate holds at about 35%. From week 5 the payoff switches to the funder&rsquo;s discounted balance: the all-in cost jumps and the effective rate spikes above 100% before settling back toward 35% as you near the end of the term.",
       rows:[
-    {lab:"Week 1", date:"Aug 28, 2026", payoff:196153.85, allin:201346.15, saved:68653.85},
-    {lab:"Week 2", date:"Sep 4, 2026", payoff:192307.69, allin:202692.31, saved:67307.69},
-    {lab:"Week 3", date:"Sep 11, 2026", payoff:188461.54, allin:204038.46, saved:65961.54},
-    {lab:"Week 4", date:"Sep 18, 2026", payoff:184615.38, allin:205384.62, saved:64615.38},
-    {lab:"Week 5", date:"Sep 25, 2026", payoff:196134.62, allin:222096.15, saved:47903.85},
-    {lab:"Week 6", date:"Oct 2, 2026", payoff:191961.54, allin:223115.38, saved:46884.62},
-    {lab:"Week 7", date:"Oct 9, 2026", payoff:187788.46, allin:224134.62, saved:45865.38},
-    {lab:"Week 8", date:"Oct 16, 2026", payoff:183615.38, allin:225153.85, saved:44846.15},
-    {lab:"Week 9", date:"Oct 23, 2026", payoff:179442.31, allin:226173.08, saved:43826.92},
-    {lab:"Week 10", date:"Oct 30, 2026", payoff:175269.23, allin:227192.31, saved:42807.69},
-    {lab:"Week 11", date:"Nov 6, 2026", payoff:171096.15, allin:228211.54, saved:41788.46},
-    {lab:"Week 12", date:"Nov 13, 2026", payoff:166923.08, allin:229230.77, saved:40769.23},
-    {lab:"Week 13", date:"Nov 20, 2026", payoff:162750.00, allin:230250.00, saved:39750.00},
-    {lab:"Week 14", date:"Nov 27, 2026", payoff:158576.92, allin:231269.23, saved:38730.77},
-    {lab:"Week 15", date:"Dec 4, 2026", payoff:154403.85, allin:232288.46, saved:37711.54},
-    {lab:"Week 16", date:"Dec 11, 2026", payoff:150230.77, allin:233307.69, saved:36692.31},
-    {lab:"Week 17", date:"Dec 18, 2026", payoff:146057.69, allin:234326.92, saved:35673.08},
-    {lab:"Week 18", date:"Dec 25, 2026", payoff:141884.62, allin:235346.15, saved:34653.85},
-    {lab:"Week 19", date:"Jan 1, 2027", payoff:137711.54, allin:236365.38, saved:33634.62},
-    {lab:"Week 20", date:"Jan 8, 2027", payoff:133538.46, allin:237384.62, saved:32615.38},
-    {lab:"Week 21", date:"Jan 15, 2027", payoff:129365.38, allin:238403.85, saved:31596.15},
-    {lab:"Week 22", date:"Jan 22, 2027", payoff:125192.31, allin:239423.08, saved:30576.92},
-    {lab:"Week 23", date:"Jan 29, 2027", payoff:121019.23, allin:240442.31, saved:29557.69},
-    {lab:"Week 24", date:"Feb 5, 2027", payoff:116846.15, allin:241461.54, saved:28538.46},
-    {lab:"Week 25", date:"Feb 12, 2027", payoff:112673.08, allin:242480.77, saved:27519.23},
-    {lab:"Week 26", date:"Feb 19, 2027", payoff:108500.00, allin:243500.00, saved:26500.00},
-    {lab:"Week 27", date:"Feb 26, 2027", payoff:104326.92, allin:244519.23, saved:25480.77},
-    {lab:"Week 28", date:"Mar 5, 2027", payoff:100153.85, allin:245538.46, saved:24461.54},
-    {lab:"Week 29", date:"Mar 12, 2027", payoff:95980.77, allin:246557.69, saved:23442.31},
-    {lab:"Week 30", date:"Mar 19, 2027", payoff:91807.69, allin:247576.92, saved:22423.08},
-    {lab:"Week 31", date:"Mar 26, 2027", payoff:87634.62, allin:248596.15, saved:21403.85},
-    {lab:"Week 32", date:"Apr 2, 2027", payoff:83461.54, allin:249615.38, saved:20384.62},
-    {lab:"Week 33", date:"Apr 9, 2027", payoff:79288.46, allin:250634.62, saved:19365.38},
-    {lab:"Week 34", date:"Apr 16, 2027", payoff:75115.38, allin:251653.85, saved:18346.15},
-    {lab:"Week 35", date:"Apr 23, 2027", payoff:70942.31, allin:252673.08, saved:17326.92},
-    {lab:"Week 36", date:"Apr 30, 2027", payoff:66769.23, allin:253692.31, saved:16307.69},
-    {lab:"Week 37", date:"May 7, 2027", payoff:62596.15, allin:254711.54, saved:15288.46},
-    {lab:"Week 38", date:"May 14, 2027", payoff:58423.08, allin:255730.77, saved:14269.23},
-    {lab:"Week 39", date:"May 21, 2027", payoff:54250.00, allin:256750.00, saved:13250.00},
-    {lab:"Week 40", date:"May 28, 2027", payoff:50076.92, allin:257769.23, saved:12230.77},
-    {lab:"Week 41", date:"Jun 4, 2027", payoff:45903.85, allin:258788.46, saved:11211.54},
-    {lab:"Week 42", date:"Jun 11, 2027", payoff:41730.77, allin:259807.69, saved:10192.31},
-    {lab:"Week 43", date:"Jun 18, 2027", payoff:37557.69, allin:260826.92, saved:9173.08},
-    {lab:"Week 44", date:"Jun 25, 2027", payoff:33384.62, allin:261846.15, saved:8153.85},
-    {lab:"Week 45", date:"Jul 2, 2027", payoff:29211.54, allin:262865.38, saved:7134.62},
-    {lab:"Week 46", date:"Jul 9, 2027", payoff:25038.46, allin:263884.62, saved:6115.38},
-    {lab:"Week 47", date:"Jul 16, 2027", payoff:20865.38, allin:264903.85, saved:5096.15},
-    {lab:"Week 48", date:"Jul 23, 2027", payoff:16692.31, allin:265923.08, saved:4076.92},
-    {lab:"Week 49", date:"Jul 30, 2027", payoff:12519.23, allin:266942.31, saved:3057.69},
-    {lab:"Week 50", date:"Aug 6, 2027", payoff:8346.15, allin:267961.54, saved:2038.46},
-    {lab:"Week 51", date:"Aug 13, 2027", payoff:4173.08, allin:268980.77, saved:1019.23},
-    {lab:"Week 52", date:"Aug 20, 2027", payoff:0.00, allin:270000.00, saved:0.00}
+    {lab:"Week 1", date:"Aug 28, 2026", payoff:196153.85, allin:201346.15, saved:68653.85, icost:0.67, sir:35.1},
+    {lab:"Week 2", date:"Sep 4, 2026", payoff:192307.69, allin:202692.31, saved:67307.69, icost:1.35, sir:35.1},
+    {lab:"Week 3", date:"Sep 11, 2026", payoff:188461.54, allin:204038.46, saved:65961.54, icost:2.02, sir:35.1},
+    {lab:"Week 4", date:"Sep 18, 2026", payoff:184615.38, allin:205384.62, saved:64615.38, icost:2.69, sir:35.1},
+    {lab:"Week 5", date:"Sep 25, 2026", payoff:196134.62, allin:222096.15, saved:47903.85, icost:11.05, sir:115.2},
+    {lab:"Week 6", date:"Oct 2, 2026", payoff:191961.54, allin:223115.38, saved:46884.62, icost:11.56, sir:100.4},
+    {lab:"Week 7", date:"Oct 9, 2026", payoff:187788.46, allin:224134.62, saved:45865.38, icost:12.07, sir:89.9},
+    {lab:"Week 8", date:"Oct 16, 2026", payoff:183615.38, allin:225153.85, saved:44846.15, icost:12.58, sir:82.0},
+    {lab:"Week 9", date:"Oct 23, 2026", payoff:179442.31, allin:226173.08, saved:43826.92, icost:13.09, sir:75.8},
+    {lab:"Week 10", date:"Oct 30, 2026", payoff:175269.23, allin:227192.31, saved:42807.69, icost:13.60, sir:70.9},
+    {lab:"Week 11", date:"Nov 6, 2026", payoff:171096.15, allin:228211.54, saved:41788.46, icost:14.11, sir:66.9},
+    {lab:"Week 12", date:"Nov 13, 2026", payoff:166923.08, allin:229230.77, saved:40769.23, icost:14.62, sir:63.5},
+    {lab:"Week 13", date:"Nov 20, 2026", payoff:162750.00, allin:230250.00, saved:39750.00, icost:15.12, sir:60.7},
+    {lab:"Week 14", date:"Nov 27, 2026", payoff:158576.92, allin:231269.23, saved:38730.77, icost:15.63, sir:58.2},
+    {lab:"Week 15", date:"Dec 4, 2026", payoff:154403.85, allin:232288.46, saved:37711.54, icost:16.14, sir:56.1},
+    {lab:"Week 16", date:"Dec 11, 2026", payoff:150230.77, allin:233307.69, saved:36692.31, icost:16.65, sir:54.3},
+    {lab:"Week 17", date:"Dec 18, 2026", payoff:146057.69, allin:234326.92, saved:35673.08, icost:17.16, sir:52.6},
+    {lab:"Week 18", date:"Dec 25, 2026", payoff:141884.62, allin:235346.15, saved:34653.85, icost:17.67, sir:51.2},
+    {lab:"Week 19", date:"Jan 1, 2027", payoff:137711.54, allin:236365.38, saved:33634.62, icost:18.18, sir:49.9},
+    {lab:"Week 20", date:"Jan 8, 2027", payoff:133538.46, allin:237384.62, saved:32615.38, icost:18.69, sir:48.7},
+    {lab:"Week 21", date:"Jan 15, 2027", payoff:129365.38, allin:238403.85, saved:31596.15, icost:19.20, sir:47.7},
+    {lab:"Week 22", date:"Jan 22, 2027", payoff:125192.31, allin:239423.08, saved:30576.92, icost:19.71, sir:46.7},
+    {lab:"Week 23", date:"Jan 29, 2027", payoff:121019.23, allin:240442.31, saved:29557.69, icost:20.22, sir:45.8},
+    {lab:"Week 24", date:"Feb 5, 2027", payoff:116846.15, allin:241461.54, saved:28538.46, icost:20.73, sir:45.0},
+    {lab:"Week 25", date:"Feb 12, 2027", payoff:112673.08, allin:242480.77, saved:27519.23, icost:21.24, sir:44.3},
+    {lab:"Week 26", date:"Feb 19, 2027", payoff:108500.00, allin:243500.00, saved:26500.00, icost:21.75, sir:43.6},
+    {lab:"Week 27", date:"Feb 26, 2027", payoff:104326.92, allin:244519.23, saved:25480.77, icost:22.26, sir:43.0},
+    {lab:"Week 28", date:"Mar 5, 2027", payoff:100153.85, allin:245538.46, saved:24461.54, icost:22.77, sir:42.4},
+    {lab:"Week 29", date:"Mar 12, 2027", payoff:95980.77, allin:246557.69, saved:23442.31, icost:23.28, sir:41.9},
+    {lab:"Week 30", date:"Mar 19, 2027", payoff:91807.69, allin:247576.92, saved:22423.08, icost:23.79, sir:41.3},
+    {lab:"Week 31", date:"Mar 26, 2027", payoff:87634.62, allin:248596.15, saved:21403.85, icost:24.30, sir:40.9},
+    {lab:"Week 32", date:"Apr 2, 2027", payoff:83461.54, allin:249615.38, saved:20384.62, icost:24.81, sir:40.4},
+    {lab:"Week 33", date:"Apr 9, 2027", payoff:79288.46, allin:250634.62, saved:19365.38, icost:25.32, sir:40.0},
+    {lab:"Week 34", date:"Apr 16, 2027", payoff:75115.38, allin:251653.85, saved:18346.15, icost:25.83, sir:39.6},
+    {lab:"Week 35", date:"Apr 23, 2027", payoff:70942.31, allin:252673.08, saved:17326.92, icost:26.34, sir:39.2},
+    {lab:"Week 36", date:"Apr 30, 2027", payoff:66769.23, allin:253692.31, saved:16307.69, icost:26.85, sir:38.9},
+    {lab:"Week 37", date:"May 7, 2027", payoff:62596.15, allin:254711.54, saved:15288.46, icost:27.36, sir:38.6},
+    {lab:"Week 38", date:"May 14, 2027", payoff:58423.08, allin:255730.77, saved:14269.23, icost:27.87, sir:38.2},
+    {lab:"Week 39", date:"May 21, 2027", payoff:54250.00, allin:256750.00, saved:13250.00, icost:28.38, sir:37.9},
+    {lab:"Week 40", date:"May 28, 2027", payoff:50076.92, allin:257769.23, saved:12230.77, icost:28.88, sir:37.7},
+    {lab:"Week 41", date:"Jun 4, 2027", payoff:45903.85, allin:258788.46, saved:11211.54, icost:29.39, sir:37.4},
+    {lab:"Week 42", date:"Jun 11, 2027", payoff:41730.77, allin:259807.69, saved:10192.31, icost:29.90, sir:37.1},
+    {lab:"Week 43", date:"Jun 18, 2027", payoff:37557.69, allin:260826.92, saved:9173.08, icost:30.41, sir:36.9},
+    {lab:"Week 44", date:"Jun 25, 2027", payoff:33384.62, allin:261846.15, saved:8153.85, icost:30.92, sir:36.6},
+    {lab:"Week 45", date:"Jul 2, 2027", payoff:29211.54, allin:262865.38, saved:7134.62, icost:31.43, sir:36.4},
+    {lab:"Week 46", date:"Jul 9, 2027", payoff:25038.46, allin:263884.62, saved:6115.38, icost:31.94, sir:36.2},
+    {lab:"Week 47", date:"Jul 16, 2027", payoff:20865.38, allin:264903.85, saved:5096.15, icost:32.45, sir:36.0},
+    {lab:"Week 48", date:"Jul 23, 2027", payoff:16692.31, allin:265923.08, saved:4076.92, icost:32.96, sir:35.8},
+    {lab:"Week 49", date:"Jul 30, 2027", payoff:12519.23, allin:266942.31, saved:3057.69, icost:33.47, sir:35.6},
+    {lab:"Week 50", date:"Aug 6, 2027", payoff:8346.15, allin:267961.54, saved:2038.46, icost:33.98, sir:35.4},
+    {lab:"Week 51", date:"Aug 13, 2027", payoff:4173.08, allin:268980.77, saved:1019.23, icost:34.49, sir:35.3},
+    {lab:"Week 52", date:"Aug 20, 2027", payoff:0.00, allin:270000.00, saved:0.00, icost:35.00, sir:35.1}
       ] } },
-  { name:"Lender B", advance:125000, factor:1.244854459, weekly:12967.233944, freq:"monthly",
-    nPay:"12", term:"12", termLabel:"12-Month Line of Credit", origPct:0, origLabel:"none", processing:0, position:"1st",
+  { name:"Lender B", advance:125000, factor:1.231527327, weekly:2960.402229,
+    nPay:"52", term:"12", termLabel:"12-Month Line of Credit", origPct:0, origLabel:"none", processing:0, position:"1st",
     lineLabel:"Line amount (maximum draw)", minDraw:1000, minDrawLabel:"Minimum draw",
-    structure:"Revolving &mdash; draw, repay, and redraw. Interest accrues only on what is drawn.",
+    structure:"Revolving &mdash; draw, repay, and redraw. Interest accrues daily, only on what is drawn.",
     forgive:"100% of remaining interest",
     payoffNote:"Pay off any time at your remaining principal &mdash; 100% of remaining interest is waived.",
-    prepay:{ freq:"month", hasDate:false, lead:"Pay off after",
-      note:"There is no prepayment penalty. Pay off at any point and you owe the remaining principal only &mdash; every dollar of unaccrued interest is waived.",
+    prepay:{ freq:"week", hasDate:false, lead:"Pay off after",
+      note:"Interest accrues daily and is shown here weekly. There is no prepayment penalty &mdash; pay off at any point and you owe the remaining principal only, so every dollar of unaccrued interest is waived. Because you are only ever charged for the balance you still hold, the effective simple interest drifts down across the term instead of spiking.",
       rows:[
-    {lab:"Month 1", payoff:116459.85, allin:129427.08, saved:26179.72},
-    {lab:"Month 2", payoff:107617.24, allin:133551.70, saved:22055.10},
-    {lab:"Month 3", payoff:98461.44, allin:137363.15, saved:18243.66},
-    {lab:"Month 4", payoff:88981.39, allin:140850.32, saved:14756.48},
-    {lab:"Month 5", payoff:79165.58, allin:144001.75, saved:11605.06},
-    {lab:"Month 6", payoff:69002.12, allin:146805.53, saved:8801.28},
-    {lab:"Month 7", payoff:58478.72, allin:149249.35, saved:6357.45},
-    {lab:"Month 8", payoff:47582.60, allin:151320.47, saved:4286.33},
-    {lab:"Month 9", payoff:36300.59, allin:153005.69, saved:2601.12},
-    {lab:"Month 10", payoff:24619.00, allin:154291.34, saved:1315.47},
-    {lab:"Month 11", payoff:12523.69, allin:155163.26, saved:443.55},
-    {lab:"Month 12", payoff:0.00, allin:155606.81, saved:0.00}
+    {lab:"Week 1", payoff:123061.23, allin:126021.63, saved:27919.28, icost:0.82, sir:42.6},
+    {lab:"Week 2", payoff:121106.62, allin:127027.42, saved:26913.49, icost:1.62, sir:42.3},
+    {lab:"Week 3", payoff:119136.03, allin:128017.24, saved:25923.68, icost:2.41, sir:42.0},
+    {lab:"Week 4", payoff:117149.34, allin:128990.95, saved:24949.97, icost:3.19, sir:41.6},
+    {lab:"Week 5", payoff:115146.40, allin:129948.42, saved:23992.50, icost:3.96, sir:41.3},
+    {lab:"Week 6", payoff:113127.10, allin:130889.52, saved:23051.40, icost:4.71, sir:40.9},
+    {lab:"Week 7", payoff:111091.30, allin:131814.11, saved:22126.80, icost:5.45, sir:40.6},
+    {lab:"Week 8", payoff:109038.85, allin:132722.07, saved:21218.85, icost:6.18, sir:40.3},
+    {lab:"Week 9", payoff:106969.63, allin:133613.25, saved:20327.66, icost:6.89, sir:39.9},
+    {lab:"Week 10", payoff:104883.50, allin:134487.52, saved:19453.39, icost:7.59, sir:39.6},
+    {lab:"Week 11", payoff:102780.32, allin:135344.75, saved:18596.17, icost:8.28, sir:39.2},
+    {lab:"Week 12", payoff:100659.95, allin:136184.78, saved:17756.14, icost:8.95, sir:38.9},
+    {lab:"Week 13", payoff:98522.25, allin:137007.48, saved:16933.44, icost:9.61, sir:38.5},
+    {lab:"Week 14", payoff:96367.08, allin:137812.71, saved:16128.21, icost:10.25, sir:38.2},
+    {lab:"Week 15", payoff:94194.29, allin:138600.32, saved:15340.59, icost:10.88, sir:37.8},
+    {lab:"Week 16", payoff:92003.75, allin:139370.18, saved:14570.74, icost:11.50, sir:37.5},
+    {lab:"Week 17", payoff:89795.30, allin:140122.13, saved:13818.78, icost:12.10, sir:37.1},
+    {lab:"Week 18", payoff:87568.80, allin:140856.04, saved:13084.88, icost:12.68, sir:36.7},
+    {lab:"Week 19", payoff:85324.10, allin:141571.74, saved:12369.17, icost:13.26, sir:36.4},
+    {lab:"Week 20", payoff:83061.06, allin:142269.11, saved:11671.81, icost:13.82, sir:36.0},
+    {lab:"Week 21", payoff:80779.52, allin:142947.97, saved:10992.95, icost:14.36, sir:35.7},
+    {lab:"Week 22", payoff:78479.34, allin:143608.19, saved:10332.73, icost:14.89, sir:35.3},
+    {lab:"Week 23", payoff:76160.35, allin:144249.60, saved:9691.31, icost:15.40, sir:34.9},
+    {lab:"Week 24", payoff:73822.42, allin:144872.07, saved:9068.85, icost:15.90, sir:34.5},
+    {lab:"Week 25", payoff:71465.37, allin:145475.43, saved:8465.49, icost:16.38, sir:34.2},
+    {lab:"Week 26", payoff:69089.06, allin:146059.52, saved:7881.40, icost:16.85, sir:33.8},
+    {lab:"Week 27", payoff:66693.33, allin:146624.19, saved:7316.73, icost:17.30, sir:33.4},
+    {lab:"Week 28", payoff:64278.01, allin:147169.28, saved:6771.64, icost:17.74, sir:33.0},
+    {lab:"Week 29", payoff:61842.96, allin:147694.63, saved:6246.29, icost:18.16, sir:32.6},
+    {lab:"Week 30", payoff:59388.01, allin:148200.07, saved:5740.84, icost:18.56, sir:32.3},
+    {lab:"Week 31", payoff:56912.99, allin:148685.46, saved:5255.46, icost:18.95, sir:31.9},
+    {lab:"Week 32", payoff:54417.74, allin:149150.61, saved:4790.31, icost:19.32, sir:31.5},
+    {lab:"Week 33", payoff:51902.10, allin:149595.37, saved:4345.54, icost:19.68, sir:31.1},
+    {lab:"Week 34", payoff:49365.90, allin:150019.57, saved:3921.34, icost:20.02, sir:30.7},
+    {lab:"Week 35", payoff:46808.96, allin:150423.04, saved:3517.87, icost:20.34, sir:30.3},
+    {lab:"Week 36", payoff:44231.14, allin:150805.62, saved:3135.30, icost:20.64, sir:29.9},
+    {lab:"Week 37", payoff:41632.24, allin:151167.12, saved:2773.80, icost:20.93, sir:29.5},
+    {lab:"Week 38", payoff:39012.10, allin:151507.38, saved:2433.53, icost:21.21, sir:29.1},
+    {lab:"Week 39", payoff:36370.55, allin:151826.23, saved:2114.68, icost:21.46, sir:28.7},
+    {lab:"Week 40", payoff:33707.40, allin:152123.49, saved:1817.42, icost:21.70, sir:28.3},
+    {lab:"Week 41", payoff:31022.49, allin:152398.98, saved:1541.93, icost:21.92, sir:27.9},
+    {lab:"Week 42", payoff:28315.64, allin:152652.53, saved:1288.38, icost:22.12, sir:27.5},
+    {lab:"Week 43", payoff:25586.66, allin:152883.96, saved:1056.96, icost:22.31, sir:27.1},
+    {lab:"Week 44", payoff:22835.38, allin:153093.08, saved:847.83, icost:22.47, sir:26.6},
+    {lab:"Week 45", payoff:20061.62, allin:153279.72, saved:661.20, icost:22.62, sir:26.2},
+    {lab:"Week 46", payoff:17265.18, allin:153443.68, saved:497.23, icost:22.75, sir:25.8},
+    {lab:"Week 47", payoff:14445.89, allin:153584.79, saved:356.12, icost:22.87, sir:25.4},
+    {lab:"Week 48", payoff:11603.55, allin:153702.86, saved:238.06, icost:22.96, sir:24.9},
+    {lab:"Week 49", payoff:8737.99, allin:153797.70, saved:143.22, icost:23.04, sir:24.5},
+    {lab:"Week 50", payoff:5849.00, allin:153869.11, saved:71.80, icost:23.10, sir:24.1},
+    {lab:"Week 51", payoff:2936.40, allin:153916.92, saved:24.00, icost:23.13, sir:23.7},
+    {lab:"Week 52", payoff:0.00, allin:153940.92, saved:-0.00, icost:23.15, sir:23.2}
       ] } }
 ];
 
@@ -456,7 +500,7 @@ function renderOffers(){
     var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
     var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
     return '<div class="offer-card'+(o.rec?' rec':'')+'">'
-      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
+      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+cap(fw)+' payments &middot; revolving line of credit</div></div>'
       + '<div class="offer-card-body">'
         + '<div class="kv-row"><span class="kv-label">'+(o.lineLabel||"Advance amount")+'</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
         + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee</span><span class="kv-val">'+(o.origPct ? money(m.fee) : "None")+'</span></div>'
@@ -468,7 +512,6 @@ function renderOffers(){
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
         + fgRow
-        + '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">'+o.position+'</span></div>'
         + structRow
         + (o.payoffNote ? '<div class="kv-row kv-payoffnote"><span class="kv-label">Early payoff</span><span class="kv-val">'+o.payoffNote+'</span></div>' : '')
       + '</div></div>';
@@ -524,6 +567,7 @@ function renderPrepay(){
       + '<th>'+p.lead+'</th>'
       + (p.hasDate ? '<th>Date</th>' : '')
       + '<th>Payoff amount (paid then)</th><th>All-in total paid</th><th>You save</th>'
+      + '<th>Interest cost</th><th>Effective simple interest<span class="th-note">annualized</span></th>'
       + '</tr></thead><tbody>';
     for(var i=0;i<p.rows.length;i++){
       var r = p.rows[i];
@@ -531,9 +575,14 @@ function renderPrepay(){
         + (p.hasDate ? '<td data-label="Date">'+r.date+'</td>' : '')
         + '<td class="po-payoff" data-label="Payoff amount (paid then)">'+money(round2(r.payoff*s))+'</td>'
         + '<td data-label="All-in total paid">'+money(round2(r.allin*s))+'</td>'
-        + '<td class="po-saved" data-label="You save">'+money(round2(r.saved*s))+'</td></tr>';
+        + '<td class="po-saved" data-label="You save">'+money(round2(r.saved*s))+'</td>'
+        + '<td class="po-ic" data-label="Interest cost">'+r.icost.toFixed(2)+'%</td>'
+        + '<td class="po-sir" data-label="Effective simple interest (annualized)">'+r.sir.toFixed(1)+'%</td></tr>';
     }
-    html += '</tbody></table></div></div>';
+    html += '</tbody></table></div>'
+      + '<div class="prepay-foot"><b>Interest cost</b> = total paid minus the amount drawn, as a percentage of the amount drawn. '
+      + '<b>Effective simple interest</b> annualizes that over the time the money was actually held '
+      + '(interest cost &divide; days held &times; 365). It is simple, not compounded, and is not an APR.</div></div>';
   });
   document.getElementById("prepayWrap").innerHTML = html;
 }
@@ -546,7 +595,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers \u2014 Region Equipment", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared August 21, 2026 at 9:38 AM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
+  doc.text("BusinessLoans.com     Prepared August 21, 2026 at 10:08 AM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -562,7 +611,6 @@ function downloadPDF(){
     rows.push([(fw==="monthly"?"Monthly":"Weekly")+" payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" "+fw]);
     rows.push(["Term", o.term+" months"]);
-    rows.push(["Position", o.position]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
@@ -584,18 +632,20 @@ function downloadPDF(){
     doc.text("Offer "+o.num+" \u2014 "+o.termLabel+" \u2014 Payment & Early-Payoff Schedule \u2014 "+money0(m.advance), L, yy); yy+=15;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
     doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/"+fw+"   "+o.nPay+" "+fw+"ly payments", L, yy); yy+=20;
-    var ch=[{h:p.lead,x:L,a:"left"},{h:"Payoff amount",x:330,a:"right"},{h:"All-in total paid",x:450,a:"right"},{h:"You save",x:R,a:"right"}];
+    var ch=[{h:p.lead,x:L,a:"left"},{h:"Payoff amount",x:266,a:"right"},{h:"All-in total paid",x:360,a:"right"},{h:"You save",x:444,a:"right"},{h:"Int. cost",x:502,a:"right"},{h:"Eff. simple int.",x:R,a:"right"}];
     doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
     ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
     yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=13;
-    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
+    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
     for(var i=0;i<p.rows.length;i++){
       if(yy>772){ doc.addPage(); yy=60; }
       var r=p.rows[i];
       doc.text(r.lab+(p.hasDate ? "  ("+r.date+")" : ""), L, yy);
-      doc.text(money(round2(r.payoff*s)), 330, yy, {align:"right"});
-      doc.text(money(round2(r.allin*s)), 450, yy, {align:"right"});
-      doc.text(money(round2(r.saved*s)), R, yy, {align:"right"});
+      doc.text(money(round2(r.payoff*s)), 266, yy, {align:"right"});
+      doc.text(money(round2(r.allin*s)), 360, yy, {align:"right"});
+      doc.text(money(round2(r.saved*s)), 444, yy, {align:"right"});
+      doc.text(r.icost.toFixed(2)+"%", 502, yy, {align:"right"});
+      doc.text(r.sir.toFixed(1)+"%", R, yy, {align:"right"});
       yy+=13;
     }
   });
