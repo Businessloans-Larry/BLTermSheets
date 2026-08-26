@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Funding Offers - Lobster Test</title>
+<title>Funding Offers - Legacy Construction and Development</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -69,22 +69,10 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .kv-row:last-child{border-bottom:none;}
 .kv-label{color:var(--slate);}
 .kv-val{color:var(--navy);font-weight:600;font-variant-numeric:tabular-nums;text-align:right;}
-.cap-badge.cap-pre{margin-left:0;margin-right:7px;}
 .cap-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green-d);background:rgba(0,205,103,.12);border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:middle;}
 /* group headers (shown only when >1 group) */
 .lender-group{margin:0 0 9px;}
 .lender-head{color:var(--navy);font-family:'DM Serif Display',Georgia,serif;font-size:16px;margin:2px 0 3px;padding-bottom:2px;border-bottom:2px solid var(--green);display:inline-block;}
-.offer-chart tr.termband td{
-  background:rgba(0,47,104,.07);color:var(--navy);font-family:'Inter',sans-serif;font-size:12px;
-  font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:7px 12px;
-  border-top:1.5px solid var(--navy);text-align:left;}
-.offer-chart tr.termband td .band-count{font-weight:600;letter-spacing:.04em;opacity:.6;margin-left:9px;text-transform:none;}
-.programs{display:flex;flex-direction:column;gap:5px;margin:0 0 10px;}
-.prog{font-size:12px;color:var(--slate);line-height:1.45;}
-.prog b{color:var(--navy);}
-.prog-tag{display:inline-block;background:var(--navy);color:#fff;font-weight:800;font-size:10px;
-  letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-right:7px;
-  vertical-align:1px;white-space:nowrap;}
 .lender-note{font-size:11.5px;color:var(--slate);font-style:italic;margin:0 0 5px;}
 .freq-badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7a4e00;background:#FFE08A;border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle;}
 /* ---- v2 (DEFAULT on every sheet): date sub-line, Call/Text/Email strip, recommended snapshot + highlight ---- */
@@ -148,18 +136,6 @@ table.prepay tbody tr:nth-child(even){background:var(--bg);}
 table.prepay tbody tr:last-child td{border-bottom:none;}
 .po-payoff{color:var(--navy);font-weight:600;}
 .po-saved{color:var(--green-d);font-weight:600;}
-.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;align-items:start;}
-.detail-card{border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;break-inside:avoid;}
-.detail-head{font-family:'DM Serif Display',Georgia,serif;font-size:17px;color:var(--navy);margin-bottom:1px;}
-.detail-tag{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-left:6px;}
-.detail-recap{font-size:11.5px;color:var(--slate);margin:0 0 8px;}
-table.sched{border-collapse:collapse;width:100%;font-size:11.5px;font-variant-numeric:tabular-nums;}
-table.sched th{background:var(--navy);color:#fff;font-weight:600;font-size:10.5px;text-align:right;padding:5px 9px;}
-table.sched th:first-child{text-align:left;}
-table.sched td{padding:5px 9px;text-align:right;border-bottom:1px solid var(--line);}
-table.sched td:first-child{text-align:left;color:var(--navy);font-weight:600;}
-table.sched tbody tr:last-child td{border-bottom:none;}
-table.sched td.po-saved{color:var(--green-d);font-weight:600;}
 .disclosure{margin-top:16px;padding:12px 15px;background:var(--bg);border-radius:10px;border:1px solid var(--line);font-size:11px;color:var(--slate);line-height:1.5;}
 .disclosure b{color:var(--navy);}
 footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-size:11px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
@@ -212,9 +188,6 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   .offer-chart tr.ch-rec td.ch-num{box-shadow:none;background:var(--green);color:#05351c;}
   .offer-chart tr.ch-rec td.ch-num::before{color:#05351c;opacity:.85;}
   /* early-payoff tables -> one card per row */
-  .offer-chart tr.termband{display:block;}
-  .offer-chart tr.termband td{display:block;width:auto;border-left:none;}
-  .offer-chart tr.termband td::before{content:none;}
   .prepay{display:block;border:none;}
   .prepay thead{display:none;}
   .prepay tbody,.prepay tr,.prepay td{display:block;width:auto;}
@@ -233,7 +206,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTguMiA3OC4yIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwMmY2ODt9LmNscy0ye2ZpbGw6IzAwY2Q2Nzt9LmNscy0ze2ZpbGw6IzAwY2RlZjt9LmNscy00e2ZpbGw6IzYwYWZmMDt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImxuMSI+PHJlY3QgeD0iLTYiIHk9Ii02IiB3aWR0aD0iMzY2IiBoZWlnaHQ9IjkwIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImxuMiI+PHJlY3QgeD0iLTYiIHk9Ijg0IiB3aWR0aD0iMzY2IiBoZWlnaHQ9Ijc2Ii8+PC9jbGlwUGF0aD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2xuMSkiPjxnPjxnPjxnPjxnPjxnPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyLjkyLDMxLjY0SDE2Ljc3VjQyLjgyaDYuMTVBMTEuNzQsMTEuNzQsMCwxLDEsMTEuMTgsNTQuNTZoMFYyNS44MWExMCwxMCwwLDAsMC0xMC0xMEgwVjU0LjU2SDBBMjIuOTIsMjIuOTIsMCwxLDAsMjIuOTIsMzEuNjRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgsMjYuMDVIMTYuNzdWMjQuODdhMTAsMTAsMCwwLDEsMTAtMTBIMjh2MS4xOEExMCwxMCwwLDAsMSwxOCwyNi4wNVoiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNCwwbC0uODMuODNhMTAsMTAsMCwwLDAsMCwxNC4xNWwuODMuODMuODQtLjgzYTEwLDEwLDAsMCwwLDAtMTQuMTVMMTQsMFoiLz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMjkuMDUsMTUxLjQyYTEuODQsMS44NCwwLDAsMSwxLjg2LTEuODYsMS43OSwxLjc5LDAsMCwxLDEuMzEuNTQsMS44MSwxLjgxLDAsMCwxLC41NCwxLjMyLDEuODYsMS44NiwwLDEsMS0zLjcxLDBaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjU1LjU2LDE1MC40MWE4LjMyLDguMzIsMCwwLDEtMywyLjM0LDguNjIsOC42MiwwLDAsMS0zLjU5Ljc2LDEwLjE4LDEwLjE4LDAsMCwxLTMuNzktLjcsOC40NCw4LjQ0LDAsMCwxLTMtMS45NSw5LDksMCwwLDEtMS45NC0zLDEwLjYyLDEwLjYyLDAsMCwxLDAtNy41Myw5LDksMCwwLDEsMS45NC0zLDguNDQsOC40NCwwLDAsMSwzLTIsMTAsMTAsMCwwLDEsMy43OS0uNyw4LjMsOC4zLDAsMCwxLDMuNjUuODEsMTAsMTAsMCwwLDEsMywyLjI4bC0xLjg2LDEuNGE3Ljg2LDcuODYsMCwwLDAtMi4yLTEuNzYsNS4zNyw1LjM3LDAsMCwwLTIuNTktLjY0LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4LDcsNywwLDAsMC0yLjI0LDEuNTYsNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMiw4LjY0LDguNjQsMCwwLDAsMCw1LjY4LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi45MSw2LjkxLDAsMCwwLDIuMjQsMS41Nyw3LjM0LDcuMzQsMCwwLDAsMi45NC41OCw1LjQyLDUuNDIsMCwwLDAsMi42OC0uNjgsNi44Niw2Ljg2LDAsMCwwLDIuMTEtMS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1OS43NywxNDQuMTFhMTAsMTAsMCwwLDEsLjY5LTMuNzYsOS4xNyw5LjE3LDAsMCwxLDEuOTMtMyw4LjU3LDguNTcsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOS44OCw5Ljg4LDAsMCwxLDMuNzcuNyw4LjczLDguNzMsMCwwLDEsNC45Miw0LjkzLDEwLjQ4LDEwLjQ4LDAsMCwxLDAsNy41Myw4LjczLDguNzMsMCwwLDEtNC45Miw0LjkzLDEwLjA4LDEwLjA4LDAsMCwxLTMuNzcuNywxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNTcsOC41NywwLDAsMS0zLTEuOTUsOS4xNyw5LjE3LDAsMCwxLTEuOTMtM0ExMCwxMCwwLDAsMSwyNTkuNzcsMTQ0LjExWm0yLjMxLDBhOC4yNiw4LjI2LDAsMCwwLC40OSwyLjg0LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi44LDYuOCwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNy4yNiw3LjI2LDAsMCwwLDIuOTMtLjU4LDYuNjIsNi42MiwwLDAsMCwzLjY2LTMuODksOC42NCw4LjY0LDAsMCwwLDAtNS42OCw2LjU2LDYuNTYsMCwwLDAtMy42Ni0zLjg4LDcuMSw3LjEsMCwwLDAtMi45My0uNTgsNy4xOCw3LjE4LDAsMCwwLTIuOTQuNThBNi45Myw2LjkzLDAsMCwwLDI2NCwxMzlhNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMkE4LjM1LDguMzUsMCwwLDAsMjYyLjA4LDE0NC4xMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yODQuMzEsMTQwLjIxYzAtLjMzLDAtLjc0LDAtMS4yMnMwLTEtLjA2LTEuNDUsMC0uOTQtLjA2LTEuMzcsMC0uNzUsMC0xaDIuMzJjMCwuNjcuMDUsMS4zMS4wNiwxLjkzYTUuODgsNS44OCwwLDAsMCwuMSwxLjJoLjExYTYuMjYsNi4yNiwwLDAsMSwyLjMyLTIuNTMsNi43Niw2Ljc2LDAsMCwxLDMuNzktMS4wNyw2LjEzLDYuMTMsMCwwLDEsMy4yNS45MSw1LjIsNS4yLDAsMCwxLDIuMTIsMyw1LjgyLDUuODIsMCwwLDEsMi41My0yLjk0LDcuMiw3LjIsMCwwLDEsMy41NC0uOTMsNy42LDcuNiwwLDAsMSwzLjQuNjYsNS40NCw1LjQ0LDAsMCwxLDIuMDcsMS43Miw2LjQ5LDYuNDksMCwwLDEsMSwyLjQ1LDE0LjIzLDE0LjIzLDAsMCwxLC4yOSwyLjg2VjE1M2gtMi4zMlYxNDIuNTNhMTEuMzQsMTEuMzQsMCwwLDAtLjE5LTIuMTEsNS42NCw1LjY0LDAsMCwwLS42OC0xLjgzLDMuNTIsMy41MiwwLDAsMC0xLjM1LTEuMyw0LjY1LDQuNjUsMCwwLDAtMi4yNi0uNDgsNS4zMyw1LjMzLDAsMCwwLTIuNjcuNiw0LjgxLDQuODEsMCwwLDAtMS42NCwxLjUyLDYuMzgsNi4zOCwwLDAsMC0uODUsMiw5LDksMCwwLDAtLjI1LDIuMDV2MTBoLTIuMzJWMTQyLjNhNy41OSw3LjU5LDAsMCwwLS45MS00LDMsMywwLDAsMC0yLjgtMS41MSw2Ljc1LDYuNzUsMCwwLDAtMi40Mi40NCw1LjI1LDUuMjUsMCwwLDAtMiwxLjM2LDYuNDgsNi40OCwwLDAsMC0xLjMxLDIuMjgsOS43NSw5Ljc1LDAsMCwwLS40OCwzLjIyVjE1M2gtMi4zMloiLz48L2c+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIuMjQsNzdIODEuMzJWNzIuODRhMTUuMzYsMTUuMzYsMCwwLDEtMTEuMTgsNC42NCwxNC40NywxNC40NywwLDAsMS0xMC41OC00QzU2LDY5LjkxLDU1LDY1LjcsNTUsNjAuOFYzMi4xNkg2Ni4xOFY1OS4yNWMwLDYuMTEsMy44Nyw4LjE3LDcuNCw4LjE3czcuNDgtMi4wNiw3LjQ4LTguMTdWMzIuMTZIOTIuMjRaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM4LjQyLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNC0zLTQuNDgsMC02LjM3LDIuMDYtNi4zNyw0LjNzMS4yOSwzLjUyLDQuNjUsMy44N2w3LC42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNSwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1TDEwOSw2My43MmMzLjYxLDMuNyw4LjUxLDQuMjIsMTEuOTUsNC4yMiwzLjg3LDAsNy45Mi0xLjI5LDcuOTItNC42NSwwLTIuMjMtMS4xMi0zLjc4LTQuNzMtNC4xM2wtNy4wNi0uNjhDMTA5LDU3LjcsMTA0LDU0LjE4LDEwNCw0NS45MmMwLTkuMzcsOC4xNy0xNC4yOCwxNy4yOS0xNC4yOEMxMjguMzYsMzEuNjQsMTM0LjEyLDMyLjkzLDEzOC40MiwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNzMsMjQuNTFIMTUwLjI5VjE1LjM5aDExLjQ0Wk0xNjEuNjQsNzdIMTUwLjQ2VjMzLjQ1aDExLjE4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwOC4wOCwzNS42YzMuNjEsMy43LDQuNTYsNy44Myw0LjU2LDEyLjczVjc3SDIwMS40NlY0OS44OGMwLTYuMTEtMy43OS04LjE3LTcuNC04LjE3cy03LjQ4LDIuMDYtNy40OCw4LjE3Vjc3SDE3NS40VjMyLjE2aDEwLjkydjQuMTNhMTUuMzMsMTUuMzMsMCwwLDEsMTEuMTgtNC42NUMyMDIsMzEuNjQsMjA1LjU5LDMzLDIwOC4wOCwzNS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI2Mi43OCw1My4zMnY0LjczaC0yOGMwLDUuODQsMy40NCwxMCw5LjgsMTAsNC45MSwwLDcuMzEtMS40NiwxMC4wNy00LjIxbDYuODgsNi42MmMtNC41Niw0LjY0LTksNy0xNyw3LTEwLjY3LDAtMjAuNzMtNC44MS0yMC43My0yMywwLTE0LjYyLDcuOTEtMjIuODgsMTkuNTItMjIuODhDMjU1LjcyLDMxLjY0LDI2Mi43OCw0MC41OSwyNjIuNzgsNTMuMzJabS0yNy4wOS03Ljc0YTEwLjg5LDEwLjg5LDAsMCwwLS45NSw0LjgxaDE2Ljk0YTEwLjg5LDEwLjg5LDAsMCwwLS45NC00LjgxLDguNDEsOC40MSwwLDAsMC0xNS4wNSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwNi43MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcsMC0xMy4zMy0uNzctMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4Yy04LjA4LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMjk2LjY2LDMxLjY0LDMwMi40MiwzMi45MywzMDYuNzIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzUxLjEsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDYtNi4zNiw0LjNzMS4yOSwzLjUyLDQuNjQsMy44N2w3LjA1LjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LjA2LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zLTcuMzFjMy42MiwzLjcsOC41Miw0LjIyLDEyLDQuMjIsMy44NywwLDcuOTEtMS4yOSw3LjkxLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDUtLjY4Yy04LjA5LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjgtMTQuMjhDMzQxLDMxLjY0LDM0Ni44LDMyLjkzLDM1MS4xLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTI0LjczLDEzOS41NWMwLDIuNjYsMS4xMiw0LDQsNEgzM3Y5LjQ2SDI2LjYyYy05LjIsMC0xMy4wNy02LjM2LTEzLjA3LTEyLjgxVjkxLjgySDI0LjczWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTczLjMyLDE0OC4wNmMtMi44NCwyLjkzLTcuMzEsNS41MS0xMy45Myw1LjUxcy0xMS0yLjU4LTEzLjg0LTUuNTFjLTQtNC4zLTUuMDgtOS4zNy01LjA4LTE3LjQ2czEtMTMuMDcsNS4wOC0xNy4zN2MyLjgzLTIuOTIsNy4yMi01LjUsMTMuODQtNS41czExLjA5LDIuNDksMTMuOTMsNS41YzQsNC4zLDUuMDgsOS4yOSw1LjA4LDE3LjM3Uzc3LjQ1LDE0My44NSw3My4zMiwxNDguMDZabS04LjY4LTI4LjI5YTcuMDcsNy4wNywwLDAsMC01LjI1LTIsNyw3LDAsMCwwLTUuMTYsMmMtMi4zMiwyLjI0LTIuNTgsNi4yOC0yLjU4LDEwLjgzcy4yNiw4LjY5LDIuNTgsMTAuOTNhNyw3LDAsMCwwLDUuMTYsMiw3LjA3LDcuMDcsMCwwLDAsNS4yNS0yYzIuMzItMi4yNCwyLjU4LTYuMjgsMi41OC0xMC45M1M2NywxMjIsNjQuNjQsMTE5Ljc3WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTEyNC4yMywxMjMuNTV2MjkuNUgxMTMuMzF2LTMuODdjLTMsMy01Ljg0LDQuMy0xMSw0LjNzLTguODYtMS4zOC0xMS40NC00YTE0LjMzLDE0LjMzLDAsMCwxLTMuNy0xMC4wNmMwLTcuMTMsNC45LTEzLDE1LjQ4LTEzaDEwLjR2LTIuMjRjMC00LjktMi40LTctOC4zNC03LTQsMC02LjE5LDEuMTItOC42LDMuODdsLTctN2M0LjM5LTQuODEsOC42LTYuMzYsMTYuMDgtNi4zNkMxMTcuNzgsMTA3LjczLDEyNC4yMywxMTMuMDYsMTI0LjIzLDEyMy41NVptLTE5LjY5LDEwLjU4Yy00LjQ3LDAtNi42MiwxLjgxLTYuNjIsNS4xNiwwLDMuMSwyLjE1LDUuMDcsNi43OSw1LjA3LDIuNzYsMCw0LjczLS4zNCw2LjYyLTIuMTUsMS4yOS0xLjExLDEuNzItMi44MywxLjcyLTUuNjd2LTIuNDFaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMTcwLjI0LDExMS42OWMzLjYyLDMuNjksNC41Niw3LjgyLDQuNTYsMTIuNzJ2MjguNjRIMTYzLjYyVjEyNmMwLTYuMS0zLjc4LTguMTctNy4zOS04LjE3cy03LjQ5LDIuMDctNy40OSw4LjE3djI3LjA5SDEzNy41NnYtNDQuOGgxMC45M3Y0LjEyYTE1LjM0LDE1LjM0LDAsMCwxLDExLjE4LTQuNjRDMTY0LjE0LDEwNy43MywxNjcuNzUsMTA5LjExLDE3MC4yNCwxMTEuNjlaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMjIwLjQ3LDExM2wtNi44OCw3Yy0yLjU4LTIuMzItNi40NS0zLTEwLjQxLTMtNC40NywwLTYuMzYsMi4wNy02LjM2LDQuM3MxLjI5LDMuNTMsNC42NCwzLjg3bDcsLjY5YzguODYuODYsMTMuMzMsNS41LDEzLjMzLDEzLjE2LDAsOS44OS04LjQyLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzgtMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjY5LDguNTEsNC4yMSwxMS45NSw0LjIxLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY0LDAtMi4yNC0xLjEyLTMuNzktNC43My00LjEzbC03LjA1LS42OWMtOC4wOC0uNzctMTMuMDctNC4zLTEzLjA3LTEyLjU1LDAtOS4zOCw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzIxMC40MSwxMDcuNzMsMjE2LjE3LDEwOSwyMjAuNDcsMTEzWiIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ni45MiAtNzYuMSkiIGNsaXAtcGF0aD0idXJsKCNsbjIpIj48Zz48Zz48Zz48Zz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMi45MiwzMS42NEgxNi43N1Y0Mi44Mmg2LjE1QTExLjc0LDExLjc0LDAsMSwxLDExLjE4LDU0LjU2aDBWMjUuODFhMTAsMTAsMCwwLDAtMTAtMTBIMFY1NC41NkgwQTIyLjkyLDIyLjkyLDAsMSwwLDIyLjkyLDMxLjY0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE4LDI2LjA1SDE2Ljc3VjI0Ljg3YTEwLDEwLDAsMCwxLDEwLTEwSDI4djEuMThBMTAsMTAsMCwwLDEsMTgsMjYuMDVaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTQsMGwtLjgzLjgzYTEwLDEwLDAsMCwwLDAsMTQuMTVsLjgzLjgzLjg0LS44M2ExMCwxMCwwLDAsMCwwLTE0LjE1TDE0LDBaIi8+PGc+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjI5LjA1LDE1MS40MmExLjg0LDEuODQsMCwwLDEsMS44Ni0xLjg2LDEuNzksMS43OSwwLDAsMSwxLjMxLjU0LDEuODEsMS44MSwwLDAsMSwuNTQsMS4zMiwxLjg2LDEuODYsMCwxLDEtMy43MSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1NS41NiwxNTAuNDFhOC4zMiw4LjMyLDAsMCwxLTMsMi4zNCw4LjYyLDguNjIsMCwwLDEtMy41OS43NiwxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNDQsOC40NCwwLDAsMS0zLTEuOTUsOSw5LDAsMCwxLTEuOTQtMywxMC42MiwxMC42MiwwLDAsMSwwLTcuNTMsOSw5LDAsMCwxLDEuOTQtMyw4LjQ0LDguNDQsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOC4zLDguMywwLDAsMSwzLjY1LjgxLDEwLDEwLDAsMCwxLDMsMi4yOGwtMS44NiwxLjRhNy44Niw3Ljg2LDAsMCwwLTIuMi0xLjc2LDUuMzcsNS4zNywwLDAsMC0yLjU5LS42NCw3LjE4LDcuMTgsMCwwLDAtMi45NC41OCw3LDcsMCwwLDAtMi4yNCwxLjU2LDYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzIsOC42NCw4LjY0LDAsMCwwLDAsNS42OCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOTEsNi45MSwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNS40Miw1LjQyLDAsMCwwLDIuNjgtLjY4LDYuODYsNi44NiwwLDAsMCwyLjExLTEuOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNTkuNzcsMTQ0LjExYTEwLDEwLDAsMCwxLC42OS0zLjc2LDkuMTcsOS4xNywwLDAsMSwxLjkzLTMsOC41Nyw4LjU3LDAsMCwxLDMtMiwxMCwxMCwwLDAsMSwzLjc5LS43LDkuODgsOS44OCwwLDAsMSwzLjc3LjcsOC43Myw4LjczLDAsMCwxLDQuOTIsNC45MywxMC40OCwxMC40OCwwLDAsMSwwLDcuNTMsOC43Myw4LjczLDAsMCwxLTQuOTIsNC45MywxMC4wOCwxMC4wOCwwLDAsMS0zLjc3LjcsMTAuMTgsMTAuMTgsMCwwLDEtMy43OS0uNyw4LjU3LDguNTcsMCwwLDEtMy0xLjk1LDkuMTcsOS4xNywwLDAsMS0xLjkzLTNBMTAsMTAsMCwwLDEsMjU5Ljc3LDE0NC4xMVptMi4zMSwwYTguMjYsOC4yNiwwLDAsMCwuNDksMi44NCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOCw2LjgsMCwwLDAsMi4yNCwxLjU3LDcuMzQsNy4zNCwwLDAsMCwyLjk0LjU4LDcuMjYsNy4yNiwwLDAsMCwyLjkzLS41OCw2LjYyLDYuNjIsMCwwLDAsMy42Ni0zLjg5LDguNjQsOC42NCwwLDAsMCwwLTUuNjgsNi41Niw2LjU2LDAsMCwwLTMuNjYtMy44OCw3LjEsNy4xLDAsMCwwLTIuOTMtLjU4LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4QTYuOTMsNi45MywwLDAsMCwyNjQsMTM5YTYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzJBOC4zNSw4LjM1LDAsMCwwLDI2Mi4wOCwxNDQuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjg0LjMxLDE0MC4yMWMwLS4zMywwLS43NCwwLTEuMjJzMC0xLS4wNi0xLjQ1LDAtLjk0LS4wNi0xLjM3LDAtLjc1LDAtMWgyLjMyYzAsLjY3LjA1LDEuMzEuMDYsMS45M2E1Ljg4LDUuODgsMCwwLDAsLjEsMS4yaC4xMWE2LjI2LDYuMjYsMCwwLDEsMi4zMi0yLjUzLDYuNzYsNi43NiwwLDAsMSwzLjc5LTEuMDcsNi4xMyw2LjEzLDAsMCwxLDMuMjUuOTEsNS4yLDUuMiwwLDAsMSwyLjEyLDMsNS44Miw1LjgyLDAsMCwxLDIuNTMtMi45NCw3LjIsNy4yLDAsMCwxLDMuNTQtLjkzLDcuNiw3LjYsMCwwLDEsMy40LjY2LDUuNDQsNS40NCwwLDAsMSwyLjA3LDEuNzIsNi40OSw2LjQ5LDAsMCwxLDEsMi40NSwxNC4yMywxNC4yMywwLDAsMSwuMjksMi44NlYxNTNoLTIuMzJWMTQyLjUzYTExLjM0LDExLjM0LDAsMCwwLS4xOS0yLjExLDUuNjQsNS42NCwwLDAsMC0uNjgtMS44MywzLjUyLDMuNTIsMCwwLDAtMS4zNS0xLjMsNC42NSw0LjY1LDAsMCwwLTIuMjYtLjQ4LDUuMzMsNS4zMywwLDAsMC0yLjY3LjYsNC44MSw0LjgxLDAsMCwwLTEuNjQsMS41Miw2LjM4LDYuMzgsMCwwLDAtLjg1LDIsOSw5LDAsMCwwLS4yNSwyLjA1djEwaC0yLjMyVjE0Mi4zYTcuNTksNy41OSwwLDAsMC0uOTEtNCwzLDMsMCwwLDAtMi44LTEuNTEsNi43NSw2Ljc1LDAsMCwwLTIuNDIuNDQsNS4yNSw1LjI1LDAsMCwwLTIsMS4zNiw2LjQ4LDYuNDgsMCwwLDAtMS4zMSwyLjI4LDkuNzUsOS43NSwwLDAsMC0uNDgsMy4yMlYxNTNoLTIuMzJaIi8+PC9nPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyLjI0LDc3SDgxLjMyVjcyLjg0YTE1LjM2LDE1LjM2LDAsMCwxLTExLjE4LDQuNjQsMTQuNDcsMTQuNDcsMCwwLDEtMTAuNTgtNEM1Niw2OS45MSw1NSw2NS43LDU1LDYwLjhWMzIuMTZINjYuMThWNTkuMjVjMCw2LjExLDMuODcsOC4xNyw3LjQsOC4xN3M3LjQ4LTIuMDYsNy40OC04LjE3VjMyLjE2SDkyLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOC40MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzctMTkuMDktNi40NUwxMDksNjMuNzJjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4QzEwOSw1Ny43LDEwNCw1NC4xOCwxMDQsNDUuOTJjMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMTI4LjM2LDMxLjY0LDEzNC4xMiwzMi45MywxMzguNDIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxLjczLDI0LjUxSDE1MC4yOVYxNS4zOWgxMS40NFpNMTYxLjY0LDc3SDE1MC40NlYzMy40NWgxMS4xOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMDguMDgsMzUuNmMzLjYxLDMuNyw0LjU2LDcuODMsNC41NiwxMi43M1Y3N0gyMDEuNDZWNDkuODhjMC02LjExLTMuNzktOC4xNy03LjQtOC4xN3MtNy40OCwyLjA2LTcuNDgsOC4xN1Y3N0gxNzUuNFYzMi4xNmgxMC45MnY0LjEzYTE1LjMzLDE1LjMzLDAsMCwxLDExLjE4LTQuNjVDMjAyLDMxLjY0LDIwNS41OSwzMywyMDguMDgsMzUuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjIuNzgsNTMuMzJ2NC43M2gtMjhjMCw1Ljg0LDMuNDQsMTAsOS44LDEwLDQuOTEsMCw3LjMxLTEuNDYsMTAuMDctNC4yMWw2Ljg4LDYuNjJjLTQuNTYsNC42NC05LDctMTcsNy0xMC42NywwLTIwLjczLTQuODEtMjAuNzMtMjMsMC0xNC42Miw3LjkxLTIyLjg4LDE5LjUyLTIyLjg4QzI1NS43MiwzMS42NCwyNjIuNzgsNDAuNTksMjYyLjc4LDUzLjMyWm0tMjcuMDktNy43NGExMC44OSwxMC44OSwwLDAsMC0uOTUsNC44MWgxNi45NGExMC44OSwxMC44OSwwLDAsMC0uOTQtNC44MSw4LjQxLDguNDEsMCwwLDAtMTUuMDUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zMDYuNzIsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40LTMtNC40OCwwLTYuMzcsMi4wNi02LjM3LDQuM3MxLjI5LDMuNTIsNC42NSwzLjg3bDcsLjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy43LDguNTEsNC4yMiwxMS45NSw0LjIyLDMuODcsMCw3LjkyLTEuMjksNy45Mi00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA2LS42OGMtOC4wOC0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI5LTE0LjI4QzI5Ni42NiwzMS42NCwzMDIuNDIsMzIuOTMsMzA2LjcyLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1MS4xLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNDEtMy00LjQ3LDAtNi4zNiwyLjA2LTYuMzYsNC4zczEuMjksMy41Miw0LjY0LDMuODdsNy4wNS42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNiwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1bDcuMy03LjMxYzMuNjIsMy43LDguNTIsNC4yMiwxMiw0LjIyLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA1LS42OGMtOC4wOS0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzM0MSwzMS42NCwzNDYuOCwzMi45MywzNTEuMSwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0yNC43MywxMzkuNTVjMCwyLjY2LDEuMTIsNCw0LDRIMzN2OS40NkgyNi42MmMtOS4yLDAtMTMuMDctNi4zNi0xMy4wNy0xMi44MVY5MS44MkgyNC43M1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik03My4zMiwxNDguMDZjLTIuODQsMi45My03LjMxLDUuNTEtMTMuOTMsNS41MXMtMTEtMi41OC0xMy44NC01LjUxYy00LTQuMy01LjA4LTkuMzctNS4wOC0xNy40NnMxLTEzLjA3LDUuMDgtMTcuMzdjMi44My0yLjkyLDcuMjItNS41LDEzLjg0LTUuNXMxMS4wOSwyLjQ5LDEzLjkzLDUuNWM0LDQuMyw1LjA4LDkuMjksNS4wOCwxNy4zN1M3Ny40NSwxNDMuODUsNzMuMzIsMTQ4LjA2Wm0tOC42OC0yOC4yOWE3LjA3LDcuMDcsMCwwLDAtNS4yNS0yLDcsNywwLDAsMC01LjE2LDJjLTIuMzIsMi4yNC0yLjU4LDYuMjgtMi41OCwxMC44M3MuMjYsOC42OSwyLjU4LDEwLjkzYTcsNywwLDAsMCw1LjE2LDIsNy4wNyw3LjA3LDAsMCwwLDUuMjUtMmMyLjMyLTIuMjQsMi41OC02LjI4LDIuNTgtMTAuOTNTNjcsMTIyLDY0LjY0LDExOS43N1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMjQuMjMsMTIzLjU1djI5LjVIMTEzLjMxdi0zLjg3Yy0zLDMtNS44NCw0LjMtMTEsNC4zcy04Ljg2LTEuMzgtMTEuNDQtNGExNC4zMywxNC4zMywwLDAsMS0zLjctMTAuMDZjMC03LjEzLDQuOS0xMywxNS40OC0xM2gxMC40di0yLjI0YzAtNC45LTIuNC03LTguMzQtNy00LDAtNi4xOSwxLjEyLTguNiwzLjg3bC03LTdjNC4zOS00LjgxLDguNi02LjM2LDE2LjA4LTYuMzZDMTE3Ljc4LDEwNy43MywxMjQuMjMsMTEzLjA2LDEyNC4yMywxMjMuNTVabS0xOS42OSwxMC41OGMtNC40NywwLTYuNjIsMS44MS02LjYyLDUuMTYsMCwzLjEsMi4xNSw1LjA3LDYuNzksNS4wNywyLjc2LDAsNC43My0uMzQsNi42Mi0yLjE1LDEuMjktMS4xMSwxLjcyLTIuODMsMS43Mi01LjY3di0yLjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTE3MC4yNCwxMTEuNjljMy42MiwzLjY5LDQuNTYsNy44Miw0LjU2LDEyLjcydjI4LjY0SDE2My42MlYxMjZjMC02LjEtMy43OC04LjE3LTcuMzktOC4xN3MtNy40OSwyLjA3LTcuNDksOC4xN3YyNy4wOUgxMzcuNTZ2LTQ0LjhoMTAuOTN2NC4xMmExNS4zNCwxNS4zNCwwLDAsMSwxMS4xOC00LjY0QzE2NC4xNCwxMDcuNzMsMTY3Ljc1LDEwOS4xMSwxNzAuMjQsMTExLjY5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTIyMC40NywxMTNsLTYuODgsN2MtMi41OC0yLjMyLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDctNi4zNiw0LjNzMS4yOSwzLjUzLDQuNjQsMy44N2w3LC42OWM4Ljg2Ljg2LDEzLjMzLDUuNSwxMy4zMywxMy4xNiwwLDkuODktOC40MiwxNC42Mi0xOSwxNC42Mi03LjA1LDAtMTMuMzMtLjc4LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy42OSw4LjUxLDQuMjEsMTEuOTUsNC4yMSwzLjg3LDAsNy45MS0xLjI5LDcuOTEtNC42NCwwLTIuMjQtMS4xMi0zLjc5LTQuNzMtNC4xM2wtNy4wNS0uNjljLTguMDgtLjc3LTEzLjA3LTQuMy0xMy4wNy0xMi41NSwwLTkuMzgsOC4xNy0xNC4yOCwxNy4yOC0xNC4yOEMyMTAuNDEsMTA3LjczLDIxNi4xNywxMDksMjIwLjQ3LDExM1oiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="BusinessLoans.com"/>
     <div class="cover-header-meta">
       <strong>FUNDING TERM SHEET</strong><br/>
-      Prepared August 26, 2026 at 10:02 AM EDT<br/>
+      Prepared August 26, 2026 at 10:59 AM EDT<br/>
       Illustration only — see disclosure
     </div>
   </header>
@@ -243,11 +216,11 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div class="borrower-bar">
     <div>
       <div class="borrower-bar-label">Prepared For</div>
-      <div class="borrower-bar-name">Lobster Test</div>
+      <div class="borrower-bar-name">Legacy Construction and Development</div>
     </div>
     <div class="borrower-bar-funding">
-      <div class="borrower-bar-label">Requested Amount &middot; approvals up to $450,000</div>
-      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="250,000" aria-label="Requested amount"/></div></div>
+      <div class="borrower-bar-label">Requested Amount</div>
+      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="215,000" aria-label="Requested amount"/></div></div>
       <div id="amountHelp" class="amount-help" style="display:none;"></div>
     </div>
   </div>
@@ -258,10 +231,9 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <span class="cta-prompt">Ready to move forward?</span>
     <span class="cta-btns">
       <a class="cta-btn cta-call" href="tel:+18437799063">&#128222; Call Larry</a>
-      <a class="cta-btn cta-text" href="sms:+18437799063?&body=Hi%20Larry%2C%20I%27d%20like%20to%20move%20forward%20on%20the%20Lobster%20Test%20funding%20offer.">&#128172; Text Larry</a>
-      <a class="cta-btn cta-email" href="mailto:larry@businessloans.com?subject=Moving%20forward%20-%20Lobster%20Test&body=Hi%20Larry%2C%20I%27ve%20reviewed%20the%20offers%20and%20I%27d%20like%20to%20move%20forward.%20Please%20send%20next%20steps.">&#9993; Email Larry</a>
+      <a class="cta-btn cta-text" href="sms:+18437799063?&body=Hi%20Larry%2C%20I%27d%20like%20to%20move%20forward%20on%20the%20Legacy%20Construction%20funding%20offer.">&#128172; Text Larry</a>
+      <a class="cta-btn cta-email" href="mailto:larry@businessloans.com?subject=Moving%20forward%20-%20Legacy%20Construction&body=Hi%20Larry%2C%20I%27ve%20reviewed%20the%20offers%20and%20I%27d%20like%20to%20move%20forward.%20Please%20send%20next%20steps.">&#9993; Email Larry</a>
     </span>
-    <span class="cta-direct">(843) 779-9063 &middot; larry@businessloans.com</span>
   </div>
 
   <!-- v2 RECOMMENDED SNAPSHOT — OPT-IN, OFF BY DEFAULT. Add it ONLY when Larry explicitly names which offer(s) to recommend.
@@ -281,7 +253,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <button id="revBtn" class="btn-rev" type="button">&#9998; Request revisions</button>
   </div>
 
-  <h2 class="section-title">Offers</h2>
+  <h2 class="section-title">Offer</h2>
   <div id="offerWrap"></div>
 
   <div id="prepayWrap"></div>
@@ -289,45 +261,29 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
   <div class="closing">
-    <h3>Lender A — Stipulations / Closing Requirements</h3>
+    <h3>Stipulations / Closing Requirements</h3>
     <ul>
-      <li>Driver's License (owner)</li>
-      <li>Proof of ownership &mdash; LLC</li>
-      <li>Voided business check</li>
-      <li>Three most recent months of business bank statements (PDF)</li>
-      <li>Signed loan &amp; security agreement</li>
-      <li>Signed ACH authorization</li>
+      <li>Driver's License</li>
+      <li>Voided Check</li>
+      <li>Electronic Bank Verification</li>
+      <li>Signed Contract</li>
+      <li>Funding Call</li>
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender B — Stipulations / Closing Requirements</h3>
+    <h3>Funding Timeline</h3>
     <ul>
-      <li>Driver's License (owner)</li>
-      <li>Proof of ownership &mdash; LLC</li>
-      <li>Voided business check</li>
-      <li>Signed loan agreement</li>
-    </ul>
-  </div>
-  <div class="closing">
-    <h3>Lender C — Stipulations / Closing Requirements</h3>
-    <ul>
-      <li>Driver's License (owner)</li>
-      <li>Proof of ownership</li>
-      <li>Voided business check</li>
-      <li>Last 3 months of bank statements &mdash; all business accounts</li>
-      <li>Bank verification</li>
-      <li>Brief merchant interview</li>
+      <li>Funding in as little as <b>24 hours</b> once the contract is signed and the funding call is complete.</li>
     </ul>
   </div>
   </div>
 
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. The offers shown come from three different funders on different paper; each carries its own contract, fees and closing requirements, and all are conditional on underwriting approval, the closing items listed above, and execution of that lender&rsquo;s agreement. The total funding amount may not equal the amount deposited to your business checking account. Payments are fixed weekly debits on the payment count shown; the Lender B offers are also available on a daily schedule. The Lender C offers are a purchase of future receivables at a fixed weekly remittance &mdash; the term and payment count shown are estimates, and remittances continue until the total is satisfied. Early-payoff figures for the Lender A offers assume the balance is paid in full inside the calendar-month window shown, with the loan&rsquo;s fixed fee discounted under that lender&rsquo;s early payment amendment. Lender C payoff figures assume the balance is satisfied in full inside the window shown and reflect the discounted pricing quoted for this file. On the Lender B offers marked &ldquo;100% of remaining interest waived,&rdquo; all remaining interest is waived when the loan is paid off early; the other Lender B offers carry a partial early-payoff discount. In every case the payoff amount stated in your executed contract governs. Actual amounts may differ due to the funding date, bank holidays, missed or early payments, and other factors.
-  </div>
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the funder’s ISO agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Final terms are set by the funding contract.</div>
 
   <footer>
-    <span>BusinessLoans.com &middot; Funding Offers for Lobster Test</span>
+    <span>BusinessLoans.com &middot; Funding Offers for Legacy Construction and Development</span>
   </footer>
 
 </div>
@@ -335,43 +291,41 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 <script>
 "use strict";
 /* =========================================================================
-   OCEAN DRAGON LOBSTER — one lender program, five terms, weekly term loan.
-   $250,000 approved · $0 closing cost · fixed weekly ACH (Tuesdays).
-   Early payoff: the loan's fixed fee is discounted when the loan is paid in
-   full inside the lender's calendar-month window (see earlyRows/renderPrepay).
-   Internal pricing (factor, commission) is NEVER displayed.
+   BL TERM SHEET TEMPLATE — replace the EXAMPLE data below for each deal:
+   - Merchant: search "Sample Merchant LLC" (title, cover, footer, PDF, tracker `deal`).
+   - MASTER_MAX = largest offer's max; STATE.requested = default amount shown;
+     also update the <input value="..."> in the borrower bar to match.
+   - OFFERS[]: one object per offer { name, advance(=its own max), factor, weekly,
+     nPay, term, termLabel, origPct, origLabel, processing, position,
+     prepay:{ranges,payoff,saved} }. payoff = advance x prepay-factor;
+     saved = payback - payoff; payoff+saved MUST equal payback on every row.
+     NEVER show buy/sell/factor rate, commission, or APR.
+   - Stips: the two .closing blocks (page) + the two arrays inside downloadPDF().
+   - Timestamp: replace August 26, 2026 at 10:59 AM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
+   - Tracker `deal` = merchant name (fires the open-alert email).
+   See references/patterns.md for groups, month-payoff schedules, the side-by-side
+   detail grid, MCA amortization, and the price-reduced strikethrough.
    ========================================================================= */
-var MASTER_MAX = 450000;
-var STATE = { requested: 250000 };
+var MASTER_MAX = 500000;
+var STATE = { requested: 215000 };
 
-/* Program notes kept as reference only — the on-page legend was dropped 2026-08-26. */
-var LENDER_NOTES = {};
-LENDER_NOTES["Lender A"] = "Approved up to $250,000 &middot; $0 closing cost &mdash; the full advance is deposited. Fixed weekly ACH payment every Tuesday. Pay off early &amp; save &mdash; see the early-payoff table below.";
-LENDER_NOTES["Lender B"] = "Approved up to $150,000 &middot; 2.5% origination fee &middot; weekly payments (a daily schedule is also available). <b>Closing is a 5-minute phone call, with funding as soon as the next business day.</b> Each term is offered two ways &mdash; a lower total payback with a standard early-payoff discount, or slightly more where 100% of remaining interest is waived if you pay the loan off early.";
-LENDER_NOTES["Lender C"] = "Approved up to $450,000 &middot; 2% origination fee &middot; fixed weekly remittance. The term shown is an estimate &mdash; the fixed weekly amount continues until the total is satisfied, so the payment count moves with it. <b>The early-payoff discount is deepest in the first three months</b> &mdash; see the payoff schedule below.";
+var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
-  /* 12 months and up only (Larry 2026-08-26). Ordered term asc, then by funding amount
-     (150s, 250s, 450s), so the numbers read 1-10 down the term-grouped chart. */
-  { name:"Lender B", advance:150000, factor:1.251, weekly:3608.65,  nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, forgive:"Pay off early &amp; save" },
-  { name:"Lender B", advance:150000, factor:1.281, weekly:3695.19,  nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, forgive:"100% of remaining interest waived" },
-  { name:"Lender A", advance:250000, factor:1.35,  weekly:6490.38,  nPay:"52", term:"12", termLabel:"12-Month", origPct:0, origLabel:"None", processing:0, forgive:"Pay off early &amp; save", within:"4 calendar months" },
-  { name:"Lender C", advance:450000, factor:1.26,  weekly:11250.00, nPay:"~50", term:"12", termLabel:"12-Month (est.)", origPct:0.02, origLabel:"2%", processing:0, forgive:"Pay off early &amp; save",
-    prepay:{ labels:["Within month 1","Within month 2","Within month 3","Within month 4"],
-             payoff:[513000,522000,531000,558000] } },
-
-  { name:"Lender C", advance:450000, factor:1.28,  weekly:10549.46, nPay:"~55", term:"13", termLabel:"13-Month (est.)", origPct:0.02, origLabel:"2%", processing:0, forgive:"Pay off early &amp; save",
-    prepay:{ labels:["Within month 1","Within month 2","Within month 3","Within month 4","Within month 5"],
-             payoff:[513000,522000,531000,558000,567000] } },
-
-  { name:"Lender C", advance:450000, factor:1.30,  weekly:9948.98,  nPay:"~59", term:"14", termLabel:"14-Month (est.)", origPct:0.02, origLabel:"2%", processing:0, forgive:"Pay off early &amp; save",
-    prepay:{ labels:["Within month 1","Within month 2","Within month 3","Within month 4","Within month 5","Within month 6"],
-             payoff:[513000,522000,531000,558000,567000,576000] } },
-
-  { name:"Lender B", advance:150000, factor:1.313, weekly:3030.00,  nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, forgive:"Pay off early &amp; save" },
-  { name:"Lender B", advance:150000, factor:1.351, weekly:3117.69,  nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, forgive:"100% of remaining interest waived" },
-  { name:"Lender A", advance:250000, factor:1.41,  weekly:5423.08,  nPay:"65", term:"15", termLabel:"15-Month", origPct:0, origLabel:"None", processing:0, forgive:"Pay off early &amp; save", within:"5 calendar months" },
-
-  { name:"Lender A", advance:250000, factor:1.49,  weekly:4775.64,  nPay:"78", term:"18", termLabel:"18-Month", origPct:0, origLabel:"None", processing:0, forgive:"Pay off early &amp; save", within:"6 calendar months" }
+  { name:"Lender A", advance:500000, factor:1.35, weekly:11250, nPay:"60", term:"15", termLabel:"15-Month", origPct:0.04, origLabel:"4%", processing:849, position:"1st",
+    prepay:{
+      ranges:["0–30","31–60","61–90","91–120","121–150","151–180","181–210","211–240","241–270","271–300","301–330"],
+      payoff:[555000,560000,570000,580000,595000,605000,630000,640000,655000,665000,670000],
+      saved:[120000,115000,105000,95000,80000,70000,45000,35000,20000,10000,5000] } },
+  { name:"Lender B", advance:215000, factor:1.32, weekly:4504.76, nPay:"63", term:"14.5", termLabel:"14.5-Month", origPct:0.03, origLabel:"3%", processing:0, position:"1st",
+    prepay:{
+      ranges:["1–30","31–60","61–90","91–120","121–150","151–180","181–210"],
+      payoff:[238650,247250,253700,260150,266600,275200,281650],
+      saved:[45150,36550,30100,23650,17200,8600,2150] } },
+  { name:"Lender B", advance:215000, factor:1.30, weekly:4581.97, nPay:"61", term:"14", termLabel:"14-Month", origPct:0.03, origLabel:"3%", processing:0, position:"1st",
+    prepay:{
+      ranges:["1–30","31–60","61–90","91–120","121–150","151–180"],
+      payoff:[238650,247250,253700,260150,266600,275200],
+      saved:[40850,32250,25800,19350,12900,4300] } }
 ];
 
 /* number offers in array order — shown in each card's title */
@@ -402,107 +356,94 @@ function model(o){
 }
 
 function renderOffers(){
-  /* SINGLE TABLE (Larry 2026-08-26 test): every offer in one chart, sorted by term
-     then funding amount then pricing, with Term and Lender as columns. */
+  /* LAYOUT (Larry 2026-07-09): 3+ offers => reactive per-group CHART (table); 1-2 => big CARDS.
+     Offers grouped by o.name; the group <h2> shows only when there is more than one group.
+     o.freq "monthly" flips the payment labels + adds a Monthly tag (defaults to weekly). */
+  var order = [], byName = {};
   var LIVEOFF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
-  var wrap = document.getElementById("offerWrap");
-
-  var sorted = LIVEOFF.slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.advance-b.advance) || (a.factor-b.factor); });
-
-  var hasForgive = LIVEOFF.some(function(o){ return o.forgive; });
-  var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
-  var payHead = allWeekly ? "Weekly Payment" : "Payment";
-
-  var rows = sorted.map(function(o){
-      var m = model(o); var fw = (o.freq === "monthly") ? "monthly" : "weekly";
-      var capTag = m.capped ? '<span class="cap-badge cap-pre">max</span>' : '';
-      var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
+  LIVEOFF.forEach(function(o){
+    if(!(o.name in byName)){ byName[o.name] = { name:o.name, offers:[] }; order.push(byName[o.name]); }
+    byName[o.name].offers.push(o);
+  });
+  var useChart = LIVEOFF.length >= 3;
+  var showHead = order.length > 1;
+  function fwOf(o){ return o.freq==="monthly" ? "monthly" : "weekly"; }
+  function cap(x){ return x.charAt(0).toUpperCase()+x.slice(1); }
+  function card(o){
+    var m = model(o); var fw = fwOf(o);
+    var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
+    var procRow = o.processing ? '<div class="kv-row kv-fee"><span class="kv-label">Processing fee</span><span class="kv-val">'+money(o.processing)+'</span></div>' : '';
+    var fgRow = o.forgive ? '<div class="kv-row"><span class="kv-label">Early-payoff interest forgiveness</span><span class="kv-val">'+o.forgive+'</span></div>' : '';
+    var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
+    var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
+    return '<div class="offer-card'+(o.rec?' rec':'')+'">'
+      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
+      + '<div class="offer-card-body">'
+        + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
+        + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
+        + procRow
+        + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
+        + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
+        + '<div class="kv-row kv-pay"><span class="kv-label">'+cap(fw)+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
+        + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
+        + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
+        + fgRow
+        + '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">'+o.position+'</span></div>'
+      + '</div></div>';
+  }
+  function chart(g){
+    var monthly = (g.offers[0].freq === "monthly");
+    var fwCap = monthly ? "Monthly" : "Weekly";
+    var hasForgive = g.offers.some(function(o){ return o.forgive; });
+    var rows = g.offers.slice().sort(function(a,b){ return (a.term-0)-(b.term-0); }).map(function(o){
+      var m = model(o); var fw = fwOf(o);
+      var capTag = m.capped ? ' <span class="cap-badge">max</span>' : '';
+      var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"—")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
-      return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num
-        + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
-        + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
-        + '<td data-label="Lender">'+o.name+recBadge+'</td>'
-        + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
+      return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
+        + '<td class="ch-term" data-label="Term">'+o.termLabel+recBadge+'</td>'
+        + '<td data-label="Advance">'+money0(m.advance)+capTag+'</td>'
         + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
-        + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
+        + '<td class="ch-pay" data-label="'+fwCap+' Payment">'+money(m.weekly)+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
-
-  var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
-    + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+payHead+'</th>'
-    + '<th># Payments</th>'+(hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
-
-  wrap.innerHTML = (rows
-    ? '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'+head+'<tbody>'+rows+'</tbody></table></div></div>'
-    : '');
-  if(HIDDEN.size){
-    wrap.innerHTML += '<div class="hiddenbar">'+HIDDEN.size+' offer'+(HIDDEN.size>1?'s':'')
-      + ' hidden from this comparison<button id="showAllBtn" type="button">Show all offers</button></div>';
+    var fgHead = hasForgive ? '<th>Early Payoff</th>' : '';
+    return '<div class="chart-wrap"><table class="offer-chart"><thead><tr>'
+      + '<th>Offer</th><th>Term</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th><th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+fwCap+' Payment</th><th># Payments</th>'+fgHead
+      + '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
-}
-
-/* ---- Early payoff (lender's early payment amendment) ----------------------
-   The loan's fixed fee (payback - advance) is discounted when the loan is paid
-   in full inside the window shown. payoff + saved = payback on every row. */
-var EARLY_DISCOUNT = 0.20;
-function earlyRows(list){
-  return list.filter(function(o){ return o.within; })
-    .slice().sort(function(a,b){ return (a.term-0)-(b.term-0); })
-    .map(function(o){
-      var m = model(o);
-      var cost = round2(m.payback - m.advance);
-      var saved = round2(cost*EARLY_DISCOUNT);
-      return { num:o.num, termLabel:o.termLabel, within:o.within, payback:m.payback,
-               payoff:round2(m.payback - saved), saved:saved };
-    });
+  if(useChart){
+    document.getElementById("offerWrap").innerHTML = order.map(function(g){
+      var head = showHead ? '<h2 class="lender-head">'+g.name+'</h2>' : '';
+      var note = LENDER_NOTES[g.name] ? '<div class="lender-note">'+LENDER_NOTES[g.name]+'</div>' : '';
+      return '<div class="lender-group">'+head+note+chart(g)+'</div>';
+    }).join("");
+  } else {
+    document.getElementById("offerWrap").innerHTML = '<div class="offers-grid">'+LIVEOFF.map(card).join("")+'</div>';
+  }
+  if(HIDDEN.size){ document.getElementById("offerWrap").innerHTML += '<div class="hiddenbar">'+HIDDEN.size+' offer'+(HIDDEN.size>1?'s':'')+' hidden from this comparison<button id="showAllBtn" type="button">Show all offers</button></div>'; }
 }
 
 function renderPrepay(){
-  var rows = earlyRows(OFFERS.filter(function(o){ return !HIDDEN.has(o.num); }));
-  if(!rows.length){ document.getElementById("prepayWrap").innerHTML = ""; return; }
-  var body = rows.map(function(r){
-    return '<tr><td data-label="Offer">'+r.num+'</td>'
-      + '<td data-label="Term">'+r.termLabel+'</td>'
-      + '<td data-label="Paid in full within">'+r.within+'</td>'
-      + '<td class="po-payoff" data-label="Discounted Total Payback">'+money(r.payoff)+'</td>'
-      + '<td class="po-saved" data-label="You Save">'+money(r.saved)+'</td></tr>';
-  }).join("");
-  var html = '<div class="prepay-section">'
-    + '<div class="prepay-head"><h2 class="prepay-title">Lender A — Early Payoff Discount</h2></div>'
-    + '<div class="prepay-recap">On the Lender A offers, paying the loan in full inside the window shown gets the '
-    + 'loan&rsquo;s fixed fee discounted &mdash; bringing the total you repay down to the figure below. Payments you have '
-    + 'already made count toward that total, and every figure moves with the funding amount above.</div>'
-    + '<div class="tscroll"><table class="prepay"><thead><tr><th>Offer</th><th>Term</th>'
-    + '<th>Paid in full within</th><th>Discounted Total Payback</th><th>You Save</th></tr></thead><tbody>'
-    + body + '</tbody></table></div></div>';
-  var pOff = OFFERS.filter(function(o){ return !HIDDEN.has(o.num) && o.prepay; });
-  if(pOff.length){
+  var html = "";
+  OFFERS.filter(function(o){ return !HIDDEN.has(o.num); }).forEach(function(o){
+    if(!o.prepay) return;
+    var m = model(o); var p = o.prepay; var s = m.s;
     html += '<div class="prepay-section">'
-      + '<div class="prepay-head"><h2 class="prepay-title">Lender C — Early Payoff Schedule</h2></div>'
-      + '<div class="prepay-recap">Satisfy the balance in full inside one of the windows below and the total you '
-      + 'owe drops to the payoff figure shown &mdash; the rest is discounted. The first three months carry the '
-      + 'deepest discount. Figures move with the funding amount above.</div>'
-      + '<div class="detail-grid">'
-      + pOff.map(function(o){
-          var m = model(o); var p = o.prepay;
-          var body = p.labels.map(function(lab,i){
-            var payoff = round2(p.payoff[i]*m.s);
-            var saved = round2(m.payback - payoff);
-            return '<tr><td data-label="Paid in full">'+lab+'</td>'
-              + '<td data-label="Total Payoff">'+money0(payoff)+'</td>'
-              + '<td class="po-saved" data-label="You Save">'+money0(saved)+'</td></tr>';
-          }).join("");
-          return '<div class="detail-card">'
-            + '<div class="detail-head">Offer '+o.num+'<span class="detail-tag">'+o.termLabel+' &middot; '+money0(m.advance)+'</span></div>'
-            + '<div class="detail-recap">Total '+money0(m.payback)+' &middot; '+money(m.weekly)+'/week</div>'
-            + '<table class="sched"><thead><tr><th>Paid in full</th><th>Total Payoff</th><th>You Save</th></tr></thead>'
-            + '<tbody>'+body+'</tbody></table></div>';
-        }).join("")
-      + '</div></div>';
-  }
+      + '<div class="prepay-head"><h2 class="prepay-title">'+o.name+' '+o.termLabel+' — Early Payoff Schedule — '+money0(m.advance)+'</h2></div>'
+      + '<div class="prepay-recap">Total payback <b>'+money0(m.payback)+'</b> &middot; <b>'+money(m.weekly)+'</b>/week &middot; '+o.nPay+' weekly payments. Total payoff and interest saved if paid in full within the day range shown.</div>';
+    if(m.advance !== o.advance) html += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m.advance)+').</div>';
+    html += '<div class="tscroll"><table class="prepay"><thead><tr><th>Pay off within (days)</th><th>Total Payoff</th><th>Interest Saved</th></tr></thead><tbody>';
+    for(var i=0;i<p.ranges.length;i++){
+      html += '<tr><td data-label="Pay off within">'+p.ranges[i]+' days</td>'
+        + '<td class="po-payoff" data-label="Total Payoff">'+money(round2(p.payoff[i]*s))+'</td>'
+        + '<td class="po-saved" data-label="Interest Saved">'+money(round2(p.saved[i]*s))+'</td></tr>';
+    }
+    html += '</tbody></table></div></div>';
+  });
   document.getElementById("prepayWrap").innerHTML = html;
 }
 
@@ -512,9 +453,9 @@ function downloadPDF(){
   var OFFERS_PDF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
   var L=54, R=558, y=70;
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
-  doc.text("Funding Offers — Lobster Test", L, y); y+=20;
+  doc.text("Funding Offers — Legacy Construction and Development", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared August 26, 2026 at 10:02 AM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
+  doc.text("BusinessLoans.com     Prepared August 26, 2026 at 10:59 AM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -528,70 +469,39 @@ function downloadPDF(){
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" months"]);
-    if(o.forgive) rows.push(["Early payoff", o.forgive.replace("&amp;","&")]);
+    rows.push(["Position", o.position]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Lender A — stipulations / closing requirements:", L, y); y+=13;
+  doc.text("Stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Driver's License (owner)","Proof of ownership - LLC","Voided business check",
-   "Three most recent months of business bank statements (PDF)",
-   "Signed loan & security agreement","Signed ACH authorization",
-   "$0 closing cost - the full advance is deposited"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
-  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Driver's License (owner)","Proof of ownership - LLC","Voided business check","Signed loan agreement",
-   "Closing is a 5-minute phone call","Funding as soon as the next business day"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
-  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender C — stipulations / closing requirements:", L, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Driver's License (owner)","Proof of ownership","Voided business check",
-   "Last 3 months of bank statements - all business accounts","Bank verification",
-   "Brief merchant interview"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
-  var ER = earlyRows(OFFERS_PDF);
-  if(ER.length){
-    if(y>600){ doc.addPage(); y=60; }
-    y+=16; doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(20);
-    doc.text("Lender A — Early Payoff Discount", L, y); y+=14;
-    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(90);
-    doc.text("On the Lender A offers, paying in full inside the window shown discounts the loan's fixed fee.", L, y); y+=10;
-    doc.text("Payments already made count toward the discounted total.", L, y); y+=17;
-    doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-    doc.text("Offer", L, y); doc.text("Term", L+46, y); doc.text("Paid in full within", L+120, y);
-    doc.text("Discounted Payback", 470, y, {align:"right"}); doc.text("You Save", R, y, {align:"right"});
-    y+=4; doc.setDrawColor(150); doc.line(L,y,R,y); y+=13;
-    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(45);
-    ER.forEach(function(r){
-      if(y>770){ doc.addPage(); y=60; }
-      doc.text(String(r.num), L, y); doc.text(r.termLabel, L+46, y); doc.text(r.within, L+120, y);
-      doc.text(money(r.payoff), 470, y, {align:"right"}); doc.text(money(r.saved), R, y, {align:"right"});
-      y+=15;
-    });
-  }
-  OFFERS_PDF.filter(function(o){ return o.prepay; }).forEach(function(o){
-    var m = model(o); var p = o.prepay;
+  ["Driver's License","Voided Check","Electronic Bank Verification","Signed Contract","Funding Call"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  y+=10; if(y>760){doc.addPage(); y=60;}
+  doc.text("Funding in as little as 24 hours once the contract is signed and the funding call is complete.", L, y); y+=12;
+  OFFERS_PDF.forEach(function(o){
+    if(!o.prepay) return;
+    var m = model(o); var p = o.prepay; var s = m.s;
     doc.addPage(); var yy=60;
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text("Offer "+o.num+" — "+o.termLabel+" — Early Payoff Schedule — "+money0(m.advance), L, yy); yy+=15;
+    doc.text(o.name+" "+o.termLabel+" — Early Payoff Schedule — "+money0(m.advance), L, yy); yy+=15;
     doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
-    doc.text("Total "+money0(m.payback)+"   "+money(m.weekly)+"/week   satisfy in full inside a window below and the rest is discounted.", L, yy); yy+=20;
+    doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly payments", L, yy); yy+=20;
+    var ch=[{h:"Pay off within (days)",x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
     doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-    doc.text("Paid in full", L, yy); doc.text("Total Payoff", 400, yy, {align:"right"}); doc.text("You Save", R, yy, {align:"right"});
+    ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
     yy+=4; doc.setDrawColor(150); doc.line(L,yy,R,yy); yy+=13;
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-    p.labels.forEach(function(lab,i){
+    for(var i=0;i<p.ranges.length;i++){
       if(yy>772){ doc.addPage(); yy=60; }
-      var payoff = round2(p.payoff[i]*m.s);
-      doc.text(lab, L, yy);
-      doc.text(money0(payoff), 400, yy, {align:"right"});
-      doc.text(money0(round2(m.payback - payoff)), R, yy, {align:"right"});
+      doc.text(p.ranges[i]+" days", L, yy);
+      doc.text(money(round2(p.payoff[i]*s)), 360, yy, {align:"right"});
+      doc.text(money(round2(p.saved[i]*s)), R, yy, {align:"right"});
       yy+=15;
-    });
+    }
   });
-  doc.save("ocean-dragon-lobster-offers.pdf");
+  doc.save("legacy-construction-and-development-offers.pdf");
 }
 
 function recompute(){
@@ -602,7 +512,7 @@ function recompute(){
   STATE.requested = r;
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
-  help.textContent = capped ? "Capped at the $450,000 approved maximum" : "";
+  help.textContent = capped ? "Capped at the $500,000 maximum" : "";
   help.style.display = capped ? "" : "none";
   renderOffers(); renderPrepay();
 }
@@ -643,7 +553,7 @@ recompute();
 <script>
 /* term-sheet tracker beacon (v4.1: open ping + exit visit-summary; geo on both) */
 (function(){try{
-  var deal="Lobster Test";
+  var deal="Legacy Construction and Development";
   var EP="https://script.google.com/macros/s/AKfycbxWxipWH7N5eU3xsZ0stuyunIbj6fGwoaiR6VnHmL0RUGjMjz3dwMyPUi4cEGtVTxGGsg/exec";
   var start=(new Date()).getTime();
   var loc="";
