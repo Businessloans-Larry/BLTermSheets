@@ -219,8 +219,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <div class="borrower-bar-name">Legacy Construction and Development</div>
     </div>
     <div class="borrower-bar-funding">
-      <div class="borrower-bar-label">Requested Amount</div>
-      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="215,000" aria-label="Requested amount"/></div></div>
+      <div class="borrower-bar-label">Requested Amount &middot; approvals up to $750,000</div>
+      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="750,000" aria-label="Requested amount"/></div></div>
       <div id="amountHelp" class="amount-help" style="display:none;"></div>
     </div>
   </div>
@@ -253,7 +253,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <button id="revBtn" class="btn-rev" type="button">&#9998; Request revisions</button>
   </div>
 
-  <h2 class="section-title">Offer</h2>
+  <h2 class="section-title">Offers</h2>
   <div id="offerWrap"></div>
 
   <div id="prepayWrap"></div>
@@ -261,7 +261,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
   <div class="closing">
-    <h3>Stipulations / Closing Requirements</h3>
+    <h3>Lender A &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Driver's License</li>
       <li>Voided Check</li>
@@ -271,9 +271,21 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
+    <h3>Lender B &mdash; Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Bank Verification</li>
+      <li>Last 12 months of bank statements &mdash; all business-related accounts, including transfer accounts</li>
+      <li>Virtual site visit (site photos)</li>
+      <li>WIP / Backlog Report</li>
+      <li>Most recent business tax return with all exhibits, including proof of ownership</li>
+      <li>Form 8821</li>
+    </ul>
+  </div>
+  <div class="closing">
     <h3>Funding Timeline</h3>
     <ul>
-      <li>Funding in as little as <b>24 hours</b> once the contract is signed and the funding call is complete.</li>
+      <li><b>Lender A:</b> funding in as little as <b>24 hours</b> once the contract is signed and the funding call is complete.</li>
+      <li><b>Lender B:</b> approval is subject to review of the stipulations above.</li>
     </ul>
   </div>
   </div>
@@ -290,42 +302,15 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
 <script>
 "use strict";
-/* =========================================================================
-   BL TERM SHEET TEMPLATE — replace the EXAMPLE data below for each deal:
-   - Merchant: search "Sample Merchant LLC" (title, cover, footer, PDF, tracker `deal`).
-   - MASTER_MAX = largest offer's max; STATE.requested = default amount shown;
-     also update the <input value="..."> in the borrower bar to match.
-   - OFFERS[]: one object per offer { name, advance(=its own max), factor, weekly,
-     nPay, term, termLabel, origPct, origLabel, processing, position,
-     prepay:{ranges,payoff,saved} }. payoff = advance x prepay-factor;
-     saved = payback - payoff; payoff+saved MUST equal payback on every row.
-     NEVER show buy/sell/factor rate, commission, or APR.
-   - Stips: the two .closing blocks (page) + the two arrays inside downloadPDF().
-   - Timestamp: replace August 26, 2026 at 10:59 AM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
-   - Tracker `deal` = merchant name (fires the open-alert email).
-   See references/patterns.md for groups, month-payoff schedules, the side-by-side
-   detail grid, MCA amortization, and the price-reduced strikethrough.
-   ========================================================================= */
-var MASTER_MAX = 500000;
-var STATE = { requested: 215000 };
+var MASTER_MAX = 750000;
+var STATE = { requested: 750000 };
 
-var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
+var LENDER_NOTES = {};
 var OFFERS = [
-  { name:"Lender A", advance:500000, factor:1.35, weekly:11250, nPay:"60", term:"15", termLabel:"15-Month", origPct:0.04, origLabel:"4%", processing:849, position:"1st",
-    prepay:{
-      ranges:["0–30","31–60","61–90","91–120","121–150","151–180","181–210","211–240","241–270","271–300","301–330"],
-      payoff:[555000,560000,570000,580000,595000,605000,630000,640000,655000,665000,670000],
-      saved:[120000,115000,105000,95000,80000,70000,45000,35000,20000,10000,5000] } },
-  { name:"Lender B", advance:215000, factor:1.32, weekly:4504.76, nPay:"63", term:"14.5", termLabel:"14.5-Month", origPct:0.03, origLabel:"3%", processing:0, position:"1st",
-    prepay:{
-      ranges:["1–30","31–60","61–90","91–120","121–150","151–180","181–210"],
-      payoff:[238650,247250,253700,260150,266600,275200,281650],
-      saved:[45150,36550,30100,23650,17200,8600,2150] } },
-  { name:"Lender B", advance:215000, factor:1.30, weekly:4581.97, nPay:"61", term:"14", termLabel:"14-Month", origPct:0.03, origLabel:"3%", processing:0, position:"1st",
-    prepay:{
-      ranges:["1–30","31–60","61–90","91–120","121–150","151–180"],
-      payoff:[238650,247250,253700,260150,266600,275200],
-      saved:[40850,32250,25800,19350,12900,4300] } }
+  { name:"Lender A", advance:50000, factor:1.32, weekly:1269.23, nPay:"52", term:"12", termLabel:"12-Month",
+    origPct:0, origLabel:"none", processing:0, position:"" },
+  { name:"Lender B", advance:750000, factor:1.36, weekly:20238.10, nPay:"~50", term:"12", termLabel:"12-Month",
+    origPct:0.02, origLabel:"2%", processing:0, position:"" }
 ];
 
 /* number offers in array order — shown in each card's title */
@@ -372,15 +357,16 @@ function renderOffers(){
   function card(o){
     var m = model(o); var fw = fwOf(o);
     var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
+    var feeRow = o.origPct ? '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>' : '';
     var procRow = o.processing ? '<div class="kv-row kv-fee"><span class="kv-label">Processing fee</span><span class="kv-val">'+money(o.processing)+'</span></div>' : '';
     var fgRow = o.forgive ? '<div class="kv-row"><span class="kv-label">Early-payoff interest forgiveness</span><span class="kv-val">'+o.forgive+'</span></div>' : '';
     var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
     var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
     return '<div class="offer-card'+(o.rec?' rec':'')+'">'
-      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
+      + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+fw+'</div></div>'
       + '<div class="offer-card-body">'
         + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
-        + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>'
+        + feeRow
         + procRow
         + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
@@ -388,7 +374,6 @@ function renderOffers(){
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
         + fgRow
-        + '<div class="kv-row"><span class="kv-label">Position</span><span class="kv-val">'+o.position+'</span></div>'
       + '</div></div>';
   }
   function chart(g){
@@ -462,24 +447,29 @@ function downloadPDF(){
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
     doc.text(o.name+" — "+o.termLabel+" — "+money0(m.advance), L, y); y+=8; doc.setDrawColor(170); doc.line(L,y,R,y); y+=18;
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-    var rows=[["Advance amount", money0(m.advance)],["Origination fee ("+o.origLabel+")", money(m.fee)]];
+    var rows=[["Advance amount", money0(m.advance)]];
+    if(o.origPct) rows.push(["Origination fee ("+o.origLabel+")", money(m.fee)]);
     if(o.processing) rows.push(["Processing fee", money(m.processing)]);
     rows.push(["Net advance (deposited)", money(m.net)]);
     rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" months"]);
-    rows.push(["Position", o.position]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Stipulations / closing requirements:", L, y); y+=13;
+  doc.text("Lender A — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided Check","Electronic Bank Verification","Signed Contract","Funding Call"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  ["Bank Verification","Last 12 months of bank statements - all business-related accounts, including transfer accounts","Virtual site visit (site photos)","WIP / Backlog Report","Most recent business tax return with all exhibits, including proof of ownership","Form 8821"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=10; if(y>760){doc.addPage(); y=60;}
-  doc.text("Funding in as little as 24 hours once the contract is signed and the funding call is complete.", L, y); y+=12;
+  doc.text("Lender A: funding in as little as 24 hours once the contract is signed and the funding call is complete.", L, y); y+=12;
+  doc.text("Lender B: approval is subject to review of the stipulations above.", L, y); y+=12;
   OFFERS_PDF.forEach(function(o){
     if(!o.prepay) return;
     var m = model(o); var p = o.prepay; var s = m.s;
