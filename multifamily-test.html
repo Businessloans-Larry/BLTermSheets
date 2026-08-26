@@ -38,6 +38,18 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .actions{margin:0 0 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .btn-pdf{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;background:var(--green);color:#fff;border:none;border-radius:8px;padding:11px 20px;cursor:pointer;transition:background .15s;}
 .btn-pdf:hover{background:var(--green-d);}
+.mini-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 8px;}
+.mini-chart{width:100%;border-collapse:collapse;font-size:13px;min-width:520px;}
+.mini-chart th{background:var(--navy);color:#fff;font-weight:600;text-align:right;padding:6px 11px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
+.mini-chart th:first-child{text-align:left;border-top-left-radius:8px;}
+.mini-chart th:last-child{border-top-right-radius:8px;}
+.mini-chart td{padding:6px 11px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--navy);}
+.mini-chart td:first-child{text-align:left;font-weight:700;background:rgba(0,47,104,.04);}
+.mini-chart tbody tr:nth-child(even){background:var(--bg);}
+.mini-chart tr.mc-total td{font-weight:800;border-top:2px solid var(--navy);background:rgba(0,205,103,.10);}
+.mini-chart td.mc-hi{font-weight:800;color:var(--green-d);}
+.mini-chart tr.mc-month td{background:rgba(0,47,104,.09);font-weight:800;border-top:2px solid var(--navy);}
+.bridge-sub{font-size:12.5px;color:var(--navy);font-weight:700;margin:12px 0 5px;}
 .btn-rev{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;background:#C0392B;color:#fff;border:none;border-radius:8px;padding:11px 20px;cursor:pointer;transition:background .15s;}
 .btn-rev:hover{background:#a93226;}
 .hidebtn{font-family:'Inter',sans-serif;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:transparent;color:inherit;opacity:.55;border:1px solid currentColor;border-radius:5px;padding:2px 7px;margin-left:8px;cursor:pointer;vertical-align:middle;}
@@ -285,6 +297,109 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div id="offerWrap"></div>
 
   <div id="prepayWrap"></div>
+
+  
+  <h2 class="section-title">Total Cost if Repaid Early &mdash; No Fee</h2>
+  <div class="bridge-sub">Week by week, the total to pay off in full on the <b>100% early-payoff offers</b> &mdash; interest only (all remaining interest waived, no penalty). <b>Shaded rows are the end of each month.</b> <span style="color:var(--green-d);">Green = cheapest at that month-end.</span></div>
+  <div class="mini-wrap"><table class="mini-chart">
+    <thead><tr><th>Repaid at</th><th>Kapitus 15mo</th><th>Kapitus 16mo</th><th>OnDeck 18mo</th></tr></thead>
+    <tbody>
+      <tr><td>Wk 1</td><td>$3,550</td><td>$3,641</td><td>$4,615</td></tr>
+      <tr><td>Wk 2</td><td>$7,100</td><td>$7,282</td><td>$9,194</td></tr>
+      <tr><td>Wk 3</td><td>$10,650</td><td>$10,923</td><td>$13,735</td></tr>
+      <tr class="mc-month"><td>Wk 4 &middot; Mo 1</td><td class="mc-hi">$14,200</td><td>$14,564</td><td>$18,239</td></tr>
+      <tr><td>Wk 5</td><td>$17,566</td><td>$18,033</td><td>$22,705</td></tr>
+      <tr><td>Wk 6</td><td>$20,933</td><td>$21,502</td><td>$27,132</td></tr>
+      <tr><td>Wk 7</td><td>$24,300</td><td>$24,972</td><td>$31,520</td></tr>
+      <tr class="mc-month"><td>Wk 8 &middot; Mo 2</td><td class="mc-hi">$27,666</td><td>$28,441</td><td>$35,869</td></tr>
+      <tr><td>Wk 9</td><td>$30,843</td><td>$31,732</td><td>$40,178</td></tr>
+      <tr><td>Wk 10</td><td>$34,020</td><td>$35,024</td><td>$44,446</td></tr>
+      <tr><td>Wk 11</td><td>$37,196</td><td>$38,315</td><td>$48,674</td></tr>
+      <tr class="mc-month"><td>Wk 12 &middot; Mo 3</td><td class="mc-hi">$40,373</td><td>$41,606</td><td>$52,860</td></tr>
+      <tr><td>Wk 13</td><td>$43,353</td><td>$44,713</td><td>$57,005</td></tr>
+      <tr><td>Wk 14</td><td>$46,334</td><td>$47,820</td><td>$61,107</td></tr>
+      <tr><td>Wk 15</td><td>$49,314</td><td>$50,927</td><td>$65,167</td></tr>
+      <tr class="mc-month"><td>Wk 16 &middot; Mo 4</td><td class="mc-hi">$52,294</td><td>$54,034</td><td>$69,184</td></tr>
+      <tr><td>Wk 17</td><td>$55,071</td><td>$56,950</td><td>$73,156</td></tr>
+      <tr><td>Wk 18</td><td>$57,848</td><td>$59,866</td><td>$77,085</td></tr>
+      <tr><td>Wk 19</td><td>$60,624</td><td>$62,781</td><td>$80,969</td></tr>
+      <tr class="mc-month"><td>Wk 20 &middot; Mo 5</td><td class="mc-hi">$63,401</td><td>$65,697</td><td>$84,807</td></tr>
+      <tr><td>Wk 21</td><td>$65,967</td><td>$68,415</td><td>$88,600</td></tr>
+      <tr><td>Wk 22</td><td>$68,533</td><td>$71,132</td><td>$92,347</td></tr>
+      <tr><td>Wk 23</td><td>$71,099</td><td>$73,850</td><td>$96,046</td></tr>
+      <tr class="mc-month"><td>Wk 24 &middot; Mo 6</td><td class="mc-hi">$73,665</td><td>$76,568</td><td>$99,699</td></tr>
+      <tr><td>Wk 25</td><td>$76,013</td><td>$79,080</td><td>$103,303</td></tr>
+      <tr><td>Wk 26</td><td>$78,360</td><td>$81,593</td><td>$106,859</td></tr>
+      <tr><td>Wk 27</td><td>$80,708</td><td>$84,106</td><td>$110,366</td></tr>
+      <tr class="mc-month"><td>Wk 28 &middot; Mo 7</td><td class="mc-hi">$83,056</td><td>$86,618</td><td>$113,823</td></tr>
+      <tr><td>Wk 29</td><td>$85,178</td><td>$88,918</td><td>$117,230</td></tr>
+      <tr><td>Wk 30</td><td>$87,300</td><td>$91,217</td><td>$120,586</td></tr>
+      <tr><td>Wk 31</td><td>$89,421</td><td>$93,516</td><td>$123,891</td></tr>
+      <tr class="mc-month"><td>Wk 32 &middot; Mo 8</td><td class="mc-hi">$91,543</td><td>$95,816</td><td>$127,145</td></tr>
+      <tr><td>Wk 33</td><td>$93,431</td><td>$97,895</td><td>$130,345</td></tr>
+      <tr><td>Wk 34</td><td>$95,318</td><td>$99,974</td><td>$133,493</td></tr>
+      <tr><td>Wk 35</td><td>$97,206</td><td>$102,054</td><td>$136,586</td></tr>
+      <tr class="mc-month"><td>Wk 36 &middot; Mo 9</td><td class="mc-hi">$99,094</td><td>$104,133</td><td>$139,626</td></tr>
+      <tr><td>Wk 37</td><td>$100,740</td><td>$105,984</td><td>$142,610</td></tr>
+      <tr><td>Wk 38</td><td>$102,385</td><td>$107,834</td><td>$145,539</td></tr>
+      <tr><td>Wk 39</td><td>$104,030</td><td>$109,684</td><td>$148,411</td></tr>
+      <tr class="mc-month"><td>Wk 40 &middot; Mo 10</td><td class="mc-hi">$105,676</td><td>$111,535</td><td>$151,227</td></tr>
+      <tr><td>Wk 41</td><td>$107,070</td><td>$113,149</td><td>$153,985</td></tr>
+      <tr><td>Wk 42</td><td>$108,465</td><td>$114,762</td><td>$156,685</td></tr>
+      <tr><td>Wk 43</td><td>$109,860</td><td>$116,376</td><td>$159,325</td></tr>
+      <tr class="mc-month"><td>Wk 44 &middot; Mo 11</td><td class="mc-hi">$111,254</td><td>$117,990</td><td>$161,907</td></tr>
+      <tr><td>Wk 45</td><td>$112,389</td><td>$119,358</td><td>$164,428</td></tr>
+      <tr><td>Wk 46</td><td>$113,524</td><td>$120,726</td><td>$166,888</td></tr>
+      <tr><td>Wk 47</td><td>$114,658</td><td>$122,095</td><td>$169,286</td></tr>
+      <tr class="mc-month"><td>Wk 48 &middot; Mo 12</td><td class="mc-hi">$115,793</td><td>$123,463</td><td>$171,622</td></tr>
+    </tbody>
+  </table></div>
+  <div class="bridge-cap">Interest accrued at payoff. OnDeck computed weekly from its amortization; Kapitus quoted monthly (month-end values exact; in-between weeks interpolated). Figures exclude the origination fee, reimbursed after closing per the note at top.</div>
+
+
+  <h2 class="section-title" style="color:#c62828;">Combination Options</h2>
+  <div class="bridge-sub">Stack two offers for more capital &mdash; each keeps its own terms; combined totals with a blended factor are shown below.</div>
+
+  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 5 + 7 (standard prepay) &mdash; combined <b>$800,000</b></div>
+  <div class="mini-wrap"><table class="mini-chart">
+    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
+    <tbody>
+      <tr><td>Kapitus 19-mo (Offer 7)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$6,549.82</td><td>$538,800</td><td>1.347</td><td>21.9%</td></tr>
+      <tr><td>OnDeck 25% 18-mo (Offer 5)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,517.95</td><td>$586,400</td><td>1.466</td><td>31.1%</td></tr>
+      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$14,067.77</td><td>$1,125,200</td><td>1.407</td><td>26.4%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 3 + 5 (standard prepay) &mdash; combined <b>$800,000</b></div>
+  <div class="mini-wrap"><table class="mini-chart">
+    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
+    <tbody>
+      <tr><td>Kapitus 16-mo (Offer 3)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$7,200.00</td><td>$498,801</td><td>1.247</td><td>18.5%</td></tr>
+      <tr><td>OnDeck 25% 18-mo (Offer 5)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,517.95</td><td>$586,400</td><td>1.466</td><td>31.1%</td></tr>
+      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$14,717.95</td><td>$1,085,201</td><td>1.357</td><td>25.2%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 4 + 6 (100% prepay) &mdash; combined <b>$800,000</b></div>
+  <div class="mini-wrap"><table class="mini-chart">
+    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
+    <tbody>
+      <tr><td>Kapitus 16-mo (Offer 4)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$7,720.00</td><td>$534,800</td><td>1.337</td><td>25.3%</td></tr>
+      <tr><td>OnDeck 100% 18-mo (Offer 6)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,805.13</td><td>$608,800</td><td>1.522</td><td>34.8%</td></tr>
+      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$15,525.13</td><td>$1,143,600</td><td>1.430</td><td>30.3%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 2 + 6 (100% prepay) &mdash; combined <b>$800,000</b></div>
+  <div class="mini-wrap"><table class="mini-chart">
+    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
+    <tbody>
+      <tr><td>Kapitus 15-mo (Offer 2)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$8,050.00</td><td>$522,801</td><td>1.307</td><td>24.6%</td></tr>
+      <tr><td>OnDeck 100% 18-mo (Offer 6)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,805.13</td><td>$608,800</td><td>1.522</td><td>34.8%</td></tr>
+      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$15,855.13</td><td>$1,131,601</td><td>1.415</td><td>30.1%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="bridge-cap">Two separate fundings taken together; each keeps its own terms and weekly payments run concurrently. Blended factor = combined payback &divide; combined advance. Ann. Factor = cost points (factor &minus; 1) &divide; term &times; 12.</div>
 
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
