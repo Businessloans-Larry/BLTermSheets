@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Funding Offers - Ocean Dragon Lobster</title>
+<title>Funding Offers - Lobster Test</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -243,7 +243,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div class="borrower-bar">
     <div>
       <div class="borrower-bar-label">Prepared For</div>
-      <div class="borrower-bar-name">Ocean Dragon Lobster</div>
+      <div class="borrower-bar-name">Lobster Test</div>
     </div>
     <div class="borrower-bar-funding">
       <div class="borrower-bar-label">Requested Amount &middot; approvals up to $450,000</div>
@@ -258,8 +258,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <span class="cta-prompt">Ready to move forward?</span>
     <span class="cta-btns">
       <a class="cta-btn cta-call" href="tel:+18437799063">&#128222; Call Larry</a>
-      <a class="cta-btn cta-text" href="sms:+18437799063?&body=Hi%20Larry%2C%20I%27d%20like%20to%20move%20forward%20on%20the%20Ocean%20Dragon%20Lobster%20funding%20offer.">&#128172; Text Larry</a>
-      <a class="cta-btn cta-email" href="mailto:larry@businessloans.com?subject=Moving%20forward%20-%20Ocean%20Dragon%20Lobster&body=Hi%20Larry%2C%20I%27ve%20reviewed%20the%20offers%20and%20I%27d%20like%20to%20move%20forward.%20Please%20send%20next%20steps.">&#9993; Email Larry</a>
+      <a class="cta-btn cta-text" href="sms:+18437799063?&body=Hi%20Larry%2C%20I%27d%20like%20to%20move%20forward%20on%20the%20Lobster%20Test%20funding%20offer.">&#128172; Text Larry</a>
+      <a class="cta-btn cta-email" href="mailto:larry@businessloans.com?subject=Moving%20forward%20-%20Lobster%20Test&body=Hi%20Larry%2C%20I%27ve%20reviewed%20the%20offers%20and%20I%27d%20like%20to%20move%20forward.%20Please%20send%20next%20steps.">&#9993; Email Larry</a>
     </span>
     <span class="cta-direct">(843) 779-9063 &middot; larry@businessloans.com</span>
   </div>
@@ -281,7 +281,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <button id="revBtn" class="btn-rev" type="button">&#9998; Request revisions</button>
   </div>
 
-  <h2 class="section-title">Offers by Term</h2>
+  <h2 class="section-title">Offers</h2>
   <div id="offerWrap"></div>
 
   <div id="prepayWrap"></div>
@@ -327,7 +327,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   </div>
 
   <footer>
-    <span>BusinessLoans.com &middot; Funding Offers for Ocean Dragon Lobster</span>
+    <span>BusinessLoans.com &middot; Funding Offers for Lobster Test</span>
   </footer>
 
 </div>
@@ -402,29 +402,18 @@ function model(o){
 }
 
 function renderOffers(){
-  /* Grouped by TERM LENGTH (Larry 2026-08-26): one band per term, lenders as line items
-     inside it, ordered by funding amount (150s, then 250s, then 450s) and pricing within
-     a tie. Program details live in the legend above. */
+  /* SINGLE TABLE (Larry 2026-08-26 test): every offer in one chart, sorted by term
+     then funding amount then pricing, with Term and Lender as columns. */
   var LIVEOFF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
   var wrap = document.getElementById("offerWrap");
 
-  var order = [], byTerm = {};
-  LIVEOFF.slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.advance-b.advance) || (a.factor-b.factor); })
-    .forEach(function(o){
-      if(!(o.term in byTerm)){ byTerm[o.term] = { term:o.term, offers:[] }; order.push(byTerm[o.term]); }
-      byTerm[o.term].offers.push(o);
-    });
+  var sorted = LIVEOFF.slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.advance-b.advance) || (a.factor-b.factor); });
 
   var hasForgive = LIVEOFF.some(function(o){ return o.forgive; });
   var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
   var payHead = allWeekly ? "Weekly Payment" : "Payment";
-  var cols = hasForgive ? 9 : 8;
 
-  var rows = order.map(function(g){
-    var n = g.offers.length;
-    var band = '<tr class="termband"><td colspan="'+cols+'">'+g.term+' Months'
-      + '<span class="band-count">'+n+(n>1?' offers':' offer')+'</span></td></tr>';
-    return band + g.offers.map(function(o){
+  var rows = sorted.map(function(o){
       var m = model(o); var fw = (o.freq === "monthly") ? "monthly" : "weekly";
       var capTag = m.capped ? '<span class="cap-badge cap-pre">max</span>' : '';
       var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
@@ -432,7 +421,8 @@ function renderOffers(){
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
       return '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num
         + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
-        + '<td class="ch-term" data-label="Lender">'+o.name+recBadge+'</td>'
+        + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
+        + '<td data-label="Lender">'+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
         + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
@@ -440,9 +430,8 @@ function renderOffers(){
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
-  }).join("");
 
-  var head = '<thead><tr><th>Offer</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
+  var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
     + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+payHead+'</th>'
     + '<th># Payments</th>'+(hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
 
@@ -523,7 +512,7 @@ function downloadPDF(){
   var OFFERS_PDF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
   var L=54, R=558, y=70;
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
-  doc.text("Funding Offers — Ocean Dragon Lobster", L, y); y+=20;
+  doc.text("Funding Offers — Lobster Test", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
   doc.text("BusinessLoans.com     Prepared August 26, 2026 at 10:02 AM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
@@ -654,7 +643,7 @@ recompute();
 <script>
 /* term-sheet tracker beacon (v4.1: open ping + exit visit-summary; geo on both) */
 (function(){try{
-  var deal="Ocean Dragon Lobster";
+  var deal="Lobster Test";
   var EP="https://script.google.com/macros/s/AKfycbxWxipWH7N5eU3xsZ0stuyunIbj6fGwoaiR6VnHmL0RUGjMjz3dwMyPUi4cEGtVTxGGsg/exec";
   var start=(new Date()).getTime();
   var loc="";
