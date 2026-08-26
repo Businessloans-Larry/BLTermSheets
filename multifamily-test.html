@@ -296,6 +296,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Offers</h2>
   <div id="offerWrap"></div>
 
+  <div id="comboWrap"></div>
+
   <div id="prepayWrap"></div>
 
   
@@ -356,50 +358,6 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   </table></div>
   <div class="bridge-cap">Interest accrued at payoff. OnDeck computed weekly from its amortization; Kapitus quoted monthly (month-end values exact; in-between weeks interpolated). Figures exclude the origination fee, reimbursed after closing per the note at top.</div>
 
-
-  <h2 class="section-title" style="color:#c62828;">Combination Options</h2>
-  <div class="bridge-sub">Stack two offers for more capital &mdash; each keeps its own terms; combined totals with a blended factor are shown below.</div>
-
-  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 5 + 7 (standard prepay) &mdash; combined <b>$800,000</b></div>
-  <div class="mini-wrap"><table class="mini-chart">
-    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
-    <tbody>
-      <tr><td>Kapitus 19-mo (Offer 7)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$6,549.82</td><td>$538,800</td><td>1.347</td><td>21.9%</td></tr>
-      <tr><td>OnDeck 25% 18-mo (Offer 5)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,517.95</td><td>$586,400</td><td>1.466</td><td>31.1%</td></tr>
-      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$14,067.77</td><td>$1,125,200</td><td>1.407</td><td>26.4%</td></tr>
-    </tbody>
-  </table></div>
-
-  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 3 + 5 (standard prepay) &mdash; combined <b>$800,000</b></div>
-  <div class="mini-wrap"><table class="mini-chart">
-    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
-    <tbody>
-      <tr><td>Kapitus 16-mo (Offer 3)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$7,200.00</td><td>$498,801</td><td>1.247</td><td>18.5%</td></tr>
-      <tr><td>OnDeck 25% 18-mo (Offer 5)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,517.95</td><td>$586,400</td><td>1.466</td><td>31.1%</td></tr>
-      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$14,717.95</td><td>$1,085,201</td><td>1.357</td><td>25.2%</td></tr>
-    </tbody>
-  </table></div>
-
-  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 4 + 6 (100% prepay) &mdash; combined <b>$800,000</b></div>
-  <div class="mini-wrap"><table class="mini-chart">
-    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
-    <tbody>
-      <tr><td>Kapitus 16-mo (Offer 4)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$7,720.00</td><td>$534,800</td><td>1.337</td><td>25.3%</td></tr>
-      <tr><td>OnDeck 100% 18-mo (Offer 6)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,805.13</td><td>$608,800</td><td>1.522</td><td>34.8%</td></tr>
-      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$15,525.13</td><td>$1,143,600</td><td>1.430</td><td>30.3%</td></tr>
-    </tbody>
-  </table></div>
-
-  <div class="bridge-sub" style="margin-top:12px;color:#c62828;font-size:14.5px;">Offers 2 + 6 (100% prepay) &mdash; combined <b>$800,000</b></div>
-  <div class="mini-wrap"><table class="mini-chart">
-    <thead><tr><th>Component</th><th>Advance</th><th>Orig. Fee</th><th>Net Deposited</th><th>Weekly</th><th>Total Payback</th><th>Factor</th><th>Ann. Factor</th></tr></thead>
-    <tbody>
-      <tr><td>Kapitus 15-mo (Offer 2)</td><td>$400,000</td><td>$10,000</td><td>$390,000</td><td>$8,050.00</td><td>$522,801</td><td>1.307</td><td>24.6%</td></tr>
-      <tr><td>OnDeck 100% 18-mo (Offer 6)</td><td>$400,000</td><td>$5,000</td><td>$395,000</td><td>$7,805.13</td><td>$608,800</td><td>1.522</td><td>34.8%</td></tr>
-      <tr class="mc-total"><td>Combined</td><td>$800,000</td><td>$15,000</td><td>$785,000</td><td>$15,855.13</td><td>$1,131,601</td><td>1.415</td><td>30.1%</td></tr>
-    </tbody>
-  </table></div>
-  <div class="bridge-cap">Two separate fundings taken together; each keeps its own terms and weekly payments run concurrently. Blended factor = combined payback &divide; combined advance. Ann. Factor = cost points (factor &minus; 1) &divide; term &times; 12.</div>
 
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
@@ -548,6 +506,42 @@ function earlyRows(list){
     });
 }
 
+/* ---- Combination Options: stack two offers for more capital. One row per combo,
+   computed from the component offers at their FULL advances (they do not scale with
+   the slider — stacking is for going ABOVE the single-offer max). ---- */
+var COMBOS = [
+  { pair:[5,7], type:"Standard prepay" },
+  { pair:[3,5], type:"Standard prepay" },
+  { pair:[4,6], type:"100% prepay" },
+  { pair:[2,6], type:"100% prepay" }
+];
+function comboAt(n){ return OFFERS.filter(function(o){ return o.num===n; })[0]; }
+function renderCombos(){
+  var wrap = document.getElementById("comboWrap");
+  if(!wrap || !COMBOS.length){ if(wrap) wrap.innerHTML=""; return; }
+  var rows = COMBOS.map(function(c,i){
+    var a=comboAt(c.pair[0]), b=comboAt(c.pair[1]);
+    if(!a||!b) return "";
+    function at(o){ var adv=o.advance, fee=round2(adv*o.origPct);
+      return { adv:adv, fee:fee, net:round2(adv-fee-o.processing), payback:round2(adv*o.factor), weekly:o.weekly }; }
+    var A=at(a), B=at(b);
+    return '<tr><td class="ch-num" data-label="Combo">C'+(i+1)
+      + '</td><td class="ch-term" data-label="Offers">Offers '+c.pair[0]+' + '+c.pair[1]+'</td>'
+      + '<td data-label="Combined Advance">'+money0(A.adv+B.adv)+'</td>'
+      + '<td data-label="Orig. Fees">'+money(A.fee+B.fee)+'</td>'
+      + '<td class="ch-net" data-label="Net Deposited">'+money(A.net+B.net)+'</td>'
+      + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(A.payback+B.payback)+'</td>'
+      + '<td class="ch-pay" data-label="Weekly Payment">'+money(round2(A.weekly+B.weekly))+'</td>'
+      + '<td class="ch-fg" data-label="Early Payoff">'+c.type+'</td></tr>';
+  }).join("");
+  wrap.innerHTML = '<h2 class="section-title" style="color:#c62828;margin-top:18px;">Combination Options</h2>'
+    + '<div class="bridge-sub">Stack two of the offers above for more capital &mdash; each keeps its own terms; combined totals below.</div>'
+    + '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'
+    + '<thead><tr><th>Combo</th><th>Offers</th><th>Combined Advance</th><th>Orig. Fees</th><th>Net Deposited</th>'
+    + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>Weekly Payment</th><th>Early Payoff</th></tr></thead>'
+    + '<tbody>'+rows+'</tbody></table></div></div>';
+}
+
 function renderPrepay(){
   var rows = earlyRows(OFFERS.filter(function(o){ return !HIDDEN.has(o.num); }));
   if(!rows.length){ document.getElementById("prepayWrap").innerHTML = ""; return; }
@@ -682,7 +676,7 @@ function recompute(){
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $400,000 approved maximum" : "";
   help.style.display = capped ? "" : "none";
-  renderOffers(); renderPrepay();
+  renderOffers(); renderCombos(); renderPrepay();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
