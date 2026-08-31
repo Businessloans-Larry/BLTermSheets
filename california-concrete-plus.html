@@ -557,6 +557,8 @@ recompute();
   var deal="California Concrete Plus";
   var EP="https://script.google.com/macros/s/AKfycbxWxipWH7N5eU3xsZ0stuyunIbj6fGwoaiR6VnHmL0RUGjMjz3dwMyPUi4cEGtVTxGGsg/exec";
   var start=(new Date()).getTime();
+  /* device self-mark: open any sheet once with ?me=1 and this browser is Larry's forever (per device) */
+  var ME=false; try{ if(location.search.indexOf("me=1")>-1) localStorage.setItem("bl_me","1"); ME = localStorage.getItem("bl_me")==="1"; }catch(e){}
   var loc="";
   function amt(){ var el=document.getElementById("amount"); if(!el)return null; var v=parseFloat((el.value||"").replace(/[^0-9.]/g,"")); return isNaN(v)?null:v; }
   var first=amt(), last=first, max=(first||0), changes=0, pdf=false;
@@ -566,7 +568,7 @@ recompute();
   if(pEl){ pEl.addEventListener("click",function(){ pdf=true; }); }
   var bk="bl_open_pinged_"+deal, oSent=false;
   function openPing(){ if(oSent||sessionStorage.getItem(bk))return; oSent=true; sessionStorage.setItem(bk,"1");
-    new Image().src=EP+"?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&ua="+encodeURIComponent(navigator.userAgent)+(loc?"&loc="+encodeURIComponent(loc):"")+"&r="+(new Date()).getTime(); }
+    new Image().src=EP+"?deal="+encodeURIComponent(deal)+"&u="+encodeURIComponent(location.href)+"&ua="+encodeURIComponent(navigator.userAgent)+(loc?"&loc="+encodeURIComponent(loc):"")+(ME?"&me=1":"")+"&r="+(new Date()).getTime(); }
   /* geo on every load — used by BOTH the open ping and the exit summary */
   try{ fetch("https://ipinfo.io/json").then(function(r){return r.json();}).then(function(d){ loc=[d.city,d.region,d.country].filter(Boolean).join(", "); openPing(); }).catch(function(){ openPing(); }); }catch(e){ openPing(); }
   setTimeout(openPing,3000);
@@ -578,7 +580,7 @@ recompute();
       +"&start="+(first==null?"":Math.round(first))
       +"&final="+(last==null?"":Math.round(last))
       +"&max="+Math.round(max)+"&changes="+changes+"&pdf="+(pdf?1:0)+"&secs="+secs
-      +(loc?"&loc="+encodeURIComponent(loc):"")+"&ua="+encodeURIComponent(navigator.userAgent)
+      +(loc?"&loc="+encodeURIComponent(loc):"")+(ME?"&me=1":"")+"&ua="+encodeURIComponent(navigator.userAgent)
       +"&u="+encodeURIComponent(location.href)+"&r="+(new Date()).getTime();
     if(navigator.sendBeacon){ try{ navigator.sendBeacon(u); }catch(e){ new Image().src=u; } } else { new Image().src=u; }
   }
@@ -595,7 +597,7 @@ recompute();
     rs.addEventListener("click",function(){
       var msg=(rt.value||"").trim(); if(!msg){ rt.focus(); return; }
       var u=EP+"?event=revision&deal="+encodeURIComponent(deal)+"&msg="+encodeURIComponent(msg.slice(0,1200))
-        +(loc?"&loc="+encodeURIComponent(loc):"")+"&ua="+encodeURIComponent(navigator.userAgent)
+        +(loc?"&loc="+encodeURIComponent(loc):"")+(ME?"&me=1":"")+"&ua="+encodeURIComponent(navigator.userAgent)
         +"&u="+encodeURIComponent(location.href)+"&r="+(new Date()).getTime();
       try{ if(navigator.sendBeacon){ navigator.sendBeacon(u); } else { new Image().src=u; } }catch(e2){ try{ new Image().src=u; }catch(e3){} }
       rs.style.display="none"; rd.style.display="block"; rt.value="";
