@@ -151,6 +151,7 @@ table.prepay tbody tr:last-child td{border-bottom:none;}
 .po-win{color:var(--green-d);font-weight:700;}
 table.prepay thead th.pg-head{background:#00234F;text-align:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-left:1px solid rgba(255,255,255,.22);}
 .prepay-legend{font-size:11.5px;color:var(--slate);margin:-8px 0 12px;line-height:1.5;}
+.closing-note{background:#FFF4D6;border-left:3px solid #C0392B;color:var(--navy);font-size:12.5px;font-weight:700;padding:7px 10px;border-radius:5px;margin:0 0 8px;}
 .disclosure{margin-top:16px;padding:12px 15px;background:var(--bg);border-radius:10px;border:1px solid var(--line);font-size:11px;color:var(--slate);line-height:1.5;}
 .disclosure b{color:var(--navy);}
 footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-size:11px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
@@ -302,12 +303,20 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div class="closing">
     <h3>Lender C &mdash; Stipulations / Closing Requirements</h3>
     <ul>
-      <li>Voided check</li>
       <li>Driver's License</li>
-      <li>Month-to-date business bank statement</li>
-      <li>Competitor payoff letter</li>
-      <li>Payoff of the current Kapitus loan (must net 50%)</li>
-      <li>Personal guarantee</li>
+      <li>Voided business check</li>
+      <li>Signed contracts</li>
+      <li>Kapitus zero balance letter</li>
+    </ul>
+  </div>
+  <div class="closing">
+    <h3>Lender D &mdash; Stipulations / Closing Requirements</h3>
+    <div class="closing-note">Also needed: a completed application from your sister.</div>
+    <ul>
+      <li>Signed documents</li>
+      <li>Voided check</li>
+      <li>Documentation confirming the guarantor has been an owner for 3 years</li>
+      <li>Most recent tax return</li>
     </ul>
   </div>
   <div class="closing">
@@ -326,7 +335,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the applicable lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early payoff on every offer shown waives 100% of the remaining interest; actual payoff amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the applicable lender agreement and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff terms vary by lender — see each offer's Early Payoff column and payoff schedule; actual payoff amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -358,16 +367,20 @@ var STATE = { requested: 500000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
-  /* term asc -> advance -> factor.  Lender A + C origination 4% (Larry); Lender B fees are the
-     funder's own listed upfront fees ($15,000 / $15,000 / $12,000 on $500,000).
-     Lender C is monthly-pay and caps at $250,000. */
+  /* term asc -> advance -> factor.  Lenders A + C: 4% origination (Larry). Lender B: the funder's own
+     listed upfront fees. Lender D: the funder's own O-Fee, $7,500 = 3% on $250,000.
+     Lenders C + D are monthly-pay and cap at $250,000. Lender D's early payoff is a PARTIAL
+     discount schedule (not 100% forgiveness) — hence the different Early Payoff wording. */
   { name:"Lender C", advance:250000, factor:1.26, weekly:26250,    nPay:"12",  term:"12", termLabel:"12-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"C12" },
   { name:"Lender A", advance:500000, factor:1.18, weekly:11346.16, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A12" },
   { name:"Lender B", advance:500000, factor:1.20, weekly:11538.47, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"B12" },
+  { name:"Lender D", advance:250000, factor:1.24, weekly:20666.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"Pay off early &amp; save" },
   { name:"Lender A", advance:500000, factor:1.23, weekly:9609.38,  nPay:"64",  term:"15", termLabel:"15-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A15" },
+  { name:"Lender D", advance:250000, factor:1.27, weekly:17638.89, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"Pay off early &amp; save" },
   { name:"Lender C", advance:250000, factor:1.33, weekly:18472.22, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"C18" },
   { name:"Lender A", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A18" },
   { name:"Lender B", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"B18" },
+  { name:"Lender D", advance:250000, factor:1.29, weekly:16125,    nPay:"20",  term:"20", termLabel:"20-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"Pay off early &amp; save", schedKey:"D20" },
   { name:"Lender A", advance:500000, factor:1.31, weekly:7616.28,  nPay:"86",  term:"20", termLabel:"20-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A20" },
   { name:"Lender A", advance:500000, factor:1.34, weekly:6979.17,  nPay:"96",  term:"22", termLabel:"22-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A22" },
   { name:"Lender C", advance:250000, factor:1.36, weekly:14166.67, nPay:"24",  term:"24", termLabel:"24-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"C24" },
@@ -380,6 +393,8 @@ var OFFERS = [
    Generator engine (scripts/amortize.sh). renderPrepay derives paid-to-date so every row
    reconciles: paid + payoff + saved = total payback. */
 var SCHED = {
+  "D20":{payoff:[251518.63,240410.34,229255.12,217731.08,206134.8,194310.9,181859.53,169550.58,156879.28,144065.87,130892.91,117547.3,103925.88,89949.44,75751.42,61201.59,46395.29,31272.92,15782.05,0],
+         saved:[54856.37,49839.66,44869.88,40268.92,35740.2,31439.1,27765.47,23949.42,20495.72,17184.13,14232.09,11452.7,8949.12,6800.56,4873.58,3298.41,1979.71,977.08,342.95,0]},
   "C12":{payoff:[233119.99,215607.32,197438.27,178588.25,159031.73,138742.23,117692.28,95853.38,73195.96,49689.34,25301.69,0],
          saved:[55630.01,46892.68,38811.73,31411.75,24718.27,18757.77,13557.72,9146.62,5554.04,2810.66,948.31,0]},
   "C18":{payoff:[239505.69,228676.49,217501.71,205970.33,194070.96,181791.86,169120.92,156045.63,142553.08,128629.96,114262.53,99436.61,84137.58,68350.33,52059.28,35248.36,17900.97,0],
@@ -697,7 +712,11 @@ function downloadPDF(){
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Lender C — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Voided check","Driver's License","Month-to-date business bank statement","Competitor payoff letter","Payoff of the current Kapitus loan (must net 50%)","Personal guarantee"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Driver's License","Voided business check","Signed contracts","Kapitus zero balance letter"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Lender D — stipulations / closing requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  ["ALSO NEEDED: a completed application from your sister","Signed documents","Voided check","Documentation confirming the guarantor has been an owner for 3 years","Most recent tax return"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
