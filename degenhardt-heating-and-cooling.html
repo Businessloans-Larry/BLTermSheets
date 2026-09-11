@@ -150,7 +150,9 @@ table.prepay tbody tr:last-child td{border-bottom:none;}
 .po-allin{color:#C0392B;font-weight:700;}
 .po-win{color:var(--green-d);font-weight:700;}
 /* per-term-band indicators (Larry 2026-09-11) */
-.mk{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+.mk{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin:0 6px 0 0;vertical-align:middle;white-space:nowrap;}
+/* every marker sits to the LEFT of the lender name so the names stay flush right (Larry 2026-09-11) */
+.offer-chart .freq-badge{font-size:9px;letter-spacing:.04em;border-radius:999px;padding:2px 7px;margin:0 6px 0 0;}
 .mk-cheap{background:var(--green);color:#05351C;}
 .mk-money{background:var(--gold);color:var(--navy);}
 .offer-chart td.ch-cost{font-weight:700;color:#C0392B;}
@@ -519,14 +521,16 @@ function renderOffers(){
       var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
+      /* all markers render BEFORE the lender name; the Lender column is right-aligned, so the names
+         stay flush right and the badges flow left into the gap under the Term column. */
       var cost = allInCost(o), bd = BAND[o.termLabel], marks = '';
+      if(o.freq === "monthly") marks += '<span class="freq-badge">Monthly</span>';
       if(bd.varCost && Math.abs(cost - bd.minCost) < 0.005) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in cost</span>';
       if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
-      var freqMark = (o.freq === "monthly") ? '<span class="freq-badge">Monthly</span>' : '';
       return band + '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num
         + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
-        + '<td class="ch-term" data-label="Term">'+o.termLabel+freqMark+'</td>'
-        + '<td data-label="Lender">'+o.name+recBadge+marks+'</td>'
+        + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
+        + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
         + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
