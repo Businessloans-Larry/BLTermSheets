@@ -572,44 +572,72 @@ function schedCells(o, i){
            allin: round2(paid + payoff + m.fee + m.processing - m.advance) };
 }
 function schedHead(o){ var m=model(o);
-  return '<b>Offer '+o.num+'</b> ('+o.name+'): '+money0(m.payback)+' payback &middot; '
+  return '<b>Offer '+o.num+'</b> ('+o.name+'): '+money0(m.advance)+' advance &middot; '+money0(m.payback)+' payback &middot; '
     + money(m.weekly)+'/'+(fwOf(o)==="monthly"?"month":"week")+' &middot; '+o.nPay+' payments &middot; '+money(m.fee)+' fee'; }
 
+/* Row index for one offer in a merged table.
+   aligned=false -> rows ARE payment numbers (every offer in the group bills the same way).
+   aligned=true  -> rows are MONTHS: a monthly offer sits at payment m, a weekly one at payment 4m
+   (Larry's convention — week = 4 x months), and the final month always uses the last payment so
+   every schedule ends at a $0 payoff. Returns -1 when that offer has no row there. */
+function schedIdx(o, i, aligned, months){
+  var n = SCHED[o.schedKey].payoff.length;
+  if(!aligned) return i < n ? i : -1;
+  var m = i + 1;
+  if(m >= months) return n - 1;
+  var k = (fwOf(o) === "monthly") ? m : 4*m;
+  return k <= n ? k - 1 : n - 1;
+}
+
 function mergedSched(grp){
-  var n = 0; grp.forEach(function(o){ n = Math.max(n, SCHED[o.schedKey].payoff.length); });
-  var m0 = model(grp[0]);
+  /* offers of the SAME TERM share one comparison table, whatever their advance or cadence
+     (Larry 2026-09-11: "put the 250k offers together ... when the term lengths match too").
+     Mixed cadences can't be lined up payment-for-payment, so those tables switch to a MONTH axis. */
+  var aligned = !grp.every(function(o){ return fwOf(o) === fwOf(grp[0]) && String(o.nPay) === String(grp[0].nPay); });
+  var months = Math.round(Number(grp[0].term)) || 1;
+  var rowsN = aligned ? months : 0;
+  if(!aligned) grp.forEach(function(o){ rowsN = Math.max(rowsN, SCHED[o.schedKey].payoff.length); });
+  var advs = grp.map(function(o){ return model(o).advance; });
+  var sameAdv = advs.every(function(a){ return a === advs[0]; });
+  var rowLabel = aligned ? "Pay off after month" : "Pay off after payment";
+
   var h = '<div class="prepay-section">'
-    + '<div class="prepay-head"><h2 class="prepay-title">'+grp[0].termLabel+' &mdash; Early Payoff Comparison &mdash; '+money0(m0.advance)+'</h2></div>'
-    + '<div class="prepay-recap">'+grp.map(schedHead).join(' &nbsp;&bull;&nbsp; ')+'</div>'
-    + '<div class="prepay-legend"><b>Payoff Amount</b> = the lump sum to close it out that day. <b>All-In Cost</b> = everything the money costs you if you pay off then &mdash; interest paid to that point plus the origination fee.</div>';
-  if(m0.advance !== grp[0].advance) h += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m0.advance)+').</div>';
-  var gh = '<tr><th rowspan="2">Pay off after payment</th>'
+    + '<div class="prepay-head"><h2 class="prepay-title">'+grp[0].termLabel+' &mdash; Early Payoff Comparison'
+    + (sameAdv ? ' &mdash; '+money0(advs[0]) : '')+'</h2></div>'
+    + '<div class="prepay-recap">'+grp.map(schedHead).join('<br/>')+'</div>'
+    + '<div class="prepay-legend"><b>Payoff Amount</b> = the lump sum to close it out that day. <b>All-In Cost</b> = everything the money costs you if you pay off then &mdash; interest paid to that point plus the origination fee.'
+    + (aligned ? ' These offers bill on different schedules, so rows are <b>months</b>: a monthly offer is shown at that month&rsquo;s payment and a weekly one at the payment falling at the end of that month (4 per month). The last row is each offer&rsquo;s final payment.' : '')
+    + '</div>';
+
+  var gh = '<tr><th rowspan="2">'+rowLabel+'</th>'
     + grp.map(function(o){ return '<th class="pg-head" colspan="2">Offer '+o.num+' &middot; '+o.name+'</th>'; }).join('')
-    + (grp.length===2 ? '<th rowspan="2">Cheaper all-in</th>' : '') + '</tr>';
+    + '<th rowspan="2">Cheaper all-in</th></tr>';
   var sh = '<tr>'+grp.map(function(){ return '<th>Payoff Amount</th><th>All-In Cost</th>'; }).join('')+'</tr>';
+
   var body = '';
-  for(var i=0;i<n;i++){
-    body += '<tr><td data-label="Pay off after payment">#'+(i+1)+'</td>';
+  for(var i=0;i<rowsN;i++){
+    body += '<tr><td data-label="'+rowLabel+'">'+(aligned ? 'Month '+(i+1) : '#'+(i+1))+'</td>';
     var costs = [];
     for(var g=0; g<grp.length; g++){
-      var o = grp[g], sc = SCHED[o.schedKey];
-      if(i >= sc.payoff.length){ costs.push(null);
+      var o = grp[g], k = schedIdx(o, i, aligned, months);
+      if(k < 0){ costs.push(null);
         body += '<td data-label="Offer '+o.num+' payoff">&mdash;</td><td data-label="Offer '+o.num+' all-in cost">&mdash;</td>'; continue; }
-      var c = schedCells(o, i); costs.push(c.allin);
+      var c = schedCells(o, k); costs.push({v:c.allin, num:o.num});
       body += '<td class="po-payoff" data-label="Offer '+o.num+' payoff">'+money(c.payoff)+'</td>'
            +  '<td class="po-allin" data-label="Offer '+o.num+' all-in cost">'+money(c.allin)+'</td>';
     }
-    if(grp.length===2){
-      var a=costs[0], b=costs[1], cell='&mdash;';
-      if(a!==null && b!==null){
-        var d = round2(Math.abs(a-b));
-        cell = (d < 0.005) ? 'even' : 'Offer '+(a<b?grp[0].num:grp[1].num)+' by '+money(d);
-      }
-      body += '<td class="po-win" data-label="Cheaper all-in">'+cell+'</td>';
-    }
-    body += '</tr>';
+    body += '<td class="po-win" data-label="Cheaper all-in">'+cheapest(costs)+'</td></tr>';
   }
   return h + '<div class="tscroll"><table class="prepay"><thead>'+gh+sh+'</thead><tbody>'+body+'</tbody></table></div></div>';
+}
+
+/* name the cheapest all-in of the row and the gap to the runner-up */
+function cheapest(costs){
+  var live = costs.filter(function(c){ return c; });
+  if(live.length < 2) return '&mdash;';
+  live.sort(function(a,b){ return a.v - b.v; });
+  var d = round2(live[1].v - live[0].v);
+  return (d < 0.005) ? 'even' : ('Offer '+live[0].num+' by '+money(d));
 }
 
 function singleSched(o){
@@ -656,11 +684,10 @@ function schedGroups(){
   while(i < live.length){
     var o = live[i];
     if(schedOf(o)){
+      /* every offer of the same term shares one table — different advances and different
+         cadences included; mergedSched switches to a month axis when the cadences differ. */
       var grp = [o], j = i+1;
-      /* only merge schedules that line up row-for-row: same term, same cadence, same payment count.
-         A monthly 12-payment schedule must never be merged with a weekly 52-payment one. */
-      while(j < live.length && live[j].termLabel === o.termLabel && schedOf(live[j])
-            && fwOf(live[j]) === fwOf(o) && String(live[j].nPay) === String(o.nPay)){ grp.push(live[j]); j++; }
+      while(j < live.length && live[j].termLabel === o.termLabel && schedOf(live[j])){ grp.push(live[j]); j++; }
       out.push(grp); i = j;
     } else { if(o.prepay) out.push([o]); i++; }
   }
@@ -745,43 +772,59 @@ function downloadPDF(){
       return;
     }
     var m0 = model(lead), merged = grp.length > 1;
-    var n = 0; grp.forEach(function(o){ n = Math.max(n, SCHED[o.schedKey].payoff.length); });
+    var aligned = merged && !grp.every(function(o){ return fwOf(o) === fwOf(grp[0]) && String(o.nPay) === String(grp[0].nPay); });
+    var months = Math.round(Number(lead.term)) || 1;
+    var n = aligned ? months : 0;
+    if(!aligned) grp.forEach(function(o){ n = Math.max(n, SCHED[o.schedKey].payoff.length); });
     doc.addPage(); var y2=60;
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text(merged ? (lead.termLabel+" — Early Payoff Comparison — "+money0(m0.advance))
+    doc.text(merged ? (lead.termLabel+" — Early Payoff Comparison")
                     : ("Offer "+lead.num+" — "+lead.termLabel+" — Early Payoff Schedule — "+money0(m0.advance)), L, y2); y2+=14;
     doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(90);
     grp.forEach(function(o){ var m=model(o);
-      doc.text("Offer "+o.num+" ("+o.name+"): "+money0(m.payback)+" payback   "+money(m.weekly)+"/week   "
-        +o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
-    doc.text("All-In Cost = interest paid to that point + the origination fee. Payoff Amount = lump sum due that day.", L, y2); y2+=16;
-    var cols = merged
-      ? [{h:"#",x:L,a:"left"},{h:"Offer "+grp[0].num+" Payoff",x:190,a:"right"},{h:"Offer "+grp[0].num+" All-In",x:280,a:"right"},
-         {h:"Offer "+grp[1].num+" Payoff",x:390,a:"right"},{h:"Offer "+grp[1].num+" All-In",x:478,a:"right"},{h:"Cheaper",x:R,a:"right"}]
-      : [{h:"#",x:L,a:"left"},{h:"Paid to Date",x:240,a:"right"},{h:"Payoff Amount",x:360,a:"right"},
-         {h:"Interest Saved",x:460,a:"right"},{h:"All-In Cost",x:R,a:"right"}];
+      doc.text("Offer "+o.num+" ("+o.name+"): "+money0(m.advance)+" advance   "+money0(m.payback)+" payback   "
+        +money(m.weekly)+"/"+(fwOf(o)==="monthly"?"month":"week")+"   "+o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
+    doc.text("All-In Cost = interest paid to that point + the origination fee. Payoff Amount = lump sum due that day.", L, y2); y2+=11;
+    if(aligned){ doc.text("Rows are months: monthly offers at that month's payment, weekly offers at 4 payments per month; last row = final payment.", L, y2); y2+=11; }
+    y2+=5;
+    var cols, fs;
+    if(merged){
+      fs = grp.length > 2 ? 7 : 8.5;
+      cols = [{h:aligned?"Month":"#",x:L,a:"left"}];
+      var span = (R - 118) / (grp.length*2), x0 = 118;
+      grp.forEach(function(o,gi){
+        cols.push({h:"Offer "+o.num+" Payoff", x:Math.round(x0+span*(gi*2+1)), a:"right"});
+        cols.push({h:"Offer "+o.num+" All-In", x:Math.round(x0+span*(gi*2+2)), a:"right"});
+      });
+      cols[cols.length-1].x = R - 92; cols.push({h:"Cheaper",x:R,a:"right"});
+    } else {
+      fs = 8.5;
+      cols = [{h:"#",x:L,a:"left"},{h:"Paid to Date",x:240,a:"right"},{h:"Payoff Amount",x:360,a:"right"},
+              {h:"Interest Saved",x:460,a:"right"},{h:"All-In Cost",x:R,a:"right"}];
+    }
     function header(){
-      doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20);
+      doc.setFont("helvetica","bold"); doc.setFontSize(Math.min(fs,8)); doc.setTextColor(20);
       cols.forEach(function(c){ doc.text(c.h,c.x,y2,{align:c.a}); });
       y2+=4; doc.setDrawColor(150); doc.line(L,y2,R,y2); y2+=12;
-      doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(45);
+      doc.setFont("helvetica","normal"); doc.setFontSize(fs); doc.setTextColor(45);
     }
     header();
     for(var i=0;i<n;i++){
       if(y2>768){ doc.addPage(); y2=60; header(); }
-      doc.text("#"+(i+1), L, y2);
+      doc.text(aligned ? ("Month "+(i+1)) : ("#"+(i+1)), L, y2);
       if(merged){
         var cs=[];
-        for(var g=0; g<2; g++){
-          var o=grp[g], sc=SCHED[o.schedKey];
-          if(i>=sc.payoff.length){ cs.push(null); doc.text("-", cols[1+g*2].x, y2, {align:"right"}); doc.text("-", cols[2+g*2].x, y2, {align:"right"}); continue; }
-          var c=schedCells(o,i); cs.push(c.allin);
+        for(var g=0; g<grp.length; g++){
+          var o=grp[g], k=schedIdx(o,i,aligned,months);
+          if(k<0){ cs.push(null); doc.text("-", cols[1+g*2].x, y2, {align:"right"}); doc.text("-", cols[2+g*2].x, y2, {align:"right"}); continue; }
+          var c=schedCells(o,k); cs.push({v:c.allin,num:o.num});
           doc.text(money(c.payoff), cols[1+g*2].x, y2, {align:"right"});
           doc.text(money(c.allin),  cols[2+g*2].x, y2, {align:"right"});
         }
-        var t="-";
-        if(cs[0]!==null && cs[1]!==null){ var d=round2(Math.abs(cs[0]-cs[1]));
-          t = (d<0.005) ? "even" : ("Offer "+(cs[0]<cs[1]?grp[0].num:grp[1].num)+" by "+money(d)); }
+        var live=cs.filter(function(x){return x;}), t="-";
+        if(live.length>1){ live.sort(function(a,b){return a.v-b.v;});
+          var d=round2(live[1].v-live[0].v);
+          t = (d<0.005) ? "even" : ("Offer "+live[0].num+" by "+money(d)); }
         doc.text(t, R, y2, {align:"right"});
       } else {
         var c1=schedCells(lead,i);
