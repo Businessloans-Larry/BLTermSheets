@@ -149,6 +149,11 @@ table.prepay tbody tr:last-child td{border-bottom:none;}
 .po-saved{color:var(--green-d);font-weight:600;}
 .po-allin{color:#C0392B;font-weight:700;}
 .po-win{color:var(--green-d);font-weight:700;}
+/* per-term-band indicators (Larry 2026-09-11) */
+.mk{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+.mk-cheap{background:var(--green);color:#05351C;}
+.mk-money{background:var(--gold);color:var(--navy);}
+.offer-chart td.ch-cost{font-weight:700;color:#C0392B;}
 table.prepay thead th.pg-head{background:#00234F;text-align:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-left:1px solid rgba(255,255,255,.22);}
 .prepay-legend{font-size:11.5px;color:var(--slate);margin:-8px 0 12px;line-height:1.5;}
 .closing-note{background:#FFF4D6;border-left:3px solid #C0392B;color:var(--navy);font-size:12.5px;font-weight:700;padding:7px 10px;border-radius:5px;margin:0 0 8px;}
@@ -369,18 +374,18 @@ var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header"
 var OFFERS = [
   /* term asc -> advance -> factor.  Lenders A + C: 4% origination (Larry). Lender B: the funder's own
      listed upfront fees. Lender D: the funder's own O-Fee, $7,500 = 3% on $250,000.
-     Lenders C + D are monthly-pay and cap at $250,000. Lender D's early payoff is a PARTIAL
-     discount schedule (not 100% forgiveness) — hence the different Early Payoff wording. */
+     Lenders C + D are monthly-pay and cap at $250,000. Lender D is quoted as 100% prepay per Larry
+     (2026-09-11); NOTE its embedded D20 schedule is the portal's PARTIAL-discount export. */
   { name:"Lender C", advance:250000, factor:1.26, weekly:26250,    nPay:"12",  term:"12", termLabel:"12-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"C12" },
   { name:"Lender A", advance:500000, factor:1.18, weekly:11346.16, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A12" },
   { name:"Lender B", advance:500000, factor:1.20, weekly:11538.47, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"B12" },
-  { name:"Lender D", advance:250000, factor:1.24, weekly:20666.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"Pay off early &amp; save" },
+  { name:"Lender D", advance:250000, factor:1.24, weekly:20666.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived" },
   { name:"Lender A", advance:500000, factor:1.23, weekly:9609.38,  nPay:"64",  term:"15", termLabel:"15-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A15" },
-  { name:"Lender D", advance:250000, factor:1.27, weekly:17638.89, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"Pay off early &amp; save" },
+  { name:"Lender D", advance:250000, factor:1.27, weekly:17638.89, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived" },
   { name:"Lender C", advance:250000, factor:1.33, weekly:18472.22, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"C18" },
   { name:"Lender A", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A18" },
   { name:"Lender B", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"B18" },
-  { name:"Lender D", advance:250000, factor:1.29, weekly:16125,    nPay:"20",  term:"20", termLabel:"20-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"Pay off early &amp; save", schedKey:"D20" },
+  { name:"Lender D", advance:250000, factor:1.29, weekly:16125,    nPay:"20",  term:"20", termLabel:"20-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"D20" },
   { name:"Lender A", advance:500000, factor:1.31, weekly:7616.28,  nPay:"86",  term:"20", termLabel:"20-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A20" },
   { name:"Lender A", advance:500000, factor:1.34, weekly:6979.17,  nPay:"96",  term:"22", termLabel:"22-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A22" },
   { name:"Lender C", advance:250000, factor:1.36, weekly:14166.67, nPay:"24",  term:"24", termLabel:"24-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"C24" },
@@ -451,6 +456,10 @@ function model(o){
     fee:fee, processing:o.processing, net:net };
 }
 
+/* All-in cost of an offer at the live amount: everything the money costs = interest + fees.
+   Same definition the early-payoff schedules use, so the chart and the schedules agree. */
+function allInCost(o){ var m = model(o); return round2(m.payback + m.fee + m.processing - m.advance); }
+
 function renderOffers(){
   /* SINGLE-TABLE standard (Larry 2026-08-27, validated on lobster-test + multifamily-test):
      3+ offers -> ONE chart, every offer a row, sorted term asc -> advance -> factor, with
@@ -475,6 +484,7 @@ function renderOffers(){
         + procRow
         + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
+        + '<div class="kv-row"><span class="kv-label">All-in cost <span class="kv-note">(interest + fee)</span></span><span class="kv-val">'+money0(allInCost(o))+'</span></div>'
         + '<div class="kv-row kv-pay"><span class="kv-label">'+cap(fw)+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
@@ -486,11 +496,20 @@ function renderOffers(){
   var html = "";
   if(useChart){
     var sorted = LIVEOFF.slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.advance-b.advance) || (a.factor-b.factor); });
+    /* per-term-band indicators (Larry 2026-09-11): cheapest all-in cost, most money deposited,
+       and a marker on the monthly-pay offers. A badge only shows when the band actually varies. */
+    var BAND = {};
+    sorted.forEach(function(o){
+      var m = model(o), c = allInCost(o);
+      var b = BAND[o.termLabel] || (BAND[o.termLabel] = {n:0,minCost:Infinity,maxNet:-Infinity,varCost:false,varNet:false});
+      if(b.n){ if(Math.abs(c-b.minCost)>0.005) b.varCost = true; if(Math.abs(m.net-b.maxNet)>0.005) b.varNet = true; }
+      b.n++; if(c < b.minCost) b.minCost = c; if(m.net > b.maxNet) b.maxNet = m.net;
+    });
     var hasForgive = LIVEOFF.some(function(o){ return o.forgive; });
     var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
     var payHead = allWeekly ? "Weekly Payment" : "Payment";
     /* term sub-category bands (Larry 2026-09-11): heading row above each term-length change */
-    var colspan = 9 + (hasForgive ? 1 : 0); var lastBand = null;
+    var colspan = 10 + (hasForgive ? 1 : 0); var lastBand = null;
     var rows = sorted.map(function(o){
       var band = "";
       if(o.termLabel !== lastBand){ lastBand = o.termLabel;
@@ -500,19 +519,25 @@ function renderOffers(){
       var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
+      var cost = allInCost(o), bd = BAND[o.termLabel], marks = '';
+      if(bd.varCost && Math.abs(cost - bd.minCost) < 0.005) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in cost</span>';
+      if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
+      var freqMark = (o.freq === "monthly") ? '<span class="freq-badge">Monthly</span>' : '';
       return band + '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num
         + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
-        + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
-        + '<td data-label="Lender">'+o.name+recBadge+'</td>'
+        + '<td class="ch-term" data-label="Term">'+o.termLabel+freqMark+'</td>'
+        + '<td data-label="Lender">'+o.name+recBadge+marks+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
         + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
+        + '<td class="ch-cost" data-label="All-In Cost (interest + fee)">'+money0(cost)+'</td>'
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
     var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
-      + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+payHead+'</th>'
+      + '<th>Total Payback<span class="th-note">if not repaid early</span></th>'
+      + '<th>All-In Cost<span class="th-note">interest + fee</span></th><th>'+payHead+'</th>'
       + '<th># Payments</th>'+(hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
     html = rows ? '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'+head+'<tbody>'+rows+'</tbody></table></div></div>' : '';
   } else {
@@ -684,10 +709,11 @@ function schedGroups(){
   while(i < live.length){
     var o = live[i];
     if(schedOf(o)){
-      /* every offer of the same term shares one table — different advances and different
-         cadences included; mergedSched switches to a month axis when the cadences differ. */
+      /* merge by TERM *and* ADVANCE TIER (Larry 2026-09-11: "mixing the 250 and 500 makes zero sense").
+         The $250k offers compare against each other, the $500k offers against each other. */
       var grp = [o], j = i+1;
-      while(j < live.length && live[j].termLabel === o.termLabel && schedOf(live[j])){ grp.push(live[j]); j++; }
+      while(j < live.length && live[j].termLabel === o.termLabel && live[j].advance === o.advance
+            && schedOf(live[j])){ grp.push(live[j]); j++; }
       out.push(grp); i = j;
     } else { if(o.prepay) out.push([o]); i++; }
   }
@@ -723,6 +749,7 @@ function downloadPDF(){
     if(o.processing) rows.push(["Processing fee", money(m.processing)]);
     rows.push(["Net advance (deposited)", money(m.net)]);
     rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
+    rows.push(["All-in cost (interest + fee)", money0(allInCost(o))]);
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" months"]);
