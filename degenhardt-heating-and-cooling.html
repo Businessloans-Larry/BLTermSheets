@@ -308,6 +308,18 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
+    <h3>Lender B &mdash; Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Bank statements &mdash; payback months (can be done with Plaid)</li>
+      <li>Bank verification</li>
+      <li>Current P&amp;L + balance sheet (if over $300,000)</li>
+      <li>Driver's License</li>
+      <li>Zero balance letters from Kapitus &amp; Fora</li>
+      <li>2025 tax return (if over $200,000)</li>
+      <li>Voided check</li>
+    </ul>
+  </div>
+  <div class="closing">
     <h3>Lender C &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Driver's License</li>
@@ -324,18 +336,6 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Voided check</li>
       <li>Documentation confirming the guarantor has been an owner for 3 years</li>
       <li>Most recent tax return</li>
-    </ul>
-  </div>
-  <div class="closing">
-    <h3>Lender B &mdash; Stipulations / Closing Requirements</h3>
-    <ul>
-      <li>Bank statements &mdash; payback months (can be done with Plaid)</li>
-      <li>Bank verification</li>
-      <li>Current P&amp;L + balance sheet (if over $300,000)</li>
-      <li>Driver's License</li>
-      <li>Zero balance letters from Kapitus &amp; Fora</li>
-      <li>2025 tax return (if over $200,000)</li>
-      <li>Voided check</li>
     </ul>
   </div>
   </div>
@@ -462,6 +462,15 @@ function model(o){
    Same definition the early-payoff schedules use, so the chart and the schedules agree. */
 function allInCost(o){ var m = model(o); return round2(m.payback + m.fee + m.processing - m.advance); }
 
+/* All-in RATE: total repaid + fees per $1 advanced (factor + origination). This is what ranks the
+   "Lowest all-in rate" badge — absolute dollar cost would hand it to the smallest advance every time
+   (Larry 2026-09-11). Never DISPLAYED: rates stay off the client sheet. */
+function allInRate(o){
+  var m = model(o);
+  if(!m.advance) return Infinity;
+  return Math.round(((m.payback + m.fee + m.processing) / m.advance) * 1e6) / 1e6;
+}
+
 function renderOffers(){
   /* SINGLE-TABLE standard (Larry 2026-08-27, validated on lobster-test + multifamily-test):
      3+ offers -> ONE chart, every offer a row, sorted term asc -> advance -> factor, with
@@ -502,10 +511,10 @@ function renderOffers(){
        and a marker on the monthly-pay offers. A badge only shows when the band actually varies. */
     var BAND = {};
     sorted.forEach(function(o){
-      var m = model(o), c = allInCost(o);
-      var b = BAND[o.termLabel] || (BAND[o.termLabel] = {n:0,minCost:Infinity,maxNet:-Infinity,varCost:false,varNet:false});
-      if(b.n){ if(Math.abs(c-b.minCost)>0.005) b.varCost = true; if(Math.abs(m.net-b.maxNet)>0.005) b.varNet = true; }
-      b.n++; if(c < b.minCost) b.minCost = c; if(m.net > b.maxNet) b.maxNet = m.net;
+      var m = model(o), r = allInRate(o);
+      var b = BAND[o.termLabel] || (BAND[o.termLabel] = {n:0,minRate:Infinity,maxNet:-Infinity,varRate:false,varNet:false});
+      if(b.n){ if(Math.abs(r-b.minRate)>1e-6) b.varRate = true; if(Math.abs(m.net-b.maxNet)>0.005) b.varNet = true; }
+      b.n++; if(r < b.minRate) b.minRate = r; if(m.net > b.maxNet) b.maxNet = m.net;
     });
     var hasForgive = LIVEOFF.some(function(o){ return o.forgive; });
     var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
@@ -525,7 +534,7 @@ function renderOffers(){
          stay flush right and the badges flow left into the gap under the Term column. */
       var cost = allInCost(o), bd = BAND[o.termLabel], marks = '';
       if(o.freq === "monthly") marks += '<span class="freq-badge">Monthly</span>';
-      if(bd.varCost && Math.abs(cost - bd.minCost) < 0.005) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in cost</span>';
+      if(bd.varRate && Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate</span>';
       if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
       return band + '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num
         + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
@@ -768,6 +777,9 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Signed loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 0059","Additional banking may be required (if the most recent banking is older than 35 days)","Zero balance letter(s) from Kapitus","Proof of business % ownership breakdown - business tax return, detailed articles of","   incorporation/organization, EIN letter, or stock certificate","Reduced document list at or below $500,000"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  ["Bank statements - payback months (can be done with Plaid)","Bank verification","Current P&L + balance sheet (if over $300,000)","Driver's License","Zero balance letters from Kapitus & Fora","2025 tax return (if over $200,000)","Voided check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   doc.text("Lender C — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided business check","Signed contracts","Kapitus zero balance letter"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
@@ -776,9 +788,6 @@ function downloadPDF(){
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["ALSO NEEDED: a completed application from your sister","Signed documents","Voided check","Documentation confirming the guarantor has been an owner for 3 years","Most recent tax return"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Bank statements - payback months (can be done with Plaid)","Bank verification","Current P&L + balance sheet (if over $300,000)","Driver's License","Zero balance letters from Kapitus & Fora","2025 tax return (if over $200,000)","Voided check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
