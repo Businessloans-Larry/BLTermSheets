@@ -302,7 +302,6 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Signed loan agreement</li>
       <li>Valid, US government-issued photo ID</li>
       <li>Voided check for the account ending in 0059</li>
-      <li>Additional banking may be required (if the most recent banking is older than 35 days)</li>
       <li>Zero balance letter(s) from Kapitus</li>
       <li>Proof of business % ownership breakdown &mdash; business tax return, detailed articles of incorporation/organization, EIN letter, or stock certificate</li>
       <li><em>Reduced document list at or below $500,000</em></li>
@@ -743,7 +742,7 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Lender A — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["ALSO NEEDED: a completed application from your sister","Signed loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 0059","Additional banking may be required (if the most recent banking is older than 35 days)","Zero balance letter(s) from Kapitus","Proof of business % ownership breakdown - business tax return, detailed articles of","   incorporation/organization, EIN letter, or stock certificate","Reduced document list at or below $500,000"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["ALSO NEEDED: a completed application from your sister","Signed loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 0059","Zero balance letter(s) from Kapitus","Proof of business % ownership breakdown - business tax return, detailed articles of","   incorporation/organization, EIN letter, or stock certificate","Reduced document list at or below $500,000"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   doc.text("Lender C — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided business check","Signed contracts","Kapitus zero balance letter"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
