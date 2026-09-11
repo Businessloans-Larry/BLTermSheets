@@ -155,7 +155,6 @@ table.prepay tbody tr:last-child td{border-bottom:none;}
 .offer-chart .freq-badge{font-size:9px;letter-spacing:.04em;border-radius:999px;padding:2px 7px;margin:0 6px 0 0;}
 .mk-cheap{background:var(--green);color:#05351C;}
 .mk-money{background:var(--gold);color:var(--navy);}
-.offer-chart td.ch-cost{font-weight:700;color:#C0392B;}
 table.prepay thead th.pg-head{background:#00234F;text-align:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-left:1px solid rgba(255,255,255,.22);}
 .prepay-legend{font-size:11.5px;color:var(--slate);margin:-8px 0 12px;line-height:1.5;}
 .closing-note{background:#FFF4D6;border-left:3px solid #C0392B;color:var(--navy);font-size:12.5px;font-weight:700;padding:7px 10px;border-radius:5px;margin:0 0 8px;}
@@ -428,10 +427,6 @@ function model(o){
     fee:fee, processing:o.processing, net:net };
 }
 
-/* All-in cost of an offer at the live amount: everything the money costs = interest + fees.
-   Same definition the early-payoff schedules use, so the chart and the schedules agree. */
-function allInCost(o){ var m = model(o); return round2(m.payback + m.fee + m.processing - m.advance); }
-
 /* All-in RATE: total repaid + fees per $1 advanced (factor + origination). This is what ranks the
    "Lowest all-in rate" badge — absolute dollar cost would hand it to the smallest advance every time
    (Larry 2026-09-11). Never DISPLAYED: rates stay off the client sheet. */
@@ -465,7 +460,6 @@ function renderOffers(){
         + procRow
         + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
-        + '<div class="kv-row"><span class="kv-label">All-in cost <span class="kv-note">(interest + fee)</span></span><span class="kv-val">'+money0(allInCost(o))+'</span></div>'
         + '<div class="kv-row kv-pay"><span class="kv-label">'+cap(fw)+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
@@ -490,7 +484,7 @@ function renderOffers(){
     var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
     var payHead = allWeekly ? "Weekly Payment" : "Payment";
     /* term sub-category bands (Larry 2026-09-11): heading row above each term-length change */
-    var colspan = 10 + (hasForgive ? 1 : 0); var lastBand = null;
+    var colspan = 9 + (hasForgive ? 1 : 0); var lastBand = null;
     var rows = sorted.map(function(o){
       var band = "";
       if(o.termLabel !== lastBand){ lastBand = o.termLabel;
@@ -502,7 +496,7 @@ function renderOffers(){
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
       /* all markers render BEFORE the lender name; the Lender column is right-aligned, so the names
          stay flush right and the badges flow left into the gap under the Term column. */
-      var cost = allInCost(o), bd = BAND[o.termLabel], marks = '';
+      var bd = BAND[o.termLabel], marks = '';
       if(o.freq === "monthly") marks += '<span class="freq-badge">Monthly</span>';
       if(bd.varRate && Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate</span>';
       if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
@@ -514,13 +508,11 @@ function renderOffers(){
         + '<td data-label="Orig. Fee">'+money(m.fee)+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
-        + '<td class="ch-cost" data-label="All-In Cost (interest + fee)">'+money0(cost)+'</td>'
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
     var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
-      + '<th>Total Payback<span class="th-note">if not repaid early</span></th>'
-      + '<th>All-In Cost<span class="th-note">interest + fee</span></th><th>'+payHead+'</th>'
+      + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+payHead+'</th>'
       + '<th># Payments</th>'+(hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
     html = rows ? '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'+head+'<tbody>'+rows+'</tbody></table></div></div>' : '';
   } else {
@@ -732,7 +724,6 @@ function downloadPDF(){
     if(o.processing) rows.push(["Processing fee", money(m.processing)]);
     rows.push(["Net advance (deposited)", money(m.net)]);
     rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
-    rows.push(["All-in cost (interest + fee)", money0(allInCost(o))]);
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" months"]);
