@@ -156,6 +156,8 @@ table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;
 .offer-chart .freq-badge{font-size:9px;letter-spacing:.04em;border-radius:999px;padding:2px 7px;margin:0 6px 0 0;}
 .mk-cheap{background:var(--green);color:#05351C;}
 .mk-money{background:var(--gold);color:var(--navy);}
+.mk-up{background:var(--cyan);color:#00243B;animation:mkpulse 1.9s ease-in-out infinite;}
+@keyframes mkpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.72;transform:scale(1.06);}}
 table.prepay thead th.pg-head{background:#00234F;text-align:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-left:1px solid rgba(255,255,255,.22);}
 .prepay-legend{font-size:11.5px;color:var(--slate);margin:-8px 0 12px;line-height:1.5;}
 .closing-note{background:#FFF4D6;border-left:3px solid #C0392B;color:var(--navy);font-size:12.5px;font-weight:700;padding:7px 10px;border-radius:5px;margin:0 0 8px;}
@@ -368,10 +370,10 @@ var OFFERS = [
      (2026-09-11); NOTE its embedded D20 schedule is the portal's PARTIAL-discount export. */
   { name:"Lender B", advance:250000, factor:1.26, weekly:26250,    nPay:"12",  term:"12", termLabel:"12-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"B12" },
   { name:"Lender A", advance:500000, factor:1.18, weekly:11346.16, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A12" },
-  { name:"Lender C", advance:250000, factor:1.24, weekly:20666.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived" },
+  { name:"Lender C", advance:400000, factor:1.24, weekly:33066.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", bump:"Increased to $400,000" },
   { name:"Lender A", advance:500000, factor:1.23, weekly:9609.38,  nPay:"64",  term:"15", termLabel:"15-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A15" },
-  { name:"Lender C", advance:250000, factor:1.27, weekly:17638.89, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived" },
   { name:"Lender B", advance:250000, factor:1.33, weekly:18472.22, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"B18" },
+  { name:"Lender C", advance:400000, factor:1.27, weekly:28222.22, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", bump:"Increased to $400,000" },
   { name:"Lender A", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A18" },
   { name:"Lender B", advance:250000, factor:1.36, weekly:14166.67, nPay:"24",  term:"24", termLabel:"24-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", schedKey:"B24" },
   { name:"Lender A", advance:500000, factor:1.37, weekly:6586.54,  nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04,  origLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A24" }
@@ -498,6 +500,7 @@ function renderOffers(){
       /* all markers render BEFORE the lender name; the Lender column is right-aligned, so the names
          stay flush right and the badges flow left into the gap under the Term column. */
       var bd = BAND[o.termLabel], marks = '';
+      if(o.bump) marks += '<span class="mk mk-up">&#8593; '+o.bump+'</span>';
       if(o.freq === "monthly") marks += '<span class="freq-badge">Monthly</span>';
       if(bd.varRate && Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate</span>';
       if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
