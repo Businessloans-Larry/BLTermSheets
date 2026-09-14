@@ -159,6 +159,8 @@ table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;
 .mk-cheap{background:var(--green);color:#05351C;}
 .mk-money{background:var(--gold);color:var(--navy);}
 .was{text-decoration:line-through;color:#9AA3B0;font-weight:400;}
+/* in the chart the old fee stacks ABOVE the new one so the column stays narrow (Larry 2026-09-14) */
+.offer-chart td .was{display:block;font-size:10.5px;line-height:1.2;}
 .mk-up{background:var(--cyan);color:#00243B;animation:mkpulse 1.9s ease-in-out infinite;}
 @keyframes mkpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.72;transform:scale(1.06);}}
 table.prepay thead th.pg-head{background:#00234F;text-align:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-left:1px solid rgba(255,255,255,.22);}
@@ -501,7 +503,7 @@ function renderOffers(){
         + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
         + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
-        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span> ' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span></td>'
+        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span></td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
