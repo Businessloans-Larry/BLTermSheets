@@ -364,12 +364,12 @@ var OFFERS = [
      Lender B: the funder's own O-Fee, $7,500 = 3% on $250,000.
      Lender B is monthly-pay. Lender B is quoted as 100% prepay per Larry
      (2026-09-11); NOTE its embedded D20 schedule is the portal's PARTIAL-discount export. */
-  { name:"Lender A", advance:500000, factor:1.18, weekly:11346.16, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A12" },
+  { name:"Lender A", advance:500000, factor:1.18, weekly:22692.32, nPay:"26",  term:"12", termLabel:"12-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", freq:"biweekly", forgive:"100% of remaining interest waived", schedKey:"A12" },
   { name:"Lender B", advance:400000, factor:1.24, weekly:33066.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", bump:"Increased to $400,000" },
-  { name:"Lender A", advance:500000, factor:1.23, weekly:9609.38,  nPay:"64",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A15" },
+  { name:"Lender A", advance:500000, factor:1.23, weekly:19218.76,  nPay:"32",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", freq:"biweekly", forgive:"100% of remaining interest waived", schedKey:"A15" },
   { name:"Lender B", advance:400000, factor:1.27, weekly:28222.22, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", bump:"Increased to $400,000" },
-  { name:"Lender A", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A18" },
-  { name:"Lender A", advance:500000, factor:1.37, weekly:6586.54,  nPay:"104", term:"24", termLabel:"24-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A24" }
+  { name:"Lender A", advance:500000, factor:1.27, weekly:16282.06,  nPay:"39",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", freq:"biweekly", forgive:"100% of remaining interest waived", schedKey:"A18" },
+  { name:"Lender A", advance:500000, factor:1.37, weekly:13173.08,  nPay:"52", term:"24", termLabel:"24-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", freq:"biweekly", forgive:"100% of remaining interest waived", schedKey:"A24" }
 ];
 
 /* Lender-supplied early-payoff schedules, indexed by payment number, at each offer's full
@@ -377,14 +377,14 @@ var OFFERS = [
    Generator engine (scripts/amortize.sh), driven at a monthly cadence. renderPrepay derives paid-to-date so every row
    reconciles: paid + payoff + saved = total payback. */
 var SCHED = {
-  "A12":{payoff:[491874.61,483696.88,475466.48,467183.06,458846.28,450455.8,442011.27,433512.35,424958.68,416349.91,407685.69,398965.66,390189.46,381356.72,372467.09,363520.19,354515.66,345453.13,336332.22,327152.56,317913.77,308615.47,299257.27,289838.79,280359.64,270819.43,261217.77,251554.26,241828.5,232040.09,222188.63,212273.71,202294.92,192251.85,182144.09,171971.22,161732.82,151428.47,141057.74,130620.21,120115.45,109543.02,98902.49,88193.41,77415.35,66567.86,55650.5,44662.81,33604.35,22474.65,11273.26,0],
-         saved:[86779.23,83610.8,80495.04,77432.3,74422.92,71467.24,68565.61,65718.37,62925.88,60188.49,57506.55,54880.42,52310.46,49797.04,47340.51,44941.25,42599.62,40315.99,38090.74,35924.24,33816.87,31769.01,29781.05,27853.37,25986.36,24180.41,22435.91,20753.26,19132.86,17575.11,16080.41,14649.17,13281.8,11978.71,10740.31,9567.02,8459.26,7417.45,6442.02,5533.39,4691.99,3918.26,3212.63,2575.55,2007.45,1508.78,1079.98,721.51,433.81,217.35,72.58,0]},
-  "A15":{payoff:[493700.46,487359.22,480976.01,474550.54,468082.54,461571.72,455017.8,448420.5,441779.52,435094.58,428365.39,421591.66,414773.09,407909.38,401000.23,394045.35,387044.43,379997.16,372903.24,365762.36,358574.21,351338.48,344054.85,336723.01,329342.63,321913.4,314434.99,306907.07,299329.32,291701.41,284023,276293.76,268513.36,260681.45,252797.7,244861.76,236873.29,228831.94,220737.36,212589.19,204387.08,196130.68,187819.62,179453.55,171032.1,162554.9,154021.58,145431.77,136785.1,128081.19,119319.67,110500.15,101622.25,92685.58,83689.75,74634.37,65519.05,56343.39,47106.99,37809.44,28450.35,19029.3,9545.89,0],
-         saved:[111690.16,108422.02,105195.85,102011.94,98870.56,95772,92716.54,89704.46,86736.06,83811.62,80931.43,78095.78,75304.97,72559.3,69859.07,67204.57,64596.11,62034,59518.54,57050.04,54628.81,52255.16,49929.41,47651.87,45422.87,43242.72,41111.75,39030.29,36998.66,35017.19,33086.22,31206.08,29377.1,27599.63,25874,24200.56,22579.65,21011.62,19496.82,18035.61,16628.34,15275.36,13977.04,12733.73,11545.8,10413.62,9337.56,8317.99,7355.28,6449.81,5601.95,4812.09,4080.61,3407.9,2794.35,2240.35,1746.29,1312.57,939.59,627.76,377.47,189.14,63.17,0]},
-  "A18":{payoff:[495021.78,490012.07,484970.67,479897.38,474791.99,469654.31,464484.13,459281.25,454045.45,448776.54,443474.3,438138.52,432768.98,427365.48,421927.8,416455.72,410949.03,405407.5,399830.92,394219.07,388571.72,382888.64,377169.61,371414.41,365622.8,359794.56,353929.45,348027.24,342087.7,336110.58,330095.65,324042.68,317951.42,311821.63,305653.06,299445.47,293198.62,286912.25,280586.12,274219.97,267813.55,261366.6,254878.87,248350.1,241780.04,235168.42,228514.97,221819.44,215081.55,208301.04,201477.64,194611.08,187701.08,180747.37,173749.68,166707.72,159621.22,152489.89,145313.45,138091.62,130824.1,123510.61,116150.86,108744.56,101291.41,93791.11,86243.37,78647.88,71004.35,63312.47,55571.93,47782.43,39943.65,32055.29,24117.03,16128.55,8089.54,0],
-         saved:[131837.19,128705.87,125606.24,122538.5,119502.86,116499.51,113528.66,110590.51,107685.28,104813.16,101974.37,99169.12,96397.63,93660.1,90956.75,88287.8,85653.46,83053.96,80489.51,77960.33,75466.65,73008.7,70586.7,68200.87,65851.45,63538.66,61262.74,59023.92,56822.43,54658.52,52532.42,50444.36,48394.59,46383.35,44410.89,42477.45,40583.27,38728.61,36913.71,35138.83,33404.22,31710.14,30056.84,28444.58,26873.61,25344.2,23856.62,22411.12,21007.98,19647.46,18329.83,17055.36,15824.33,14637.01,13493.67,12394.6,11340.07,10330.37,9365.78,8446.58,7573.07,6745.53,5964.25,5229.52,4541.64,3900.91,3307.62,2762.08,2264.58,1815.43,1414.94,1063.41,761.16,508.49,305.72,153.17,51.15,0]},
-  "A24":{payoff:[496593.62,493165.58,489715.74,486243.95,482750.08,479233.99,475695.54,472134.58,468550.97,464944.57,461315.23,457662.81,453987.16,450288.13,446565.57,442819.33,439049.27,435255.23,431437.06,427594.6,423727.7,419836.21,415919.97,411978.82,408012.6,404021.15,400004.32,395961.94,391893.85,387799.88,383679.87,379533.66,375361.08,371161.96,366936.13,362683.42,358403.67,354096.7,349762.33,345400.39,341010.71,336593.11,332147.41,327673.44,323171.01,318639.94,314080.05,309491.16,304873.09,300225.64,295548.63,290841.88,286105.19,281338.37,276541.23,271713.58,266855.23,261965.98,257045.63,252093.98,247110.84,242096.01,237049.28,231970.45,226859.32,221715.68,216539.32,211330.04,206087.63,200811.88,195502.57,190159.49,184782.43,179371.17,173925.49,168445.17,162930,157379.75,151794.2,146173.12,140516.29,134823.48,129094.46,123329,117526.87,111687.84,105811.67,99898.13,93946.97,87957.96,81930.86,75865.43,69761.42,63618.59,57436.69,51215.47,44954.68,38654.07,32313.38,25932.36,19510.76,13048.31,6544.76,0],
-         saved:[181819.84,178661.34,175524.64,172409.89,169317.22,166246.77,163198.68,160173.1,157170.17,154190.03,151232.83,148298.71,145387.82,142500.31,139636.33,136796.03,133979.55,131187.05,128418.68,125674.6,122954.96,120259.91,117589.61,114944.22,112323.9,109728.81,107159.1,104614.94,102096.49,99603.92,97137.39,94697.06,92283.1,89895.68,87534.97,85201.14,82894.35,80614.78,78362.61,76138.01,73941.15,71772.21,69631.37,67518.8,65434.69,63379.22,61352.57,59354.92,57386.45,55447.36,53537.83,51658.04,49808.19,47988.47,46199.07,44440.18,42711.99,41014.7,39348.51,37713.62,36110.22,34538.51,32998.7,31490.99,30015.58,28572.68,27162.5,25785.24,24441.11,23130.32,21853.09,20609.63,19400.15,18224.87,17084.01,15977.79,14906.42,13870.13,12869.14,11903.68,10973.97,10080.24,9222.72,8401.64,7617.23,6869.72,6159.35,5486.35,4850.97,4253.44,3694,3172.89,2690.36,2246.65,1842.01,1476.69,1150.94,865.01,619.16,413.64,248.7,124.61,41.62,0]}
+  "A12":{payoff:[483696.88,467183.06,450455.8,433512.35,416349.91,398965.66,381356.72,363520.19,345453.13,327152.56,308615.47,289838.79,270819.43,251554.26,232040.09,212273.71,192251.85,171971.22,151428.47,130620.21,109543.02,88193.41,66567.86,44662.81,22474.65,0],
+         saved:[83610.8,77432.3,71467.24,65718.37,60188.49,54880.42,49797.04,44941.25,40315.99,35924.24,31769.01,27853.37,24180.41,20753.26,17575.11,14649.17,11978.71,9567.02,7417.45,5533.39,3918.26,2575.55,1508.78,721.51,217.35,0]},
+  "A15":{payoff:[487359.22,474550.54,461571.72,448420.5,435094.58,421591.66,407909.38,394045.35,379997.16,365762.36,351338.48,336723.01,321913.4,306907.07,291701.41,276293.76,260681.45,244861.76,228831.94,212589.19,196130.68,179453.55,162554.9,145431.77,128081.19,110500.15,92685.58,74634.37,56343.39,37809.44,19029.3,0],
+         saved:[108422.02,102011.94,95772,89704.46,83811.62,78095.78,72559.3,67204.57,62034,57050.04,52255.16,47651.87,43242.72,39030.29,35017.19,31206.08,27599.63,24200.56,21011.62,18035.61,15275.36,12733.73,10413.62,8317.99,6449.81,4812.09,3407.9,2240.35,1312.57,627.76,189.14,0]},
+  "A18":{payoff:[490012.07,479897.38,469654.31,459281.25,448776.54,438138.52,427365.48,416455.72,405407.5,394219.07,382888.64,371414.41,359794.56,348027.24,336110.58,324042.68,311821.63,299445.47,286912.25,274219.97,261366.6,248350.1,235168.42,221819.44,208301.04,194611.08,180747.37,166707.72,152489.89,138091.62,123510.61,108744.56,93791.11,78647.88,63312.47,47782.43,32055.29,16128.55,0],
+         saved:[128705.87,122538.5,116499.51,110590.51,104813.16,99169.12,93660.1,88287.8,83053.96,77960.33,73008.7,68200.87,63538.66,59023.92,54658.52,50444.36,46383.35,42477.45,38728.61,35138.83,31710.14,28444.58,25344.2,22411.12,19647.46,17055.36,14637.01,12394.6,10330.37,8446.58,6745.53,5229.52,3900.91,2762.08,1815.43,1063.41,508.49,153.17,0]},
+  "A24":{payoff:[493165.58,486243.95,479233.99,472134.58,464944.57,457662.81,450288.13,442819.33,435255.23,427594.6,419836.21,411978.82,404021.15,395961.94,387799.88,379533.66,371161.96,362683.42,354096.7,345400.39,336593.11,327673.44,318639.94,309491.16,300225.64,290841.88,281338.37,271713.58,261965.98,252093.98,242096.01,231970.45,221715.68,211330.04,200811.88,190159.49,179371.17,168445.17,157379.75,146173.12,134823.48,123329,111687.84,99898.13,87957.96,75865.43,63618.59,51215.47,38654.07,25932.36,13048.31,0],
+         saved:[178661.34,172409.89,166246.77,160173.1,154190.03,148298.71,142500.31,136796.03,131187.05,125674.6,120259.91,114944.22,109728.81,104614.94,99603.92,94697.06,89895.68,85201.14,80614.78,76138.01,71772.21,67518.8,63379.22,59354.92,55447.36,51658.04,47988.47,44440.18,41014.7,37713.62,34538.51,31490.99,28572.68,25785.24,23130.32,20609.63,18224.87,15977.79,13870.13,11903.68,10080.24,8401.64,6869.72,5486.35,4253.44,3172.89,2246.65,1476.69,865.01,413.64,124.61,0]}
 };
 
 /* number offers in array order — shown in each card's title */
@@ -404,7 +404,10 @@ function round2(x){ return Math.round((x + Number.EPSILON)*100)/100; }
 function money(x){ return "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function money0(x){ return "$" + Math.round(Number(x)).toLocaleString("en-US"); }
 
-function fwOf(o){ return (o.freq === "monthly") ? "monthly" : "weekly"; }
+var FREQW = { monthly:{word:"monthly", each:"month"}, biweekly:{word:"bi-weekly", each:"2 weeks"},
+              weekly:{word:"weekly", each:"week"} };
+function fwOf(o){ return FREQW[o.freq] ? FREQW[o.freq].word : "weekly"; }
+function eachOf(o){ return FREQW[o.freq] ? FREQW[o.freq].each : "week"; }
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 
 function model(o){
@@ -440,7 +443,7 @@ function renderOffers(){
     var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
     var procRow = o.processing ? '<div class="kv-row kv-fee"><span class="kv-label">Processing fee</span><span class="kv-val">'+money(o.processing)+'</span></div>' : '';
     var fgRow = o.forgive ? '<div class="kv-row"><span class="kv-label">Early-payoff interest forgiveness</span><span class="kv-val">'+o.forgive+'</span></div>' : '';
-    var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
+    var badge = (o.freq && o.freq !== "weekly") ? '<span class="freq-badge">'+cap(fwOf(o))+'</span>' : '';
     var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
     return '<div class="offer-card'+(o.rec?' rec':'')+'">'
       + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+' &middot; '+o.position+' Position &middot; '+fw+'</div></div>'
@@ -471,15 +474,16 @@ function renderOffers(){
       b.n++; if(r < b.minRate) b.minRate = r; if(m.net > b.maxNet) b.maxNet = m.net;
     });
     var hasForgive = LIVEOFF.some(function(o){ return o.forgive; });
-    var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
-    var payHead = allWeekly ? "Weekly Payment" : "Payment";
+    var freqs = {}; LIVEOFF.forEach(function(o){ freqs[fwOf(o)] = 1; });
+    var only = Object.keys(freqs);
+    var payHead = (only.length === 1) ? (cap(only[0]) + " Payment") : "Payment";
     /* term sub-category bands (Larry 2026-09-11): heading row above each term-length change */
     var colspan = 9 + (hasForgive ? 1 : 0); var lastBand = null;
     var rows = sorted.map(function(o){
       var band = "";
       if(o.termLabel !== lastBand){ lastBand = o.termLabel;
         band = '<tr class="ch-band"><td colspan="'+colspan+'">'+o.termLabel+' Term</td></tr>'; }
-      var m = model(o); var fw = (o.freq === "monthly") ? "monthly" : "weekly";
+      var m = model(o); var fw = fwOf(o);
       var capTag = m.capped ? '<span class="cap-badge cap-pre">max</span>' : '';
       var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
@@ -488,7 +492,7 @@ function renderOffers(){
          stay flush right and the badges flow left into the gap under the Term column. */
       var bd = BAND[o.termLabel], marks = '';
       if(o.bump) marks += '<span class="mk mk-up">&#8593; '+o.bump+'</span>';
-      if(o.freq === "monthly") marks += '<span class="freq-badge">Monthly</span>';
+      if(o.freq && o.freq !== "weekly") marks += '<span class="freq-badge">'+cap(fwOf(o))+'</span>';
       /* shown in EVERY band, single-offer bands included (Larry 2026-09-14) */
       if(Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate<span class="mk-sub">for this term length</span></span>';
       if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
@@ -566,7 +570,7 @@ function schedCells(o, i){
 }
 function schedHead(o){ var m=model(o);
   return '<b>Offer '+o.num+'</b> ('+o.name+'): '+money0(m.advance)+' advance &middot; '+money0(m.payback)+' payback &middot; '
-    + money(m.weekly)+'/'+(fwOf(o)==="monthly"?"month":"week")+' &middot; '+o.nPay+' payments &middot; '+money(m.fee)+' fee'; }
+    + money(m.weekly)+' per '+eachOf(o)+' &middot; '+o.nPay+' payments &middot; '+money(m.fee)+' fee'; }
 
 /* Row index for one offer in a merged table.
    aligned=false -> rows ARE payment numbers (every offer in the group bills the same way).
@@ -578,7 +582,7 @@ function schedIdx(o, i, aligned, months){
   if(!aligned) return i < n ? i : -1;
   var m = i + 1;
   if(m >= months) return n - 1;
-  var k = (fwOf(o) === "monthly") ? m : 4*m;
+  var k = (o.freq === "monthly") ? m : (o.freq === "biweekly" ? 2*m : 4*m);
   return k <= n ? k - 1 : n - 1;
 }
 
@@ -719,7 +723,7 @@ function downloadPDF(){
     rows.push(["Net advance (deposited)", money(m.net)]);
     rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
     rows.push(["Weekly payment", money(m.weekly)]);
-    rows.push(["Number of payments", o.nPay+" weekly"]);
+    rows.push(["Number of payments", o.nPay+" "+fwOf(o)]);
     rows.push(["Term", o.term+" months"]);
     rows.push(["Position", o.position]);
     if(o.forgive) rows.push(["Early payoff", o.forgive]);
@@ -744,7 +748,7 @@ function downloadPDF(){
       doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
       doc.text("Offer "+o.num+" — "+o.termLabel+" — Early Payoff Schedule — "+money0(m.advance), L, yy); yy+=15;
       doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
-      doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+"/week   "+o.nPay+" weekly payments", L, yy); yy+=20;
+      doc.text("Total payback "+money0(m.payback)+"   "+money(m.weekly)+" per "+eachOf(o)+"   "+o.nPay+" "+fwOf(o)+" payments", L, yy); yy+=20;
       var ch=[{h:"Pay off within (days)",x:L,a:"left"},{h:"Total Payoff",x:360,a:"right"},{h:"Interest Saved",x:R,a:"right"}];
       doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
       ch.forEach(function(c){ doc.text(c.h,c.x,yy,{align:c.a}); });
@@ -771,7 +775,7 @@ function downloadPDF(){
     doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(90);
     grp.forEach(function(o){ var m=model(o);
       doc.text("Offer "+o.num+" ("+o.name+"): "+money0(m.advance)+" advance   "+money0(m.payback)+" payback   "
-        +money(m.weekly)+"/"+(fwOf(o)==="monthly"?"month":"week")+"   "+o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
+        +money(m.weekly)+" per "+eachOf(o)+"   "+o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
     doc.text("Payoff Amount = lump sum due that day. Total Repayment = everything repaid if you pay off at that point.", L, y2); y2+=11;
     if(aligned){ doc.text("Rows are months: monthly offers at that month's payment, weekly offers at 4 payments per month; last row = final payment.", L, y2); y2+=11; }
     y2+=5;
