@@ -155,6 +155,8 @@ table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;
 .mk-sub{display:block;font-size:7.5px;font-weight:700;letter-spacing:.02em;text-transform:none;opacity:.82;line-height:1.15;margin-top:-1px;}
 .pct{font-size:10.5px;font-weight:600;color:var(--slate);}
 .was{text-decoration:line-through;color:#9AA3B0;font-weight:400;}
+/* reduced figures stack ABOVE the new one so columns stay narrow (Larry 2026-09-14) */
+.offer-chart td .was{display:block;font-size:10.5px;line-height:1.2;font-weight:400;}
 .mk-up{background:var(--cyan);color:#00243B;animation:mkpulse 1.9s ease-in-out infinite;}
 @keyframes mkpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.72;transform:scale(1.06);}}
 /* every marker sits to the LEFT of the lender name so the names stay flush right (Larry 2026-09-11) */
@@ -356,27 +358,20 @@ var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header"
    same two shapes. Factors carry 6 decimals only so each payback matches the funder's figure
    to the dollar at the full advance; the weekly is the funder's Fixed Amount verbatim. */
 var OFFERS = [
-  { name:"Kapitus", advance:250000, factor:1.257004, weekly:8064.00, nPay:"39", term:"9", termLabel:"9-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
+  { name:"Kapitus", advance:164000, factor:1.169, weekly:7380.00, nPay:"26", term:"6", termLabel:"6-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
     forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:250000, factor:1.277004, weekly:8193.00, nPay:"39", term:"9", termLabel:"9-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"100% of remaining interest waived" },
-  { name:"Kapitus", advance:250000, factor:1.287004, weekly:6193.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:250000, factor:1.307004, weekly:6289.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"100% of remaining interest waived" },
-  { name:"Kapitus", advance:250000, factor:1.386004, weekly:5335.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:250000, factor:1.406004, weekly:5412.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"100% of remaining interest waived" },
-  { name:"Kapitus", advance:250000, factor:1.406004, weekly:5074.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:250000, factor:1.426004, weekly:5146.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
-    forgive:"100% of remaining interest waived" },
-  { name:"OnDeck", advance:189000, factor:1.395, weekly:2535.14, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st",
-    forgive:"Pay off early &amp; save" },
-  { name:"OnDeck", advance:189000, factor:1.442, weekly:2620.56, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st",
-    forgive:"100% of remaining interest waived" }
+  { name:"Kapitus", advance:250000, factor:1.198, weekly:7686.00, nPay:"39", term:"9", termLabel:"9-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
+    forgive:"Pay off early &amp; save", old:{ factor:1.257004, weekly:8064.00 } },
+  { name:"Kapitus", advance:250000, factor:1.248, weekly:6005.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
+    forgive:"Pay off early &amp; save", old:{ factor:1.287004, weekly:6193.00 } },
+  { name:"Kapitus", advance:250000, factor:1.316, weekly:5066.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
+    forgive:"Pay off early &amp; save", old:{ factor:1.386004, weekly:5335.00 } },
+  { name:"Kapitus", advance:250000, factor:1.336, weekly:4822.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st",
+    forgive:"Pay off early &amp; save", old:{ factor:1.406004, weekly:5074.00 } },
+  { name:"OnDeck", advance:189000, factor:1.355, weekly:2462.45, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st",
+    forgive:"Pay off early &amp; save", old:{ factor:1.395, weekly:2535.14 } }
 ];
+
 
 /* number offers in array order — shown in each card's title */
 (function(){var n=0;OFFERS.forEach(function(o){o.num=++n;});})();
@@ -405,6 +400,8 @@ function model(o){
   var net = round2(adv - fee - o.processing);
   return { advance:adv, capped:STATE.requested > o.advance, s:s,
     payback:round2(adv*o.factor), weekly:round2(o.weekly*s),
+    oldPayback:(o.old && o.old.factor ? round2(adv*o.old.factor) : 0),
+    oldWeekly:(o.old && o.old.weekly ? round2(o.old.weekly*s) : 0),
     fee:fee, oldFee:(o.oldOrigPct ? round2(adv*o.oldOrigPct) : 0), processing:o.processing, net:net };
 }
 
@@ -440,7 +437,7 @@ function renderOffers(){
         + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+'</span> ' : '')+money(m.fee)+'</span></div>'
         + procRow
         + '<div class="kv-row kv-net"><span class="kv-label">Net advance (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
+        + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+(m.oldPayback ? '<span class="was">'+money0(m.oldPayback)+'</span> ' : '')+money0(m.payback)+'</span></div>'
         + '<div class="kv-row kv-pay"><span class="kv-label">'+cap(fw)+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>'
@@ -490,8 +487,8 @@ function renderOffers(){
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
         + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span> ' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span></td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
-        + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
-        + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
+        + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+(m.oldPayback ? '<span class="was">'+money0(m.oldPayback)+'</span>' : '')+money0(m.payback)+'</td>'
+        + '<td class="ch-pay" data-label="'+payHead+'">'+(m.oldWeekly ? '<span class="was">'+money(m.oldWeekly)+'</span>' : '')+money(m.weekly)+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
     var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
@@ -708,8 +705,8 @@ function downloadPDF(){
       ["Origination fee ("+o.origLabel+")", (m.oldFee ? money(m.oldFee)+" -> " : "")+money(m.fee)]];
     if(o.processing) rows.push(["Processing fee", money(m.processing)]);
     rows.push(["Net advance (deposited)", money(m.net)]);
-    rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
-    rows.push(["Weekly payment", money(m.weekly)]);
+    rows.push(["Total payback (if not repaid early)", (m.oldPayback ? money0(m.oldPayback)+" -> " : "")+money0(m.payback)]);
+    rows.push(["Weekly payment", (m.oldWeekly ? money(m.oldWeekly)+" -> " : "")+money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Term", o.term+" months"]);
     rows.push(["Position", o.position]);
