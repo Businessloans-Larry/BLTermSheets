@@ -311,7 +311,6 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Signed loan agreement</li>
       <li>Valid, US government-issued photo ID</li>
       <li>Voided check for the account ending in 0059</li>
-      <li>Zero balance letter(s) from Kapitus</li>
       <li>Proof of business % ownership breakdown &mdash; business tax return, detailed articles of incorporation/organization, EIN letter, or stock certificate</li>
       <li><em>Reduced document list at or below $500,000</em></li>
     </ul>
@@ -738,7 +737,7 @@ function downloadPDF(){
     y+=14;
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
-  [["Lender A", ["ALSO NEEDED: a completed application from your sister","WE WILL REIMBURSE 1% of the origination fee after closing, so your effective cost matches","   the 3% on the $400,000 offer","Signed loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 0059","Zero balance letter(s) from Kapitus","Proof of business % ownership breakdown - business tax return, detailed articles of","   incorporation/organization, EIN letter, or stock certificate","Reduced document list at or below $500,000"]],
+  [["Lender A", ["ALSO NEEDED: a completed application from your sister","WE WILL REIMBURSE 1% of the origination fee after closing, so your effective cost matches","   the 3% on the $400,000 offer","Signed loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 0059","Proof of business % ownership breakdown - business tax return, detailed articles of","   incorporation/organization, EIN letter, or stock certificate","Reduced document list at or below $500,000"]],
    ["Lender B", ["ALSO NEEDED: a completed application from your sister","Signed documents","Voided check","Documentation confirming the guarantor has been an owner for 3 years","Most recent tax return"]]].forEach(function(g,gi){
     if(gi) y+=8;
     if(y>760){ doc.addPage(); y=60; }
