@@ -301,12 +301,12 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div class="closing-grid">
   <div class="closing">
     <h3>Kapitus &mdash; Stipulations / Closing Requirements</h3>
-    <div class="closing-note closing-note-good">The PayPal payoff letter is the one open item &mdash; <b>I am working on getting that stip waived</b> and will confirm before closing.</div>
+    <div class="closing-note closing-note-good">The PayPal zero balance letter is the one open item &mdash; <b>I am working on getting that stip waived</b> and will confirm before closing.</div>
     <ul>
       <li>DecisionLogic bank verification</li>
       <li>Voided check &mdash; account ending 5197</li>
       <li>Driver&rsquo;s license / photo ID</li>
-      <li>Payoff letter &mdash; PayPal</li>
+      <li>PayPal zero balance letter</li>
       <li>Signed payment authorization</li>
       <li>Mobile phone number</li>
     </ul>
@@ -720,7 +720,7 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Kapitus — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["WORKING ON WAIVING the PayPal payoff letter - will confirm before closing","DecisionLogic bank verification","Voided check - account ending 5197","Driver's license / photo ID","Payoff letter - PayPal","Signed payment authorization","Mobile phone number"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["WORKING ON WAIVING the PayPal zero balance letter - will confirm before closing","DecisionLogic bank verification","Voided check - account ending 5197","Driver's license / photo ID","PayPal zero balance letter","Signed payment authorization","Mobile phone number"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("OnDeck — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
