@@ -151,7 +151,9 @@ table.prepay tbody tr:last-child td{border-bottom:none;}
 table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;text-transform:none;letter-spacing:0;line-height:1.15;}
 .po-win{color:var(--green-d);font-weight:700;}
 /* per-term-band indicators (Larry 2026-09-11) */
-.mk{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin:0 6px 0 0;vertical-align:middle;white-space:nowrap;}
+.mk{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin:0 6px 0 0;vertical-align:middle;white-space:nowrap;text-align:center;}
+.mk-sub{display:block;font-size:7.5px;font-weight:700;letter-spacing:.02em;text-transform:none;opacity:.82;line-height:1.15;margin-top:-1px;}
+.pct{font-size:10.5px;font-weight:600;color:var(--slate);}
 /* every marker sits to the LEFT of the lender name so the names stay flush right (Larry 2026-09-11) */
 .offer-chart .freq-badge{font-size:9px;letter-spacing:.04em;border-radius:999px;padding:2px 7px;margin:0 6px 0 0;}
 .mk-cheap{background:var(--green);color:#05351C;}
@@ -362,12 +364,12 @@ var OFFERS = [
      Lender B: the funder's own O-Fee, $7,500 = 3% on $250,000.
      Lender B is monthly-pay. Lender B is quoted as 100% prepay per Larry
      (2026-09-11); NOTE its embedded D20 schedule is the portal's PARTIAL-discount export. */
-  { name:"Lender A", advance:500000, factor:1.18, weekly:11346.16, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04,   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A12" },
+  { name:"Lender A", advance:500000, factor:1.18, weekly:11346.16, nPay:"52",  term:"12", termLabel:"12-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A12" },
   { name:"Lender B", advance:400000, factor:1.24, weekly:33066.67, nPay:"15",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", bump:"Increased to $400,000" },
-  { name:"Lender A", advance:500000, factor:1.23, weekly:9609.38,  nPay:"64",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04,   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A15" },
+  { name:"Lender A", advance:500000, factor:1.23, weekly:9609.38,  nPay:"64",  term:"15", termLabel:"15-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A15" },
   { name:"Lender B", advance:400000, factor:1.27, weekly:28222.22, nPay:"18",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%",   processing:0, position:"1st", freq:"monthly", forgive:"100% of remaining interest waived", bump:"Increased to $400,000" },
-  { name:"Lender A", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04,   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A18" },
-  { name:"Lender A", advance:500000, factor:1.37, weekly:6586.54,  nPay:"104", term:"24", termLabel:"24-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04,   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A24" }
+  { name:"Lender A", advance:500000, factor:1.27, weekly:8141.03,  nPay:"78",  term:"18", termLabel:"18-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A18" },
+  { name:"Lender A", advance:500000, factor:1.37, weekly:6586.54,  nPay:"104", term:"24", termLabel:"24-Month", origPct:0.03,  origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%",   processing:0, position:"1st", forgive:"100% of remaining interest waived", schedKey:"A24" }
 ];
 
 /* Lender-supplied early-payoff schedules, indexed by payment number, at each offer's full
@@ -487,14 +489,15 @@ function renderOffers(){
       var bd = BAND[o.termLabel], marks = '';
       if(o.bump) marks += '<span class="mk mk-up">&#8593; '+o.bump+'</span>';
       if(o.freq === "monthly") marks += '<span class="freq-badge">Monthly</span>';
-      if(bd.varRate && Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate</span>';
+      /* shown in EVERY band, single-offer bands included (Larry 2026-09-14) */
+      if(Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate<span class="mk-sub">for this term length</span></span>';
       if(bd.varNet && Math.abs(m.net - bd.maxNet) < 0.005) marks += '<span class="mk mk-money">&#128176; Most money</span>';
       return band + '<tr'+(o.rec?' class="ch-rec"':'')+'><td class="ch-num" data-label="Offer">'+star+o.num
         + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
         + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
         + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
-        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+'</span> ' : '')+money(m.fee)+'</td>'
+        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span> ' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span></td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
