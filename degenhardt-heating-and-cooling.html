@@ -570,8 +570,13 @@ function schedCells(o, i){
            allin: round2(paid + payoff + m.fee + m.processing - m.advance) }; /* ranking only — never displayed */
 }
 function schedHead(o){ var m=model(o);
-  return '<b>Offer '+o.num+'</b> ('+o.name+'): '+money0(m.advance)+' advance &middot; '+money0(m.payback)+' payback &middot; '
+  return '<b>Offer '+o.num+'</b> ('+o.name+' &middot; '+o.termLabel+'): '+money0(m.advance)+' advance &middot; '+money0(m.payback)+' payback &middot; '
     + money(m.weekly)+' per '+eachOf(o)+' &middot; '+o.nPay+' payments &middot; '+money(m.fee)+' fee'; }
+
+/* What one schedule ROW means for an offer. A bi-weekly draft still publishes a weekly
+   schedule, so only a monthly offer is on a different clock. Two offers whose rows mean the
+   same thing line up row-for-row; otherwise the merged table falls back to a month axis. */
+function schedRowUnit(o){ return (o.freq === "monthly") ? "monthly" : "weekly"; }
 
 /* Row index for one offer in a merged table.
    aligned=false -> rows ARE payment numbers (every offer in the group bills the same way).
@@ -591,16 +596,20 @@ function mergedSched(grp){
   /* offers of the SAME TERM share one comparison table, whatever their advance or cadence
      (Larry 2026-09-11: "put the 250k offers together ... when the term lengths match too").
      Mixed cadences can't be lined up payment-for-payment, so those tables switch to a MONTH axis. */
-  var aligned = !grp.every(function(o){ return fwOf(o) === fwOf(grp[0]) && String(o.nPay) === String(grp[0].nPay); });
-  var months = Math.round(Number(grp[0].term)) || 1;
+  var aligned = !grp.every(function(o){ return schedRowUnit(o) === schedRowUnit(grp[0]); });
+  var months = Math.round(Number(grp[grp.length-1].term)) || 1;
+  var sameTerm = grp.every(function(o){ return o.termLabel === grp[0].termLabel; });
+  var sameName = grp.every(function(o){ return o.name === grp[0].name; });
   var rowsN = aligned ? months : 0;
   if(!aligned) grp.forEach(function(o){ rowsN = Math.max(rowsN, SCHED[o.schedKey].payoff.length); });
   var advs = grp.map(function(o){ return model(o).advance; });
   var sameAdv = advs.every(function(a){ return a === advs[0]; });
-  var rowLabel = aligned ? "Pay off after month" : "Pay off after payment";
+  var unit = schedUnit(grp[0]);
+  var rowLabel = aligned ? "Pay off after month" : ("Pay off after " + unit);
+  var heading = sameTerm ? grp[0].termLabel : (sameName ? grp[0].name : "All Terms");
 
   var h = '<div class="prepay-section">'
-    + '<div class="prepay-head"><h2 class="prepay-title">'+grp[0].termLabel+' &mdash; Early Payoff Comparison'
+    + '<div class="prepay-head"><h2 class="prepay-title">'+heading+' &mdash; Early Payoff Comparison'
     + (sameAdv ? ' &mdash; '+money0(advs[0]) : '')+'</h2></div>'
     + '<div class="prepay-recap">'+grp.map(schedHead).join('<br/>')+'</div>'
     + '<div class="prepay-legend"><b>Payoff Amount</b> = the lump sum to close it out that day. <b>Total Repayment</b> = everything you will have repaid if you pay off at that point. <b>Cheaper all-in</b> compares total repayment plus each offer&rsquo;s origination fee.'
@@ -608,13 +617,13 @@ function mergedSched(grp){
     + '</div>';
 
   var gh = '<tr><th rowspan="2">'+rowLabel+'</th>'
-    + grp.map(function(o){ return '<th class="pg-head" colspan="2">Offer '+o.num+' &middot; '+o.name+'</th>'; }).join('')
+    + grp.map(function(o){ return '<th class="pg-head" colspan="2">Offer '+o.num+' &middot; '+(sameTerm ? o.name : o.termLabel)+'</th>'; }).join('')
     + '<th rowspan="2">Cheaper all-in</th></tr>';
   var sh = '<tr>'+grp.map(function(){ return '<th>Payoff Amount</th><th>Total Repayment<span class="th-note">if paid off at that point</span></th>'; }).join('')+'</tr>';
 
   var body = '';
   for(var i=0;i<rowsN;i++){
-    body += '<tr><td data-label="'+rowLabel+'">'+(aligned ? 'Month '+(i+1) : '#'+(i+1))+'</td>';
+    body += '<tr><td data-label="'+rowLabel+'">'+(aligned ? 'Month ' : (unit === "week" ? 'Week ' : '#'))+(i+1)+'</td>';
     var costs = [];
     for(var g=0; g<grp.length; g++){
       var o = grp[g], k = schedIdx(o, i, aligned, months);
@@ -680,18 +689,29 @@ function daySched(o){
 
 /* group the live offers: consecutive same-term offers that both carry a lender schedule
    merge into one comparison table; everything else renders on its own. */
+/* Force specific offers into ONE comparison table regardless of term — e.g. [[1,3,5,6]] puts every
+   Mulligan schedule side by side so the merchant can compare terms at the same week. Empty = the
+   default rule only (same term + same advance tier). */
+var MERGE_GROUPS = [[1, 3, 5, 6]];  /* all four Lender A schedules in one table (Larry 2026-09-15) */
 function schedGroups(){
   var live = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); })
                    .slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.num-b.num); });
-  var out = [], i = 0;
+  var forced = {};
+  MERGE_GROUPS.forEach(function(g,gi){ g.forEach(function(n){ forced[n] = gi; }); });
+  var out = [], bag = {}, i = 0;
   while(i < live.length){
     var o = live[i];
     if(schedOf(o)){
-      /* merge by TERM *and* ADVANCE TIER (Larry 2026-09-11: "mixing the 250 and 500 makes zero sense").
-         The $250k offers compare against each other, the $500k offers against each other. */
+      if(forced[o.num] !== undefined){
+        var gi = forced[o.num];
+        if(!bag[gi]){ bag[gi] = []; out.push(bag[gi]); }
+        bag[gi].push(o); i++; continue;
+      }
+      /* default: merge by TERM *and* ADVANCE TIER (Larry 2026-09-11: "mixing the 250 and 500
+         makes zero sense"). The $250k offers compare against each other, the $500k against each other. */
       var grp = [o], j = i+1;
       while(j < live.length && live[j].termLabel === o.termLabel && live[j].advance === o.advance
-            && schedOf(live[j])){ grp.push(live[j]); j++; }
+            && schedOf(live[j]) && forced[live[j].num] === undefined){ grp.push(live[j]); j++; }
       out.push(grp); i = j;
     } else { if(o.prepay) out.push([o]); i++; }
   }
@@ -789,6 +809,7 @@ function downloadPDF(){
     if(merged){
       fs = grp.length > 2 ? 7 : 8.5;
       cols = [{h:aligned?"Month":(schedUnit(lead)==="week"?"Week":"#"),x:L,a:"left"}];
+      if(grp.length > 3) fs = 6.2;
       var span = (R - 118) / (grp.length*2), x0 = 118;
       grp.forEach(function(o,gi){
         cols.push({h:"Offer "+o.num+" Payoff", x:Math.round(x0+span*(gi*2+1)), a:"right"});
