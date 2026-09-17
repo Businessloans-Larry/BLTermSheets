@@ -177,6 +177,8 @@ table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;
 .offer-chart td .was{display:block;font-size:10.5px;line-height:1.2;}
 .offer-chart td .sub{display:block;font-size:10.5px;font-weight:600;color:var(--slate);line-height:1.25;margin-top:1px;}
 .offer-chart td .sub.reb{color:var(--green-d);font-weight:700;}
+.offer-chart td .now{display:block;}
+.offer-chart td .was{color:#9aa3b0;font-weight:400;text-decoration:line-through;}
 .mk-up{background:var(--cyan);color:#00243B;animation:mkpulse 1.9s ease-in-out infinite;}
 @keyframes mkpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.72;transform:scale(1.06);}}
 /* every marker sits to the LEFT of the lender name so the names stay flush right (Larry 2026-09-11) */
@@ -259,7 +261,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTguMiA3OC4yIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwMmY2ODt9LmNscy0ye2ZpbGw6IzAwY2Q2Nzt9LmNscy0ze2ZpbGw6IzAwY2RlZjt9LmNscy00e2ZpbGw6IzYwYWZmMDt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImxuMSI+PHJlY3QgeD0iLTYiIHk9Ii02IiB3aWR0aD0iMzY2IiBoZWlnaHQ9IjkwIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImxuMiI+PHJlY3QgeD0iLTYiIHk9Ijg0IiB3aWR0aD0iMzY2IiBoZWlnaHQ9Ijc2Ii8+PC9jbGlwUGF0aD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2xuMSkiPjxnPjxnPjxnPjxnPjxnPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyLjkyLDMxLjY0SDE2Ljc3VjQyLjgyaDYuMTVBMTEuNzQsMTEuNzQsMCwxLDEsMTEuMTgsNTQuNTZoMFYyNS44MWExMCwxMCwwLDAsMC0xMC0xMEgwVjU0LjU2SDBBMjIuOTIsMjIuOTIsMCwxLDAsMjIuOTIsMzEuNjRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgsMjYuMDVIMTYuNzdWMjQuODdhMTAsMTAsMCwwLDEsMTAtMTBIMjh2MS4xOEExMCwxMCwwLDAsMSwxOCwyNi4wNVoiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNCwwbC0uODMuODNhMTAsMTAsMCwwLDAsMCwxNC4xNWwuODMuODMuODQtLjgzYTEwLDEwLDAsMCwwLDAtMTQuMTVMMTQsMFoiLz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMjkuMDUsMTUxLjQyYTEuODQsMS44NCwwLDAsMSwxLjg2LTEuODYsMS43OSwxLjc5LDAsMCwxLDEuMzEuNTQsMS44MSwxLjgxLDAsMCwxLC41NCwxLjMyLDEuODYsMS44NiwwLDEsMS0zLjcxLDBaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjU1LjU2LDE1MC40MWE4LjMyLDguMzIsMCwwLDEtMywyLjM0LDguNjIsOC42MiwwLDAsMS0zLjU5Ljc2LDEwLjE4LDEwLjE4LDAsMCwxLTMuNzktLjcsOC40NCw4LjQ0LDAsMCwxLTMtMS45NSw5LDksMCwwLDEtMS45NC0zLDEwLjYyLDEwLjYyLDAsMCwxLDAtNy41Myw5LDksMCwwLDEsMS45NC0zLDguNDQsOC40NCwwLDAsMSwzLTIsMTAsMTAsMCwwLDEsMy43OS0uNyw4LjMsOC4zLDAsMCwxLDMuNjUuODEsMTAsMTAsMCwwLDEsMywyLjI4bC0xLjg2LDEuNGE3Ljg2LDcuODYsMCwwLDAtMi4yLTEuNzYsNS4zNyw1LjM3LDAsMCwwLTIuNTktLjY0LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4LDcsNywwLDAsMC0yLjI0LDEuNTYsNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMiw4LjY0LDguNjQsMCwwLDAsMCw1LjY4LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi45MSw2LjkxLDAsMCwwLDIuMjQsMS41Nyw3LjM0LDcuMzQsMCwwLDAsMi45NC41OCw1LjQyLDUuNDIsMCwwLDAsMi42OC0uNjgsNi44Niw2Ljg2LDAsMCwwLDIuMTEtMS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1OS43NywxNDQuMTFhMTAsMTAsMCwwLDEsLjY5LTMuNzYsOS4xNyw5LjE3LDAsMCwxLDEuOTMtMyw4LjU3LDguNTcsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOS44OCw5Ljg4LDAsMCwxLDMuNzcuNyw4LjczLDguNzMsMCwwLDEsNC45Miw0LjkzLDEwLjQ4LDEwLjQ4LDAsMCwxLDAsNy41Myw4LjczLDguNzMsMCwwLDEtNC45Miw0LjkzLDEwLjA4LDEwLjA4LDAsMCwxLTMuNzcuNywxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNTcsOC41NywwLDAsMS0zLTEuOTUsOS4xNyw5LjE3LDAsMCwxLTEuOTMtM0ExMCwxMCwwLDAsMSwyNTkuNzcsMTQ0LjExWm0yLjMxLDBhOC4yNiw4LjI2LDAsMCwwLC40OSwyLjg0LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi44LDYuOCwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNy4yNiw3LjI2LDAsMCwwLDIuOTMtLjU4LDYuNjIsNi42MiwwLDAsMCwzLjY2LTMuODksOC42NCw4LjY0LDAsMCwwLDAtNS42OCw2LjU2LDYuNTYsMCwwLDAtMy42Ni0zLjg4LDcuMSw3LjEsMCwwLDAtMi45My0uNTgsNy4xOCw3LjE4LDAsMCwwLTIuOTQuNThBNi45Myw2LjkzLDAsMCwwLDI2NCwxMzlhNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMkE4LjM1LDguMzUsMCwwLDAsMjYyLjA4LDE0NC4xMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yODQuMzEsMTQwLjIxYzAtLjMzLDAtLjc0LDAtMS4yMnMwLTEtLjA2LTEuNDUsMC0uOTQtLjA2LTEuMzcsMC0uNzUsMC0xaDIuMzJjMCwuNjcuMDUsMS4zMS4wNiwxLjkzYTUuODgsNS44OCwwLDAsMCwuMSwxLjJoLjExYTYuMjYsNi4yNiwwLDAsMSwyLjMyLTIuNTMsNi43Niw2Ljc2LDAsMCwxLDMuNzktMS4wNyw2LjEzLDYuMTMsMCwwLDEsMy4yNS45MSw1LjIsNS4yLDAsMCwxLDIuMTIsMyw1LjgyLDUuODIsMCwwLDEsMi41My0yLjk0LDcuMiw3LjIsMCwwLDEsMy41NC0uOTMsNy42LDcuNiwwLDAsMSwzLjQuNjYsNS40NCw1LjQ0LDAsMCwxLDIuMDcsMS43Miw2LjQ5LDYuNDksMCwwLDEsMSwyLjQ1LDE0LjIzLDE0LjIzLDAsMCwxLC4yOSwyLjg2VjE1M2gtMi4zMlYxNDIuNTNhMTEuMzQsMTEuMzQsMCwwLDAtLjE5LTIuMTEsNS42NCw1LjY0LDAsMCwwLS42OC0xLjgzLDMuNTIsMy41MiwwLDAsMC0xLjM1LTEuMyw0LjY1LDQuNjUsMCwwLDAtMi4yNi0uNDgsNS4zMyw1LjMzLDAsMCwwLTIuNjcuNiw0LjgxLDQuODEsMCwwLDAtMS42NCwxLjUyLDYuMzgsNi4zOCwwLDAsMC0uODUsMiw5LDksMCwwLDAtLjI1LDIuMDV2MTBoLTIuMzJWMTQyLjNhNy41OSw3LjU5LDAsMCwwLS45MS00LDMsMywwLDAsMC0yLjgtMS41MSw2Ljc1LDYuNzUsMCwwLDAtMi40Mi40NCw1LjI1LDUuMjUsMCwwLDAtMiwxLjM2LDYuNDgsNi40OCwwLDAsMC0xLjMxLDIuMjgsOS43NSw5Ljc1LDAsMCwwLS40OCwzLjIyVjE1M2gtMi4zMloiLz48L2c+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIuMjQsNzdIODEuMzJWNzIuODRhMTUuMzYsMTUuMzYsMCwwLDEtMTEuMTgsNC42NCwxNC40NywxNC40NywwLDAsMS0xMC41OC00QzU2LDY5LjkxLDU1LDY1LjcsNTUsNjAuOFYzMi4xNkg2Ni4xOFY1OS4yNWMwLDYuMTEsMy44Nyw4LjE3LDcuNCw4LjE3czcuNDgtMi4wNiw3LjQ4LTguMTdWMzIuMTZIOTIuMjRaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM4LjQyLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNC0zLTQuNDgsMC02LjM3LDIuMDYtNi4zNyw0LjNzMS4yOSwzLjUyLDQuNjUsMy44N2w3LC42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNSwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1TDEwOSw2My43MmMzLjYxLDMuNyw4LjUxLDQuMjIsMTEuOTUsNC4yMiwzLjg3LDAsNy45Mi0xLjI5LDcuOTItNC42NSwwLTIuMjMtMS4xMi0zLjc4LTQuNzMtNC4xM2wtNy4wNi0uNjhDMTA5LDU3LjcsMTA0LDU0LjE4LDEwNCw0NS45MmMwLTkuMzcsOC4xNy0xNC4yOCwxNy4yOS0xNC4yOEMxMjguMzYsMzEuNjQsMTM0LjEyLDMyLjkzLDEzOC40MiwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNzMsMjQuNTFIMTUwLjI5VjE1LjM5aDExLjQ0Wk0xNjEuNjQsNzdIMTUwLjQ2VjMzLjQ1aDExLjE4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwOC4wOCwzNS42YzMuNjEsMy43LDQuNTYsNy44Myw0LjU2LDEyLjczVjc3SDIwMS40NlY0OS44OGMwLTYuMTEtMy43OS04LjE3LTcuNC04LjE3cy03LjQ4LDIuMDYtNy40OCw4LjE3Vjc3SDE3NS40VjMyLjE2aDEwLjkydjQuMTNhMTUuMzMsMTUuMzMsMCwwLDEsMTEuMTgtNC42NUMyMDIsMzEuNjQsMjA1LjU5LDMzLDIwOC4wOCwzNS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI2Mi43OCw1My4zMnY0LjczaC0yOGMwLDUuODQsMy40NCwxMCw5LjgsMTAsNC45MSwwLDcuMzEtMS40NiwxMC4wNy00LjIxbDYuODgsNi42MmMtNC41Niw0LjY0LTksNy0xNyw3LTEwLjY3LDAtMjAuNzMtNC44MS0yMC43My0yMywwLTE0LjYyLDcuOTEtMjIuODgsMTkuNTItMjIuODhDMjU1LjcyLDMxLjY0LDI2Mi43OCw0MC41OSwyNjIuNzgsNTMuMzJabS0yNy4wOS03Ljc0YTEwLjg5LDEwLjg5LDAsMCwwLS45NSw0LjgxaDE2Ljk0YTEwLjg5LDEwLjg5LDAsMCwwLS45NC00LjgxLDguNDEsOC40MSwwLDAsMC0xNS4wNSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwNi43MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcsMC0xMy4zMy0uNzctMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4Yy04LjA4LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMjk2LjY2LDMxLjY0LDMwMi40MiwzMi45MywzMDYuNzIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzUxLjEsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDYtNi4zNiw0LjNzMS4yOSwzLjUyLDQuNjQsMy44N2w3LjA1LjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LjA2LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zLTcuMzFjMy42MiwzLjcsOC41Miw0LjIyLDEyLDQuMjIsMy44NywwLDcuOTEtMS4yOSw3LjkxLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDUtLjY4Yy04LjA5LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjgtMTQuMjhDMzQxLDMxLjY0LDM0Ni44LDMyLjkzLDM1MS4xLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTI0LjczLDEzOS41NWMwLDIuNjYsMS4xMiw0LDQsNEgzM3Y5LjQ2SDI2LjYyYy05LjIsMC0xMy4wNy02LjM2LTEzLjA3LTEyLjgxVjkxLjgySDI0LjczWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTczLjMyLDE0OC4wNmMtMi44NCwyLjkzLTcuMzEsNS41MS0xMy45Myw1LjUxcy0xMS0yLjU4LTEzLjg0LTUuNTFjLTQtNC4zLTUuMDgtOS4zNy01LjA4LTE3LjQ2czEtMTMuMDcsNS4wOC0xNy4zN2MyLjgzLTIuOTIsNy4yMi01LjUsMTMuODQtNS41czExLjA5LDIuNDksMTMuOTMsNS41YzQsNC4zLDUuMDgsOS4yOSw1LjA4LDE3LjM3Uzc3LjQ1LDE0My44NSw3My4zMiwxNDguMDZabS04LjY4LTI4LjI5YTcuMDcsNy4wNywwLDAsMC01LjI1LTIsNyw3LDAsMCwwLTUuMTYsMmMtMi4zMiwyLjI0LTIuNTgsNi4yOC0yLjU4LDEwLjgzcy4yNiw4LjY5LDIuNTgsMTAuOTNhNyw3LDAsMCwwLDUuMTYsMiw3LjA3LDcuMDcsMCwwLDAsNS4yNS0yYzIuMzItMi4yNCwyLjU4LTYuMjgsMi41OC0xMC45M1M2NywxMjIsNjQuNjQsMTE5Ljc3WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTEyNC4yMywxMjMuNTV2MjkuNUgxMTMuMzF2LTMuODdjLTMsMy01Ljg0LDQuMy0xMSw0LjNzLTguODYtMS4zOC0xMS40NC00YTE0LjMzLDE0LjMzLDAsMCwxLTMuNy0xMC4wNmMwLTcuMTMsNC45LTEzLDE1LjQ4LTEzaDEwLjR2LTIuMjRjMC00LjktMi40LTctOC4zNC03LTQsMC02LjE5LDEuMTItOC42LDMuODdsLTctN2M0LjM5LTQuODEsOC42LTYuMzYsMTYuMDgtNi4zNkMxMTcuNzgsMTA3LjczLDEyNC4yMywxMTMuMDYsMTI0LjIzLDEyMy41NVptLTE5LjY5LDEwLjU4Yy00LjQ3LDAtNi42MiwxLjgxLTYuNjIsNS4xNiwwLDMuMSwyLjE1LDUuMDcsNi43OSw1LjA3LDIuNzYsMCw0LjczLS4zNCw2LjYyLTIuMTUsMS4yOS0xLjExLDEuNzItMi44MywxLjcyLTUuNjd2LTIuNDFaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMTcwLjI0LDExMS42OWMzLjYyLDMuNjksNC41Niw3LjgyLDQuNTYsMTIuNzJ2MjguNjRIMTYzLjYyVjEyNmMwLTYuMS0zLjc4LTguMTctNy4zOS04LjE3cy03LjQ5LDIuMDctNy40OSw4LjE3djI3LjA5SDEzNy41NnYtNDQuOGgxMC45M3Y0LjEyYTE1LjM0LDE1LjM0LDAsMCwxLDExLjE4LTQuNjRDMTY0LjE0LDEwNy43MywxNjcuNzUsMTA5LjExLDE3MC4yNCwxMTEuNjlaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMjIwLjQ3LDExM2wtNi44OCw3Yy0yLjU4LTIuMzItNi40NS0zLTEwLjQxLTMtNC40NywwLTYuMzYsMi4wNy02LjM2LDQuM3MxLjI5LDMuNTMsNC42NCwzLjg3bDcsLjY5YzguODYuODYsMTMuMzMsNS41LDEzLjMzLDEzLjE2LDAsOS44OS04LjQyLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzgtMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjY5LDguNTEsNC4yMSwxMS45NSw0LjIxLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY0LDAtMi4yNC0xLjEyLTMuNzktNC43My00LjEzbC03LjA1LS42OWMtOC4wOC0uNzctMTMuMDctNC4zLTEzLjA3LTEyLjU1LDAtOS4zOCw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzIxMC40MSwxMDcuNzMsMjE2LjE3LDEwOSwyMjAuNDcsMTEzWiIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ni45MiAtNzYuMSkiIGNsaXAtcGF0aD0idXJsKCNsbjIpIj48Zz48Zz48Zz48Zz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMi45MiwzMS42NEgxNi43N1Y0Mi44Mmg2LjE1QTExLjc0LDExLjc0LDAsMSwxLDExLjE4LDU0LjU2aDBWMjUuODFhMTAsMTAsMCwwLDAtMTAtMTBIMFY1NC41NkgwQTIyLjkyLDIyLjkyLDAsMSwwLDIyLjkyLDMxLjY0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE4LDI2LjA1SDE2Ljc3VjI0Ljg3YTEwLDEwLDAsMCwxLDEwLTEwSDI4djEuMThBMTAsMTAsMCwwLDEsMTgsMjYuMDVaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTQsMGwtLjgzLjgzYTEwLDEwLDAsMCwwLDAsMTQuMTVsLjgzLjgzLjg0LS44M2ExMCwxMCwwLDAsMCwwLTE0LjE1TDE0LDBaIi8+PGc+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjI5LjA1LDE1MS40MmExLjg0LDEuODQsMCwwLDEsMS44Ni0xLjg2LDEuNzksMS43OSwwLDAsMSwxLjMxLjU0LDEuODEsMS44MSwwLDAsMSwuNTQsMS4zMiwxLjg2LDEuODYsMCwxLDEtMy43MSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1NS41NiwxNTAuNDFhOC4zMiw4LjMyLDAsMCwxLTMsMi4zNCw4LjYyLDguNjIsMCwwLDEtMy41OS43NiwxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNDQsOC40NCwwLDAsMS0zLTEuOTUsOSw5LDAsMCwxLTEuOTQtMywxMC42MiwxMC42MiwwLDAsMSwwLTcuNTMsOSw5LDAsMCwxLDEuOTQtMyw4LjQ0LDguNDQsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOC4zLDguMywwLDAsMSwzLjY1LjgxLDEwLDEwLDAsMCwxLDMsMi4yOGwtMS44NiwxLjRhNy44Niw3Ljg2LDAsMCwwLTIuMi0xLjc2LDUuMzcsNS4zNywwLDAsMC0yLjU5LS42NCw3LjE4LDcuMTgsMCwwLDAtMi45NC41OCw3LDcsMCwwLDAtMi4yNCwxLjU2LDYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzIsOC42NCw4LjY0LDAsMCwwLDAsNS42OCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOTEsNi45MSwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNS40Miw1LjQyLDAsMCwwLDIuNjgtLjY4LDYuODYsNi44NiwwLDAsMCwyLjExLTEuOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNTkuNzcsMTQ0LjExYTEwLDEwLDAsMCwxLC42OS0zLjc2LDkuMTcsOS4xNywwLDAsMSwxLjkzLTMsOC41Nyw4LjU3LDAsMCwxLDMtMiwxMCwxMCwwLDAsMSwzLjc5LS43LDkuODgsOS44OCwwLDAsMSwzLjc3LjcsOC43Myw4LjczLDAsMCwxLDQuOTIsNC45MywxMC40OCwxMC40OCwwLDAsMSwwLDcuNTMsOC43Myw4LjczLDAsMCwxLTQuOTIsNC45MywxMC4wOCwxMC4wOCwwLDAsMS0zLjc3LjcsMTAuMTgsMTAuMTgsMCwwLDEtMy43OS0uNyw4LjU3LDguNTcsMCwwLDEtMy0xLjk1LDkuMTcsOS4xNywwLDAsMS0xLjkzLTNBMTAsMTAsMCwwLDEsMjU5Ljc3LDE0NC4xMVptMi4zMSwwYTguMjYsOC4yNiwwLDAsMCwuNDksMi44NCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOCw2LjgsMCwwLDAsMi4yNCwxLjU3LDcuMzQsNy4zNCwwLDAsMCwyLjk0LjU4LDcuMjYsNy4yNiwwLDAsMCwyLjkzLS41OCw2LjYyLDYuNjIsMCwwLDAsMy42Ni0zLjg5LDguNjQsOC42NCwwLDAsMCwwLTUuNjgsNi41Niw2LjU2LDAsMCwwLTMuNjYtMy44OCw3LjEsNy4xLDAsMCwwLTIuOTMtLjU4LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4QTYuOTMsNi45MywwLDAsMCwyNjQsMTM5YTYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzJBOC4zNSw4LjM1LDAsMCwwLDI2Mi4wOCwxNDQuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjg0LjMxLDE0MC4yMWMwLS4zMywwLS43NCwwLTEuMjJzMC0xLS4wNi0xLjQ1LDAtLjk0LS4wNi0xLjM3LDAtLjc1LDAtMWgyLjMyYzAsLjY3LjA1LDEuMzEuMDYsMS45M2E1Ljg4LDUuODgsMCwwLDAsLjEsMS4yaC4xMWE2LjI2LDYuMjYsMCwwLDEsMi4zMi0yLjUzLDYuNzYsNi43NiwwLDAsMSwzLjc5LTEuMDcsNi4xMyw2LjEzLDAsMCwxLDMuMjUuOTEsNS4yLDUuMiwwLDAsMSwyLjEyLDMsNS44Miw1LjgyLDAsMCwxLDIuNTMtMi45NCw3LjIsNy4yLDAsMCwxLDMuNTQtLjkzLDcuNiw3LjYsMCwwLDEsMy40LjY2LDUuNDQsNS40NCwwLDAsMSwyLjA3LDEuNzIsNi40OSw2LjQ5LDAsMCwxLDEsMi40NSwxNC4yMywxNC4yMywwLDAsMSwuMjksMi44NlYxNTNoLTIuMzJWMTQyLjUzYTExLjM0LDExLjM0LDAsMCwwLS4xOS0yLjExLDUuNjQsNS42NCwwLDAsMC0uNjgtMS44MywzLjUyLDMuNTIsMCwwLDAtMS4zNS0xLjMsNC42NSw0LjY1LDAsMCwwLTIuMjYtLjQ4LDUuMzMsNS4zMywwLDAsMC0yLjY3LjYsNC44MSw0LjgxLDAsMCwwLTEuNjQsMS41Miw2LjM4LDYuMzgsMCwwLDAtLjg1LDIsOSw5LDAsMCwwLS4yNSwyLjA1djEwaC0yLjMyVjE0Mi4zYTcuNTksNy41OSwwLDAsMC0uOTEtNCwzLDMsMCwwLDAtMi44LTEuNTEsNi43NSw2Ljc1LDAsMCwwLTIuNDIuNDQsNS4yNSw1LjI1LDAsMCwwLTIsMS4zNiw2LjQ4LDYuNDgsMCwwLDAtMS4zMSwyLjI4LDkuNzUsOS43NSwwLDAsMC0uNDgsMy4yMlYxNTNoLTIuMzJaIi8+PC9nPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyLjI0LDc3SDgxLjMyVjcyLjg0YTE1LjM2LDE1LjM2LDAsMCwxLTExLjE4LDQuNjQsMTQuNDcsMTQuNDcsMCwwLDEtMTAuNTgtNEM1Niw2OS45MSw1NSw2NS43LDU1LDYwLjhWMzIuMTZINjYuMThWNTkuMjVjMCw2LjExLDMuODcsOC4xNyw3LjQsOC4xN3M3LjQ4LTIuMDYsNy40OC04LjE3VjMyLjE2SDkyLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOC40MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzctMTkuMDktNi40NUwxMDksNjMuNzJjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4QzEwOSw1Ny43LDEwNCw1NC4xOCwxMDQsNDUuOTJjMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMTI4LjM2LDMxLjY0LDEzNC4xMiwzMi45MywxMzguNDIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxLjczLDI0LjUxSDE1MC4yOVYxNS4zOWgxMS40NFpNMTYxLjY0LDc3SDE1MC40NlYzMy40NWgxMS4xOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMDguMDgsMzUuNmMzLjYxLDMuNyw0LjU2LDcuODMsNC41NiwxMi43M1Y3N0gyMDEuNDZWNDkuODhjMC02LjExLTMuNzktOC4xNy03LjQtOC4xN3MtNy40OCwyLjA2LTcuNDgsOC4xN1Y3N0gxNzUuNFYzMi4xNmgxMC45MnY0LjEzYTE1LjMzLDE1LjMzLDAsMCwxLDExLjE4LTQuNjVDMjAyLDMxLjY0LDIwNS41OSwzMywyMDguMDgsMzUuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjIuNzgsNTMuMzJ2NC43M2gtMjhjMCw1Ljg0LDMuNDQsMTAsOS44LDEwLDQuOTEsMCw3LjMxLTEuNDYsMTAuMDctNC4yMWw2Ljg4LDYuNjJjLTQuNTYsNC42NC05LDctMTcsNy0xMC42NywwLTIwLjczLTQuODEtMjAuNzMtMjMsMC0xNC42Miw3LjkxLTIyLjg4LDE5LjUyLTIyLjg4QzI1NS43MiwzMS42NCwyNjIuNzgsNDAuNTksMjYyLjc4LDUzLjMyWm0tMjcuMDktNy43NGExMC44OSwxMC44OSwwLDAsMC0uOTUsNC44MWgxNi45NGExMC44OSwxMC44OSwwLDAsMC0uOTQtNC44MSw4LjQxLDguNDEsMCwwLDAtMTUuMDUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zMDYuNzIsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40LTMtNC40OCwwLTYuMzcsMi4wNi02LjM3LDQuM3MxLjI5LDMuNTIsNC42NSwzLjg3bDcsLjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy43LDguNTEsNC4yMiwxMS45NSw0LjIyLDMuODcsMCw3LjkyLTEuMjksNy45Mi00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA2LS42OGMtOC4wOC0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI5LTE0LjI4QzI5Ni42NiwzMS42NCwzMDIuNDIsMzIuOTMsMzA2LjcyLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1MS4xLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNDEtMy00LjQ3LDAtNi4zNiwyLjA2LTYuMzYsNC4zczEuMjksMy41Miw0LjY0LDMuODdsNy4wNS42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNiwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1bDcuMy03LjMxYzMuNjIsMy43LDguNTIsNC4yMiwxMiw0LjIyLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA1LS42OGMtOC4wOS0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzM0MSwzMS42NCwzNDYuOCwzMi45MywzNTEuMSwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0yNC43MywxMzkuNTVjMCwyLjY2LDEuMTIsNCw0LDRIMzN2OS40NkgyNi42MmMtOS4yLDAtMTMuMDctNi4zNi0xMy4wNy0xMi44MVY5MS44MkgyNC43M1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik03My4zMiwxNDguMDZjLTIuODQsMi45My03LjMxLDUuNTEtMTMuOTMsNS41MXMtMTEtMi41OC0xMy44NC01LjUxYy00LTQuMy01LjA4LTkuMzctNS4wOC0xNy40NnMxLTEzLjA3LDUuMDgtMTcuMzdjMi44My0yLjkyLDcuMjItNS41LDEzLjg0LTUuNXMxMS4wOSwyLjQ5LDEzLjkzLDUuNWM0LDQuMyw1LjA4LDkuMjksNS4wOCwxNy4zN1M3Ny40NSwxNDMuODUsNzMuMzIsMTQ4LjA2Wm0tOC42OC0yOC4yOWE3LjA3LDcuMDcsMCwwLDAtNS4yNS0yLDcsNywwLDAsMC01LjE2LDJjLTIuMzIsMi4yNC0yLjU4LDYuMjgtMi41OCwxMC44M3MuMjYsOC42OSwyLjU4LDEwLjkzYTcsNywwLDAsMCw1LjE2LDIsNy4wNyw3LjA3LDAsMCwwLDUuMjUtMmMyLjMyLTIuMjQsMi41OC02LjI4LDIuNTgtMTAuOTNTNjcsMTIyLDY0LjY0LDExOS43N1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMjQuMjMsMTIzLjU1djI5LjVIMTEzLjMxdi0zLjg3Yy0zLDMtNS44NCw0LjMtMTEsNC4zcy04Ljg2LTEuMzgtMTEuNDQtNGExNC4zMywxNC4zMywwLDAsMS0zLjctMTAuMDZjMC03LjEzLDQuOS0xMywxNS40OC0xM2gxMC40di0yLjI0YzAtNC45LTIuNC03LTguMzQtNy00LDAtNi4xOSwxLjEyLTguNiwzLjg3bC03LTdjNC4zOS00LjgxLDguNi02LjM2LDE2LjA4LTYuMzZDMTE3Ljc4LDEwNy43MywxMjQuMjMsMTEzLjA2LDEyNC4yMywxMjMuNTVabS0xOS42OSwxMC41OGMtNC40NywwLTYuNjIsMS44MS02LjYyLDUuMTYsMCwzLjEsMi4xNSw1LjA3LDYuNzksNS4wNywyLjc2LDAsNC43My0uMzQsNi42Mi0yLjE1LDEuMjktMS4xMSwxLjcyLTIuODMsMS43Mi01LjY3di0yLjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTE3MC4yNCwxMTEuNjljMy42MiwzLjY5LDQuNTYsNy44Miw0LjU2LDEyLjcydjI4LjY0SDE2My42MlYxMjZjMC02LjEtMy43OC04LjE3LTcuMzktOC4xN3MtNy40OSwyLjA3LTcuNDksOC4xN3YyNy4wOUgxMzcuNTZ2LTQ0LjhoMTAuOTN2NC4xMmExNS4zNCwxNS4zNCwwLDAsMSwxMS4xOC00LjY0QzE2NC4xNCwxMDcuNzMsMTY3Ljc1LDEwOS4xMSwxNzAuMjQsMTExLjY5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTIyMC40NywxMTNsLTYuODgsN2MtMi41OC0yLjMyLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDctNi4zNiw0LjNzMS4yOSwzLjUzLDQuNjQsMy44N2w3LC42OWM4Ljg2Ljg2LDEzLjMzLDUuNSwxMy4zMywxMy4xNiwwLDkuODktOC40MiwxNC42Mi0xOSwxNC42Mi03LjA1LDAtMTMuMzMtLjc4LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy42OSw4LjUxLDQuMjEsMTEuOTUsNC4yMSwzLjg3LDAsNy45MS0xLjI5LDcuOTEtNC42NCwwLTIuMjQtMS4xMi0zLjc5LTQuNzMtNC4xM2wtNy4wNS0uNjljLTguMDgtLjc3LTEzLjA3LTQuMy0xMy4wNy0xMi41NSwwLTkuMzgsOC4xNy0xNC4yOCwxNy4yOC0xNC4yOEMyMTAuNDEsMTA3LjczLDIxNi4xNywxMDksMjIwLjQ3LDExM1oiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="BusinessLoans.com"/>
     <div class="cover-header-meta">
       <strong>FUNDING TERM SHEET</strong><br/>
-      Prepared September 16, 2026 at 2:09 PM EDT<br/>
+      Prepared September 17, 2026 at 3:01 PM EDT<br/>
       Illustration only — see disclosure
     </div>
   </header>
@@ -272,8 +274,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <div class="borrower-bar-name">East TN Tree Service, Inc.</div>
     </div>
     <div class="borrower-bar-funding">
-      <div class="borrower-bar-label">Funding Amount &middot; approvals up to $814,000</div>
-      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="814,000" aria-label="Funding amount"/></div></div>
+      <div class="borrower-bar-label">Funding Amount &middot; approvals up to $826,000</div>
+      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="826,000" aria-label="Funding amount"/></div></div>
       <div id="amountHelp" class="amount-help" style="display:none;"></div>
     </div>
   </div>
@@ -304,22 +306,23 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
   <div class="fit-grid">
     <div class="fit">
-      <span class="fit-tag">Offers 1 &amp; 2 &middot; Lender A &middot; Line of Credit</span>
+      <span class="fit-tag">Offers 1 &amp; 2 &middot; Revenued &middot; Line of Credit</span>
       <h3>Best fit for drawing and paying off inside 30 days</h3>
       <p>Through the fourth weekly payment &mdash; roughly the first 30 days &mdash; the payoff is simply your remaining principal. Draw <b>$500,000</b> on Offer 1 and close it out at day 28 and the whole thing costs <b>$10,000</b> ($510,000 all&#8209;in). At payment 5 it switches to a discounted&#8209;balance basis and the all&#8209;in jumps to <b>$550,913</b>, so the first month is where the value is.</p>
       <p class="fit-cap">Largest lines on the table &mdash; up to $545,000 &mdash; and no origination or draw fee.</p>
     </div>
     <div class="fit b">
-      <span class="fit-tag">Offer 3 &middot; Lender B &middot; Line of Credit</span>
+      <span class="fit-tag">Offer 3 &middot; Byzfunder &middot; Line of Credit</span>
       <h3>Better for drawing and holding</h3>
       <p>No 30&#8209;day cliff: the payoff discount comes down evenly across the full 15 months, so there is no penalty for keeping the money out. The trade&#8209;off is size and cost &mdash; <b>$300,000 is their maximum line</b>, and the first draw carries $15,000 in fees.</p>
       <p class="fit-cap">Lowest weekly payment on the sheet at a full draw: $7,175.</p>
     </div>
     <div class="fit c">
-      <span class="fit-tag">Offers 5&ndash;8 &middot; Lender C &middot; Term Loan</span>
+      <span class="fit-tag">Offers 5&ndash;8 &middot; Kapitus &middot; Term Loan</span>
       <h3>Better fit for a lump-sum deposit</h3>
       <p>These are <b>term loans, not lines</b> &mdash; the full amount hits your account at closing. The right pick if you actually need all of it up front and expect to <b>hold it longer than 60 days</b>: past the first month the two lines above lose their cheap&#8209;exit advantage, while these price evenly across the whole term.</p>
-      <p class="fit-cap">Largest approval on the sheet at $814,000 &mdash; and we reimburse the full 2.5% origination fee if it funds in September.</p>
+      <p><b>Holding it a year? This is the cheapest money on the sheet.</b> $578,000 for 12 months costs <b>$120,224</b> all&#8209;in once we reimburse the fee. The 12&#8209;month line of credit costs $130,000 &mdash; on a smaller $500,000 draw.</p>
+      <p class="fit-cap">Largest approval on the sheet at $826,000, repriced 9/16, and we reimburse the full 2.5% origination fee if it funds in September.</p>
     </div>
   </div>
 
@@ -331,9 +334,9 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Funding Options</h2>
   <div id="offerWrap"></div>
 
-  <div class="stack-note"><b>&#43; Offer 4 can be added to anything else on this sheet.</b> The $200,000 line from Lender D <b>stacks</b> &mdash; take one of the offers above and keep this alongside it as a revolving backstop. <b>Minimum draw is just $1,000</b>, there is no fee of any kind, and you can pay it off whenever you like with 100% of the remaining interest waived. Nothing is owed on it until you draw.</div>
+  <div class="stack-note"><b>&#43; Offer 4 can be added to anything else on this sheet.</b> The $200,000 line from OnDeck <b>stacks</b> &mdash; take one of the offers above and keep this alongside it as a revolving backstop. <b>Minimum draw is just $1,000</b>, there is no fee of any kind, and you can pay it off whenever you like with 100% of the remaining interest waived. Nothing is owed on it until you draw.</div>
 
-  <div class="rebate-note"><b>&#8617; September funding bonus.</b> On the four <b>term loans</b> (Offers 5&ndash;8, Lender C), <b>BusinessLoans.com reimburses the full 2.5% origination fee</b> &mdash; up to $20,350 on the $814,000 approval &mdash; if the loan funds on or before September 30, 2026. The fee is still collected at closing by the lender; we send it back to you. Offers 1, 2 and 4 carry no fees at all; Offer 3&rsquo;s fees are shown in the table above.</div>
+  <div class="rebate-note"><b>&#8617; September funding bonus.</b> On the four <b>term loans</b> (Offers 5&ndash;8, Kapitus), <b>BusinessLoans.com reimburses the full 2.5% origination fee</b> &mdash; up to $20,650 on the $826,000 approval &mdash; if the loan funds on or before September 30, 2026. The fee is still collected at closing by the lender; we send it back to you. Offers 1, 2 and 4 carry no fees at all; Offer 3&rsquo;s fees are shown in the table above.</div>
 
   <div id="comboWrap"></div>
 
@@ -358,7 +361,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender A (Offers 1 &amp; 2) &mdash; Stipulations / Closing Requirements</h3>
+    <h3>Revenued (Offers 1 &amp; 2) &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Connect bank account (secure link provided by us)</li>
       <li>Driver's License</li>
@@ -372,7 +375,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender B (Offer 3) &mdash; Stipulations / Closing Requirements</h3>
+    <h3>Byzfunder (Offer 3) &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Active Driver's License</li>
       <li>Voided check</li>
@@ -385,7 +388,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender C (Offers 5&ndash;8) &mdash; Stipulations / Closing Requirements</h3>
+    <h3>Kapitus (Offers 5&ndash;8) &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Driver's License</li>
       <li>Voided check</li>
@@ -394,7 +397,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender D (Offer 4) &mdash; Stipulations / Closing Requirements</h3>
+    <h3>OnDeck (Offer 4) &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Driver's License</li>
       <li>Voided check</li>
@@ -428,13 +431,13 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
      saved = payback - payoff; payoff+saved MUST equal payback on every row.
      NEVER show buy/sell/factor rate, commission, or APR.
    - Stips: the two .closing blocks (page) + the two arrays inside downloadPDF().
-   - Timestamp: replace September 16, 2026 at 2:09 PM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
+   - Timestamp: replace September 17, 2026 at 3:01 PM EDT with the real "Month D, YYYY at H:MM AM/PM EDT".
    - Tracker `deal` = merchant name (fires the open-alert email).
    See references/patterns.md for groups, month-payoff schedules, the side-by-side
    detail grid, MCA amortization, and the price-reduced strikethrough.
    ========================================================================= */
-var MASTER_MAX = 814000;
-var STATE = { requested: 814000 };
+var MASTER_MAX = 826000;
+var STATE = { requested: 826000 };
 
 var LENDER_NOTES = {};
 /* Lines AND term loans on one sheet. o.advance = the approved amount (a line's spending limit
@@ -446,32 +449,32 @@ var LENDER_NOTES = {};
    captured at the full line size. */
 var OFFERS = [
   /* ---- LINES OF CREDIT (kind:"loc") - draw what you need, charged only on what you draw ---- */
-  { kind:"loc", name:"Lender A", advance:500000, factor:1.26, weekly:12115.38, nPay:"52", term:"12",
+  { kind:"loc", name:"Revenued", advance:500000, factor:1.26, weekly:12115.38, nPay:"52", term:"12",
     termLabel:"12-Month", termDetail:"~12 months (260 business days, est.)", sizeNote:"min draw $50,000",
     origPct:0, origLabel:"None", processing:0, position:"1st", minDraw:50000,
     feeNote:"no fee", cliffNote:true, schedKey:"opt2",
     payoffLine:"You can offer to pay the balance off early at a <b>discounted payoff</b>; the figures below are the lender&rsquo;s own schedule." },
-  { kind:"loc", name:"Lender A", advance:545000, factor:1.34, weekly:12171.67, nPay:"60", term:"13.8",
+  { kind:"loc", name:"Revenued", advance:545000, factor:1.34, weekly:12171.67, nPay:"60", term:"13.8",
     termLabel:"14-Month", termDetail:"~14 months (300 business days, est.)", sizeNote:"min draw $54,500",
     origPct:0, origLabel:"None", processing:0, position:"1st", minDraw:54500,
     feeNote:"no fee", cliffNote:true, schedKey:"opt3",
     payoffLine:"You can offer to pay the balance off early at a <b>discounted payoff</b>; the figures below are the lender&rsquo;s own schedule." },
-  /* Lender B line: 2.5% draw fee (scales with the draw) + a 2.5%-of-credit-limit origination
+  /* Byzfunder line: 2.5% draw fee (scales with the draw) + a 2.5%-of-credit-limit origination
      fee charged once on the first draw (flat $7,500, does NOT scale) -> processing. Net at a
      full $300,000 draw = $285,000, matching the approval. Payoff table is theirs verbatim:
      their rows are WEEKS and at week N you have made N-1 payments, so week 1 shows $0 paid. */
-  { kind:"loc", name:"Lender B", advance:300000, factor:1.435, weekly:7175.00, nPay:"60", term:"15",
+  { kind:"loc", name:"Byzfunder", advance:300000, factor:1.435, weekly:7175.00, nPay:"60", term:"15",
     termLabel:"15-Month", termDetail:"15 months (60 weekly payments)", sizeNote:"min draw $15,000",
     origPct:0.025, origLabel:"2.5% of draw", processing:7500,
     procLabel:"Origination fee (2.5% of credit limit, first draw only)",
     feeNote:"2.5% draw + 2.5% limit", position:"1st", minDraw:15000,
     validUntil:"September 30, 2026", schedByWeek:true, schedKey:"byz",
     payoffLine:"You can offer to pay the balance off early at a <b>discounted payoff</b>; the figures below are the lender&rsquo;s own schedule." },
-  /* Lender D: stackable $200,000 line, no fee, 100%% prepay interest forgiveness at ANY time.
+  /* OnDeck: stackable $200,000 line, no fee, 100%% prepay interest forgiveness at ANY time.
      factor reproduces the $300,501.72 payback on a $200,000 draw to the cent. Schedule is the
      lender's own amortization: payoff = the remaining-principal column, saved = remaining
      interest (100%% forgiveness), so payoff + saved + paid = payback on every row. */
-  { kind:"loc", name:"Lender D", advance:200000, factor:1.5025086, weekly:2889.44, nPay:"104", term:"24",
+  { kind:"loc", name:"OnDeck", advance:200000, factor:1.5025086, weekly:2889.44, nPay:"104", term:"24",
     termLabel:"24-Month", termDetail:"24 months (104 weekly payments)", sizeNote:"min draw $1,000 &middot; stackable",
     origPct:0, origLabel:"None", processing:0, position:"1st", minDraw:1000,
     feeNote:"no fee", stackable:true, schedKey:"ondeck",
@@ -483,22 +486,26 @@ var OFFERS = [
      partial. Payoff arrays are the Amortization Generator's Kapitus engine at 100% interest
      forgiveness, converted off its cumulative basis (payoff = total - k x payment). BL reimburses
      the 2.5% origination fee in full if the loan funds in September -> rebate:true. ---- */
-  { kind:"term", name:"Lender C", advance:570000, factor:1.268, weekly:13910.00, nPay:"52", term:"12",
+  { kind:"term", name:"Kapitus", advance:578000, factor:1.208, weekly:13438.00, nPay:"52", term:"12",
+    priceReduced:true, old:{ advance:570000, factor:1.268, weekly:13910.00 },
     termLabel:"12-Month", termDetail:"12 months (52 weekly payments)", sizeNote:"lump sum at closing",
     origPct:0.025, origLabel:"2.5%", processing:0, feeNote:"2.5% origination", rebate:true,
     position:"1st", schedKey:"kap12", schedUnitLabel:"month", monthlySched:true,
     payoffLine:"Pay off early at any time and <b>100% of remaining interest is waived</b>." },
-  { kind:"term", name:"Lender C", advance:678000, factor:1.327, weekly:13853.00, nPay:"65", term:"15",
+  { kind:"term", name:"Kapitus", advance:694000, factor:1.2570014409221901, weekly:13432.00, nPay:"65", term:"15",
+    priceReduced:true, old:{ advance:678000, factor:1.327, weekly:13853.00 },
     termLabel:"15-Month", termDetail:"15 months (65 weekly payments)", sizeNote:"lump sum at closing",
     origPct:0.025, origLabel:"2.5%", processing:0, feeNote:"2.5% origination", rebate:true,
     position:"1st", schedKey:"kap15", schedUnitLabel:"month", monthlySched:true,
     payoffLine:"Pay off early at any time and <b>100% of remaining interest is waived</b>." },
-  { kind:"term", name:"Lender C", advance:783000, factor:1.378, weekly:13844.00, nPay:"78", term:"18",
+  { kind:"term", name:"Kapitus", advance:794000, factor:1.319, weekly:13438.00, nPay:"78", term:"18",
+    priceReduced:true, old:{ advance:783000, factor:1.378, weekly:13844.00 },
     termLabel:"18-Month", termDetail:"18 months (78 weekly payments)", sizeNote:"lump sum at closing",
     origPct:0.025, origLabel:"2.5%", processing:0, feeNote:"2.5% origination", rebate:true,
     position:"1st", schedKey:"kap18", schedUnitLabel:"month", monthlySched:true,
     payoffLine:"Pay off early at any time and <b>100% of remaining interest is waived</b>." },
-  { kind:"term", name:"Lender C", advance:814000, factor:1.398, weekly:13833.00, nPay:"83", term:"19",
+  { kind:"term", name:"Kapitus", advance:826000, factor:1.339, weekly:13444.00, nPay:"83", term:"19",
+    priceReduced:true, old:{ advance:814000, factor:1.398, weekly:13833.00 },
     termLabel:"19-Month", termDetail:"19 months (83 weekly payments)", sizeNote:"lump sum at closing",
     origPct:0.025, origLabel:"2.5%", processing:0, feeNote:"2.5% origination", rebate:true,
     position:"1st", schedKey:"kap19", schedUnitLabel:"month", monthlySched:true,
@@ -528,6 +535,7 @@ function fwOf(o){ return FREQW[o.freq] ? FREQW[o.freq].word : "weekly"; }
 function eachOf(o){ return FREQW[o.freq] ? FREQW[o.freq].each : "week"; }
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 
+function wasNew(oldStr, newStr){ return '<span class="was">'+oldStr+'</span><span class="now">'+newStr+'</span>'; }
 function model(o){
   var adv = Math.min(STATE.requested, o.advance); if(adv < 0) adv = 0;
   var s = o.advance ? adv/o.advance : 0;
@@ -535,7 +543,13 @@ function model(o){
   var net = round2(adv - fee - o.processing);
   return { advance:adv, capped:STATE.requested > o.advance, s:s,
     payback:round2(adv*o.factor), weekly:round2(o.weekly*s),
-    fee:fee, oldFee:(o.oldOrigPct ? round2(adv*o.oldOrigPct) : 0), processing:o.processing, net:net };
+    fee:fee, oldFee:(o.oldOrigPct ? round2(adv*o.oldOrigPct) : 0), processing:o.processing, net:net,
+    oldPayback:(o.old ? round2(adv*o.old.factor) : 0),
+    oldWeekly:(o.old && o.old.advance ? round2(o.old.weekly*adv/o.old.advance) : 0),
+    /* Larry 2026-09-17: on the Kapitus term loans we reimburse the origination fee, so the
+       money that stays with the merchant is the FULL amount. netShown reflects that; net
+       (the arithmetic figure) is left alone. */
+    netShown:(o.rebate ? adv : net), feeEff:(o.rebate ? 0 : round2(fee + o.processing)) };
 }
 
 /* All-in RATE: total repaid + fees per $1 advanced (factor + origination). This is what ranks the
@@ -550,13 +564,13 @@ function allInRate(o){
 var KINDS = ["loc","term"];
 var KIND_TITLE = { loc:"Lines of Credit", term:"Term Loans" };
 var KIND_NOTE  = { loc:"Revolving &mdash; draw what you need, when you need it, and you are only charged on what you actually draw.",
-                   term:"The full approved amount funds as a lump sum at closing." };
+                   term:"The full approved amount funds as a lump sum at closing. <b>Repriced &mdash; the struck-through figures are the earlier quote.</b>" };
 function renderOffers(){
   /* SINGLE-TABLE standard (Larry 2026-08-27, validated on lobster-test + multifamily-test):
      3+ offers -> ONE chart, every offer a row, sorted term asc -> advance -> factor, with
      Term + Lender columns (no lender groups, no term bands). 1-2 offers -> the big cards.
      Define OFFERS in the same order (term asc, then amount, then price) so o.num reads 1..N
-     straight down the table. Lender column shows o.name ("Lender A/B/C" unless Larry says real names). */
+     straight down the table. Lender column shows o.name (real funder names on this sheet, per Larry 2026-09-17). */
   var LIVEOFF = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); });
   var useChart = LIVEOFF.length >= 3;
 
@@ -609,12 +623,12 @@ function renderOffers(){
         + ' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer from the comparison">hide</button></td>'
         + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
         + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
-        + '<td data-label="Approved Amount">'+money0(o.advance)+'<span class="sub">'+o.sizeNote+'</span></td>'
+        + '<td data-label="Approved Amount">'+(o.old ? wasNew(money0(o.old.advance), money0(o.advance)) : money0(o.advance))+'<span class="sub">'+o.sizeNote+'</span></td>'
         + '<td data-label="Amount Shown">'+capTag+money0(m.advance)+'</td>'
         + '<td data-label="Fees">'+money(m.fee + m.processing)+'<span class="sub">'+o.feeNote+'</span>'+(o.rebate ? '<span class="sub reb">&#8617; we reimburse this in Sept</span>' : '')+'</td>'
-        + '<td class="ch-net" data-label="Net Deposited">'+money(m.net)+'</td>'
-        + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
-        + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
+        + '<td class="ch-net" data-label="Net Deposited">'+money(m.netShown)+(o.rebate ? '<span class="sub reb">fee reimbursed by us</span>' : '')+'</td>'
+        + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+(o.old ? wasNew(money0(m.oldPayback), money0(m.payback)) : money0(m.payback))+'</td>'
+        + '<td class="ch-pay" data-label="'+payHead+'">'+(o.old ? wasNew(money(m.oldWeekly), money(m.weekly)) : money(m.weekly))+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }
     var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Approved Amount</th><th>Amount Shown</th><th>Fees</th><th>Net Deposited</th>'
@@ -672,14 +686,14 @@ var SCHED = {
          saved:[127500,125000,122500,120000,79086.54,77403.85,75721.15,74038.46,72355.77,70673.08,68990.38,67307.69,65625,63942.31,62259.62,60576.92,58894.23,57211.54,55528.85,53846.15,52163.46,50480.77,48798.08,47115.38,45432.69,43750,42067.31,40384.62,38701.92,37019.23,35336.54,33653.85,31971.15,30288.46,28605.77,26923.08,25240.38,23557.69,21875,20192.31,18509.62,16826.92,15144.23,13461.54,11778.85,10096.15,8413.46,6730.77,5048.08,3365.38,1682.69,0] },
   byz:{ payoff:[308700,304525,300350,297345,292060,286775,281490,276205,270920,265605,260320,255035,249750,244465,239180,233895,228610,223325,218040,212755,207470,202185,196900,191615,186330,181045,175730,170445,165160,159875,154590,149305,144020,138735,133450,128165,122880,117595,112310,107025,101740,96455,91170,85855,80570,75285,70000,64715,54930,54145,48860,44475,38950,32975,27720,21925,15470,10215,4030,7175],
         saved:[121800,118800,115800,111630,109740,107850,105960,104070,102180,100320,98430,96540,94650,92760,90870,88980,87090,85200,83310,81420,79530,77640,75750,73860,71970,70080,68220,66330,64440,62550,60660,58770,56880,54990,53100,51210,49320,47430,45540,43650,41760,39870,37980,36120,34230,32340,30450,28560,31170,24780,22890,20100,18450,17250,15330,13950,13230,11310,10320,0] },
-  kap12:{ payoff:[531751.85,492028.67,450773.58,407927.51,363429.09,317214.61,269217.88,219370.17,167600.1,113833.54,57993.49,0],
-        saved:[130778.15,110271.33,91296.42,73912.49,58180.91,44165.39,31932.12,21549.83,13089.9,6626.46,2236.51,0] },
-  kap15:{ payoff:[643543.27,607789.4,570689.56,532193.07,492247.36,450797.87,407788,363159,316849.91,268797.49,218936.11,167197.68,113511.53,57804.33,0],
-        saved:[196182.33,171955.8,149075.24,127591.33,107556.64,89025.73,72055.2,56703.8,43032.49,31104.51,20985.49,12743.52,6449.27,2176.07,0] },
-  kap18:{ payoff:[751379.96,718616.15,684667.2,649490.23,613040.83,575272.97,536138.96,495589.38,453573.02,410036.83,364925.83,318183.06,269749.5,219563.98,167563.13,113681.29,57850.41,0],
-        saved:[267651.04,240471.85,214477.8,189711.77,166218.17,144043.03,123234.04,103840.62,85913.98,69507.17,54675.17,41474.94,29965.5,20208.02,12265.87,6204.71,2092.59,0] },
-  kap19:{ payoff:[783416.71,751732.2,718906.82,684899.48,649667.63,613167.17,575352.43,536176.08,495589.09,453540.67,409978.2,364847.16,318091.08,269651.43,219467.6,167476.79,113613.92,57811.6,0],
-        saved:[294662.03,266453.28,239385.4,213499.48,188838.07,165445.27,143366.75,122649.84,103343.57,85498.73,69167.94,54405.72,41268.54,29814.93,20105.5,12203.05,6172.66,2081.72,0] },
+  kap12:{ payoff:[537351.74,495470.17,452317.87,407856.29,362045.71,314845.19,266212.56,216104.37,164475.85,111280.87,56471.91,0],
+         saved:[102686.93,86383.17,71350.14,57626.39,45251.64,34266.83,24714.13,16636.99,10080.18,5089.83,1713.46,0] },
+  kap15:{ payoff:[656701.12,618281.21,578706.58,537942.52,495953.28,452702.04,408150.87,362260.7,314991.29,266301.18,216147.68,164486.8,111273.23,56460.31,0],
+         saved:[157500.61,137763.25,119180.61,101787.4,85619.37,70713.34,57107.24,44840.14,33952.28,24485.12,16481.35,9984.96,5041.26,1696.91,0] },
+  kap18:{ payoff:[760370.97,725702.01,689960.95,653114.64,615128.9,575968.49,535597.09,493977.25,451070.37,406836.64,361235.03,314223.25,265757.68,215793.37,164283.97,111181.7,56437.31,0],
+         saved:[228732.47,205218.87,182777.37,161441.12,141244.3,122222.15,104410.99,87848.27,72572.59,58623.76,46042.81,34872.03,25155.04,16936.79,10263.63,5183.34,1745.17,0] },
+  kap19:{ payoff:[793448.37,759885.53,725280.06,689599.57,652810.67,614878.93,575768.84,535443.8,493866.06,450996.72,406795.64,361221.46,314231.52,265781.84,215827.07,164320.46,111213.8,56457.39,0],
+         saved:[254354.37,229705.95,206100.16,183569.39,162147.03,141867.51,122766.34,104880.12,88246.6,72904.68,58894.5,46257.42,35036.1,25274.52,17018.03,10313.38,5208.78,1753.93,0] },
   ondeck:{ payoff:[198787.48,197564.8,196331.87,195088.59,193834.9,192570.69,191295.88,190010.38,188714.11,187406.96,186088.86,184759.7,183419.4,182067.86,180704.99,179330.69,177944.87,176547.43,175138.28,173717.3,172284.42,170839.52,169382.5,167913.27,166431.72,164937.74,163431.24,161912.11,160380.24,158835.53,157277.87,155707.14,154123.24,152526.07,150915.5,149291.43,147653.74,146002.32,144337.06,142657.83,140964.52,139257.01,137535.19,135798.93,134048.11,132282.61,130502.31,128707.09,126896.81,125071.35,123230.58,121374.38,119502.62,117615.17,115711.88,113792.64,111857.31,109905.75,107937.83,105953.41,103952.35,101934.51,99899.75,97847.93,95778.91,93692.54,91588.68,89467.17,87327.88,85170.65,82995.34,80801.78,78589.83,76359.34,74110.14,71842.09,69555.02,67248.77,64923.18,62578.1,60213.35,57828.78,55424.21,52999.48,50554.42,48088.86,45602.63,43095.55,40567.45,38018.16,35447.48,32855.26,30241.3,27605.42,24947.44,22267.18,19564.44,16839.04,14090.79,11319.49,8524.96,5707,2865.41,0],
            saved:[98824.8,97158.04,95501.54,93855.37,92219.63,90594.4,88979.77,87375.83,85782.67,84200.37,82629.03,81068.75,79519.61,77981.71,76455.14,74940,73436.38,71944.38,70464.1,68995.63,67539.08,66094.54,64662.12,63241.91,61834.02,60438.55,59055.61,57685.3,56327.73,54983,53651.23,52332.52,51026.98,49734.72,48455.85,47190.48,45938.73,44700.71,43476.54,42266.33,41070.2,39888.27,38720.65,37567.47,36428.85,35304.91,34195.77,33101.56,32022.4,30958.42,29909.74,28876.5,27858.82,26856.84,25870.68,24900.48,23946.37,23008.49,22086.97,21181.95,20293.57,19421.97,18567.29,17729.67,16909.25,16106.18,15320.6,14552.66,13802.51,13070.3,12356.18,11660.3,10982.81,10323.86,9683.62,9062.23,8459.86,7876.67,7312.81,6768.45,6243.76,5738.89,5254.02,4789.31,4344.93,3921.05,3517.84,3135.48,2774.14,2434,2115.23,1818.02,1542.54,1288.98,1057.52,848.35,661.65,497.61,356.42,238.27,143.36,71.88,24.03,0] },
   opt3:{ payoff:[535916.67,526833.33,517750,508666.67,542047.92,532192.5,522337.08,512481.67,502626.25,492770.83,482915.42,473060,463204.58,453349.17,443493.75,433638.33,423782.92,413927.5,404072.08,394216.67,384361.25,374505.83,364650.42,354795,344939.58,335084.17,325228.75,315373.33,305517.92,295662.5,285807.08,275951.67,266096.25,256240.83,246385.42,236530,226674.58,216819.17,206963.75,197108.33,187252.92,177397.5,167542.08,157686.67,147831.25,137975.83,128120.42,118265,108409.58,98554.17,88698.75,78843.33,68987.92,59132.5,49277.08,39421.67,29566.25,19710.83,9855.42,0],
@@ -788,15 +802,15 @@ function schedUnit(o){ return o.schedUnitLabel || ((o.freq === "biweekly" || o.s
 function schedRowPrefix(u){ return u === "week" ? "Week " : (u === "month" ? "Month " : "#"); }
 function singleSched(o){
   var m = model(o), sc = SCHED[o.schedKey], unit = schedUnit(o);
-  var hasFee = round2(m.fee + m.processing) > 0;
+  var hasFee = m.feeEff > 0;
   var h = '<div class="prepay-section">'
     + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.termLabel+' &mdash; Early Payoff Schedule &mdash; '+money0(m.advance)+'</h2></div>'
     + '<div class="prepay-recap">'+schedHead(o)+'. '+(o.payoffLine||"")+'</div>'
     + '<div class="prepay-legend"><b>Payoff Amount</b> = the lump sum to close it out at that point. <b>Total Repayment</b> = everything you will have repaid to the lender if you pay off then.'
-    + (hasFee ? ' <b>Total Cost</b> adds the '+money(m.fee + m.processing)+' in fees on this draw, so it is the true all-in number.' : '')
+    + (hasFee ? ' <b>Total Cost</b> adds the '+money(m.feeEff)+' in fees on this draw, so it is the true all-in number.' : '')
     + (o.schedByWeek ? ' The lender counts these rows as weeks &mdash; at week N you have made N&minus;1 payments, so week 1 shows nothing paid yet.' : '')
     + (o.monthlySched ? ' Your payment is drafted <b>weekly</b> ('+money(m.weekly)+'); this lender tracks early payoff on a <b>monthly</b> ladder, so the rows below are months and Paid to Date is the monthly equivalent.' : '')
-    + (o.rebate ? ' If this funds in September we reimburse the '+money(m.fee + m.processing)+' origination fee in full &mdash; subtract it from every Total Cost below.' : '')
+    + (o.rebate ? ' We reimburse the '+money(m.fee + m.processing)+' origination fee in full if this funds in September, so <b>Total Repayment is your all-in cost</b> &mdash; there is no fee column to add.' : '')
     + (o.cliffNote ? ' <b>Watch payment 5.</b> Through payment 4 the payoff is your remaining principal only &mdash; by far the cheapest exit. At payment 5 it switches to a discounted-balance basis and the total cost steps up sharply, then grinds down from there.' : '')
     + '</div>';
   if(m.advance !== o.advance) h += '<div class="scale-note">Figures scaled to the advance shown ('+money0(m.advance)+').</div>';
@@ -808,7 +822,7 @@ function singleSched(o){
       + '<td class="po-payoff" data-label="Payoff Amount">'+money(c.payoff)+'</td>'
       + '<td class="po-saved" data-label="Interest Saved">'+money(c.saved)+'</td>'
       + '<td class="po-total" data-label="Total Repayment (if paid off then)">'+money(c.total)+'</td>'
-      + (hasFee ? '<td class="po-total" data-label="Total Cost (repaid + fees)">'+money(round2(c.total + m.fee + m.processing))+'</td>' : '')
+      + (hasFee ? '<td class="po-total" data-label="Total Cost (repaid + fees)">'+money(round2(c.total + m.feeEff))+'</td>' : '')
       + '</tr>';
   }
   return h + '<div class="tscroll"><table class="prepay"><thead><tr><th>Pay off after '+unit+'</th><th>Paid to Date</th>'
@@ -882,7 +896,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers \u2014 East TN Tree Service, Inc.", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared September 16, 2026 at 2:09 PM EDT     Draw shown "+money0(STATE.requested), L, y); y+=22;
+  doc.text("BusinessLoans.com     Prepared September 17, 2026 at 3:01 PM EDT     Draw shown "+money0(STATE.requested), L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -892,11 +906,11 @@ function downloadPDF(){
     var rows=[["Available line (spending limit)", money0(o.advance)],
       ["Draw amount shown", money0(m.advance)],
       ["Approved / line size", money0(o.advance)+" ("+String(o.sizeNote).replace(/&middot;/g,"-").replace(/&nbsp;/g," ")+")"],
-      ["Origination / draw fee", o.origLabel+" — "+money(m.fee)]];
+      ["Origination / draw fee", o.origLabel+" — "+money(m.fee)+(o.rebate ? " (reimbursed by us)" : "")]];
     if(o.processing) rows.push([(o.procLabel||"Processing fee"), money(m.processing)]);
-    rows.push(["Net deposited on this draw", money(m.net)]);
-    rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
-    rows.push(["Weekly payment", money(m.weekly)]);
+    rows.push([(o.rebate ? "Net deposited (origination fee reimbursed by us)" : "Net deposited on this draw"), money(m.netShown)]);
+    rows.push(["Total payback (if not repaid early)", (m.oldPayback ? money0(m.oldPayback)+" -> " : "")+money0(m.payback)]);
+    rows.push(["Weekly payment", (m.oldWeekly ? money(m.oldWeekly)+" -> " : "")+money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
     rows.push(["Estimated payback period", o.termDetail]);
     rows.push(["Position", o.position]);
@@ -949,7 +963,7 @@ function downloadPDF(){
       doc.text("Offer "+o.num+" ("+o.name+"): "+money0(m.advance)+" advance   "+money0(m.payback)+" payback   "
         +money(m.weekly)+"/"+(fwOf(o)==="monthly"?"month":"week")+"   "+o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
     doc.text("Payoff Amount = lump sum due at that point. Total Repayment = everything repaid to the lender if you pay off then.", L, y2); y2+=11;
-    var feeAll = round2(m0.fee + m0.processing);
+    var feeAll = m0.feeEff;
     if(!merged && feeAll > 0){ doc.text("Total Cost adds the "+money(feeAll)+" in fees on this draw - the true all-in number.", L, y2); y2+=11; }
     if(!merged && lead.schedByWeek){ doc.text("Rows are the lender's weeks: at week N you have made N-1 payments.", L, y2); y2+=11; }
     if(!merged && lead.monthlySched){ doc.text("Payment is drafted weekly ("+money(m0.weekly)+"); this lender tracks payoff monthly, so rows are months.", L, y2); y2+=11; }
@@ -1020,7 +1034,7 @@ function recompute(){
   STATE.requested = r;
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
-  help.textContent = capped ? "Capped at the $814,000 maximum approval" : "";
+  help.textContent = capped ? "Capped at the $826,000 maximum approval" : "";
   help.style.display = capped ? "" : "none";
   renderOffers(); renderCombos(); renderPrepay();
 }
