@@ -102,11 +102,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 /* reactive offer chart (default for 3+ offers) */
 .chart-wrap{overflow-x:auto;margin:0 0 3px;-webkit-overflow-scrolling:touch;}
 .offer-chart{width:100%;border-collapse:collapse;font-size:13px;min-width:640px;}
-.offer-chart th{background:var(--navy);color:#fff;font-weight:600;text-align:right;padding:5px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
+.offer-chart th{background:var(--navy);color:#fff;font-weight:600;text-align:right;padding:5px 7px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
 .offer-chart th:first-child{text-align:center;border-top-left-radius:8px;}
 .offer-chart th:nth-child(2){text-align:left;}
 .offer-chart th:last-child{border-top-right-radius:8px;}
-.offer-chart td{padding:5px 10px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--navy);}
+.offer-chart td{padding:5px 7px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--navy);}
 .offer-chart td.ch-num{text-align:center;font-weight:800;color:var(--navy);background:rgba(0,47,104,.05);}
 .offer-chart td.ch-term{text-align:left;font-weight:700;}
 .offer-chart tbody tr:nth-child(even){background:var(--bg);}
@@ -153,6 +153,9 @@ table.prepay tbody tr:last-child td{border-bottom:none;}
 .po-total{color:var(--navy);font-weight:700;}
 table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;text-transform:none;letter-spacing:0;line-height:1.15;}
 .po-win{color:var(--green-d);font-weight:700;}
+.offer-chart td.ch-si{font-variant-numeric:tabular-nums;color:var(--navy);font-weight:600;}
+sup.fn{color:#c62828;font-weight:700;}
+.chart-note{font-size:11.5px;color:var(--slate);padding:7px 4px 0;line-height:1.45;}
 /* always two lines, so the column reads the same from the first row to the last */
 .po-win .win-amt{display:block;}
 /* per-term-band indicators (Larry 2026-09-11) */
@@ -247,7 +250,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTguMiA3OC4yIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwMmY2ODt9LmNscy0ye2ZpbGw6IzAwY2Q2Nzt9LmNscy0ze2ZpbGw6IzAwY2RlZjt9LmNscy00e2ZpbGw6IzYwYWZmMDt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImxuMSI+PHJlY3QgeD0iLTYiIHk9Ii02IiB3aWR0aD0iMzY2IiBoZWlnaHQ9IjkwIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImxuMiI+PHJlY3QgeD0iLTYiIHk9Ijg0IiB3aWR0aD0iMzY2IiBoZWlnaHQ9Ijc2Ii8+PC9jbGlwUGF0aD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2xuMSkiPjxnPjxnPjxnPjxnPjxnPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyLjkyLDMxLjY0SDE2Ljc3VjQyLjgyaDYuMTVBMTEuNzQsMTEuNzQsMCwxLDEsMTEuMTgsNTQuNTZoMFYyNS44MWExMCwxMCwwLDAsMC0xMC0xMEgwVjU0LjU2SDBBMjIuOTIsMjIuOTIsMCwxLDAsMjIuOTIsMzEuNjRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgsMjYuMDVIMTYuNzdWMjQuODdhMTAsMTAsMCwwLDEsMTAtMTBIMjh2MS4xOEExMCwxMCwwLDAsMSwxOCwyNi4wNVoiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNCwwbC0uODMuODNhMTAsMTAsMCwwLDAsMCwxNC4xNWwuODMuODMuODQtLjgzYTEwLDEwLDAsMCwwLDAtMTQuMTVMMTQsMFoiLz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMjkuMDUsMTUxLjQyYTEuODQsMS44NCwwLDAsMSwxLjg2LTEuODYsMS43OSwxLjc5LDAsMCwxLDEuMzEuNTQsMS44MSwxLjgxLDAsMCwxLC41NCwxLjMyLDEuODYsMS44NiwwLDEsMS0zLjcxLDBaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjU1LjU2LDE1MC40MWE4LjMyLDguMzIsMCwwLDEtMywyLjM0LDguNjIsOC42MiwwLDAsMS0zLjU5Ljc2LDEwLjE4LDEwLjE4LDAsMCwxLTMuNzktLjcsOC40NCw4LjQ0LDAsMCwxLTMtMS45NSw5LDksMCwwLDEtMS45NC0zLDEwLjYyLDEwLjYyLDAsMCwxLDAtNy41Myw5LDksMCwwLDEsMS45NC0zLDguNDQsOC40NCwwLDAsMSwzLTIsMTAsMTAsMCwwLDEsMy43OS0uNyw4LjMsOC4zLDAsMCwxLDMuNjUuODEsMTAsMTAsMCwwLDEsMywyLjI4bC0xLjg2LDEuNGE3Ljg2LDcuODYsMCwwLDAtMi4yLTEuNzYsNS4zNyw1LjM3LDAsMCwwLTIuNTktLjY0LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4LDcsNywwLDAsMC0yLjI0LDEuNTYsNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMiw4LjY0LDguNjQsMCwwLDAsMCw1LjY4LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi45MSw2LjkxLDAsMCwwLDIuMjQsMS41Nyw3LjM0LDcuMzQsMCwwLDAsMi45NC41OCw1LjQyLDUuNDIsMCwwLDAsMi42OC0uNjgsNi44Niw2Ljg2LDAsMCwwLDIuMTEtMS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1OS43NywxNDQuMTFhMTAsMTAsMCwwLDEsLjY5LTMuNzYsOS4xNyw5LjE3LDAsMCwxLDEuOTMtMyw4LjU3LDguNTcsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOS44OCw5Ljg4LDAsMCwxLDMuNzcuNyw4LjczLDguNzMsMCwwLDEsNC45Miw0LjkzLDEwLjQ4LDEwLjQ4LDAsMCwxLDAsNy41Myw4LjczLDguNzMsMCwwLDEtNC45Miw0LjkzLDEwLjA4LDEwLjA4LDAsMCwxLTMuNzcuNywxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNTcsOC41NywwLDAsMS0zLTEuOTUsOS4xNyw5LjE3LDAsMCwxLTEuOTMtM0ExMCwxMCwwLDAsMSwyNTkuNzcsMTQ0LjExWm0yLjMxLDBhOC4yNiw4LjI2LDAsMCwwLC40OSwyLjg0LDYuNTIsNi41MiwwLDAsMCwxLjQxLDIuMzIsNi44LDYuOCwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNy4yNiw3LjI2LDAsMCwwLDIuOTMtLjU4LDYuNjIsNi42MiwwLDAsMCwzLjY2LTMuODksOC42NCw4LjY0LDAsMCwwLDAtNS42OCw2LjU2LDYuNTYsMCwwLDAtMy42Ni0zLjg4LDcuMSw3LjEsMCwwLDAtMi45My0uNTgsNy4xOCw3LjE4LDAsMCwwLTIuOTQuNThBNi45Myw2LjkzLDAsMCwwLDI2NCwxMzlhNi42MSw2LjYxLDAsMCwwLTEuNDEsMi4zMkE4LjM1LDguMzUsMCwwLDAsMjYyLjA4LDE0NC4xMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yODQuMzEsMTQwLjIxYzAtLjMzLDAtLjc0LDAtMS4yMnMwLTEtLjA2LTEuNDUsMC0uOTQtLjA2LTEuMzcsMC0uNzUsMC0xaDIuMzJjMCwuNjcuMDUsMS4zMS4wNiwxLjkzYTUuODgsNS44OCwwLDAsMCwuMSwxLjJoLjExYTYuMjYsNi4yNiwwLDAsMSwyLjMyLTIuNTMsNi43Niw2Ljc2LDAsMCwxLDMuNzktMS4wNyw2LjEzLDYuMTMsMCwwLDEsMy4yNS45MSw1LjIsNS4yLDAsMCwxLDIuMTIsMyw1LjgyLDUuODIsMCwwLDEsMi41My0yLjk0LDcuMiw3LjIsMCwwLDEsMy41NC0uOTMsNy42LDcuNiwwLDAsMSwzLjQuNjYsNS40NCw1LjQ0LDAsMCwxLDIuMDcsMS43Miw2LjQ5LDYuNDksMCwwLDEsMSwyLjQ1LDE0LjIzLDE0LjIzLDAsMCwxLC4yOSwyLjg2VjE1M2gtMi4zMlYxNDIuNTNhMTEuMzQsMTEuMzQsMCwwLDAtLjE5LTIuMTEsNS42NCw1LjY0LDAsMCwwLS42OC0xLjgzLDMuNTIsMy41MiwwLDAsMC0xLjM1LTEuMyw0LjY1LDQuNjUsMCwwLDAtMi4yNi0uNDgsNS4zMyw1LjMzLDAsMCwwLTIuNjcuNiw0LjgxLDQuODEsMCwwLDAtMS42NCwxLjUyLDYuMzgsNi4zOCwwLDAsMC0uODUsMiw5LDksMCwwLDAtLjI1LDIuMDV2MTBoLTIuMzJWMTQyLjNhNy41OSw3LjU5LDAsMCwwLS45MS00LDMsMywwLDAsMC0yLjgtMS41MSw2Ljc1LDYuNzUsMCwwLDAtMi40Mi40NCw1LjI1LDUuMjUsMCwwLDAtMiwxLjM2LDYuNDgsNi40OCwwLDAsMC0xLjMxLDIuMjgsOS43NSw5Ljc1LDAsMCwwLS40OCwzLjIyVjE1M2gtMi4zMloiLz48L2c+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIuMjQsNzdIODEuMzJWNzIuODRhMTUuMzYsMTUuMzYsMCwwLDEtMTEuMTgsNC42NCwxNC40NywxNC40NywwLDAsMS0xMC41OC00QzU2LDY5LjkxLDU1LDY1LjcsNTUsNjAuOFYzMi4xNkg2Ni4xOFY1OS4yNWMwLDYuMTEsMy44Nyw4LjE3LDcuNCw4LjE3czcuNDgtMi4wNiw3LjQ4LTguMTdWMzIuMTZIOTIuMjRaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM4LjQyLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNC0zLTQuNDgsMC02LjM3LDIuMDYtNi4zNyw0LjNzMS4yOSwzLjUyLDQuNjUsMy44N2w3LC42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNSwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1TDEwOSw2My43MmMzLjYxLDMuNyw4LjUxLDQuMjIsMTEuOTUsNC4yMiwzLjg3LDAsNy45Mi0xLjI5LDcuOTItNC42NSwwLTIuMjMtMS4xMi0zLjc4LTQuNzMtNC4xM2wtNy4wNi0uNjhDMTA5LDU3LjcsMTA0LDU0LjE4LDEwNCw0NS45MmMwLTkuMzcsOC4xNy0xNC4yOCwxNy4yOS0xNC4yOEMxMjguMzYsMzEuNjQsMTM0LjEyLDMyLjkzLDEzOC40MiwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNzMsMjQuNTFIMTUwLjI5VjE1LjM5aDExLjQ0Wk0xNjEuNjQsNzdIMTUwLjQ2VjMzLjQ1aDExLjE4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwOC4wOCwzNS42YzMuNjEsMy43LDQuNTYsNy44Myw0LjU2LDEyLjczVjc3SDIwMS40NlY0OS44OGMwLTYuMTEtMy43OS04LjE3LTcuNC04LjE3cy03LjQ4LDIuMDYtNy40OCw4LjE3Vjc3SDE3NS40VjMyLjE2aDEwLjkydjQuMTNhMTUuMzMsMTUuMzMsMCwwLDEsMTEuMTgtNC42NUMyMDIsMzEuNjQsMjA1LjU5LDMzLDIwOC4wOCwzNS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI2Mi43OCw1My4zMnY0LjczaC0yOGMwLDUuODQsMy40NCwxMCw5LjgsMTAsNC45MSwwLDcuMzEtMS40NiwxMC4wNy00LjIxbDYuODgsNi42MmMtNC41Niw0LjY0LTksNy0xNyw3LTEwLjY3LDAtMjAuNzMtNC44MS0yMC43My0yMywwLTE0LjYyLDcuOTEtMjIuODgsMTkuNTItMjIuODhDMjU1LjcyLDMxLjY0LDI2Mi43OCw0MC41OSwyNjIuNzgsNTMuMzJabS0yNy4wOS03Ljc0YTEwLjg5LDEwLjg5LDAsMCwwLS45NSw0LjgxaDE2Ljk0YTEwLjg5LDEwLjg5LDAsMCwwLS45NC00LjgxLDguNDEsOC40MSwwLDAsMC0xNS4wNSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwNi43MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcsMC0xMy4zMy0uNzctMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4Yy04LjA4LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMjk2LjY2LDMxLjY0LDMwMi40MiwzMi45MywzMDYuNzIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzUxLjEsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDYtNi4zNiw0LjNzMS4yOSwzLjUyLDQuNjQsMy44N2w3LjA1LjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LjA2LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zLTcuMzFjMy42MiwzLjcsOC41Miw0LjIyLDEyLDQuMjIsMy44NywwLDcuOTEtMS4yOSw3LjkxLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDUtLjY4Yy04LjA5LS43OC0xMy4wNy00LjMtMTMuMDctMTIuNTYsMC05LjM3LDguMTctMTQuMjgsMTcuMjgtMTQuMjhDMzQxLDMxLjY0LDM0Ni44LDMyLjkzLDM1MS4xLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTI0LjczLDEzOS41NWMwLDIuNjYsMS4xMiw0LDQsNEgzM3Y5LjQ2SDI2LjYyYy05LjIsMC0xMy4wNy02LjM2LTEzLjA3LTEyLjgxVjkxLjgySDI0LjczWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTczLjMyLDE0OC4wNmMtMi44NCwyLjkzLTcuMzEsNS41MS0xMy45Myw1LjUxcy0xMS0yLjU4LTEzLjg0LTUuNTFjLTQtNC4zLTUuMDgtOS4zNy01LjA4LTE3LjQ2czEtMTMuMDcsNS4wOC0xNy4zN2MyLjgzLTIuOTIsNy4yMi01LjUsMTMuODQtNS41czExLjA5LDIuNDksMTMuOTMsNS41YzQsNC4zLDUuMDgsOS4yOSw1LjA4LDE3LjM3Uzc3LjQ1LDE0My44NSw3My4zMiwxNDguMDZabS04LjY4LTI4LjI5YTcuMDcsNy4wNywwLDAsMC01LjI1LTIsNyw3LDAsMCwwLTUuMTYsMmMtMi4zMiwyLjI0LTIuNTgsNi4yOC0yLjU4LDEwLjgzcy4yNiw4LjY5LDIuNTgsMTAuOTNhNyw3LDAsMCwwLDUuMTYsMiw3LjA3LDcuMDcsMCwwLDAsNS4yNS0yYzIuMzItMi4yNCwyLjU4LTYuMjgsMi41OC0xMC45M1M2NywxMjIsNjQuNjQsMTE5Ljc3WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTEyNC4yMywxMjMuNTV2MjkuNUgxMTMuMzF2LTMuODdjLTMsMy01Ljg0LDQuMy0xMSw0LjNzLTguODYtMS4zOC0xMS40NC00YTE0LjMzLDE0LjMzLDAsMCwxLTMuNy0xMC4wNmMwLTcuMTMsNC45LTEzLDE1LjQ4LTEzaDEwLjR2LTIuMjRjMC00LjktMi40LTctOC4zNC03LTQsMC02LjE5LDEuMTItOC42LDMuODdsLTctN2M0LjM5LTQuODEsOC42LTYuMzYsMTYuMDgtNi4zNkMxMTcuNzgsMTA3LjczLDEyNC4yMywxMTMuMDYsMTI0LjIzLDEyMy41NVptLTE5LjY5LDEwLjU4Yy00LjQ3LDAtNi42MiwxLjgxLTYuNjIsNS4xNiwwLDMuMSwyLjE1LDUuMDcsNi43OSw1LjA3LDIuNzYsMCw0LjczLS4zNCw2LjYyLTIuMTUsMS4yOS0xLjExLDEuNzItMi44MywxLjcyLTUuNjd2LTIuNDFaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMTcwLjI0LDExMS42OWMzLjYyLDMuNjksNC41Niw3LjgyLDQuNTYsMTIuNzJ2MjguNjRIMTYzLjYyVjEyNmMwLTYuMS0zLjc4LTguMTctNy4zOS04LjE3cy03LjQ5LDIuMDctNy40OSw4LjE3djI3LjA5SDEzNy41NnYtNDQuOGgxMC45M3Y0LjEyYTE1LjM0LDE1LjM0LDAsMCwxLDExLjE4LTQuNjRDMTY0LjE0LDEwNy43MywxNjcuNzUsMTA5LjExLDE3MC4yNCwxMTEuNjlaIi8+PHBhdGggY2xhc3M9ImNscy00IiBkPSJNMjIwLjQ3LDExM2wtNi44OCw3Yy0yLjU4LTIuMzItNi40NS0zLTEwLjQxLTMtNC40NywwLTYuMzYsMi4wNy02LjM2LDQuM3MxLjI5LDMuNTMsNC42NCwzLjg3bDcsLjY5YzguODYuODYsMTMuMzMsNS41LDEzLjMzLDEzLjE2LDAsOS44OS04LjQyLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzgtMTkuMDktNi40NWw3LjMxLTcuMzFjMy42MSwzLjY5LDguNTEsNC4yMSwxMS45NSw0LjIxLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY0LDAtMi4yNC0xLjEyLTMuNzktNC43My00LjEzbC03LjA1LS42OWMtOC4wOC0uNzctMTMuMDctNC4zLTEzLjA3LTEyLjU1LDAtOS4zOCw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzIxMC40MSwxMDcuNzMsMjE2LjE3LDEwOSwyMjAuNDcsMTEzWiIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ni45MiAtNzYuMSkiIGNsaXAtcGF0aD0idXJsKCNsbjIpIj48Zz48Zz48Zz48Zz48Zz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMi45MiwzMS42NEgxNi43N1Y0Mi44Mmg2LjE1QTExLjc0LDExLjc0LDAsMSwxLDExLjE4LDU0LjU2aDBWMjUuODFhMTAsMTAsMCwwLDAtMTAtMTBIMFY1NC41NkgwQTIyLjkyLDIyLjkyLDAsMSwwLDIyLjkyLDMxLjY0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE4LDI2LjA1SDE2Ljc3VjI0Ljg3YTEwLDEwLDAsMCwxLDEwLTEwSDI4djEuMThBMTAsMTAsMCwwLDEsMTgsMjYuMDVaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTQsMGwtLjgzLjgzYTEwLDEwLDAsMCwwLDAsMTQuMTVsLjgzLjgzLjg0LS44M2ExMCwxMCwwLDAsMCwwLTE0LjE1TDE0LDBaIi8+PGc+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjI5LjA1LDE1MS40MmExLjg0LDEuODQsMCwwLDEsMS44Ni0xLjg2LDEuNzksMS43OSwwLDAsMSwxLjMxLjU0LDEuODEsMS44MSwwLDAsMSwuNTQsMS4zMiwxLjg2LDEuODYsMCwxLDEtMy43MSwwWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI1NS41NiwxNTAuNDFhOC4zMiw4LjMyLDAsMCwxLTMsMi4zNCw4LjYyLDguNjIsMCwwLDEtMy41OS43NiwxMC4xOCwxMC4xOCwwLDAsMS0zLjc5LS43LDguNDQsOC40NCwwLDAsMS0zLTEuOTUsOSw5LDAsMCwxLTEuOTQtMywxMC42MiwxMC42MiwwLDAsMSwwLTcuNTMsOSw5LDAsMCwxLDEuOTQtMyw4LjQ0LDguNDQsMCwwLDEsMy0yLDEwLDEwLDAsMCwxLDMuNzktLjcsOC4zLDguMywwLDAsMSwzLjY1LjgxLDEwLDEwLDAsMCwxLDMsMi4yOGwtMS44NiwxLjRhNy44Niw3Ljg2LDAsMCwwLTIuMi0xLjc2LDUuMzcsNS4zNywwLDAsMC0yLjU5LS42NCw3LjE4LDcuMTgsMCwwLDAtMi45NC41OCw3LDcsMCwwLDAtMi4yNCwxLjU2LDYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzIsOC42NCw4LjY0LDAsMCwwLDAsNS42OCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOTEsNi45MSwwLDAsMCwyLjI0LDEuNTcsNy4zNCw3LjM0LDAsMCwwLDIuOTQuNTgsNS40Miw1LjQyLDAsMCwwLDIuNjgtLjY4LDYuODYsNi44NiwwLDAsMCwyLjExLTEuOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNTkuNzcsMTQ0LjExYTEwLDEwLDAsMCwxLC42OS0zLjc2LDkuMTcsOS4xNywwLDAsMSwxLjkzLTMsOC41Nyw4LjU3LDAsMCwxLDMtMiwxMCwxMCwwLDAsMSwzLjc5LS43LDkuODgsOS44OCwwLDAsMSwzLjc3LjcsOC43Myw4LjczLDAsMCwxLDQuOTIsNC45MywxMC40OCwxMC40OCwwLDAsMSwwLDcuNTMsOC43Myw4LjczLDAsMCwxLTQuOTIsNC45MywxMC4wOCwxMC4wOCwwLDAsMS0zLjc3LjcsMTAuMTgsMTAuMTgsMCwwLDEtMy43OS0uNyw4LjU3LDguNTcsMCwwLDEtMy0xLjk1LDkuMTcsOS4xNywwLDAsMS0xLjkzLTNBMTAsMTAsMCwwLDEsMjU5Ljc3LDE0NC4xMVptMi4zMSwwYTguMjYsOC4yNiwwLDAsMCwuNDksMi44NCw2LjUyLDYuNTIsMCwwLDAsMS40MSwyLjMyLDYuOCw2LjgsMCwwLDAsMi4yNCwxLjU3LDcuMzQsNy4zNCwwLDAsMCwyLjk0LjU4LDcuMjYsNy4yNiwwLDAsMCwyLjkzLS41OCw2LjYyLDYuNjIsMCwwLDAsMy42Ni0zLjg5LDguNjQsOC42NCwwLDAsMCwwLTUuNjgsNi41Niw2LjU2LDAsMCwwLTMuNjYtMy44OCw3LjEsNy4xLDAsMCwwLTIuOTMtLjU4LDcuMTgsNy4xOCwwLDAsMC0yLjk0LjU4QTYuOTMsNi45MywwLDAsMCwyNjQsMTM5YTYuNjEsNi42MSwwLDAsMC0xLjQxLDIuMzJBOC4zNSw4LjM1LDAsMCwwLDI2Mi4wOCwxNDQuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjg0LjMxLDE0MC4yMWMwLS4zMywwLS43NCwwLTEuMjJzMC0xLS4wNi0xLjQ1LDAtLjk0LS4wNi0xLjM3LDAtLjc1LDAtMWgyLjMyYzAsLjY3LjA1LDEuMzEuMDYsMS45M2E1Ljg4LDUuODgsMCwwLDAsLjEsMS4yaC4xMWE2LjI2LDYuMjYsMCwwLDEsMi4zMi0yLjUzLDYuNzYsNi43NiwwLDAsMSwzLjc5LTEuMDcsNi4xMyw2LjEzLDAsMCwxLDMuMjUuOTEsNS4yLDUuMiwwLDAsMSwyLjEyLDMsNS44Miw1LjgyLDAsMCwxLDIuNTMtMi45NCw3LjIsNy4yLDAsMCwxLDMuNTQtLjkzLDcuNiw3LjYsMCwwLDEsMy40LjY2LDUuNDQsNS40NCwwLDAsMSwyLjA3LDEuNzIsNi40OSw2LjQ5LDAsMCwxLDEsMi40NSwxNC4yMywxNC4yMywwLDAsMSwuMjksMi44NlYxNTNoLTIuMzJWMTQyLjUzYTExLjM0LDExLjM0LDAsMCwwLS4xOS0yLjExLDUuNjQsNS42NCwwLDAsMC0uNjgtMS44MywzLjUyLDMuNTIsMCwwLDAtMS4zNS0xLjMsNC42NSw0LjY1LDAsMCwwLTIuMjYtLjQ4LDUuMzMsNS4zMywwLDAsMC0yLjY3LjYsNC44MSw0LjgxLDAsMCwwLTEuNjQsMS41Miw2LjM4LDYuMzgsMCwwLDAtLjg1LDIsOSw5LDAsMCwwLS4yNSwyLjA1djEwaC0yLjMyVjE0Mi4zYTcuNTksNy41OSwwLDAsMC0uOTEtNCwzLDMsMCwwLDAtMi44LTEuNTEsNi43NSw2Ljc1LDAsMCwwLTIuNDIuNDQsNS4yNSw1LjI1LDAsMCwwLTIsMS4zNiw2LjQ4LDYuNDgsMCwwLDAtMS4zMSwyLjI4LDkuNzUsOS43NSwwLDAsMC0uNDgsMy4yMlYxNTNoLTIuMzJaIi8+PC9nPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyLjI0LDc3SDgxLjMyVjcyLjg0YTE1LjM2LDE1LjM2LDAsMCwxLTExLjE4LDQuNjQsMTQuNDcsMTQuNDcsMCwwLDEtMTAuNTgtNEM1Niw2OS45MSw1NSw2NS43LDU1LDYwLjhWMzIuMTZINjYuMThWNTkuMjVjMCw2LjExLDMuODcsOC4xNyw3LjQsOC4xN3M3LjQ4LTIuMDYsNy40OC04LjE3VjMyLjE2SDkyLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEzOC40MiwzNi44OWwtNi44OCw3Yy0yLjU4LTIuMzMtNi40NS0zLTEwLjQtMy00LjQ4LDAtNi4zNywyLjA2LTYuMzcsNC4zczEuMjksMy41Miw0LjY1LDMuODdsNywuNjhjOC44Ni44NiwxMy4zMyw1LjUxLDEzLjMzLDEzLjE2LDAsOS44OS04LjQzLDE0LjYyLTE5LDE0LjYyLTcuMDUsMC0xMy4zMy0uNzctMTkuMDktNi40NUwxMDksNjMuNzJjMy42MSwzLjcsOC41MSw0LjIyLDExLjk1LDQuMjIsMy44NywwLDcuOTItMS4yOSw3LjkyLTQuNjUsMC0yLjIzLTEuMTItMy43OC00LjczLTQuMTNsLTcuMDYtLjY4QzEwOSw1Ny43LDEwNCw1NC4xOCwxMDQsNDUuOTJjMC05LjM3LDguMTctMTQuMjgsMTcuMjktMTQuMjhDMTI4LjM2LDMxLjY0LDEzNC4xMiwzMi45MywxMzguNDIsMzYuODlaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYxLjczLDI0LjUxSDE1MC4yOVYxNS4zOWgxMS40NFpNMTYxLjY0LDc3SDE1MC40NlYzMy40NWgxMS4xOFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMDguMDgsMzUuNmMzLjYxLDMuNyw0LjU2LDcuODMsNC41NiwxMi43M1Y3N0gyMDEuNDZWNDkuODhjMC02LjExLTMuNzktOC4xNy03LjQtOC4xN3MtNy40OCwyLjA2LTcuNDgsOC4xN1Y3N0gxNzUuNFYzMi4xNmgxMC45MnY0LjEzYTE1LjMzLDE1LjMzLDAsMCwxLDExLjE4LTQuNjVDMjAyLDMxLjY0LDIwNS41OSwzMywyMDguMDgsMzUuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjIuNzgsNTMuMzJ2NC43M2gtMjhjMCw1Ljg0LDMuNDQsMTAsOS44LDEwLDQuOTEsMCw3LjMxLTEuNDYsMTAuMDctNC4yMWw2Ljg4LDYuNjJjLTQuNTYsNC42NC05LDctMTcsNy0xMC42NywwLTIwLjczLTQuODEtMjAuNzMtMjMsMC0xNC42Miw3LjkxLTIyLjg4LDE5LjUyLTIyLjg4QzI1NS43MiwzMS42NCwyNjIuNzgsNDAuNTksMjYyLjc4LDUzLjMyWm0tMjcuMDktNy43NGExMC44OSwxMC44OSwwLDAsMC0uOTUsNC44MWgxNi45NGExMC44OSwxMC44OSwwLDAsMC0uOTQtNC44MSw4LjQxLDguNDEsMCwwLDAtMTUuMDUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zMDYuNzIsMzYuODlsLTYuODgsN2MtMi41OC0yLjMzLTYuNDUtMy0xMC40LTMtNC40OCwwLTYuMzcsMi4wNi02LjM3LDQuM3MxLjI5LDMuNTIsNC42NSwzLjg3bDcsLjY4YzguODYuODYsMTMuMzMsNS41MSwxMy4zMywxMy4xNiwwLDkuODktOC40MywxNC42Mi0xOSwxNC42Mi03LDAtMTMuMzMtLjc3LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy43LDguNTEsNC4yMiwxMS45NSw0LjIyLDMuODcsMCw3LjkyLTEuMjksNy45Mi00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA2LS42OGMtOC4wOC0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI5LTE0LjI4QzI5Ni42NiwzMS42NCwzMDIuNDIsMzIuOTMsMzA2LjcyLDM2Ljg5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1MS4xLDM2Ljg5bC02Ljg4LDdjLTIuNTgtMi4zMy02LjQ1LTMtMTAuNDEtMy00LjQ3LDAtNi4zNiwyLjA2LTYuMzYsNC4zczEuMjksMy41Miw0LjY0LDMuODdsNy4wNS42OGM4Ljg2Ljg2LDEzLjMzLDUuNTEsMTMuMzMsMTMuMTYsMCw5Ljg5LTguNDMsMTQuNjItMTksMTQuNjItNy4wNiwwLTEzLjMzLS43Ny0xOS4wOS02LjQ1bDcuMy03LjMxYzMuNjIsMy43LDguNTIsNC4yMiwxMiw0LjIyLDMuODcsMCw3LjkxLTEuMjksNy45MS00LjY1LDAtMi4yMy0xLjEyLTMuNzgtNC43My00LjEzbC03LjA1LS42OGMtOC4wOS0uNzgtMTMuMDctNC4zLTEzLjA3LTEyLjU2LDAtOS4zNyw4LjE3LTE0LjI4LDE3LjI4LTE0LjI4QzM0MSwzMS42NCwzNDYuOCwzMi45MywzNTEuMSwzNi44OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0yNC43MywxMzkuNTVjMCwyLjY2LDEuMTIsNCw0LDRIMzN2OS40NkgyNi42MmMtOS4yLDAtMTMuMDctNi4zNi0xMy4wNy0xMi44MVY5MS44MkgyNC43M1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik03My4zMiwxNDguMDZjLTIuODQsMi45My03LjMxLDUuNTEtMTMuOTMsNS41MXMtMTEtMi41OC0xMy44NC01LjUxYy00LTQuMy01LjA4LTkuMzctNS4wOC0xNy40NnMxLTEzLjA3LDUuMDgtMTcuMzdjMi44My0yLjkyLDcuMjItNS41LDEzLjg0LTUuNXMxMS4wOSwyLjQ5LDEzLjkzLDUuNWM0LDQuMyw1LjA4LDkuMjksNS4wOCwxNy4zN1M3Ny40NSwxNDMuODUsNzMuMzIsMTQ4LjA2Wm0tOC42OC0yOC4yOWE3LjA3LDcuMDcsMCwwLDAtNS4yNS0yLDcsNywwLDAsMC01LjE2LDJjLTIuMzIsMi4yNC0yLjU4LDYuMjgtMi41OCwxMC44M3MuMjYsOC42OSwyLjU4LDEwLjkzYTcsNywwLDAsMCw1LjE2LDIsNy4wNyw3LjA3LDAsMCwwLDUuMjUtMmMyLjMyLTIuMjQsMi41OC02LjI4LDIuNTgtMTAuOTNTNjcsMTIyLDY0LjY0LDExOS43N1oiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMjQuMjMsMTIzLjU1djI5LjVIMTEzLjMxdi0zLjg3Yy0zLDMtNS44NCw0LjMtMTEsNC4zcy04Ljg2LTEuMzgtMTEuNDQtNGExNC4zMywxNC4zMywwLDAsMS0zLjctMTAuMDZjMC03LjEzLDQuOS0xMywxNS40OC0xM2gxMC40di0yLjI0YzAtNC45LTIuNC03LTguMzQtNy00LDAtNi4xOSwxLjEyLTguNiwzLjg3bC03LTdjNC4zOS00LjgxLDguNi02LjM2LDE2LjA4LTYuMzZDMTE3Ljc4LDEwNy43MywxMjQuMjMsMTEzLjA2LDEyNC4yMywxMjMuNTVabS0xOS42OSwxMC41OGMtNC40NywwLTYuNjIsMS44MS02LjYyLDUuMTYsMCwzLjEsMi4xNSw1LjA3LDYuNzksNS4wNywyLjc2LDAsNC43My0uMzQsNi42Mi0yLjE1LDEuMjktMS4xMSwxLjcyLTIuODMsMS43Mi01LjY3di0yLjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTE3MC4yNCwxMTEuNjljMy42MiwzLjY5LDQuNTYsNy44Miw0LjU2LDEyLjcydjI4LjY0SDE2My42MlYxMjZjMC02LjEtMy43OC04LjE3LTcuMzktOC4xN3MtNy40OSwyLjA3LTcuNDksOC4xN3YyNy4wOUgxMzcuNTZ2LTQ0LjhoMTAuOTN2NC4xMmExNS4zNCwxNS4zNCwwLDAsMSwxMS4xOC00LjY0QzE2NC4xNCwxMDcuNzMsMTY3Ljc1LDEwOS4xMSwxNzAuMjQsMTExLjY5WiIvPjxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTIyMC40NywxMTNsLTYuODgsN2MtMi41OC0yLjMyLTYuNDUtMy0xMC40MS0zLTQuNDcsMC02LjM2LDIuMDctNi4zNiw0LjNzMS4yOSwzLjUzLDQuNjQsMy44N2w3LC42OWM4Ljg2Ljg2LDEzLjMzLDUuNSwxMy4zMywxMy4xNiwwLDkuODktOC40MiwxNC42Mi0xOSwxNC42Mi03LjA1LDAtMTMuMzMtLjc4LTE5LjA5LTYuNDVsNy4zMS03LjMxYzMuNjEsMy42OSw4LjUxLDQuMjEsMTEuOTUsNC4yMSwzLjg3LDAsNy45MS0xLjI5LDcuOTEtNC42NCwwLTIuMjQtMS4xMi0zLjc5LTQuNzMtNC4xM2wtNy4wNS0uNjljLTguMDgtLjc3LTEzLjA3LTQuMy0xMy4wNy0xMi41NSwwLTkuMzgsOC4xNy0xNC4yOCwxNy4yOC0xNC4yOEMyMTAuNDEsMTA3LjczLDIxNi4xNywxMDksMjIwLjQ3LDExM1oiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="BusinessLoans.com"/>
     <div class="cover-header-meta">
       <strong>FUNDING TERM SHEET</strong><br/>
-      Prepared September 17, 2026 at 3:37 PM EDT<br/>
+      Prepared September 17, 2026 at 3:44 PM EDT<br/>
       Illustration only — see disclosure
     </div>
   </header>
@@ -260,8 +263,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <div class="borrower-bar-name">Lambert Marble and Tile</div>
     </div>
     <div class="borrower-bar-funding">
-      <div class="borrower-bar-label">Requested Amount &middot; approvals up to $400,000</div>
-      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="400,000" aria-label="Requested amount"/></div></div>
+      <div class="borrower-bar-label">Requested Amount &middot; approvals up to $450,000</div>
+      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="450,000" aria-label="Requested amount"/></div></div>
       <div id="amountHelp" class="amount-help" style="display:none;"></div>
     </div>
   </div>
@@ -313,11 +316,19 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Signed Contract</li>
     </ul>
   </div>
+  <div class="closing">
+    <h3>Mulligan Funding — Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Driver's License</li>
+      <li>Voided Check</li>
+      <li>Signed Contract</li>
+    </ul>
+  </div>
   </div>
 
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the ISO agreement with Kapitus and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect the payoff due if the balance is paid in full after the payment shown; Kapitus tracks payoff on a monthly schedule while payments are drawn weekly. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the ISO agreement with Kapitus or Mulligan Funding and satisfaction of the stipulations above. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect the payoff due if the balance is paid in full after the payment shown; Kapitus tracks payoff on a monthly schedule while payments are drawn weekly. Actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -334,41 +345,56 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
      (SCHED k12..k27) and merge into ONE cross-term comparison table via MERGE_GROUPS.
    - Retention-pricing offers (12/15/18/21/24/27 mo) are cheaper but carry no published
      payoff ladder, so they read "Pay off early & save" with no schedule.
-   The 6-month ($361,000 cap) and 9-month retention offers were pulled 2026-09-17 (Larry) so
-   every offer on the sheet is the same $400,000.
+   The 6-month ($361,000 cap) and 9-month retention offers were pulled 2026-09-17 (Larry).
+   - Mulligan Funding, $450,000, 18 & 24 months: each term quoted twice — 100% prepay (4% fee) and
+     standard prepay (2.5% fee), same payment either way. Schedules are Mulligan's OWN PDF numbers
+     (SCHED m18_50/m18_100/m24_50/m24_100) and merge into a second cross-term table.
+     The two 100% offers carry feeNote — the September fee reimbursement — shown as a table footnote.
+   Every offer shows Simple Interest (factor - 1) and Annualized (simple / term x 12).
    Kapitus quotes payoff MONTH-BY-MONTH while the draft is weekly -> schedClock:"month".
    NEVER show buy/sell/factor rate, commission, or APR.
    ========================================================================= */
-var MASTER_MAX = 400000;
-var STATE = { requested: 400000 };
+var MASTER_MAX = 450000;
+var STATE = { requested: 450000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
   /* Kapitus — Retention pricing (partial early-payoff savings, no published schedule) */
-  { name:"Kapitus", advance:400000, factor:1.191, weekly:9169.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.191, weekly:9169.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"Pay off early &amp; save" },
   /* Kapitus — 100% interest-forgiveness pricing (schedules below) */
-  { name:"Kapitus", advance:400000, factor:1.238, weekly:9531.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.238, weekly:9531.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"100% of remaining interest waived", schedKey:"k12", schedClock:"month" },
-  { name:"Kapitus", advance:400000, factor:1.181, weekly:7274.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.181, weekly:7274.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:1.2670025, weekly:7803.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.2670025, weekly:7803.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"100% of remaining interest waived", schedKey:"k15", schedClock:"month" },
-  { name:"Kapitus", advance:400000, factor:1.2390025, weekly:6359.00, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.2390025, weekly:6359.00, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:1.3170025, weekly:6760.00, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.3170025, weekly:6760.00, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"100% of remaining interest waived", schedKey:"k18", schedClock:"month" },
-  { name:"Kapitus", advance:400000, factor:1.298, weekly:5710.00, nPay:"91", term:"21", termLabel:"21-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  /* Mulligan Funding — same $450,000 / same payment; the choice is fee vs. early-payoff forgiveness */
+  { name:"Mulligan Funding", advance:450000, factor:1.27, weekly:7326.93, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
+    forgive:"Pay off early &amp; save", schedKey:"m18_50", schedTag:"18-Month &middot; standard prepay" },
+  { name:"Mulligan Funding", advance:450000, factor:1.27, weekly:7326.93, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.04, origLabel:"4.00%", processing:0, position:"1st", freq:"weekly",
+    forgive:"100% of remaining interest waived", schedKey:"m18_100", schedTag:"18-Month &middot; 100% prepay",
+    feeNote:true },
+  { name:"Kapitus", advance:400000, factor:1.298, weekly:5710.00, nPay:"91", term:"21", termLabel:"21-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:1.378, weekly:6062.00, nPay:"91", term:"21", termLabel:"21-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.378, weekly:6062.00, nPay:"91", term:"21", termLabel:"21-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"100% of remaining interest waived", schedKey:"k21", schedClock:"month" },
-  { name:"Kapitus", advance:400000, factor:1.338, weekly:5151.00, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.338, weekly:5151.00, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:1.419, weekly:5462.00, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.419, weekly:5462.00, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"100% of remaining interest waived", schedKey:"k24", schedClock:"month" },
-  { name:"Kapitus", advance:400000, factor:1.408, weekly:4818.00, nPay:"117", term:"27", termLabel:"27-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Mulligan Funding", advance:450000, factor:1.36, weekly:5884.62, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
+    forgive:"Pay off early &amp; save", schedKey:"m24_50", schedTag:"24-Month &middot; standard prepay" },
+  { name:"Mulligan Funding", advance:450000, factor:1.36, weekly:5884.62, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4.00%", processing:0, position:"1st", freq:"weekly",
+    forgive:"100% of remaining interest waived", schedKey:"m24_100", schedTag:"24-Month &middot; 100% prepay",
+    feeNote:true },
+  { name:"Kapitus", advance:400000, factor:1.408, weekly:4818.00, nPay:"117", term:"27", termLabel:"27-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:1.489, weekly:5095.00, nPay:"117", term:"27", termLabel:"27-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"weekly",
+  { name:"Kapitus", advance:400000, factor:1.489, weekly:5095.00, nPay:"117", term:"27", termLabel:"27-Month", origPct:0.025, origLabel:"2.50%", processing:0, position:"1st", freq:"weekly",
     forgive:"100% of remaining interest waived", schedKey:"k27", schedClock:"month" }
 ];
 
@@ -419,6 +445,13 @@ function allInRate(o){
   return Math.round(((m.payback + m.fee + m.processing) / m.advance) * 1e6) / 1e6;
 }
 
+/* Simple interest = total interest as a % of the advance (factor - 1); annualized spreads that
+   over a year (simple / term in months x 12). Both are advance-independent, so they do not move
+   when the merchant changes the amount. Larry asked for these on every offer 2026-09-17. */
+function simpleInt(o){ return (o.factor - 1) * 100; }
+function annualInt(o){ return simpleInt(o) / (Number(o.term) || 1) * 12; }
+function pct1(x){ return (Math.round(x*10)/10).toFixed(1) + "%"; }
+
 function renderOffers(){
   /* SINGLE-TABLE standard (Larry 2026-08-27, validated on lobster-test + multifamily-test):
      3+ offers -> ONE chart, every offer a row, sorted term asc -> advance -> factor, with
@@ -467,7 +500,7 @@ function renderOffers(){
     var allWeekly = LIVEOFF.every(function(o){ return o.freq !== "monthly"; });
     var payHead = allWeekly ? "Weekly Payment" : "Payment";
     /* term sub-category bands (Larry 2026-09-11): heading row above each term-length change */
-    var colspan = 9 + (hasForgive ? 1 : 0); var lastBand = null;
+    var colspan = 11 + (hasForgive ? 1 : 0); var lastBand = null;
     var rows = sorted.map(function(o){
       var band = "";
       if(o.termLabel !== lastBand){ lastBand = o.termLabel;
@@ -490,16 +523,22 @@ function renderOffers(){
         + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
         + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
-        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span></td>'
+        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span>'+(o.feeNote ? '<sup class="fn">&dagger;</sup>' : '')+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
-        + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
+        + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'
+        + '<td class="ch-si" data-label="Simple Interest">'+pct1(simpleInt(o))+'</td>'
+        + '<td class="ch-si" data-label="Annualized">'+pct1(annualInt(o))+'</td>'+fg+'</tr>';
     }).join("");
     var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Orig. Fee</th><th>Net Advance</th>'
       + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+payHead+'</th>'
-      + '<th># Payments</th>'+(hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
-    html = rows ? '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'+head+'<tbody>'+rows+'</tbody></table></div></div>' : '';
+      + '<th># Payments</th><th>Simple Interest<span class="th-note">over the full term</span></th>'
+      + '<th>Annualized<span class="th-note">simple &divide; term &times; 12</span></th>'
+      + (hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
+    var fnote = LIVEOFF.some(function(o){ return o.feeNote; })
+      ? '<div class="chart-note"><sup class="fn">&dagger;</sup> BusinessLoans.com will reimburse 2.50% of the origination fee after closing if the loan funds in September 2026.</div>' : '';
+    html = rows ? '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'+head+'<tbody>'+rows+'</tbody></table></div>'+fnote+'</div>' : '';
   } else {
     html = '<div class="offers-grid">'+LIVEOFF.map(card).join("")+'</div>';
   }
@@ -555,7 +594,18 @@ var SCHED = {
   k24:{ payoff:[388398.77,376448.09,364137.43,351455.95,338392.48,324935.52,311073.21,296793.34,282083.33,266930.22,251320.67,235240.93,218676.84,201613.81,184036.81,165930.35,147278.49,128064.80,108272.36,87883.73,66880.96,45245.54,22958.42,0.00],
         saved:[155551.23,143851.91,132512.57,121544.05,110957.52,100764.48,90976.79,81606.66,72666.67,64169.78,56129.33,48559.07,41473.16,34886.19,28813.19,23269.65,18271.51,13835.20,9977.64,6716.27,4069.04,2054.46,691.58,0.00] },
   k27:{ payoff:[390300.39,380301.07,369992.78,359365.97,348410.80,337117.13,325474.50,313472.11,301098.86,288343.29,275193.58,261637.56,247662.67,233255.97,218404.11,203093.34,187309.48,171037.92,154263.58,136970.93,119143.96,100766.14,81820.46,62289.38,42154.81,21398.10,0.00],
-        saved:[183240.35,171180.41,159429.44,147996.99,136892.90,126127.31,115710.69,105653.82,95967.81,86664.12,77754.57,69251.33,61166.96,53514.40,46307.00,39558.51,33283.11,27495.41,22210.49,17443.88,13211.60,9530.16,6416.58,3888.40,1963.71,661.16,0.00] }
+        saved:[183240.35,171180.41,159429.44,147996.99,136892.90,126127.31,115710.69,105653.82,95967.81,86664.12,77754.57,69251.33,61166.96,53514.40,46307.00,39558.51,33283.11,27495.41,22210.49,17443.88,13211.60,9530.16,6416.58,3888.40,1963.71,661.16,0.00] },
+/* Mulligan Funding payoff schedules — taken VERBATIM from the lender's own amortization PDFs
+   (Discounted Payoff Balance / Interest Discount if Paid Early), indexed by weekly payment number,
+   at the offer's full $450,000 advance. 18-mo = 78 payments, 24-mo = 104. */
+  m18_50:{ payoff:[504846.33,498928.50,492996.40,487049.95,481089.06,475113.64,469123.59,463118.83,457099.26,451064.78,445015.30,438950.73,432870.97,426775.93,420665.51,414539.61,408398.13,402240.97,396068.05,389879.25,383674.47,377453.62,371216.59,364963.29,358693.60,352407.42,346104.66,339785.20,333448.94,327095.77,320725.58,314338.28,307933.74,301511.87,295072.55,288615.67,282141.12,275648.78,269138.56,262610.33,256063.97,249499.38,242916.43,236315.02,229695.03,223056.33,216398.82,209722.36,203026.85,196312.15,189578.16,182824.74,176051.77,169259.14,162446.71,155614.37,148761.97,141889.40,134996.54,128083.25,121149.40,114194.86,107219.51,100223.21,93205.82,86167.22,79107.27,72025.83,64922.78,57797.97,50651.26,43482.51,36291.60,29078.37,21842.68,14584.40,7303.38,0.00],
+            saved:[59326.74,57917.64,56522.81,55142.33,53776.29,52424.78,51087.89,49765.73,48458.38,47165.93,45888.47,44626.11,43378.93,42147.04,40930.54,39729.51,38544.06,37374.29,36220.28,35082.15,33960.00,32853.92,31764.01,30690.39,29633.15,28592.40,27568.23,26560.76,25570.09,24596.33,23639.58,22699.96,21777.56,20872.51,19984.90,19114.85,18262.47,17427.88,16611.17,15812.48,15031.90,14269.56,13525.58,12800.06,12093.12,11404.89,10735.47,10085.00,9453.58,8841.34,8248.41,7674.90,7120.94,6586.64,6072.14,5577.56,5103.02,4648.65,4214.59,3800.95,3407.87,3035.47,2683.90,2353.28,2043.73,1755.40,1488.42,1242.92,1019.05,816.93,636.72,478.53,342.51,228.81,137.57,68.92,23.01,0.00] },
+  m18_100:{ payoff:[445519.60,441010.86,436473.59,431907.62,427312.77,422688.86,418035.70,413353.10,408640.88,403898.85,399126.83,394324.62,389492.04,384628.89,379734.97,374810.10,369854.07,364866.69,359847.77,354797.10,349714.48,344599.71,339452.58,334272.90,329060.45,323815.03,318536.43,313224.44,307878.85,302499.44,297086.00,291638.32,286156.18,280639.36,275087.65,269500.82,263878.65,258220.91,252527.39,246797.85,241032.07,235229.82,229390.86,223514.97,217601.91,211651.45,205663.35,199637.37,193573.27,187470.81,181329.75,175149.84,168930.84,162672.50,156374.57,150036.81,143658.95,137240.75,130781.95,124282.30,117741.53,111159.39,104535.61,97869.93,91162.09,84411.82,77618.85,70782.91,63903.73,56981.03,50014.54,43003.98,35949.08,28849.55,21705.11,14515.48,7280.37,0.00],
+            saved:[118653.47,115835.28,113045.62,110284.66,107552.58,104849.56,102175.79,99531.46,96916.75,94331.85,91776.94,89252.22,86757.87,84294.09,81861.08,79459.02,77088.12,74748.57,72440.56,70164.30,67919.99,65707.83,63528.03,61380.78,59266.30,57184.79,55136.46,53121.52,51140.18,49192.66,47279.17,45399.92,43555.13,41745.02,39969.80,38229.70,36524.94,34855.75,33222.34,31624.95,30063.80,28539.12,27051.15,25600.11,24186.24,22809.77,21470.94,20169.99,18907.16,17682.69,16496.82,15349.80,14241.87,13173.28,12144.28,11155.11,10206.04,9297.31,8429.18,7601.90,6815.74,6070.95,5367.80,4706.55,4087.46,3510.80,2976.84,2485.85,2038.10,1633.87,1273.43,957.06,685.03,457.63,275.14,137.84,46.02,0.00] },
+  m24_50:{ payoff:[526511.08,522012.58,517504.41,512986.54,508458.89,503921.40,499374.02,494816.69,490249.33,485671.90,481084.32,476486.54,471878.49,467260.10,462631.33,457992.09,453342.32,448681.96,444010.94,439329.20,434636.67,429933.28,425218.97,420493.66,415757.30,411009.80,406251.11,401481.16,396699.86,391907.16,387102.98,382287.25,377459.90,372620.85,367770.04,362907.40,358032.84,353146.29,348247.68,343336.95,338413.99,333478.75,328531.15,323571.11,318598.55,313613.40,308615.58,303605.01,298581.60,293545.29,288495.99,283433.62,278358.11,273269.35,268167.28,263051.82,257922.87,252780.36,247624.20,242454.31,237270.60,232072.98,226861.38,221635.70,216395.86,211141.76,205873.32,200590.46,195293.08,189981.08,184654.39,179312.90,173956.54,168585.20,163198.79,157797.21,152380.39,146948.22,141500.60,136037.43,130558.64,125064.11,119553.74,114027.45,108485.13,102926.68,97352.00,91760.99,86153.56,80529.58,74888.98,69231.64,63557.45,57866.33,52158.14,46432.81,40690.21,34930.23,29152.78,23357.74,17545.01,11714.47,5866.01,0.00],
+            saved:[79604.29,78218.18,76841.73,75474.99,74118.01,72770.88,71433.64,70106.35,68789.09,67481.90,66184.86,64898.02,63621.45,62355.21,61099.38,59854.00,58619.14,57394.89,56181.28,54978.40,53786.31,52605.08,51434.77,50275.46,49127.20,47990.07,46864.14,45749.49,44646.16,43554.24,42473.80,41404.91,40347.64,39302.07,38268.25,37246.29,36236.22,35238.15,34252.14,33278.25,32316.59,31367.21,30430.19,29505.61,28593.54,27694.08,26807.28,25933.23,25072.01,24223.71,23388.38,22566.13,21757.03,20961.17,20178.62,19409.47,18653.79,17911.68,17183.22,16468.49,15767.58,15080.58,14407.56,13748.62,13103.84,12473.32,11857.14,11255.38,10668.15,10095.52,9537.59,8994.46,8466.20,7952.93,7454.72,6971.66,6503.87,6051.43,5614.43,5192.97,4787.14,4397.05,4022.80,3664.47,3322.17,2996.00,2686.06,2392.45,2115.26,1854.62,1610.60,1383.32,1172.88,979.39,802.96,643.67,501.65,377.01,269.84,180.26,108.38,54.30,18.13,0.00] },
+  m24_100:{ payoff:[446906.79,443794.39,440662.68,437511.55,434340.87,431150.52,427940.38,424710.33,421460.24,418189.99,414899.46,411588.52,408257.04,404904.89,401531.95,398138.09,394723.17,391287.07,387829.66,384350.80,380850.36,377328.20,373784.20,370218.21,366630.10,363019.73,359386.97,355731.67,352053.70,348352.92,344629.18,340882.34,337112.26,333318.79,329501.79,325661.11,321796.61,317908.14,313995.55,310058.69,306097.40,302111.54,298100.96,294065.50,290005.01,285919.33,281808.31,277671.78,273509.59,269321.59,265107.61,260867.49,256601.07,252308.18,247988.66,243642.35,239269.08,234868.68,230440.98,225985.82,221503.02,216992.41,212453.82,207887.08,203292.01,198668.44,194016.19,189335.08,184624.93,179885.56,175116.79,170318.44,165490.33,160632.27,155744.07,150825.55,145876.52,140896.79,135886.17,130844.47,125771.50,120667.06,115530.95,110362.98,105162.96,99930.68,94665.94,89368.55,84038.29,78674.97,73278.38,67848.32,62384.57,56886.93,51355.19,45789.13,40188.55,34553.22,28882.94,23177.48,17436.63,11660.17,5847.88,0.00],
+            saved:[159208.59,156436.37,153683.46,150949.97,148236.03,145541.76,142867.28,140212.71,137578.18,134963.81,132369.72,129796.04,127242.90,124710.43,122198.75,119707.99,117238.29,114789.77,112362.56,109956.80,107572.62,105210.16,102869.54,100550.91,98254.40,95980.15,93728.29,91498.97,89292.32,87108.48,84947.60,82809.82,80695.28,78604.13,76536.51,74492.57,72472.45,70476.30,68504.27,66556.51,64633.18,62734.42,60860.38,59011.22,57187.09,55388.15,53614.55,51866.46,50144.03,48447.41,46776.77,45132.27,43514.07,41922.34,40357.24,38818.93,37307.58,35823.36,34366.44,32936.98,31535.16,30161.15,28815.12,27497.24,26207.69,24946.64,23714.27,22510.76,21336.29,20191.04,19075.19,17988.92,16932.41,15905.85,14909.43,13943.33,13007.74,12102.85,11228.85,10385.93,9574.28,8794.10,8045.59,7328.94,6644.34,5992.00,5372.12,4784.89,4230.53,3709.23,3221.20,2766.64,2345.77,1958.79,1605.91,1287.35,1003.31,754.02,539.68,360.52,216.75,108.59,36.26,0.00] }
 };
 
 /* ---- lender-supplied payment-numbered schedules ---------------------------------
@@ -619,7 +669,7 @@ function mergedSched(grp){
     + '';
 
   var gh = '<tr><th rowspan="2">'+rowLabel+'</th>'
-    + grp.map(function(o){ return '<th class="pg-head" colspan="2">Offer '+o.num+' &middot; '+(sameTerm ? o.name : o.termLabel)+'</th>'; }).join('')
+    + grp.map(function(o){ return '<th class="pg-head" colspan="2">Offer '+o.num+' &middot; '+(sameTerm ? o.name : (o.schedTag || o.termLabel))+'</th>'; }).join('')
     + '<th rowspan="2">Cheaper all-in</th></tr>';
   var sh = '<tr>'+grp.map(function(){ return '<th>Payoff Amount</th><th>Total Repayment<span class="th-note">if paid off at that point</span></th>'; }).join('')+'</tr>';
 
@@ -693,7 +743,8 @@ function daySched(o){
 /* Force specific offers into ONE comparison table regardless of term — e.g. [[1,3,5,6]] puts every
    Mulligan schedule side by side so the merchant can compare terms at the same week. Empty = the
    default rule only (same term + same advance tier). */
-var MERGE_GROUPS = [[2,4,6,8,10,12]];  /* the six 100%-forgiveness offers, all $400,000 — one side-by-side table */
+var MERGE_GROUPS = [[2,4,6,10,12,16],  /* Kapitus 100%-forgiveness offers, all $400,000 */
+                    [7,8,13,14]];      /* Mulligan, all $450,000 — both terms, both prepay tiers */
 function schedGroups(){
   var live = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); })
                    .slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.num-b.num); });
@@ -737,7 +788,7 @@ function downloadPDF(){
   doc.setFont("helvetica","bold"); doc.setFontSize(16); doc.setTextColor(20);
   doc.text("Funding Offers — Lambert Marble and Tile", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
-  doc.text("BusinessLoans.com     Prepared September 17, 2026 at 3:37 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
+  doc.text("BusinessLoans.com     Prepared September 17, 2026 at 3:44 PM EDT     Requested "+money0(STATE.requested), L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -751,14 +802,21 @@ function downloadPDF(){
     rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
-    if(o.forgive) rows.push(["Early payoff", String(o.forgive).replace("&amp;","&")]);
     rows.push(["Term", o.term+" months"]);
+    rows.push(["Simple interest (over the full term)", pct1(simpleInt(o))]);
+    rows.push(["Annualized (simple / term x 12)", pct1(annualInt(o))]);
+    if(o.forgive) rows.push(["Early payoff", String(o.forgive).replace("&amp;","&")]);
+    if(o.feeNote) rows.push(["Origination fee note", "BusinessLoans.com reimburses 2.50% after closing if funded in Sept 2026"]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Kapitus — stipulations / closing requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  ["Driver's License","Voided Check","Signed Contract"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Mulligan Funding — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided Check","Signed Contract"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
@@ -798,7 +856,7 @@ function downloadPDF(){
                     : ("Offer "+lead.num+" — "+lead.termLabel+" — Early Payoff Schedule — "+money0(m0.advance)), L, y2); y2+=14;
     doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(90);
     grp.forEach(function(o){ var m=model(o);
-      doc.text("Offer "+o.num+" ("+o.name+"): "+money0(m.advance)+" advance   "+money0(m.payback)+" payback   "
+      doc.text("Offer "+o.num+" ("+o.name+(sameTerm?"":" - "+String(o.schedTag||o.termLabel).replace(/&middot;/g,"-").replace(/&[a-z]+;/g,""))+"): "+money0(m.advance)+" advance   "+money0(m.payback)+" payback   "
         +money(m.weekly)+"/"+(fwOf(o)==="monthly"?"month":"week")+"   "+o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
     doc.text("Payoff Amount = lump sum due that day. Total Repayment = everything repaid if you pay off at that point.", L, y2); y2+=11;
     if(aligned){ doc.text("Rows are months: monthly offers at that month's payment, weekly offers at 4 payments per month; last row = final payment.", L, y2); y2+=11; }
@@ -806,20 +864,19 @@ function downloadPDF(){
     y2+=5;
     var cols, fs;
     if(merged){
-      var wide = grp.length > 3;               /* too many offers to print both columns each */
+      var wide = grp.length > 4;               /* too many offers to print both columns each */
       fs = wide ? 7.5 : (grp.length > 2 ? 7 : 8.5);
       var hdr = aligned ? "Month" : (unitP === "month" ? "Month" : (unitP === "week" ? "Week" : "#"));
       cols = [{h:hdr,x:L,a:"left"}];
       var per = wide ? 1 : 2;
-      /* in wide mode the offer columns must stop short of the "Cheaper" column, not be pulled back
-         onto the one before it (that reassignment only works when the last column reaches R) */
-      var right = wide ? (R - 92) : R;
-      var span = (right - 118) / (grp.length*per), x0 = 118;
+      /* reserve the "Cheaper" column's width BEFORE laying the offer columns out. The template
+         used to place them across the full width and then yank the last one back to R-92, which
+         lands it left of its own Payoff column as soon as a group has 2+ offers. */
+      var span = ((R - 92) - 118) / (grp.length*per), x0 = 118;
       grp.forEach(function(o,gi){
         cols.push({h:"Offer "+o.num+" Payoff", x:Math.round(x0+span*(gi*per+1)), a:"right"});
         if(!wide) cols.push({h:"Offer "+o.num+" Total Repaid", x:Math.round(x0+span*(gi*per+2)), a:"right"});
       });
-      if(!wide) cols[cols.length-1].x = R - 92;
       cols.push({h:"Cheaper",x:R,a:"right"});
     } else {
       fs = 8.5;
@@ -872,7 +929,7 @@ function recompute(){
   STATE.requested = r;
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
-  help.textContent = capped ? "Capped at the $400,000 maximum" : "";
+  help.textContent = capped ? "Capped at the $450,000 maximum" : "";
   help.style.display = capped ? "" : "none";
   renderOffers(); renderCombos(); renderPrepay();
 }
