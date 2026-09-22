@@ -732,18 +732,18 @@ function locSched(o){
   var h = '<div class="prepay-section">'
     + '<div class="prepay-head"><h2 class="prepay-title">Offer '+o.num+' &middot; '+o.termLabel+' &mdash; Early Payoff Schedule &mdash; '+money0(m.advance)+'</h2></div>'
     + '<div class="prepay-recap">'+money0(m.advance)+' drawn &middot; '+money(m.payback)+' total payback &middot; '+money(m.weekly)+' per month &middot; '+o.nPay+' payments &middot; no fees. Pay off early at any time and <b>100% of remaining interest is waived</b>.</div>'
-    + '<div class="prepay-legend"><b>All-In Total Paid</b> = everything you would have paid if you closed the line out that week &mdash; the payments made by then plus the lump sum to clear the balance. <b>You Save</b> = the interest waived against carrying it the full '+o.term+' months. <b>Interest Cost</b> = that all-in cost as a percentage of what you drew, so it holds at any draw size. Your payment is drafted <b>monthly</b>, but interest accrues continuously — so payoff is tracked week by week.</div>';
+    + '<div class="prepay-legend"><b>All-In Total Paid</b> = everything you would have paid if you closed the line out that week &mdash; the payments made by then plus the lump sum to clear the balance. <b>You Save</b> = the interest waived against carrying it the full '+o.term+' months. Your payment is drafted <b>monthly</b>, but interest accrues continuously — so payoff is tracked week by week.</div>';
   if(m.advance !== o.advance) h += '<div class="scale-note">Figures scaled to the amount drawn ('+money0(m.advance)+').</div>';
   var body = '';
   for(var i=0;i<A.length;i++){
     body += '<tr><td data-label="Pay off after week">Week '+(i+1)+'</td>'
       + '<td class="po-total" data-label="All-In Total Paid">'+money(round2(A[i]*s))+'</td>'
       + '<td class="po-saved" data-label="You Save">'+money(round2(pbB*s - A[i]*s))+'</td>'
-      + '<td class="po-payoff" data-label="Interest Cost">'+(((A[i]-o.advance)/o.advance)*100).toFixed(2)+'%</td></tr>';
+      + '</tr>';
   }
   return h + '<div class="tscroll"><table class="prepay"><thead><tr><th>Pay off after week</th>'
     + '<th>All-In Total Paid<span class="th-note">if you close it out then</span></th>'
-    + '<th>You Save</th><th>Interest Cost</th></tr></thead><tbody>'+body+'</tbody></table></div></div>';
+    + '<th>You Save</th></tr></thead><tbody>'+body+'</tbody></table></div></div>';
 }
 
 function renderPrepay(){
@@ -808,7 +808,7 @@ function downloadPDF(){
       doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(90);
       doc.text("Total payback "+money(ml.payback)+"   "+money(ml.weekly)+"/month   "+ol.nPay+" monthly payments   no fees", L, yl); yl+=11;
       doc.text("Payment is drafted monthly; interest accrues continuously, so payoff is tracked weekly. 100% of remaining interest is waived on early payoff.", L, yl); yl+=16;
-      var cl=[{h:"Pay off after week",x:L,a:"left"},{h:"All-In Total Paid",x:300,a:"right"},{h:"You Save",x:430,a:"right"},{h:"Interest Cost",x:R,a:"right"}];
+      var cl=[{h:"Pay off after week",x:L,a:"left"},{h:"All-In Total Paid",x:380,a:"right"},{h:"You Save",x:R,a:"right"}];
       var hdrL=function(){ doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(20);
         cl.forEach(function(c){ doc.text(c.h,c.x,yl,{align:c.a}); });
         yl+=4; doc.setDrawColor(150); doc.line(L,yl,R,yl); yl+=12;
@@ -817,9 +817,8 @@ function downloadPDF(){
       for(var li=0; li<AL.length; li++){
         if(yl>768){ doc.addPage(); yl=60; hdrL(); }
         doc.text("Week "+(li+1), L, yl);
-        doc.text(money(round2(AL[li]*sl)), 300, yl, {align:"right"});
-        doc.text(money(round2(pbL*sl - AL[li]*sl)), 430, yl, {align:"right"});
-        doc.text((((AL[li]-ol.advance)/ol.advance)*100).toFixed(2)+"%", R, yl, {align:"right"});
+        doc.text(money(round2(AL[li]*sl)), 380, yl, {align:"right"});
+        doc.text(money(round2(pbL*sl - AL[li]*sl)), R, yl, {align:"right"});
         yl+=12;
       }
       return;
