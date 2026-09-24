@@ -257,8 +257,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <div class="borrower-bar-name">Corbett Exterminating, Inc.</div>
     </div>
     <div class="borrower-bar-funding">
-      <div class="borrower-bar-label">Draw Amount &middot; lines up to $545,000</div>
-      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="500,000" aria-label="Draw amount"/></div></div>
+      <div class="borrower-bar-label">Requested Amount &middot; approvals up to $750,000</div>
+      <div class="edit-row"><span class="edit-hint">&#9998; Edit this amount &mdash; every offer updates</span><span class="edit-arrow">&#10142;</span><div class="amount-input-wrap"><span class="amount-prefix">$</span><input id="amount" class="amount-input" type="text" inputmode="numeric" value="750,000" aria-label="Requested amount"/></div></div>
       <div id="amountHelp" class="amount-help" style="display:none;"></div>
     </div>
   </div>
@@ -301,7 +301,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
   <div class="closing">
-    <h3>Stipulations / Closing Requirements</h3>
+    <h3>Offers 1 &amp; 2 &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Connect bank account via Plaid</li>
       <li>Driver's License</li>
@@ -313,13 +313,21 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>How This Line Works</h3>
+    <h3>Offers 1 &amp; 2 &mdash; How the Line Works</h3>
     <ul>
       <li><b>Use it as a loan or as a line of credit</b> &mdash; take the full amount at once, or draw only what you need, when you need it</li>
       <li><b>10% minimum draw</b> &mdash; $50,000 on Offer 1, $54,500 on Offer 2</li>
       <li><b>No closing costs and no origination fee</b></li>
       <li><b>No monthly or annual maintenance fees</b></li>
       <li>Payments are a set percentage of receipts, so the payment and term shown are estimates based on current deposit activity</li>
+    </ul>
+  </div>
+  <div class="closing">
+    <h3>Offer 3 &mdash; Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Driver's License</li>
+      <li>Voided Check</li>
+      <li>Signed Contract</li>
     </ul>
   </div>
   </div>
@@ -333,7 +341,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Final terms are subject to the funder&rsquo;s agreement and satisfaction of the stipulations above. This is a draw-based purchase of future receivables, not a loan; repayment is a set percentage of receipts, so the weekly payment, number of payments and term shown are estimates based on current deposit activity and will vary with actual receipts. Payment and payback figures scale with the amount drawn. Early payoff at a discount may be offered through the program website and is accepted or rejected at the funder&rsquo;s sole discretion. The total funded amount may not equal the amount deposited to your business checking account.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Final terms are subject to the funder&rsquo;s agreement and satisfaction of the stipulations above. Offers 1 and 2 are a draw-based purchase of future receivables, not a loan; repayment is a set percentage of receipts, so the weekly payment, number of payments and term shown are estimates based on current deposit activity and will vary with actual receipts, and early payoff at a discount is accepted or rejected at the funder&rsquo;s sole discretion. Offer 3 is a fixed-payment term loan. Advance, payment and payback figures scale with the amount requested, and each offer is capped at its own approved maximum. The total funded amount may not equal the amount deposited to your business checking account.
   </div>
 
   <footer>
@@ -360,16 +368,18 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
    See references/patterns.md for groups, month-payoff schedules, the side-by-side
    detail grid, MCA amortization, and the price-reduced strikethrough.
    ========================================================================= */
-var MASTER_MAX = 545000;
-var STATE = { requested: 500000 };
+var MASTER_MAX = 750000;
+var STATE = { requested: 750000 };
 var MIN_DRAW_PCT = 0.10;
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
   { name:"Lender A", advance:500000, factor:1.27, weekly:12211.54, nPay:"52", term:"12", termLabel:"12-Month",
-    origPct:0, origLabel:"None", processing:0, position:"1st" },
+    origPct:0, origLabel:"None", processing:0, position:"1st", loc:true, forgive:"Pay off early &amp; save" },
   { name:"Lender A", advance:545000, factor:1.35, weekly:12262.50, nPay:"60", term:"14", termLabel:"14-Month",
-    origPct:0, origLabel:"None", processing:0, position:"1st" }
+    origPct:0, origLabel:"None", processing:0, position:"1st", loc:true, forgive:"Pay off early &amp; save" },
+  { name:"Lender B", advance:750000, factor:1.33, weekly:16088.71, nPay:"62", term:"15", termLabel:"15-Month",
+    origPct:0.02, origLabel:"2%", processing:0, position:"1st", forgive:"Pay off early &amp; save" }
 ];
 
 /* number offers in array order — shown in each card's title */
@@ -430,26 +440,40 @@ function renderOffers(){
 
   function card(o){
     var m = model(o); var fw = fwOf(o);
-    var minDraw = round2(o.advance * MIN_DRAW_PCT);
-    var capTag = m.capped ? '<span class="cap-badge">line max</span>' : '';
     var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
-    var minNote = (m.advance > 0 && m.advance < minDraw)
-      ? '<div class="kv-row kv-fee"><span class="kv-label">Heads up</span><span class="kv-val">Below this line&rsquo;s '+money0(minDraw)+' minimum draw</span></div>' : '';
+    var head, top, termRow;
+    if(o.loc){
+      var minDraw = round2(o.advance * MIN_DRAW_PCT);
+      var capTagL = m.capped ? '<span class="cap-badge">line max</span>' : '';
+      var minNote = (m.advance > 0 && m.advance < minDraw)
+        ? '<div class="kv-row kv-fee"><span class="kv-label">Heads up</span><span class="kv-val">Below this line&rsquo;s '+money0(minDraw)+' minimum draw</span></div>' : '';
+      head = o.name+' &middot; Use as a loan or a line of credit &middot; '+fw+' payments';
+      top = '<div class="kv-row"><span class="kv-label">Approved line (spending limit)</span><span class="kv-val">'+money0(o.advance)+'</span></div>'
+          + '<div class="kv-row"><span class="kv-label">Minimum draw (10%)</span><span class="kv-val">'+money0(minDraw)+'</span></div>'
+          + '<div class="kv-row kv-net"><span class="kv-label">Amount drawn (shown below)</span><span class="kv-val">'+money0(m.advance)+capTagL+'</span></div>'
+          + minNote
+          + '<div class="kv-row kv-fee"><span class="kv-label">Closing / origination fee</span><span class="kv-val">None &mdash; $0</span></div>'
+          + '<div class="kv-row kv-fee"><span class="kv-label">Monthly / annual maintenance fee</span><span class="kv-val">None &mdash; $0</span></div>';
+      termRow = '<div class="kv-row"><span class="kv-label">Estimated term</span><span class="kv-val">&asymp; '+o.term+' months</span></div>';
+    } else {
+      var capTagT = m.capped ? '<span class="cap-badge">offer max</span>' : '';
+      head = o.name+' &middot; Term loan &middot; '+fw+' payments';
+      top = '<div class="kv-row"><span class="kv-label">Loan amount</span><span class="kv-val">'+money0(m.advance)+capTagT+'</span></div>'
+          + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee ('+o.origLabel+')</span><span class="kv-val">'+money(m.fee)+'</span></div>';
+      termRow = '<div class="kv-row"><span class="kv-label">Term</span><span class="kv-val">'+o.term+' months</span></div>';
+    }
+    var fgRow = o.forgive ? '<div class="kv-row"><span class="kv-label">Early payoff</span><span class="kv-val">'+o.forgive+'</span></div>' : '';
     return '<div class="offer-card'+(o.rec?' rec':'')+'">'
       + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div>'
-      + '<div class="offer-sub">'+o.name+' &middot; Use as a loan or a line of credit &middot; '+fw+' payments</div></div>'
+      + '<div class="offer-sub">'+head+'</div></div>'
       + '<div class="offer-card-body">'
-        + '<div class="kv-row"><span class="kv-label">Approved line (spending limit)</span><span class="kv-val">'+money0(o.advance)+'</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Minimum draw (10%)</span><span class="kv-val">'+money0(minDraw)+'</span></div>'
-        + '<div class="kv-row kv-net"><span class="kv-label">Amount drawn (shown below)</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
-        + minNote
-        + '<div class="kv-row kv-fee"><span class="kv-label">Closing / origination fee</span><span class="kv-val">None &mdash; $0</span></div>'
-        + '<div class="kv-row kv-fee"><span class="kv-label">Monthly / annual maintenance fee</span><span class="kv-val">None &mdash; $0</span></div>'
+        + top
         + '<div class="kv-row kv-net"><span class="kv-label">Net funded (deposited)</span><span class="kv-val">'+money(m.net)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
         + '<div class="kv-row kv-pay"><span class="kv-label">'+cap(fw)+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
-        + '<div class="kv-row"><span class="kv-label">Estimated term</span><span class="kv-val">&asymp; '+o.term+' months</span></div>'
+        + termRow
+        + fgRow
       + '</div></div>';
   }
 
@@ -492,7 +516,7 @@ function renderOffers(){
         + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
         + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
-        + '<td data-label="Orig. Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span></td>'
+        + '<td data-label="Orig. Fee">'+(o.origPct ? ((m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span>') : 'None <span class="pct">($0)</span>')+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+money0(m.payback)+'</td>'
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
@@ -731,30 +755,37 @@ function downloadPDF(){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
     doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
-    doc.text("Offer "+o.num+" — "+o.termLabel+" — line "+money0(o.advance), L, y); y+=8; doc.setDrawColor(170); doc.line(L,y,R,y); y+=18;
+    doc.text("Offer "+o.num+" — "+o.termLabel+" — "+(o.loc ? "line "+money0(o.advance) : money0(m.advance)), L, y); y+=8; doc.setDrawColor(170); doc.line(L,y,R,y); y+=18;
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
-    var rows=[["Approved line (spending limit)", money0(o.advance)],
-      ["Minimum draw (10%)", money0(round2(o.advance*MIN_DRAW_PCT))],
-      ["Amount drawn", money0(m.advance)],
-      ["Closing / origination fee", "None - $0"],
-      ["Monthly / annual maintenance fee", "None - $0"]];
+    var rows = o.loc
+      ? [["Approved line (spending limit)", money0(o.advance)],
+         ["Minimum draw (10%)", money0(round2(o.advance*MIN_DRAW_PCT))],
+         ["Amount drawn", money0(m.advance)],
+         ["Closing / origination fee", "None - $0"],
+         ["Monthly / annual maintenance fee", "None - $0"]]
+      : [["Loan amount", money0(m.advance)],
+         ["Origination fee ("+o.origLabel+")", money(m.fee)]];
     rows.push(["Net funded (deposited)", money(m.net)]);
     rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
     rows.push(["Weekly payment", money(m.weekly)]);
     rows.push(["Number of payments", o.nPay+" weekly"]);
-    rows.push(["Estimated term", "~ "+o.term+" months"]);
+    rows.push([o.loc ? "Estimated term" : "Term", (o.loc?"~ ":"")+o.term+" months"]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
-  doc.text("Stipulations / closing requirements:", L, y); y+=13;
+  doc.text("Offers 1 & 2 — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Connect bank account via Plaid","Driver's License","Voided Check","2026 YTD Profit & Loss and Balance Sheet","Most recently filed business tax return","IRS Form 8821","Accounts Receivable Summary"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("How this line works:", L, y); y+=13;
+  doc.text("Offers 1 & 2 — how the line works:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Use it as a loan or as a line of credit - draw only what you need, when you need it","10% minimum draw ($50,000 on Offer 1, $54,500 on Offer 2)","No closing costs and no origination fee","No monthly or annual maintenance fees","Payments are a set percentage of receipts, so payment and term are estimates"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Offer 3 — stipulations / closing requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  ["Driver's License","Voided Check","Signed Contract"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
@@ -856,7 +887,7 @@ function recompute(){
   STATE.requested = r;
   var help = document.getElementById("amountHelp");
   help.className = "amount-help" + (capped ? " warning" : "");
-  help.textContent = capped ? "Capped at the $545,000 maximum approved line" : "";
+  help.textContent = capped ? "Capped at the $750,000 maximum approval" : "";
   help.style.display = capped ? "" : "none";
   renderOffers(); renderCombos(); renderPrepay();
 }
