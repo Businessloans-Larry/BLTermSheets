@@ -309,17 +309,14 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
   <div class="closing">
-    <h3>Lender A &mdash; Stipulations / Closing Requirements</h3>
+    <h3>OnDeck &mdash; Stipulations / Closing Requirements</h3>
     <ul>
-      <li><b>One 5-minute phone call</b> &mdash; that is the entire closing process</li>
+      <li><b>One 5-minute phone call</b> &mdash; that is the entire closing process. No documents needed.</li>
       <li>Funds can be in the account as soon as the <b>next business day</b></li>
-      <li>Signed contract</li>
-      <li>Driver's License</li>
-      <li>Voided check</li>
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender B &mdash; Stipulations / Closing Requirements</h3>
+    <h3>BriteCap &mdash; Stipulations / Closing Requirements</h3>
     <ul>
       <li>Signed contract</li>
       <li>Driver's License</li>
@@ -329,19 +326,9 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender C &mdash; Stipulations / Closing Requirements</h3>
+    <h3>Mulligan Funding &mdash; Stipulations / Closing Requirements</h3>
     <ul>
-      <li>Signed contract</li>
-      <li>Driver's License</li>
-      <li>Voided check</li>
-      <li>Bank verification &mdash; connect via Plaid at online checkout (or DecisionLogic)</li>
-      <li>Proof of business ownership &mdash; any one of: business license, operating agreement, IRS EIN letter, stock certificates, purchase agreement, or most recent K-1</li>
-    </ul>
-  </div>
-  <div class="closing">
-    <h3>Lender D &mdash; Stipulations / Closing Requirements</h3>
-    <ul>
-      <li>Signed loan agreement</li>
+      <li>Signed Mulligan loan agreement</li>
       <li>Valid, US government-issued photo ID</li>
       <li>Voided check for the account ending in 2976</li>
       <li>Add Swartz's Ultimate Collision Repair, Inc. to the loan</li>
@@ -391,25 +378,16 @@ var STATE = { requested: 500000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
-  { name:"Lender A", advance:350000, factor:1.1, weekly:14807.69, nPay:"26", term:"6", termLabel:"6-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
-  { name:"Lender A", advance:350000, factor:1.101, weekly:9880.77, nPay:"39", term:"9", termLabel:"9-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
-  { name:"Lender A", advance:350000, factor:1.113, weekly:9988.46, nPay:"39", term:"9", termLabel:"9-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender D", advance:288000, factor:1.16, weekly:6424.62, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 50% of remaining interest", },
-  { name:"Lender D", advance:288000, factor:1.16, weekly:6424.62, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender A", advance:350000, factor:1.114, weekly:7498.08, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
-  { name:"Lender A", advance:350000, factor:1.15, weekly:7740.38, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender A", advance:350000, factor:1.147, weekly:6176.15, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
-  { name:"Lender A", advance:350000, factor:1.187, weekly:6391.54, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender A", advance:350000, factor:1.179, weekly:5290.38, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
-  { name:"Lender A", advance:350000, factor:1.223, weekly:5487.82, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender D", advance:400000, factor:1.25, weekly:6410.26, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 50% of remaining interest", },
-  { name:"Lender D", advance:400000, factor:1.25, weekly:6410.26, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender B", advance:400000, factor:1.259, weekly:27977.78, nPay:"18", term:"18", termLabel:"18-Month", freq:"monthly", origPct:0.0249, origLabel:"2.49%", processing:0, position:"1st", },
-  { name:"Lender A", advance:350000, factor:1.245, weekly:4189.90, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
-  { name:"Lender A", advance:350000, factor:1.297, weekly:4364.90, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
-  { name:"Lender C", advance:400000, factor:1.319, weekly:21983.33, nPay:"24", term:"24", termLabel:"24-Month", freq:"monthly", origPct:0.0249, origLabel:"2.49%", processing:0, position:"1st", },
-  { name:"Lender D", advance:500000, factor:1.34, weekly:6442.31, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 50% of remaining interest", },
-  { name:"Lender D", advance:500000, factor:1.34, weekly:6442.31, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", }
+  { name:"OnDeck", advance:350000, factor:1.179, weekly:5290.38, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
+  { name:"OnDeck", advance:350000, factor:1.223, weekly:5487.82, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
+  { name:"Mulligan Funding", advance:400000, factor:1.25, weekly:6410.26, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 50% of remaining interest", },
+  { name:"Mulligan Funding", advance:400000, factor:1.25, weekly:6410.26, nPay:"78", term:"18", termLabel:"18-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
+  { name:"BriteCap", advance:400000, factor:1.259, weekly:27977.78, nPay:"18", term:"18", termLabel:"18-Month", freq:"monthly", origPct:0.0249, origLabel:"2.49%", processing:0, position:"1st", },
+  { name:"OnDeck", advance:350000, factor:1.245, weekly:4189.90, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"Save 25% of remaining interest", },
+  { name:"OnDeck", advance:350000, factor:1.297, weekly:4364.90, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", },
+  { name:"BriteCap", advance:400000, factor:1.319, weekly:21983.33, nPay:"24", term:"24", termLabel:"24-Month", freq:"monthly", origPct:0.0249, origLabel:"2.49%", processing:0, position:"1st", },
+  { name:"Mulligan Funding", advance:500000, factor:1.34, weekly:6442.31, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Save 50% of remaining interest", },
+  { name:"Mulligan Funding", advance:500000, factor:1.34, weekly:6442.31, nPay:"104", term:"24", termLabel:"24-Month", origPct:0.04, origLabel:"4%", processing:0, position:"1st", forgive:"100% of remaining interest waived", }
 ];
 
 /* number offers in array order — shown in each card's title */
@@ -788,21 +766,17 @@ function downloadPDF(){
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender A — stipulations / closing requirements:", L, y); y+=13;
+  doc.text("OnDeck — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["One 5-minute phone call - that is the entire closing process","Funds can be in the account as soon as the next business day","Signed contract","Driver's License","Voided check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["One 5-minute phone call - that is the entire closing process. No documents needed.","Funds can be in the account as soon as the next business day"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
+  doc.text("BriteCap — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Signed contract","Driver's License","Voided check","Bank verification - connect via Plaid at online checkout (or DecisionLogic)","Proof of business ownership - any one of: business license, operating agreement, IRS EIN letter, stock certificates, purchase agreement, or most recent K-1"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender C — stipulations / closing requirements:", L, y); y+=13;
+  doc.text("Mulligan Funding — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Signed contract","Driver's License","Voided check","Bank verification - connect via Plaid at online checkout (or DecisionLogic)","Proof of business ownership - any one of: business license, operating agreement, IRS EIN letter, stock certificates, purchase agreement, or most recent K-1"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
-  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender D — stipulations / closing requirements:", L, y); y+=13;
-  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Signed loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 2976","Add Swartz's Ultimate Collision Repair, Inc. to the loan","Signed credit application for the additional guarantor, Stephen Swartz - or proof of your 80% ownership"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Signed Mulligan loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 2976","Add Swartz's Ultimate Collision Repair, Inc. to the loan","Signed credit application for the additional guarantor, Stephen Swartz - or proof of your 80% ownership"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
