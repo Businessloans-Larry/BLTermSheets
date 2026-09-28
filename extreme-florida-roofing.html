@@ -315,10 +315,11 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div class="closing">
     <h3>Stipulations / Closing Requirements</h3>
     <ul>
-      <li>Payment plan for the PennyMac Loan Services judgment ($313,283)</li>
+      <li>Payment plan for the $313,283 judgment against the business (PennyMac Loan Services)</li>
       <li>Aging A/R report</li>
       <li>Tax returns</li>
       <li>Signed agreement, Driver's License &amp; voided check</li>
+      <li>Electronic bank verification</li>
     </ul>
   </div>
   </div>
@@ -752,7 +753,7 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Payment plan for the PennyMac Loan Services judgment ($313,283)","Aging A/R report","Tax returns","Signed agreement, Driver's License & voided check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Payment plan for the $313,283 judgment against the business (PennyMac Loan Services)","Aging A/R report","Tax returns","Signed agreement, Driver's License & voided check","Electronic bank verification"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
