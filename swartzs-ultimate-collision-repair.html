@@ -308,7 +308,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div id="comboWrap"></div>
 
   <h2 class="section-title">Lines of Credit</h2>
-  <div class="loc-lead">Revolving credit limits you draw against as you need them. Byzfunder charges its origination fee once, on the first draw, and is <b>100% prepayment</b> &mdash; pay the line off early at any time and 100% of the remaining interest is waived. Idea Financial has no origination fee; its 2.99% fee is charged <b>on each draw</b>. Figures below are shown at each line&rsquo;s full draw.</div>
+  <div class="loc-lead">Revolving credit limits you draw against as you need them. Byzfunder charges its origination fee once, on the first draw. Idea Financial has no origination fee; instead it charges a <b>2.99% draw fee on every draw</b>. Both lines are <b>100% prepayment</b> &mdash; pay off early at any time and 100% of the remaining interest is waived. Figures below are shown at each line&rsquo;s full draw.</div>
   <div id="locWrap"></div>
 
   <!-- Closing requirements sit ABOVE the schedules whenever a sheet has one (Larry 2026-09-17). -->
@@ -481,7 +481,7 @@ var LOCS = [
   { name:"Idea Financial", limit:350000, termLabel:"24-Month", nPay:24, freqWord:"monthly", factor:1.26622546,
     origPct:0, origLabel:"", oldOrigPct:0, oldOrigLabel:"",
     drawFeePct:0.0299, drawFeeLabel:"2.99%", drawFeeNote:"per draw",
-    forgive:"Pay off early &amp; save" }
+    forgive:"100% of remaining interest waived" }
 ];
 function locModel(L){
   var draw = Math.min(STATE.requested, L.limit); if(draw < 0) draw = 0;
@@ -842,6 +842,26 @@ function downloadPDF(){
     rows.push(["Term", o.term+" months"]);
     rows.push(["Position", o.position]);
     rows.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
+    y+=14;
+  });
+  LOCS.forEach(function(Lc){
+    var lm = locModel(Lc);
+    if(y>620){ doc.addPage(); y=60; }
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text(Lc.name+" \u2014 Line of Credit \u2014 "+Lc.termLabel+" \u2014 "+money0(Lc.limit)+" limit", L, y);
+    y+=8; doc.setDrawColor(170); doc.line(L,y,R,y); y+=18;
+    doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
+    var lr=[["Credit limit", money0(Lc.limit)], ["Draw shown", money0(lm.draw)]];
+    lr.push(["Origination fee, charged by the lender", Lc.origPct
+      ? (money(lm.oldOrig)+" -> "+money(lm.orig)+" ("+Lc.origLabel+" of limit, first draw only)") : "None"]);
+    lr.push(["Draw fee, charged by the lender ("+Lc.drawFeeLabel
+      +(Lc.drawFeeNote ? " "+Lc.drawFeeNote : "")+")", money(lm.drawFee)]);
+    lr.push(["Net disbursement", money(lm.net)]);
+    lr.push(["Total payback on the draw (if not repaid early)", money0(lm.payback)]);
+    lr.push([cap(Lc.freqWord)+" payment", money(lm.pay)]);
+    lr.push(["Number of payments", Lc.nPay+" "+Lc.freqWord]);
+    lr.push(["Early payoff", Lc.forgive.replace(/&amp;/g,"&")]);
+    lr.forEach(function(r){ doc.text(r[0]+":", L, y); doc.text(String(r[1]), R, y, {align:"right"}); y+=15; });
     y+=14;
   });
   y+=2; doc.setDrawColor(205); doc.line(L,y,R,y); y+=14;
