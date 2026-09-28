@@ -352,7 +352,8 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Most recent accounts receivable / WIP &mdash; <b>waived up to $300K</b></li>
       <li>Most recent accounts payable &mdash; <b>waived up to $300K</b></li>
       <li>YTD interim financials, P&amp;L and balance sheet &mdash; <b>waived up to $300K</b></li>
-      <li>Qualifies for EasyByz &mdash; if bank verification is insufficient, standard stips may be required</li>
+      <li>Plaid bank connection required</li>
+      <li>Each draw is subject to a cash-flow check</li>
     </ul>
   </div>
   </div>
@@ -837,7 +838,7 @@ function downloadPDF(){
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Byzfunder (Line of Credit) — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Signed contracts","Active Driver's License","Voided check","Merchant interview","Bank VOD (verification of deposit)","Most recent tax return - including ownership","Most recent accounts receivable / WIP - waived up to $300K","Most recent accounts payable - waived up to $300K","YTD interim financials, P&L and balance sheet - waived up to $300K","Qualifies for EasyByz - if bank verification is insufficient, standard stips may be required"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Signed contracts","Active Driver's License","Voided check","Merchant interview","Bank VOD (verification of deposit)","Most recent tax return - including ownership","Most recent accounts receivable / WIP - waived up to $300K","Most recent accounts payable - waived up to $300K","YTD interim financials, P&L and balance sheet - waived up to $300K","Plaid bank connection required","Each draw is subject to a cash-flow check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
