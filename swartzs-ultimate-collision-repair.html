@@ -30,6 +30,7 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .amount-help{font-size:13px;color:rgba(255,255,255,.92);font-weight:600;margin-top:7px;}
 .amount-help.warning{color:var(--gold);font-weight:600;}
 .closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:10px 13px;margin:0;}
+.loc-lead{font-size:13px;color:#4A5568;margin:-2px 0 9px;line-height:1.45;}
 .promo{background:#FFC858;color:#002F68;border-radius:12px;padding:12px 18px;margin:4px 0 12px;font-weight:700;font-size:15.5px;line-height:1.35;display:flex;gap:12px;align-items:center;}
 .promo .promo-tag{background:#002F68;color:#FFC858;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;}
 @media(max-width:600px){.promo{flex-direction:column;align-items:flex-start;font-size:14px;gap:8px;}}
@@ -305,6 +306,10 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
   <div id="comboWrap"></div>
 
+  <h2 class="section-title">Line of Credit</h2>
+  <div class="loc-lead">A revolving credit limit you draw against as you need it &mdash; the origination fee is charged once, on the first draw. Figures below are shown at the full first draw.</div>
+  <div id="locWrap"></div>
+
   <!-- Closing requirements sit ABOVE the schedules whenever a sheet has one (Larry 2026-09-17). -->
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
@@ -333,6 +338,21 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Voided check for the account ending in 2976</li>
       <li>Add Swartz's Ultimate Collision Repair, Inc. to the loan</li>
       <li>Signed credit application for the additional guarantor, Stephen Swartz &mdash; or proof of your 80% ownership</li>
+    </ul>
+  </div>
+  <div class="closing">
+    <h3>Byzfunder (Line of Credit) &mdash; Stipulations / Closing Requirements</h3>
+    <ul>
+      <li>Signed contracts</li>
+      <li>Active Driver's License</li>
+      <li>Voided check</li>
+      <li>Merchant interview</li>
+      <li>Bank VOD (verification of deposit)</li>
+      <li>Most recent tax return &mdash; including ownership</li>
+      <li>Most recent accounts receivable / WIP &mdash; <b>waived up to $300K</b></li>
+      <li>Most recent accounts payable &mdash; <b>waived up to $300K</b></li>
+      <li>YTD interim financials, P&amp;L and balance sheet &mdash; <b>waived up to $300K</b></li>
+      <li>Qualifies for EasyByz &mdash; if bank verification is insufficient, standard stips may be required</li>
     </ul>
   </div>
   </div>
@@ -396,7 +416,7 @@ var OFFERS = [
 /* ---- hide-for-comparison (per-visitor; resets when they open a new browser session) ---- */
 var HIDDEN = (function(){ try{ return new Set(JSON.parse(sessionStorage.getItem("bl_hide_"+location.pathname)||"[]")); }catch(e){ return new Set(); } })();
 function hideSave(){ try{ sessionStorage.setItem("bl_hide_"+location.pathname, JSON.stringify(Array.from(HIDDEN))); }catch(e){} }
-function rerenderAll(){ renderOffers(); if (typeof renderPrepay === "function") renderPrepay(); }
+function rerenderAll(){ renderOffers(); if (typeof renderLOC === "function") renderLOC(); if (typeof renderPrepay === "function") renderPrepay(); }
 document.addEventListener("click", function(e){
   var b = e.target && e.target.closest ? e.target.closest(".hidebtn") : null;
   if(b){ var n = Number(b.getAttribute("data-hide")); if(HIDDEN.has(n)) HIDDEN.delete(n); else HIDDEN.add(n); hideSave(); rerenderAll(); return; }
@@ -435,6 +455,43 @@ function allInRate(o){
   var m = model(o);
   if(!m.advance) return Infinity;
   return Math.round(((m.payback + m.fee + m.processing) / m.advance) * 1e6) / 1e6;
+}
+
+/* ---- Byzfunder ByzFlex line of credit (own section; draw follows the master amount, capped at the limit) ---- */
+var LOC = { name:"Byzfunder", limit:300000, termLabel:"15-Month", nPay:60, factor:1.46,
+            origPct:0.015, origLabel:"1.5%", oldOrigPct:0.03, oldOrigLabel:"3%",
+            drawFeePct:0.025, drawFeeLabel:"2.50%", position:"1st", validUntil:"October 9, 2026" };
+function locModel(){
+  var draw = Math.min(STATE.requested, LOC.limit); if(draw < 0) draw = 0;
+  var orig = round2(LOC.limit * LOC.origPct);              /* % of the CREDIT LIMIT, first draw only */
+  var oldOrig = round2(LOC.limit * LOC.oldOrigPct);
+  var drawFee = round2(draw * LOC.drawFeePct);             /* % of the draw */
+  var payback = round2(draw * LOC.factor);
+  return { draw:draw, orig:orig, oldOrig:oldOrig, drawFee:drawFee, payback:payback,
+           net:round2(draw - orig - drawFee), weekly:round2(payback / LOC.nPay) };
+}
+function renderLOC(){
+  var w = document.getElementById("locWrap"); if(!w) return;
+  var m = locModel();
+  var cols = [["Lender", LOC.name],
+              ["Credit Limit", money0(LOC.limit)],
+              ["Term", LOC.termLabel],
+              ["1st Draw", money0(m.draw)],
+              ["Orig. Fee", '<span class="was">'+money(m.oldOrig)+' ('+LOC.oldOrigLabel+')</span>'
+                            +money(m.orig)+' <span class="pct">('+LOC.origLabel+' of limit)</span>'],
+              ["Draw Fee", money(m.drawFee)+' <span class="pct">('+LOC.drawFeeLabel+')</span>'],
+              ["Net Disbursement", money(m.net)],
+              ["Payback on Draw", money0(m.payback)],
+              ["Weekly Payment", money(m.weekly)],
+              ["# Payments", LOC.nPay+" weekly"]];
+  var head = "<thead><tr>" + cols.map(function(c){
+      return "<th>" + (c[0] === "Orig. Fee"
+        ? 'Orig. Fee<span class="th-note">charged by the lender</span>' : c[0]) + "</th>"; }).join("") + "</tr></thead>";
+  var body = "<tbody><tr>" + cols.map(function(c){
+      return '<td data-label="'+c[0]+'">'+c[1]+"</td>"; }).join("") + "</tr></tbody>";
+  w.innerHTML = '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'
+    + head + body + "</table></div></div>"
+    + '<div class="loc-lead">' + LOC.position + ' position &middot; approval valid until ' + LOC.validUntil + '.</div>';
 }
 
 function renderOffers(){
@@ -777,6 +834,10 @@ function downloadPDF(){
   doc.text("Mulligan Funding — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Signed Mulligan loan agreement","Valid, US government-issued photo ID","Voided check for the account ending in 2976","Add Swartz's Ultimate Collision Repair, Inc. to the loan","Signed credit application for the additional guarantor, Stephen Swartz - or proof of your 80% ownership"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
+  doc.text("Byzfunder (Line of Credit) — stipulations / closing requirements:", L, y); y+=13;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
+  ["Signed contracts","Active Driver's License","Voided check","Merchant interview","Bank VOD (verification of deposit)","Most recent tax return - including ownership","Most recent accounts receivable / WIP - waived up to $300K","Most recent accounts payable - waived up to $300K","YTD interim financials, P&L and balance sheet - waived up to $300K","Qualifies for EasyByz - if bank verification is insufficient, standard stips may be required"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
@@ -880,7 +941,7 @@ function recompute(){
   help.className = "amount-help" + (capped ? " warning" : "");
   help.textContent = capped ? "Capped at the $500,000 maximum" : "";
   help.style.display = capped ? "" : "none";
-  renderOffers(); renderCombos(); renderPrepay();
+  renderOffers(); renderLOC(); renderCombos(); renderPrepay();
 }
 document.getElementById("amount").addEventListener("input", recompute);
 document.getElementById("amount").addEventListener("blur", function(){
