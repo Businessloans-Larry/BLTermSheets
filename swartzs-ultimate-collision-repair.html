@@ -307,7 +307,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <div id="comboWrap"></div>
 
   <h2 class="section-title">Line of Credit</h2>
-  <div class="loc-lead">A revolving credit limit you draw against as you need it &mdash; the origination fee is charged once, on the first draw. Figures below are shown at the full first draw.</div>
+  <div class="loc-lead">A revolving credit limit you draw against as you need it &mdash; the origination fee is charged once, on the first draw. <b>100% prepayment</b> &mdash; pay the line off early at any time and 100% of the remaining interest is waived. Figures below are shown at the full first draw.</div>
   <div id="locWrap"></div>
 
   <!-- Closing requirements sit ABOVE the schedules whenever a sheet has one (Larry 2026-09-17). -->
@@ -461,7 +461,8 @@ function allInRate(o){
 /* ---- Byzfunder ByzFlex line of credit (own section; draw follows the master amount, capped at the limit) ---- */
 var LOC = { name:"Byzfunder", limit:300000, termLabel:"15-Month", nPay:60, factor:1.46,
             origPct:0.015, origLabel:"1.5%", oldOrigPct:0.03, oldOrigLabel:"3%",
-            drawFeePct:0.025, drawFeeLabel:"2.50%", position:"1st", validUntil:"October 9, 2026" };
+            drawFeePct:0.025, drawFeeLabel:"2.50%", position:"1st", validUntil:"October 9, 2026",
+            forgive:"100% of remaining interest waived" };
 function locModel(){
   var draw = Math.min(STATE.requested, LOC.limit); if(draw < 0) draw = 0;
   var orig = round2(LOC.limit * LOC.origPct);              /* % of the CREDIT LIMIT, first draw only */
@@ -484,7 +485,8 @@ function renderLOC(){
               ["Net Disbursement", money(m.net)],
               ["Payback on Draw", money0(m.payback)],
               ["Weekly Payment", money(m.weekly)],
-              ["# Payments", LOC.nPay+" weekly"]];
+              ["# Payments", LOC.nPay+" weekly"],
+              ["Early Payoff", LOC.forgive]];
   var head = "<thead><tr>" + cols.map(function(c){
       return "<th>" + (c[0] === "Orig. Fee"
         ? 'Orig. Fee<span class="th-note">charged by the lender</span>' : c[0]) + "</th>"; }).join("") + "</tr></thead>";
