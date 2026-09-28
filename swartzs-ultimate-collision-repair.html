@@ -30,6 +30,7 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .amount-help{font-size:13px;color:rgba(255,255,255,.92);font-weight:600;margin-top:7px;}
 .amount-help.warning{color:var(--gold);font-weight:600;}
 .closing{border:1.5px solid var(--gold);background:rgba(255,200,88,.10);border-radius:10px;padding:10px 13px;margin:0;}
+.stip-alert{background:#FDE0E0;color:#8B1A1A;font-weight:700;padding:3px 7px;border-radius:5px;display:inline-block;line-height:1.35;}
 .loc-lead{font-size:13px;color:#4A5568;margin:-2px 0 9px;line-height:1.45;}
 .promo{background:#FFC858;color:#002F68;border-radius:12px;padding:12px 18px;margin:4px 0 12px;font-weight:700;font-size:15.5px;line-height:1.35;display:flex;gap:12px;align-items:center;}
 .promo .promo-tag{background:#002F68;color:#FFC858;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;}
@@ -352,8 +353,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
       <li>Most recent accounts receivable / WIP &mdash; <b>waived up to $300K</b></li>
       <li>Most recent accounts payable &mdash; <b>waived up to $300K</b></li>
       <li>YTD interim financials, P&amp;L and balance sheet &mdash; <b>waived up to $300K</b></li>
-      <li>Plaid bank connection required</li>
-      <li>Each draw is subject to a cash-flow check</li>
+      <li><span class="stip-alert">Plaid bank connection required &mdash; each draw is subject to a cash-flow check</span></li>
     </ul>
   </div>
   </div>
@@ -840,7 +840,7 @@ function downloadPDF(){
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Byzfunder (Line of Credit) — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Signed contracts","Active Driver's License","Voided check","Merchant interview","Bank VOD (verification of deposit)","Most recent tax return - including ownership","Most recent accounts receivable / WIP - waived up to $300K","Most recent accounts payable - waived up to $300K","YTD interim financials, P&L and balance sheet - waived up to $300K","Plaid bank connection required","Each draw is subject to a cash-flow check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Signed contracts","Active Driver's License","Voided check","Merchant interview","Bank VOD (verification of deposit)","Most recent tax return - including ownership","Most recent accounts receivable / WIP - waived up to $300K","Most recent accounts payable - waived up to $300K","YTD interim financials, P&L and balance sheet - waived up to $300K","Plaid bank connection required - each draw is subject to a cash-flow check"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
