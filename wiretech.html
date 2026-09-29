@@ -360,11 +360,10 @@ var STATE = { requested: 350000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
-  /* ByzFlex LINE: 3.5% draw fee scales with the draw (origPct); the 3.5%-of-credit-limit origination
-     fee is charged once on the first draw = flat $5,250, so it lives in processing (doesn't shrink). */
+  /* ByzFlex LINE: one 3.5% fee shown (Larry 2026-09-29: show the fee once, not draw fee + line fee). */
   { name:"Lender A", advance:150000, factor:1.475, weekly:5531.25, nPay:"40", term:"10", termLabel:"10-Month Line",
-    origPct:0.035, origLabel:"3.5% of draw", feeName:"Draw fee, charged by the lender", advLabel:"Draw amount",
-    processing:5250, procLabel:"One-time line fee (3.5% of $150,000 limit, first draw only)",
+    origPct:0.035, origLabel:"3.5%", advLabel:"Draw amount",
+    processing:0,
     lineNote:"$150,000 line &middot; draw from $15,000", position:"2nd",
     schedKey:"byz", schedByWeek:true },
   { name:"Lender A", advance:350000, factor:1.41, weekly:11750, nPay:"42", term:"11", termLabel:"11-Month",
