@@ -310,14 +310,14 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <h2 class="section-title">Closing Documents</h2>
   <div class="closing-grid">
   <div class="closing">
-    <h3>Lender A (Offers 1&ndash;6) — Stipulations / Closing Requirements</h3>
+    <h3>Kapitus (Offers 1&ndash;6) — Stipulations / Closing Requirements</h3>
     <ul>
       <li>Driver's License</li>
       <li>Voided Business Check</li>
       <li>Signed Contract</li>
       <li>Electronic Bank Verification</li>
     </ul>
-    <div class="closing-up"><b>Want up to $450,000?</b> Lender A can go as high as $450,000 with these added:</div>
+    <div class="closing-up"><b>Want up to $450,000?</b> Kapitus can go as high as $450,000 with these added:</div>
     <ul>
       <li>Merchant Interview</li>
       <li>Most Recent Tax Return</li>
@@ -326,7 +326,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </ul>
   </div>
   <div class="closing">
-    <h3>Lender B (Offer 7) — Stipulations / Closing Requirements</h3>
+    <h3>Byzfunder (Offer 7) — Stipulations / Closing Requirements</h3>
     <ul>
       <li>Driver's License</li>
       <li>Voided Check</li>
@@ -381,14 +381,14 @@ var STATE = { requested: 300000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
-  { name:"Lender A", advance:300000, factor:1.288, weekly:7437.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"Pay off early &amp; save", rec:true },
-  { name:"Lender A", advance:300000, factor:1.338, weekly:7726.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"100% of remaining interest waived", rec:true },
-  { name:"Lender A", advance:300000, factor:1.346, weekly:6218.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"Pay off early &amp; save", rec:true },
-  { name:"Lender A", advance:300000, factor:430801/300000, weekly:6633.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"100% of remaining interest waived", rec:true },
-  { name:"Lender A", advance:300000, factor:412801/300000, weekly:5959.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"Pay off early &amp; save", rec:true },
-  { name:"Lender A", advance:300000, factor:1.466, weekly:6349.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"100% of remaining interest waived", rec:true },
+  { name:"Kapitus", advance:300000, factor:1.288, weekly:7437.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"Pay off early &amp; save", rec:true },
+  { name:"Kapitus", advance:300000, factor:1.338, weekly:7726.00, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"100% of remaining interest waived", rec:true },
+  { name:"Kapitus", advance:300000, factor:1.346, weekly:6218.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"Pay off early &amp; save", rec:true },
+  { name:"Kapitus", advance:300000, factor:430801/300000, weekly:6633.00, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"100% of remaining interest waived", rec:true },
+  { name:"Kapitus", advance:300000, factor:412801/300000, weekly:5959.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"Pay off early &amp; save", rec:true },
+  { name:"Kapitus", advance:300000, factor:1.466, weekly:6349.00, nPay:"70", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"2nd", forgive:"100% of remaining interest waived", rec:true },
   /* Byzfunder MCA: kept for transparency in its own section below the table (Larry 2026-09-29) */
-  { name:"Lender B", advance:350000, factor:1.41, weekly:11750, nPay:"42", term:"11", termLabel:"11-Month",
+  { name:"Byzfunder", advance:350000, factor:1.41, weekly:11750, nPay:"42", term:"11", termLabel:"11-Month",
     origPct:0.03, origLabel:"3%", processing:995, position:"2nd", aside:true, forgive:"Pay off early &amp; save",
     prepay:{
       ranges:["1–30","31–60","61–90","91–120","121–150","151–180","181–210","211–240","241–270"],
@@ -779,15 +779,15 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","normal"); doc.setTextColor(45);
   doc.text("Every offer sits in 2nd position behind your Revenued line. Offer 7 is shown for transparency; Offers 1-6 are much cheaper.", L, y); y+=12;
   y+=8; if(y>740){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender A (Offers 1-6) — stipulations / closing requirements:", L, y); y+=13;
+  doc.text("Kapitus (Offers 1-6) — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided Business Check","Signed Contract","Electronic Bank Verification"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>740){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender A can go up to $450,000 with these added:", L, y); y+=13;
+  doc.text("Kapitus can go up to $450,000 with these added:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Merchant Interview","Most Recent Tax Return","Most Recent Accounts Payable Aging Report","Most Recent Accounts Receivable Aging Report / WIP"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8; if(y>740){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
-  doc.text("Lender B (Offer 7) — stipulations / closing requirements:", L, y); y+=13;
+  doc.text("Byzfunder (Offer 7) — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   ["Driver's License","Voided Check","Signed Contract","Bank Verification","Merchant Interview","Most Recent Tax Return","Most Recent Accounts Payable Aging Report","Most Recent Accounts Receivable Aging Report / WIP"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
