@@ -36,6 +36,9 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .promo-text b{color:var(--navy);}
 @media print{.promo{break-inside:avoid;}}
 @media(max-width:600px){.promo{padding:12px 15px;}.promo-text{font-size:14px;}}
+.promo-red{border-color:#c62828;background:linear-gradient(180deg,rgba(198,40,40,.14),rgba(198,40,40,.05));}
+.promo-red .promo-tag{background:#c62828;color:#fff;}
+.promo-red .promo-text,.promo-red .promo-text b{color:#8e1b1b;}
 .closing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:0 0 12px;align-items:start;}
 .closing h3{color:var(--navy);font-size:13.5px;margin:0 0 5px 0;}
 .closing ul{margin:0;padding-left:16px;font-size:12px;color:var(--navy2);}
@@ -117,8 +120,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .offer-chart td.ch-term{text-align:left;font-weight:700;}
 .offer-chart tbody tr:nth-child(even){background:var(--bg);}
 .offer-chart tbody tr:hover{background:rgba(0,205,103,.07);}
+/* column lines, NO row lines (Larry 2026-09-30) — desktop only; mobile keeps its tile grid */
+@media(min-width:601px){.offer-chart td{border-bottom:none;}.offer-chart td+td{border-left:1px solid var(--line);}.offer-chart th+th{border-left:1px solid rgba(255,255,255,.22);}.offer-chart tr.ch-band td{border-bottom:none;}}
 .offer-chart td.ch-net{color:var(--green-d);font-weight:600;}
 .offer-chart td.ch-payback{font-weight:600;}
+.offer-chart th.th-wrap{white-space:normal;line-height:1.15;}  /* Lender Charged / Orig Fee header ALWAYS wraps to two lines (Larry 2026-09-30) */
 .offer-chart th .th-note{display:block;font-size:8.5px;font-weight:500;opacity:.78;text-transform:none;letter-spacing:0;line-height:1.1;}
 .kv-note{font-size:10px;color:var(--slate);font-weight:500;}
 .offer-chart td.ch-pay{font-weight:700;}
@@ -295,7 +301,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   </div>
   -->
 
-  <div class="promo">
+  <div class="promo promo-red">
     <span class="promo-tag">Save Money: Pay Off Revenued Yourself</span>
     <span class="promo-text"><b>Pay off your Revenued balance yourself before this loan funds.</b> If the payoff is sent from the loan proceeds, Revenued will not discount the remaining interest. Paying it off directly gets you that discount and saves you money. Once it is paid, all we need is <b>proof of your $0 balance</b> with Revenued.</span>
   </div>
@@ -484,7 +490,7 @@ function renderOffers(){
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
         + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
     }).join("");
-    var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th>Lender Charged Orig Fee</th><th>Net Advance</th>'
+    var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th class="th-wrap">Lender Charged<br/>Orig Fee</th><th>Net Advance</th>'
       + '<th>Total Payback<span class="th-note">if not repaid early</span></th><th>'+payHead+'</th>'
       + '<th># Payments</th>'+(hasForgive?'<th>Early Payoff</th>':'')+'</tr></thead>';
     html = rows ? '<div class="lender-group"><div class="chart-wrap"><table class="offer-chart">'+head+'<tbody>'+rows+'</tbody></table></div></div>' : '';
