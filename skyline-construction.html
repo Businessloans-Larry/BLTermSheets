@@ -606,7 +606,7 @@ function mergedSched(grp){
   var h = '<div class="prepay-section">'
     + '<div class="prepay-head"><h2 class="prepay-title">'+heading+' &mdash; Early Payoff Comparison'
     + (sameAdv ? ' &mdash; '+money0(advs[0]) : '')+'</h2></div>'
-    + '<div class="prepay-legend"><b>Payoff Amount</b> = the lump sum to close it out that day. <b>Total Repayment</b> = everything you will have repaid if you pay off at that point. '+(NOFEE ? '' : ' <b>All-In Cost</b> = that plus the origination fee.')+(sameAdv ? ' <b>Cheaper all-in</b> names the option that costs least if you pay off at that payment, and by how much.' : ' These options are approved at different amounts, so compare each one against the advance in its own column heading rather than against each other in dollars.')+' These are the four options that waive <b>100% of the remaining interest</b> when you pay off early, so the payoff column is what you owe that day and nothing more.'
+    + '<div class="prepay-legend">'+(NOPAY ? '' : '<b>Payoff Amount</b> = the lump sum to close it out that day. ')+'<b>Total Repayment</b> = everything you will have repaid if you pay off after that payment. '+(NOFEE ? '' : ' <b>All-In Cost</b> = that plus the origination fee.')+(sameAdv ? ' <b>Cheaper all-in</b> names the option that costs least if you pay off at that payment, and by how much.' : ' These options are approved at different amounts, so compare each one against the advance in its own column heading rather than against each other in dollars.')+' These are the four options that waive <b>100% of the remaining interest</b> when you pay off early.'
     + (aligned ? ' These offers bill on different schedules, so rows are <b>months</b>: a monthly offer is shown at that month&rsquo;s payment and a weekly one at the payment falling at the end of that month (4 per month). The last row is each offer&rsquo;s final payment.' : '')
     + '</div>';
 
@@ -614,9 +614,9 @@ function mergedSched(grp){
      and whole-dollar cells so 18 columns stay legible */
   var wide = grp.length > 4, mf = wide ? money0 : money;
   var gh = '<tr><th rowspan="2">'+rowLabel+'</th>'
-    + grp.map(function(o){ return '<th class="pg-head" colspan="'+(NOFEE?2:3)+'">Offer '+o.num+' &middot; '+(sameTerm ? o.name : o.termLabel)+(o.fgShort ? ' &middot; '+o.fgShort : '')+(sameAdv ? '' : ' &middot; '+money0(model(o).advance))+(o.origPct ? ' &middot; '+o.origLabel+' fee' : '')+'</th>'; }).join('')
+    + grp.map(function(o){ return '<th class="pg-head" colspan="'+PCOLS.length+'">Offer '+o.num+' &middot; '+(sameTerm ? o.name : o.termLabel)+(o.fgShort ? ' &middot; '+o.fgShort : '')+(sameAdv ? '' : ' &middot; '+money0(model(o).advance))+(o.origPct ? ' &middot; '+o.origLabel+' fee' : '')+'</th>'; }).join('')
     + (sameAdv ? '<th rowspan="2">Cheaper all-in</th>' : '')+'</tr>';
-  var sh = '<tr>'+grp.map(function(){ return '<th>Payoff Amount</th><th>Total Repayment<span class="th-note">if paid off at that point</span></th>'+(NOFEE?'':'<th>All-In Cost<span class="th-note">incl. origination fee</span></th>'); }).join('')+'</tr>';
+  var sh = '<tr>'+grp.map(function(){ return PCOLS.map(function(c){ return '<th>'+c[1]+'</th>'; }).join(''); }).join('')+'</tr>';
 
   var body = '';
   for(var i=0;i<rowsN;i++){
@@ -625,11 +625,9 @@ function mergedSched(grp){
     for(var g=0; g<grp.length; g++){
       var o = grp[g], k = schedIdx(o, i, aligned, months);
       if(k < 0){ costs.push(null);
-        body += '<td data-label="Offer '+o.num+' payoff">&mdash;</td><td data-label="Offer '+o.num+' total repayment">&mdash;</td>'+(NOFEE?'':'<td data-label="Offer '+o.num+' all-in cost">&mdash;</td>'); continue; }
+        body += PCOLS.map(function(pc){ return '<td data-label="Offer '+o.num+' '+pc[3]+'">&mdash;</td>'; }).join(''); continue; }
       var c = schedCells(o, k); costs.push({v:c.allin, num:o.num});
-      body += '<td class="po-payoff" data-label="Offer '+o.num+' payoff">'+mf(c.payoff)+'</td>'
-           +  '<td class="po-total" data-label="Offer '+o.num+' total repayment">'+mf(c.total)+'</td>'
-           +  (NOFEE ? '' : '<td class="po-allin" data-label="Offer '+o.num+' all-in cost">'+mf(c.allinGross)+'</td>');
+      body += PCOLS.map(function(pc){ return '<td class="'+pc[2]+'" data-label="Offer '+o.num+' '+pc[3]+'">'+mf(c[pc[0]])+'</td>'; }).join('');
     }
     body += (sameAdv ? '<td class="po-win" data-label="Cheaper all-in">'+cheapest(costs)+'</td>' : '')+'</tr>';
   }
@@ -693,6 +691,11 @@ function daySched(o){
    Mulligan schedule side by side so the merchant can compare terms at the same week. Empty = the
    default rule only (same term + same advance tier). */
 var NOFEE = OFFERS.every(function(o){ return !o.origPct && !o.processing; });  /* no fee anywhere: All-In Cost would just repeat Total Repayment, so drop it */
+var NOPAY = true;  /* Larry 2026-09-30: merged schedule shows Total Repayment only, no Payoff Amount column */
+/* per-offer columns in the merged schedule: [key, header html, css class, pdf header] */
+var PCOLS = (NOPAY ? [] : [["payoff","Payoff Amount","po-payoff","Payoff"]])
+  .concat([["total",'Total Repayment<span class="th-note">if paid off at that point</span>',"po-total","Total Repaid"]])
+  .concat(NOFEE ? [] : [["allinGross",'All-In Cost<span class="th-note">incl. origination fee</span>',"po-allin","All-In"]]);
 var MERGE_GROUPS = [[1,2,3,4]];  /* all four 100% prepay terms in ONE schedule (Larry 2026-09-30) */
 function schedGroups(){
   var live = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); })
@@ -812,7 +815,7 @@ function downloadPDF(){
     grp.forEach(function(o){ var m=model(o);
       doc.text("Offer "+o.num+" ("+o.name+"): "+money0(m.advance)+" advance   "+money0(m.payback)+" payback   "
         +money(m.weekly)+"/"+eachOf(o)+"   "+o.nPay+" payments   "+money(m.fee)+" fee", L, y2); y2+=11; });
-    doc.text("Payoff Amount = lump sum due that day. Total Repayment = everything repaid if you pay off at that point. Cheaper = lowest cost if paid off at that payment.", L, y2); y2+=11;
+    doc.text((NOPAY ? "" : "Payoff Amount = lump sum due that day. ")+"Total Repaid = everything repaid if you pay off after that payment. Cheaper = lowest cost if paid off at that payment.", L, y2); y2+=11;
     if(aligned){ doc.text("Rows are months: monthly offers at that month's payment, weekly offers at 4 payments per month; last row = final payment.", L, y2); y2+=11; }
     y2+=5;
     var cols, fs;
@@ -820,11 +823,9 @@ function downloadPDF(){
       fs = grp.length > 2 ? 7 : 8.5;
       cols = [{h:aligned?"Month":"#",x:L,a:"left"}];
       fs = wide ? 6.2 : 7.5;
-      var ST = NOFEE ? 2 : 3, span = (R2 - 118) / (grp.length*ST), x0 = 118;
+      var ST = PCOLS.length, span = (R2 - 118) / (grp.length*ST + (sameAdvOf(grp) ? 1 : 0)), x0 = 118;
       grp.forEach(function(o,gi){
-        cols.push({h:"Offer "+o.num+" Payoff", x:Math.round(x0+span*(gi*ST+1)), a:"right"});
-        cols.push({h:"Offer "+o.num+" Total Repaid", x:Math.round(x0+span*(gi*ST+2)), a:"right"});
-        if(!NOFEE) cols.push({h:"Offer "+o.num+" All-In", x:Math.round(x0+span*(gi*ST+3)), a:"right"});
+        PCOLS.forEach(function(pc,pi){ cols.push({h:"Offer "+o.num+" "+pc[3], x:Math.round(x0+span*(gi*ST+pi+1)), a:"right"}); });
       });
       if(sameAdvOf(grp)){ cols[cols.length-1].x = R2 - (wide ? 78 : 92); cols.push({h:"Cheaper",x:R2,a:"right"}); }
     } else {
@@ -846,11 +847,9 @@ function downloadPDF(){
         var cs=[];
         for(var g=0; g<grp.length; g++){
           var o=grp[g], k=schedIdx(o,i,aligned,months);
-          if(k<0){ cs.push(null); doc.text("-", cols[1+g*ST].x, y2, {align:"right"}); doc.text("-", cols[2+g*ST].x, y2, {align:"right"}); if(!NOFEE) doc.text("-", cols[3+g*ST].x, y2, {align:"right"}); continue; }
+          if(k<0){ cs.push(null); PCOLS.forEach(function(pc,pi){ doc.text("-", cols[1+g*ST+pi].x, y2, {align:"right"}); }); continue; }
           var c=schedCells(o,k); cs.push({v:c.allin,num:o.num});
-          doc.text(mf(c.payoff),     cols[1+g*ST].x, y2, {align:"right"});
-          doc.text(mf(c.total),      cols[2+g*ST].x, y2, {align:"right"});
-          if(!NOFEE) doc.text(mf(c.allinGross), cols[3+g*ST].x, y2, {align:"right"});
+          PCOLS.forEach(function(pc,pi){ doc.text(mf(c[pc[0]]), cols[1+g*ST+pi].x, y2, {align:"right"}); });
         }
         var live=sameAdvOf(grp) ? cs.filter(function(x){return x;}) : [], t="-";
         if(live.length>1){ live.sort(function(a,b){return a.v-b.v;});
