@@ -241,6 +241,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   .prepay td::before{content:attr(data-label);text-align:left;color:var(--slate);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;}
   .prepay td:first-child{background:rgba(0,47,104,.05);font-weight:700;color:var(--navy);}
 }
+.sept-x{text-decoration:line-through;text-decoration-thickness:1.5px;opacity:.55;}
 </style>
 </head>
 <body>
@@ -255,7 +256,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     </div>
   </header>
 
-  <div class="promo-banner">
+  <div class="promo-banner sept-x">
     <span class="promo-icon">&#9203;</span>
     <span>Close in September and BusinessLoans.com will reimburse <b>2% of your origination fee</b> after closing.
       <span class="promo-sub">The origination fee and net advance below are already net of this reimbursement. The struck-through fee is what the lender collects at closing.</span></span>
@@ -340,7 +341,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to lender approval and satisfaction of the stipulations above. The September origination-fee reimbursement (2% of the funded amount) is paid by BusinessLoans.com after closing, not by the lender, and applies only to deals that close by September 30, 2026. The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the day range shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to lender approval and satisfaction of the stipulations above. <span class="sept-x">The September origination-fee reimbursement (2% of the funded amount) is paid by BusinessLoans.com after closing, not by the lender, and applies only to deals that close by September 30, 2026.</span> The total funding amount may not equal the amount deposited to your business checking account. Early-payoff figures scale with the requested amount and reflect payoff if paid in full within the day range shown; actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -449,7 +450,7 @@ function renderOffers(){
         + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
         + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee, charged by the lender ('+o.origLabel+')</span><span class="kv-val">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+'</span> ' : '')+money(m.fee)+'</span></div>'
         + procRow
-        + '<div class="kv-row kv-net"><span class="kv-label">Net advance <span class="kv-note">(after the September reimbursement)</span></span><span class="kv-val">'+money(m.net)+'</span></div>'
+        + '<div class="kv-row kv-net"><span class="kv-label">Net advance <span class="kv-note sept-x">(after the September reimbursement)</span></span><span class="kv-val">'+money(m.net)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>'
         + '<div class="kv-row kv-pay"><span class="kv-label">'+cap(fw)+' payment</span><span class="kv-val">'+money(m.weekly)+'</span></div>'
         + '<div class="kv-row"><span class="kv-label">Number of payments</span><span class="kv-val">'+o.nPay+' '+fw+'</span></div>'
@@ -734,7 +735,7 @@ function downloadPDF(){
   doc.text("Funding Offers — JT Barrier", L, y); y+=20;
   doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(90);
   doc.text("BusinessLoans.com     Prepared September 29, 2026 at 11:57 AM EDT     Requested "+money0(STATE.requested), L, y); y+=16;
-  doc.text("Close in September and BusinessLoans.com will reimburse 2% of your origination fee after closing (figures shown net).", L, y); y+=22;
+  sxText(doc, "Close in September and BusinessLoans.com will reimburse 2% of your origination fee after closing (figures shown net).", L, y); y+=22;
   OFFERS_PDF.forEach(function(o){
     var m = model(o);
     if(y>660){ doc.addPage(); y=60; }
@@ -956,5 +957,10 @@ recompute();
     });
   }
 }catch(e){}})();
+</script>
+<script>
+/* September fee reimbursement expired 9/30 -- struck through in the PDF too (Larry 2026-10-01) */
+function sxText(doc,t,x,y){ doc.text(t,x,y); var w=doc.getTextWidth(t), dy=doc.getFontSize()*0.3;
+  doc.saveGraphicsState(); doc.setLineWidth(0.7); doc.setDrawColor(90); doc.line(x,y-dy,x+w,y-dy); doc.restoreGraphicsState(); }
 </script>
 </body></html>
