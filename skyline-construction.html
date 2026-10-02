@@ -40,7 +40,7 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .promo-red .promo-tag{background:#c62828;color:#fff;}
 .promo-red .promo-text,.promo-red .promo-text b{color:#8e1b1b;}
 /* Skyline only (Larry 2026-09-30): the 100% prepay cell highlighted green */
-.offer-chart td.ch-fg,.offer-chart tbody tr:hover td.ch-fg{background:rgba(0,205,103,.16);color:#00733a;font-weight:700;}
+.offer-chart td.ch-fg.fg100,.offer-chart tbody tr:hover td.ch-fg.fg100{background:rgba(0,205,103,.16);color:#00733a;font-weight:700;}
 .closing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:0 0 12px;align-items:start;}
 .closing h3{color:var(--navy);font-size:13.5px;margin:0 0 5px 0;}
 .closing ul{margin:0;padding-left:16px;font-size:12px;color:var(--navy2);}
@@ -340,7 +340,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 
 
   <div class="disclosure">
-    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender&rsquo;s approval and satisfaction of the stipulations above. Every option may be paid off early at any time and 100% of the remaining interest is waived; early payoff amounts are estimates and actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
+    <b>Disclosure.</b> This term sheet is for illustration purposes only and is not a commitment to lend. Subject to the lender&rsquo;s approval and satisfaction of the stipulations above. Every option may be paid off early at any time: the 100% options waive all of the remaining interest and the 25% options forgive 25% of it; early payoff amounts are estimates and actual amounts may differ due to origination date, bank holidays, missed or early payments, and other factors.
   </div>
 
   <footer>
@@ -358,13 +358,17 @@ var STATE = { requested: 275000 };
 var LENDER_NOTES = {};
 
 var FG100 = "100% of remaining interest waived";
+var FG25  = "Save 25% of remaining interest";
 
 var LA = "Lender A";
 
 var OFFERS = [
   { name:LA, advance:275000, factor:1.168, freq:"weekly", weekly:321200/39, nPay:"39", term:"9",  termLabel:"9-Month",  origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG100, fgShort:"100% forgiveness", schedKey:"od9_100"  },
+  { name:LA, advance:275000, factor:1.141, freq:"weekly", weekly:313775/52, nPay:"52", term:"12", termLabel:"12-Month", origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG25,  fgShort:"25% forgiveness" },
   { name:LA, advance:275000, factor:1.203, freq:"weekly", weekly:330825/52, nPay:"52", term:"12", termLabel:"12-Month", origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG100, fgShort:"100% forgiveness", schedKey:"od12_100" },
+  { name:LA, advance:275000, factor:1.176, freq:"weekly", weekly:323400/65, nPay:"65", term:"15", termLabel:"15-Month", origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG25,  fgShort:"25% forgiveness" },
   { name:LA, advance:275000, factor:1.242, freq:"weekly", weekly:341550/65, nPay:"65", term:"15", termLabel:"15-Month", origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG100, fgShort:"100% forgiveness", schedKey:"od15_100" },
+  { name:LA, advance:275000, factor:1.194, freq:"weekly", weekly:328350/78, nPay:"78", term:"18", termLabel:"18-Month", origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG25,  fgShort:"25% forgiveness" },
   { name:LA, advance:275000, factor:1.262, freq:"weekly", weekly:347050/78, nPay:"78", term:"18", termLabel:"18-Month", origPct:0, origLabel:"None", processing:0, position:"1st", forgive:FG100, fgShort:"100% forgiveness", schedKey:"od18_100" }
 ];
 
@@ -470,7 +474,7 @@ function renderOffers(){
         band = '<tr class="ch-band"><td colspan="'+colspan+'">'+o.termLabel+' Term</td></tr>'; }
       var m = model(o); var fw = (o.freq === "monthly") ? "monthly" : "weekly";
       var capTag = m.capped ? '<span class="cap-badge cap-pre">max</span>' : '';
-      var fg = hasForgive ? '<td class="ch-fg" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
+      var fg = hasForgive ? '<td class="ch-fg'+(o.forgive===FG100 ? ' fg100' : '')+'" data-label="Early Payoff">'+(o.forgive||"&mdash;")+'</td>' : '';
       var star = o.rec ? '<span class="rec-star">&#9733;</span>' : '';
       var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
       /* all markers render BEFORE the lender name; the Lender column is right-aligned, so the names
@@ -698,7 +702,7 @@ var NOPAY = true;  /* Larry 2026-09-30: merged schedule shows Total Repayment on
 var PCOLS = (NOPAY ? [] : [["payoff","Payoff Amount","po-payoff","Payoff"]])
   .concat([["total",'Total Repayment<span class="th-note">if paid off at that point</span>',"po-total","Total Repaid"]])
   .concat(NOFEE ? [] : [["allinGross",'All-In Cost<span class="th-note">incl. origination fee</span>',"po-allin","All-In"]]);
-var MERGE_GROUPS = [[1,2,3,4]];  /* all four 100% prepay terms in ONE schedule (Larry 2026-09-30) */
+var MERGE_GROUPS = [[1,3,5,7]];  /* the four 100% prepay terms in ONE schedule (Larry 2026-09-30); 25% options (2,4,6) carry no schedule */
 function schedGroups(){
   var live = OFFERS.filter(function(o){ return !HIDDEN.has(o.num); })
                    .slice().sort(function(a,b){ return ((a.term-0)-(b.term-0)) || (a.num-b.num); });
@@ -774,7 +778,7 @@ function downloadPDF(){
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Every option:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["No origination fee","Pay off early at any time and 100% of the remaining interest is waived","Save money: pay off your Revenued balance yourself before funding - if it is paid from the loan proceeds,","   Revenued will not discount the remaining interest. Then just send proof of your $0 balance."].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["No origination fee","100% options: pay off early at any time and 100% of the remaining interest is waived","25% options: pay off early and save 25% of the remaining interest","Save money: pay off your Revenued balance yourself before funding - if it is paid from the loan proceeds,","   Revenued will not discount the remaining interest. Then just send proof of your $0 balance."].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   y+=8;
   schedGroups().forEach(function(grp){
     var lead = grp[0];
