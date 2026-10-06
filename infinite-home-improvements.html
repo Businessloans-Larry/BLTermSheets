@@ -494,7 +494,6 @@ function renderOffers(){
          stay flush right and the badges flow left into the gap under the Term column. */
       var bd = BAND[o.termLabel], marks = '';
       if(o.bump) marks += '<span class="mk mk-up">&#8593; '+o.bump+'</span>';
-      if(fwOf(o) !== "weekly") marks += '<span class="freq-badge">'+cap(fwOf(o))+'</span>';
       /* OPT-IN ONLY \u2014 off by default (Larry 2026-09-17). When enabled it shows in EVERY band,
          single-offer bands included (Larry 2026-09-14). */
       if(SHOW_CHEAPEST_BADGE && Math.abs(allInRate(o) - bd.minRate) < 1e-6) marks += '<span class="mk mk-cheap">&#9733; Lowest all-in rate<span class="mk-sub">for this term length</span></span>';
@@ -507,7 +506,7 @@ function renderOffers(){
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + (showPayback ? '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+(o.noPayback ? '&mdash;' : money0(m.payback))+'</td>' : '')
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
-        + '<td data-label="# Payments">'+o.nPay+' '+fw+'</td>'+fg+'</tr>';
+        + '<td data-label="# Payments">'+o.nPay+' '+(fw === "weekly" ? fw : '<span class="freq-badge">'+cap(fw)+'</span>')+'</td>'+fg+'</tr>';
     }).join("");
     var head = '<thead><tr><th>Offer</th><th>Term</th><th>Lender</th><th>Advance</th><th class="th-wrap">Lender Charged<br/>Orig Fee</th><th>Net Advance</th>'
       + (showPayback ? '<th>Total Payback<span class="th-note">if not repaid early</span></th>' : '')+'<th>'+payHead+'</th>'
