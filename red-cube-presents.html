@@ -243,7 +243,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
 /* tighter chart (Larry 2026-10-06, Red Cube): struck fee inline, slimmer rows + term bands */
 @media(min-width:601px){
 .offer-chart td{padding:3px 10px;}
-.offer-chart td .was{display:inline;margin-right:6px;}
+.offer-chart td .was{display:inline;margin-right:4px;}
 .offer-chart tr.ch-band td{padding:2px 10px;font-size:13px;}
 .offer-chart th{padding:4px 10px;}
 .offer-chart .hidebtn{padding:0 5px;}
@@ -535,7 +535,7 @@ function renderOffersInto(LIST, wrapId, forceChart){
         + '<td class="ch-term" data-label="Term">'+o.termLabel+'</td>'
         + '<td data-label="Lender">'+marks+o.name+recBadge+'</td>'
         + '<td data-label="Advance">'+capTag+money0(m.advance)+'</td>'
-        + '<td data-label="Lender Charged Orig Fee">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money(m.fee)+' <span class="pct">('+o.origLabel+')</span>'+(o.feeOnTop ? '<span class="was" style="text-decoration:none">loaned, then withheld</span>' : '')+'</td>'
+        + '<td data-label="Lender Charged Orig Fee">'+(m.oldFee ? '<span class="was">'+money0(m.oldFee)+' ('+o.oldOrigLabel+')</span>' : '')+money0(m.fee)+' <span class="pct">('+o.origLabel+')</span>'+(o.feeOnTop ? '<span class="was" style="text-decoration:none">loaned, then withheld</span>' : '')+'</td>'
         + '<td class="ch-net" data-label="Net Advance">'+money(m.net)+'</td>'
         + (showPayback ? '<td class="ch-payback" data-label="Total Payback (if not repaid early)">'+(o.noPayback ? '&mdash;' : money0(m.payback))+'</td>' : '')
         + '<td class="ch-pay" data-label="'+payHead+'">'+money(m.weekly)+'</td>'
