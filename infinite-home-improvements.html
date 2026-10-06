@@ -298,7 +298,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   </div>
 
   <h2 class="section-title">Offers</h2>
-  <p class="lender-note" style="margin:0 0 8px;font-size:13px;">Two ways to price it: the <b>&ldquo;Pay off early &amp; save&rdquo;</b> offers cost the least if you keep the loan for the full term. The <b>&ldquo;100% of remaining interest waived&rdquo;</b> offers cost more at full term, but are the best choice if you plan to pay it off early.</p>
+  <p class="lender-note" style="margin:0 0 8px;font-size:13px;">Two ways to price it: the <b>&ldquo;10% of remaining interest waived&rdquo;</b> offers cost the least if you keep the loan for the full term. The <b>&ldquo;100% of remaining interest waived&rdquo;</b> offers cost more at full term, but are the best choice if you plan to pay it off early.</p>
   <div id="offerWrap"></div>
 
   <div id="comboWrap"></div>
@@ -358,14 +358,14 @@ var STATE = { requested: 400000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 var OFFERS = [
-  { name:"Kapitus", advance:400000, factor:471201/400000, weekly:9069, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:483200/400000, weekly:18599, nPay:"26", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"biweekly", forgive:"Pay off early &amp; save" },
+  { name:"Kapitus", advance:400000, factor:471201/400000, weekly:9069, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"10% of remaining interest waived" },
+  { name:"Kapitus", advance:400000, factor:483200/400000, weekly:18599, nPay:"26", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"biweekly", forgive:"10% of remaining interest waived" },
   { name:"Kapitus", advance:400000, factor:495200/400000, weekly:9531, nPay:"52", term:"12", termLabel:"12-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived" },
-  { name:"Kapitus", advance:400000, factor:490400/400000, weekly:7551, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:502400/400000, weekly:15471, nPay:"32", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"biweekly", forgive:"Pay off early &amp; save" },
+  { name:"Kapitus", advance:400000, factor:490400/400000, weekly:7551, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"10% of remaining interest waived" },
+  { name:"Kapitus", advance:400000, factor:502400/400000, weekly:15471, nPay:"32", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"biweekly", forgive:"10% of remaining interest waived" },
   { name:"Kapitus", advance:400000, factor:522400/400000, weekly:8044, nPay:"65", term:"15", termLabel:"15-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived" },
-  { name:"Kapitus", advance:400000, factor:498400/400000, weekly:7194, nPay:"69", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"Pay off early &amp; save" },
-  { name:"Kapitus", advance:400000, factor:510400/400000, weekly:14735, nPay:"35", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"biweekly", forgive:"Pay off early &amp; save" },
+  { name:"Kapitus", advance:400000, factor:498400/400000, weekly:7194, nPay:"69", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"10% of remaining interest waived" },
+  { name:"Kapitus", advance:400000, factor:510400/400000, weekly:14735, nPay:"35", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", freq:"biweekly", forgive:"10% of remaining interest waived" },
   { name:"Kapitus", advance:400000, factor:530400/400000, weekly:7656, nPay:"69", term:"16", termLabel:"16-Month", origPct:0.025, origLabel:"2.5%", processing:0, position:"1st", forgive:"100% of remaining interest waived" }
 ];
 
