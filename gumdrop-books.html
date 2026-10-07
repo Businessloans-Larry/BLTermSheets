@@ -863,7 +863,7 @@ function mergedSched(grp){
     + '<div class="prepay-head"><h2 class="prepay-title">'+heading+' &mdash; Early Payoff Comparison'
     + (sameAdv ? ' &mdash; '+money0(advs[0]) : '')+'</h2></div>'
     + '<div class="prepay-recap allin-note"><b>All-In Cost at each week includes every cost of the loan:</b> the payments made to date, the payoff amount, <b>and the origination fee charged by the lender</b>.</div>'
-    + '<div class="prepay-legend"><b>Payoff Amount</b> = the lump sum to close it out that day. <b>Total Repayment</b> = everything you will have repaid if you pay off at that point. <b>All-In Cost</b> = total repayment plus the origination fee charged by the lender. <b>Cheaper all-in</b> names the lowest all-in cost at that point and how much it wins by.'
+    + '<div class="prepay-legend">'+(compact ? '' : '<b>Payoff Amount</b> = the lump sum to close it out that day. ')+'<b>Total Repayment</b> = everything you will have repaid if you pay off at that point. <b>All-In Cost</b> = total repayment plus the origination fee charged by the lender. <b>Cheaper all-in</b> names the lowest all-in cost at that point and how much it wins by.'
     + (aligned ? ' These offers bill on different schedules, so rows are <b>months</b>: a monthly offer is shown at that month&rsquo;s payment and a weekly one at the payment falling at the end of that month (4 per month). The last row is each offer&rsquo;s final payment.' : '')
     + (grp.some(function(o){ return o.freq === "biweekly"; }) ? ' A bi-weekly offer&rsquo;s payment is drawn every 2 weeks; its schedule is shown week by week so it lines up with the weekly offers.' : '')
     + '</div>';
