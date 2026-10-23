@@ -332,6 +332,7 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
     <ul>
       <li>Driver&#39;s License</li>
       <li>Voided Check</li>
+      <li>Bank Verification</li>
       <li>Signed Contract</li>
     </ul>
   </div>
@@ -795,7 +796,7 @@ function downloadPDF(){
   y+=8; if(y>760){doc.addPage(); y=60;} doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(20);
   doc.text("Lender B — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Driver's License","Voided Check","Signed Contract"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Driver's License","Voided Check","Bank Verification","Signed Contract"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
