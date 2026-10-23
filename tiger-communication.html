@@ -61,6 +61,11 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 .single-wrap{max-width:560px;}
 .offers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:900px;}
 @media(max-width:760px){.offers-grid{grid-template-columns:1fr;}}
+#prepayWrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:900px;align-items:start;}
+#prepayWrap[hidden]{display:none!important;}
+#prepayWrap .prepay-section{margin-top:12px;}
+@media(max-width:760px){#prepayWrap{grid-template-columns:1fr;}}
+@media print{#prepayWrap{display:block!important;max-width:none;}}
 .offer-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .offer-card-header{color:#fff;padding:11px 15px;background:linear-gradient(135deg,#002F68 0%,#1A2763 100%);}
 .offer-term{font-family:'DM Serif Display',Georgia,serif;font-size:20px;line-height:1.1;}
@@ -749,7 +754,7 @@ function schedGroups(){
 }
 
 function renderPrepay(){
-  var html = schedGroups().map(function(grp){
+  var html = schedGroups().slice().sort(function(a,b){ return a[0].num - b[0].num; }).map(function(grp){
     if(!schedOf(grp[0])) return daySched(grp[0]);
     return grp.length > 1 ? mergedSched(grp) : singleSched(grp[0]);
   }).join("");
