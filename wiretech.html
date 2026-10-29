@@ -149,7 +149,8 @@ h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;}
 @media print{.sched-bar{display:none!important;}}
 table.prepay-tot{font-size:12px;}
 table.prepay-tot th,table.prepay-tot td{padding:4px 8px;}
-table.prepay-tot th{font-size:10.5px;line-height:1.2;vertical-align:bottom;}
+table.prepay-tot thead th{font-size:11px;line-height:1.3;vertical-align:middle;text-align:center;white-space:nowrap;padding:7px 8px;}
+table.prepay-tot thead th:first-child{text-align:center;}
 table.prepay-tot td{white-space:nowrap;}
 table.prepay-tot th+th{border-left:1px solid rgba(255,255,255,.25);}
 table.prepay-tot td+td{border-left:1px solid var(--line);}
@@ -732,6 +733,7 @@ function schedGroups(){
 function totLive(){ return OFFERS.filter(function(o){ return !HIDDEN.has(o.num); }); }
 function totAt(o, mth){ var t = SCHED_TOT[o.num-1]; if(mth > t.length) return null; return round2(t[mth-1]*model(o).s); }
 function totHead(o){ return 'Offer '+o.num+' &middot; '+o.termLabel+' &middot; '+o.forgive.replace(/ of remaining interest waived/,'')+' IF'; }
+function totTh(o){ return '<b>Offer '+o.num+'</b><br/>'+o.termLabel.replace('-Month',' mo')+' &middot; '+o.forgive.replace(/ of remaining interest waived/,'')+' IF'; }
 /* rank on total repaid + origination fee */
 function totCheapest(live, mth){
   var c = live.map(function(o){ var v = totAt(o,mth); if(v===null) return null; var m = model(o); return {v:round2(v + m.fee + m.processing - m.advance), num:o.num}; });
@@ -742,7 +744,7 @@ function totalSched(){
   var n = Math.max.apply(null, live.map(function(o){ return SCHED_TOT[o.num-1].length; }));
   var h = '<div class="prepay-section prepay-tot-sec"><div class="prepay-head"><h2 class="prepay-title">Early Payoff Comparison &mdash; All Offers &mdash; '+money0(model(live[0]).advance)+'</h2></div>'
     + '<div class="prepay-legend"><b>Total Repayment</b> = everything you will have repaid (payments made plus the payoff) if you pay the offer off after that month. <b>Cheapest all-in</b> = the lowest total repayment plus origination fee that month, and how far ahead it is of the next best. Payments are drawn weekly; payoff amounts step by month.</div>';
-  var head = '<tr><th>Pay off after month</th>'+live.map(function(o){ return '<th>'+totHead(o)+'</th>'; }).join('')+'<th>Cheapest all-in</th></tr>';
+  var head = '<tr><th>Pay off<br/>after</th>'+live.map(function(o){ return '<th>'+totTh(o)+'</th>'; }).join('')+'<th>Cheapest<br/>all-in</th></tr>';
   var body = '';
   for(var mth=1; mth<=n; mth++){
     body += '<tr><td data-label="Pay off after month">Month '+mth+'</td>'
