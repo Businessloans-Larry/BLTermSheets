@@ -252,6 +252,12 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   .prepay td::before{content:attr(data-label);text-align:left;color:var(--slate);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;}
   .prepay td:first-child{background:rgba(0,47,104,.05);font-weight:700;color:var(--navy);}
 }
+/* Larry 10/29: center every header and cell in its box, top/bottom and left/right (desktop table only) */
+@media(min-width:601px){
+  .offer-chart th,.offer-chart td{text-align:center!important;vertical-align:middle!important;}
+  .offer-chart tr.ch-band td{text-align:left!important;}
+  table.prepay-tot th,table.prepay-tot td{text-align:center!important;vertical-align:middle!important;}
+}
 </style>
 </head>
 <body>
