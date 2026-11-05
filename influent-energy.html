@@ -332,9 +332,9 @@ footer{margin-top:14px;padding-top:10px;border-top:2px solid var(--line);font-si
   <!-- Closing requirements sit ABOVE the schedules whenever a sheet has one (Larry 2026-09-17). -->
   <h2 class="section-title">Cash Flow: Monthly True Revenue</h2>
   <div class="cf">
-    <div class="cf-chart"><div class="cf-col"><div class="cf-val">$1,063K</div><div class="cf-bar" style="height:32.5%"></div></div><div class="cf-col"><div class="cf-val">$1,057K</div><div class="cf-bar" style="height:32.4%"></div></div><div class="cf-col"><div class="cf-val">$320K</div><div class="cf-bar" style="height:9.8%"></div></div><div class="cf-col"><div class="cf-val">$2,874K</div><div class="cf-bar" style="height:88.0%"></div></div><div class="cf-col cf-drop"><div class="cf-val">$230K</div><div class="cf-bar" style="height:7.0%"></div></div><div class="cf-col"><div class="cf-val">$1,166K</div><div class="cf-bar" style="height:35.7%"></div></div></div>
+    <div class="cf-chart"><div class="cf-col"><div class="cf-val">$1.06MM</div><div class="cf-bar" style="height:32.5%"></div></div><div class="cf-col"><div class="cf-val">$1.06MM</div><div class="cf-bar" style="height:32.4%"></div></div><div class="cf-col"><div class="cf-val">$320K</div><div class="cf-bar" style="height:9.8%"></div></div><div class="cf-col"><div class="cf-val">$2.87MM</div><div class="cf-bar" style="height:88.0%"></div></div><div class="cf-col cf-drop"><div class="cf-val">$230K</div><div class="cf-bar" style="height:7.0%"></div></div><div class="cf-col"><div class="cf-val">$1.17MM</div><div class="cf-bar" style="height:35.7%"></div></div></div>
     <div class="cf-labels"><div>May</div><div>Jun</div><div>Jul</div><div>Aug</div><div>Sep</div><div>Oct</div></div>
-    <div class="cf-callout"><b>September revenue dropped to $230K</b>, down 92% from August ($2.87M) and 83% below the May&ndash;August average of $1.33M per month. October came back to $1.17M.</div>
+    <div class="cf-callout"><b>September revenue dropped to $230K</b>, down 92% from August ($2.87MM) and 83% below the May&ndash;August average of $1.33MM per month. October came back to $1.17MM.</div>
     <div class="cf-fine">True revenue = customer deposits into the operating account ending in 1447. Excludes transfers from the money market account (4060), loan proceeds, returned and reversed items, refunds, account-verification credits, and dividends.</div>
   </div>
 
@@ -799,7 +799,7 @@ function downloadPDF(){
   doc.text("Monthly true revenue (operating account ending in 1447):", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
   [["May 2026","$1,062,872.49"],["Jun 2026","$1,057,416.85"],["Jul 2026","$319,600.68"],["Aug 2026","$2,873,780.16"],["Sep 2026","$230,049.28"],["Oct 2026","$1,165,935.05"]].forEach(function(r){ doc.text(r[0], L, y); doc.text(r[1], 300, y, {align:"right"}); y+=12; });
-  doc.setTextColor(170,30,30); doc.text("September revenue dropped 92% from August and 83% below the May-Aug average ($1.33M/mo). October came back to $1.17M.", L, y); y+=12; doc.setTextColor(45);
+  doc.setTextColor(170,30,30); doc.text("September revenue dropped 92% from August and 83% below the May-Aug average ($1.33MM/mo). October came back to $1.17MM.", L, y); y+=12; doc.setTextColor(45);
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
