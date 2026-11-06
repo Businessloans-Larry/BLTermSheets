@@ -321,6 +321,9 @@ table.prepay.amort tr.amort-yr td{background:rgba(0,47,104,.08);font-weight:700;
       <li>Driver's License</li>
       <li>Voided Check</li>
       <li>Signed Contract</li>
+      <li>Most Recent Business Tax Return</li>
+      <li>Accounts Receivable Aging Report</li>
+      <li>Electronic Bank Verification</li>
     </ul>
   </div>
   </div>
@@ -821,7 +824,7 @@ function downloadPDF(){
   doc.setFontSize(9); doc.setFont("helvetica","bold"); doc.setTextColor(20);
   doc.text("Lender A — stipulations / closing requirements:", L, y); y+=13;
   doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(45);
-  ["Driver's License","Voided Check","Signed Contract"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
+  ["Driver's License","Voided Check","Signed Contract","Most Recent Business Tax Return","Accounts Receivable Aging Report","Electronic Bank Verification"].forEach(function(r){ if(y>760){doc.addPage(); y=60;} doc.text("- "+r, L, y); y+=12; });
   schedGroups().forEach(function(grp){
     var lead = grp[0];
     if(!schedOf(lead)){
