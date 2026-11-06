@@ -164,6 +164,7 @@ table.prepay th .th-note{display:block;font-size:9px;font-weight:400;opacity:.8;
 .mk-sub{display:block;font-size:7.5px;font-weight:700;letter-spacing:.02em;text-transform:none;opacity:.82;line-height:1.15;margin-top:-1px;}
 .pct{font-size:10.5px;font-weight:600;color:var(--slate);}
 .was{text-decoration:line-through;color:#9AA3B0;font-weight:400;}
+.disc-badge{display:inline-block;font-family:Inter,sans-serif;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#00CD67;border-radius:999px;padding:3px 9px;margin-left:8px;vertical-align:middle;}
 /* in the chart the old fee stacks ABOVE the new one so the column stays narrow (Larry 2026-09-14) */
 .offer-chart td .was{display:block;font-size:10.5px;line-height:1.2;}
 .mk-up{background:var(--cyan);color:#00243B;animation:mkpulse 1.9s ease-in-out infinite;}
@@ -366,23 +367,23 @@ var STATE = { requested: 250000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 /* Chedr amortizing loans, 72 weekly payments, simple interest (early payoff = remaining balance).
-   Two builds of the same approval: no origination fee vs 3% fee, both $250,000 (Larry 2026-11-06; no-fee payment scaled from the $247,800 quote at the same 1.392). $50 wire fee on both. */
+   Two builds of the same approval: no origination fee vs 1.5% fee (veteran discount off 3%), both $250,000 (Larry 2026-11-06; no-fee payment scaled from the $247,800 quote at the same 1.392). $50 wire fee on both. */
 var OFFERS = [
   { name:"Lender A", advance:250000, factor:1.392, weekly:4833.33, nPay:"72", term:"16.6", termLabel:"72-Week", termTxt:"72 weeks",
     origPct:0, origLabel:"0%", processing:50, procLabel:"Wire fee", position:"",
     forgive:"100% of remaining interest waived" },
-  { name:"Lender A", advance:250000, factor:338250.24/250000, weekly:4697.92, nPay:"72", term:"16.6", termLabel:"72-Week", termTxt:"72 weeks",
-    origPct:0.03, origLabel:"3%", processing:50, procLabel:"Wire fee", position:"",
-    forgive:"100% of remaining interest waived", amortKey:"chedr250" }
+  { name:"Lender A", advance:250000, factor:(72*4767.36)/250000, weekly:4767.36, nPay:"72", term:"16.6", termLabel:"72-Week", termTxt:"72 weeks",
+    origPct:0.015, origLabel:"1.5%", oldOrigPct:0.03, oldOrigLabel:"3%", discNote:"Veteran discount", processing:50, procLabel:"Wire fee", position:"",
+    forgive:"100% of remaining interest waived", amortKey:"chedrVet" }
 ];
 
-/* Lender's own amortization (exported from the lender portal 2026-11-06) at the full $250,000 advance.
-   Interest accrues on actual days between drafts, so holiday weeks run long/short. Balance after the
-   last payment printed as -$0.22 (lender rounding) and is shown as $0. */
-var AMORT = { chedr250: {
-  interest:[2190.81, 2168.84, 2146.68, 2124.32, 2101.77, 2079.02, 2937.24, 2040.64, 1152.77, 1986.28, 1962.52, 1938.55, 1914.37, 1889.98, 1865.37, 1840.55, 1815.51, 1790.25, 1764.77, 1739.06, 1713.13, 1686.98, 1660.59, 1633.98, 1607.13, 1580.04, 1552.72, 1525.16, 1497.35, 1469.3, 1441.01, 2017.81, 793.7, 1354.77, 1325.47, 1295.92, 1266.11, 1236.03, 1205.7, 1175.09, 1144.22, 1113.08, 1081.66, 1049.97, 1018.01, 985.76, 953.23, 920.41, 887.31, 853.92, 820.23, 786.25, 751.97, 717.39, 682.51, 647.32, 611.82, 576.02, 771.28, 505.48, 267.85, 429.92, 392.52, 354.79, 316.73, 278.34, 239.61, 200.54, 161.13, 121.37, 81.27, 40.81],
-  principal:[2507.11, 2529.08, 2551.24, 2573.6, 2596.15, 2618.9, 1760.68, 2657.28, 3545.15, 2711.64, 2735.4, 2759.37, 2783.55, 2807.94, 2832.55, 2857.37, 2882.41, 2907.67, 2933.15, 2958.86, 2984.79, 3010.94, 3037.33, 3063.94, 3090.79, 3117.88, 3145.2, 3172.76, 3200.57, 3228.62, 3256.91, 2680.11, 3904.22, 3343.15, 3372.45, 3402.0, 3431.81, 3461.89, 3492.22, 3522.83, 3553.7, 3584.84, 3616.26, 3647.95, 3679.91, 3712.16, 3744.69, 3777.51, 3810.61, 3844.0, 3877.69, 3911.67, 3945.95, 3980.53, 4015.41, 4050.6, 4086.1, 4121.9, 3926.64, 4192.44, 4430.07, 4268.0, 4305.4, 4343.13, 4381.19, 4419.58, 4458.31, 4497.38, 4536.79, 4576.55, 4616.65, 4657.11],
-  balance:[247492.89, 244963.81, 242412.57, 239838.97, 237242.82, 234623.92, 232863.23, 230205.95, 226660.8, 223949.17, 221213.77, 218454.4, 215670.85, 212862.91, 210030.36, 207172.98, 204290.57, 201382.9, 198449.75, 195490.89, 192506.11, 189495.16, 186457.84, 183393.89, 180303.1, 177185.22, 174040.02, 170867.25, 167666.68, 164438.07, 161181.16, 158501.05, 154596.84, 151253.69, 147881.24, 144479.24, 141047.43, 137585.54, 134093.32, 130570.49, 127016.79, 123431.95, 119815.69, 116167.75, 112487.84, 108775.67, 105030.98, 101253.47, 97442.86, 93598.86, 89721.17, 85809.5, 81863.55, 77883.02, 73867.61, 69817.01, 65730.91, 61609.01, 57682.36, 53489.93, 49059.86, 44791.87, 40486.47, 36143.34, 31762.15, 27342.57, 22884.26, 18386.88, 13850.09, 9273.54, 4656.89, 0.0] } };
+/* Lender's own amortization (exported from the lender portal 2026-11-06) for the 1.5% veteran-discount
+   build, quoted at $247,800 (base) and scaled to the live amount. Interest accrues on actual days between
+   drafts, so holiday weeks run long/short. Final balance printed as -$0.28 (lender rounding), shown as $0. */
+var AMORT = { chedrVet: { base:247800,
+  interest:[2283.77, 2261.26, 2238.55, 2215.64, 2192.5, 2169.16, 3065.15, 2130.3, 1203.65, 2073.93, 2049.49, 2024.83, 1999.94, 1974.82, 1949.47, 1923.89, 1898.07, 1872.01, 1845.71, 1819.17, 1792.39, 1765.36, 1738.08, 1710.55, 1682.76, 1654.72, 1626.42, 1597.86, 1569.03, 1539.94, 1510.59, 2115.65, 832.52, 1421.03, 1390.58, 1359.84, 1328.82, 1297.52, 1265.93, 1234.04, 1201.87, 1169.39, 1136.62, 1103.55, 1070.17, 1036.48, 1002.48, 968.17, 933.54, 898.6, 863.33, 827.73, 791.81, 755.56, 718.97, 682.05, 644.78, 607.18, 813.17, 533.17, 282.59, 453.58, 414.21, 374.48, 334.38, 293.91, 253.07, 211.86, 170.26, 128.28, 85.91, 43.15],
+  principal:[2441.64, 2464.15, 2486.86, 2509.77, 2532.91, 2556.25, 1660.26, 2595.11, 3521.76, 2651.48, 2675.92, 2700.58, 2725.47, 2750.59, 2775.94, 2801.52, 2827.34, 2853.4, 2879.7, 2906.24, 2933.02, 2960.05, 2987.33, 3014.86, 3042.65, 3070.69, 3098.99, 3127.55, 3156.38, 3185.47, 3214.82, 2609.76, 3892.89, 3304.38, 3334.83, 3365.57, 3396.59, 3427.89, 3459.48, 3491.37, 3523.54, 3556.02, 3588.79, 3621.86, 3655.24, 3688.93, 3722.93, 3757.24, 3791.87, 3826.81, 3862.08, 3897.68, 3933.6, 3969.85, 4006.44, 4043.36, 4080.63, 4118.23, 3912.24, 4192.24, 4442.82, 4271.83, 4311.2, 4350.93, 4391.03, 4431.5, 4472.34, 4513.55, 4555.15, 4597.13, 4639.5, 4682.26],
+  balance:[245358.36, 242894.21, 240407.36, 237897.58, 235364.68, 232808.43, 231148.16, 228553.05, 225031.29, 222379.81, 219703.89, 217003.31, 214277.84, 211527.25, 208751.31, 205949.78, 203122.44, 200269.04, 197389.35, 194483.11, 191550.09, 188590.04, 185602.71, 182587.84, 179545.19, 176474.5, 173375.51, 170247.96, 167091.58, 163906.12, 160691.3, 158081.54, 154188.65, 150884.27, 147549.43, 144183.86, 140787.28, 137359.39, 133899.9, 130408.54, 126884.99, 123328.98, 119740.19, 116118.32, 112463.08, 108774.15, 105051.22, 101293.98, 97502.11, 93675.3, 89813.22, 85915.54, 81981.94, 78012.09, 74005.66, 69962.29, 65881.67, 61763.43, 57851.2, 53658.96, 49216.13, 44944.31, 40633.11, 36282.19, 31891.16, 27459.66, 22987.33, 18473.77, 13918.62, 9321.48, 4681.98, 0.0] } };
 
 /* number offers in array order — shown in each card's title */
 (function(){var n=0;OFFERS.forEach(function(o){o.num=++n;});})();
@@ -459,13 +460,13 @@ function renderOffers(){
     var capTag = m.capped ? '<span class="cap-badge">offer max</span>' : '';
     var procRow = o.processing ? '<div class="kv-row kv-fee"><span class="kv-label">'+(o.procLabel||"Processing fee")+'</span><span class="kv-val">'+money(o.processing)+'</span></div>' : '';
     var fgRow = o.forgive ? '<div class="kv-row"><span class="kv-label">Early-payoff interest forgiveness</span><span class="kv-val">'+o.forgive+'</span></div>' : '';
-    var badge = (o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '';
+    var badge = ((o.freq==="monthly") ? '<span class="freq-badge">Monthly</span>' : '') + (o.discNote ? '<span class="disc-badge">&#9733; '+o.discNote+'</span>' : '');
     var recBadge = o.rec ? ' <span class="rec-badge">&#9733; Recommended</span>' : '';
     return '<div class="offer-card'+(o.rec?' rec':'')+'">'
       + '<div class="offer-card-header"><div class="offer-term">Offer '+o.num+' &middot; '+o.termLabel+badge+recBadge+' <button type="button" class="hidebtn" data-hide="'+o.num+'" title="Hide this offer">hide</button></div><div class="offer-sub">'+o.name+(o.position ? ' &middot; '+o.position+' Position' : '')+' &middot; '+fw+'</div></div>'
       + '<div class="offer-card-body">'
         + '<div class="kv-row"><span class="kv-label">Advance amount</span><span class="kv-val">'+money0(m.advance)+capTag+'</span></div>'
-        + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee, charged by the lender ('+o.origLabel+')'+(o.feeOnTop ? ' <span class="kv-note">(loaned to you as part of the loan amount, then withheld at funding)</span>' : '')+'</span><span class="kv-val">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+'</span> ' : '')+money(m.fee)+'</span></div>'
+        + '<div class="kv-row kv-fee"><span class="kv-label">Origination fee, charged by the lender ('+(o.oldOrigLabel ? '<span class="was">'+o.oldOrigLabel+'</span> ' : '')+o.origLabel+')'+(o.discNote ? ' <span class="kv-note">('+o.discNote.toLowerCase()+', '+(Math.round((o.oldOrigPct-o.origPct)*1000)/10)+'% off)</span>' : '')+(o.feeOnTop ? ' <span class="kv-note">(loaned to you as part of the loan amount, then withheld at funding)</span>' : '')+'</span><span class="kv-val">'+(m.oldFee ? '<span class="was">'+money(m.oldFee)+'</span> ' : '')+money(m.fee)+'</span></div>'
         + procRow
         + '<div class="kv-row kv-net"><span class="kv-label">'+(o.feeOnTop ? 'Deposited to you (loan amount minus the withheld fee)' : 'Net advance (deposited)')+'</span><span class="kv-val">'+money(m.net)+'</span></div>'
         + (o.noPayback ? '' : '<div class="kv-row"><span class="kv-label">Total payback <span class="kv-note">(if not repaid early)</span></span><span class="kv-val">'+money0(m.payback)+'</span></div>')
@@ -757,10 +758,10 @@ function renderPrepay(){
    origination and wire fees the lender charges. ---- */
 function amortOffers(){ return OFFERS.filter(function(o){ return o.amortKey && !HIDDEN.has(o.num); }); }
 function amortRows(o){
-  var m = model(o), A = AMORT[o.amortKey], rows = [];
+  var m = model(o), A = AMORT[o.amortKey], rows = [], s = m.advance/(A.base || o.advance);
   for(var k=0;k<A.interest.length;k++){
-    var bal = round2(A.balance[k]*m.s), paid = round2(m.weekly*(k+1));
-    rows.push({ i:round2(A.interest[k]*m.s), p:round2(A.principal[k]*m.s), b:bal,
+    var bal = round2(A.balance[k]*s), paid = round2(m.weekly*(k+1));
+    rows.push({ i:round2(A.interest[k]*s), p:round2(A.principal[k]*s), b:bal,
                 t:round2(paid + bal), a:round2(paid + bal + m.fee + m.processing) });
   }
   return { m:m, rows:rows };
@@ -804,7 +805,7 @@ function downloadPDF(){
     doc.text(o.name+" — "+o.termLabel+" — "+money0(m.advance), L, y); y+=8; doc.setDrawColor(170); doc.line(L,y,R,y); y+=18;
     doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.setTextColor(45);
     var rows=[["Advance amount", money0(m.advance)],
-      ["Origination fee, charged by the lender ("+o.origLabel+")"+(o.feeOnTop ? ", loaned then withheld" : ""), (m.oldFee ? money(m.oldFee)+" -> " : "")+money(m.fee)]];
+      ["Origination fee, charged by the lender ("+(o.oldOrigLabel ? o.oldOrigLabel+" -> " : "")+o.origLabel+(o.discNote ? ", "+o.discNote.toLowerCase() : "")+")"+(o.feeOnTop ? ", loaned then withheld" : ""), (m.oldFee ? money(m.oldFee)+" -> " : "")+money(m.fee)]];
     if(o.processing) rows.push([o.procLabel||"Processing fee", money(m.processing)]);
     rows.push([o.feeOnTop ? "Deposited to you (loan minus withheld fee)" : "Net advance (deposited)", money(m.net)]);
     if(!o.noPayback) rows.push(["Total payback (if not repaid early)", money0(m.payback)]);
