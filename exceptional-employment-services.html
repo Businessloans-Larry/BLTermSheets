@@ -366,9 +366,9 @@ var STATE = { requested: 250000 };
 
 var LENDER_NOTES = {}; /* optional: { "Group Name":"note under the group header", ... } */
 /* Chedr amortizing loans, 72 weekly payments, simple interest (early payoff = remaining balance).
-   Two builds of the same approval: no origination fee ($247,800 max) vs 3% fee ($250,000 max). $50 wire fee on both. */
+   Two builds of the same approval: no origination fee vs 3% fee, both $250,000 (Larry 2026-11-06; no-fee payment scaled from the $247,800 quote at the same 1.392). $50 wire fee on both. */
 var OFFERS = [
-  { name:"Lender A", advance:247800, factor:344937.60/247800, weekly:4790.80, nPay:"72", term:"16.6", termLabel:"72-Week", termTxt:"72 weeks",
+  { name:"Lender A", advance:250000, factor:1.392, weekly:4833.33, nPay:"72", term:"16.6", termLabel:"72-Week", termTxt:"72 weeks",
     origPct:0, origLabel:"0%", processing:50, procLabel:"Wire fee", position:"",
     forgive:"100% of remaining interest waived" },
   { name:"Lender A", advance:250000, factor:338250.24/250000, weekly:4697.92, nPay:"72", term:"16.6", termLabel:"72-Week", termTxt:"72 weeks",
