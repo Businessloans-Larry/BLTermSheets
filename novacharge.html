@@ -429,11 +429,11 @@ var OFFERS = [
      Payment = payback / 40 like their table ($411,000 / 40 = $10,275). Tagged 2nd: Libertas is dead and Larry asked Jacob
      for 300-400k "as a 2nd". term in months = 40 x 12/52 for the annualized simple interest; termWeeks drives the label. */
   { name:"BizCap", advance:300000, factor:1.37, weekly:10275.00, nPay:"40", term:"9.23", termWeeks:40, noAnn:true, termLabel:"40-Week", origPct:0.02, origLabel:"2%", oldOrigPct:0.03, oldOrigLabel:"3%", processing:0, position:"2nd" },
-  /* Fintap broker sheet REVISED 2026-11-18 (Core program, position 2), "Premium Pricing" tier: approved $166,200, 44 weekly,
-     4% orig fee. Larry: 8 points -> factor 1.39 (buy 1.31), payback $231,018, payment $5,250 (sheet figure, whole dollars).
-     (Premium + Pricing $175K tier tops out at 5 pts.) Replaces the 11/17 $237,600 / 52-wk / 1.41 offer. 44 weeks is not
-     12 months, so no annualized simple interest (noAnn), same as BizCap. Fee struck 4% -> 3% for the Friday BL 1%. */
-  { name:"Fintap", advance:166200, factor:1.39, weekly:5250, nPay:"44", term:"10.15", termWeeks:44, noAnn:true, termLabel:"44-Week", origPct:0.03, origLabel:"3%", oldOrigPct:0.04, oldOrigLabel:"4%", processing:0, position:"2nd" },
+  /* Fintap broker sheet REVISED 2026-11-18 (Core program, position 2). Larry: "no its 175" -> the "Premium + Pricing" tier:
+     approved $175,000, 44 weekly, 3.75% orig fee, buy 1.27 (1.28 = 1 pt). Larry's 8 points -> 1.35 (Fintap's own table
+     stops at 5 pts / 1.32, so 1.35 needs their OK). Payback $236,250, $5,369/wk (payback / 44, whole dollars like their
+     sheet). 44 weeks is not 12 months -> noAnn. Fee struck 3.75% -> 2.75% for the Friday BL 1%. */
+  { name:"Fintap", advance:175000, factor:1.35, weekly:5369, nPay:"44", term:"10.15", termWeeks:44, noAnn:true, termLabel:"44-Week", origPct:0.0275, origLabel:"2.75%", oldOrigPct:0.0375, oldOrigLabel:"3.75%", processing:0, position:"2nd" },
   /* Libertas Funding pre-approval 2026-11-16 4:45 PM, offer OR00047230 (12 mo, 2nd position, no Kalamata payoff,
      3% orig, funding $291,000). Email FCR 1.32 at 12 pts (buy 1.20); Larry 11/17: SELL 1.26 (6 pts).
      Weekly = payback / 50.4 rounded UP to the cent (Libertas x4.2 format): 378,000 / 50.4 = 7,500.00, final payment $3,000.
